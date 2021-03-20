@@ -65,8 +65,12 @@ artifacts/
 # StyleCop
 StyleCopReport.xml
 
-# Files built by Visual Studio
+#Files por el limón mecánico
+[Dd]ependencies/
 *.exe
+*.dll
+
+# Files built by Visual Studio
 *_i.c
 *_p.c
 *_h.h
