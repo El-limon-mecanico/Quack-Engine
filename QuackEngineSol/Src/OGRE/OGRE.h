@@ -1,3 +1,3 @@
 #pragma once
 
-void CargarOGRE();
+void OGRE_Init();

@@ -1,3 +1,3 @@
 #pragma once
 
-void CargarFMOD();
+void FMOD_Init();
