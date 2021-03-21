@@ -66,7 +66,7 @@ artifacts/
 StyleCopReport.xml
 
 #Files por el limón mecánico
-[Dd]ependencies/
+[Bb]uild/
 *.exe
 *.dll
 
