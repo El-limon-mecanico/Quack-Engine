@@ -8,7 +8,7 @@ void OGRE_Init()
 	Ogre::Root* root;
 	root = new Ogre::Root();
 
-	root->initialise(false);
+	/*root->initialise(false);
 	Ogre::SceneManager* scnMgr = root->createSceneManager();
-	Ogre::Camera* cam = scnMgr->createCamera("myCam");
+	Ogre::Camera* cam = scnMgr->createCamera("myCam");*/
 }
