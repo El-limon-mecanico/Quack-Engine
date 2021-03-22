@@ -49,6 +49,8 @@ void OGRE_Init()
 
 	while (true)
 	{
+		// Ogre::WindowEventUtilities::messagePump();  WindowEventUtilities se ha mudado con el traidor OgreBites y no sabemos como sustituir esta linea
+
 		if (mWindow->isClosed()) return;
 
 		if (!root->renderOneFrame()) return;
