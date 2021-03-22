@@ -1,5 +1,8 @@
 #include <iostream>
 #include <OgreRoot.h>
+#include <OgreEntity.h>
+#include "OgreViewport.h"
+#include "OgreRenderWindow.h"
 
 void OGRE_Init()
 {
@@ -8,7 +11,46 @@ void OGRE_Init()
 	Ogre::Root* root;
 	root = new Ogre::Root();
 
-	root->initialise(false);
-	Ogre::SceneManager* scnMgr = root->createSceneManager();
-	Ogre::Camera* cam = scnMgr->createCamera("myCam");
+	Ogre::RenderWindow* mWindow;
+
+	root->showConfigDialog(NULL);
+
+	mWindow = root->initialise(true, "DIOS SANTO LA VENTANA");
+
+	Ogre::SceneManager* mSceneMngr;
+
+	mSceneMngr = root->createSceneManager();
+
+	Ogre::Camera* mCamera;
+
+	mCamera = mSceneMngr->createCamera("MainCam");
+
+	mCamera->setNearClipDistance(1);
+	mCamera->setFarClipDistance(100000);
+	mCamera->setAutoAspectRatio(true);
+
+
+	Ogre::SceneNode* mNodeCamera = mSceneMngr->getRootSceneNode()->createChildSceneNode();
+	mNodeCamera->attachObject(mCamera);
+
+	mNodeCamera->setPosition(0, 0, 0);
+	mNodeCamera->lookAt(Ogre::Vector3(0, 0, 0), Ogre::Node::TS_WORLD);
+
+	Ogre::Viewport* vp = mWindow->addViewport(mCamera);
+
+	vp->setBackgroundColour(Ogre::ColourValue(0, 0, 0));
+
+	mCamera->setAspectRatio(
+		Ogre::Real(vp->getActualWidth()) /
+		Ogre::Real(vp->getActualHeight()));
+
+	mSceneMngr->setAmbientLight(Ogre::ColourValue(.5, .5, .5));
+
+
+	while (true)
+	{
+		if (mWindow->isClosed()) return;
+
+		if (!root->renderOneFrame()) return;
+	}
 }
