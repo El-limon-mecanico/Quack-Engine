@@ -6,7 +6,7 @@
 
 void OGRE_Init()
 {
-	std::cout << "\n\n\nEMPIEZA LA INICIALIZACIÓN DE OGRE\n\n";
+	std::cout << "\n\n\nEMPIEZA LA INICIALIZACIï¿½N DE OGRE\n\n";
 
 	Ogre::Root* root;
 	root = new Ogre::Root();
