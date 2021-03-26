@@ -1,6 +1,7 @@
 #include <iostream>
 #include <OgreRoot.h>
 
+
 void OGRE_Init()
 {
 	std::cout << "\n\n\nEMPIEZA LA INICIALIZACIÓN DE OGRE\n\n";
