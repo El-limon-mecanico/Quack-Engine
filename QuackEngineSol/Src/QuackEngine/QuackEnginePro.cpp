@@ -2,7 +2,6 @@
 #include <fstream>
 #include "FMOD.h"
 #include "OGRE.h"
-
 //para que no salga la consola en el modo release (en las propiedades del proyecto hay que poner que se
 //ejecute como aplicacion window no cmd (en la parte de vinculador))
 #if (defined _DEBUG) || !(defined _WIN32)
