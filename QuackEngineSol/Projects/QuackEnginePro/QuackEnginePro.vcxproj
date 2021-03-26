@@ -22,6 +22,9 @@
     <ClCompile Include="..\..\Src\QuackEngine\QuackEnginePro.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CEGUI\CEGUI.vcxproj">
+      <Project>{a42d3d95-f450-4a5e-9f48-1f003569bf27}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\FMOD\FMOD.vcxproj">
       <Project>{acc2e015-9e69-45d9-be67-b9a55bd44c46}</Project>
     </ProjectReference>
@@ -110,7 +113,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)src\FMOD;$(SolutionDir)src\OGRE</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\FMOD;$(SolutionDir)src\OGRE;$(SolutionDir)src\CEGUI</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

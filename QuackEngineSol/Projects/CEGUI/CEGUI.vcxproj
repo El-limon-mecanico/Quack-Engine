@@ -96,6 +96,10 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <Lib>
+      <AdditionalDependencies>CEGUIOpenGLRenderer-0_d.lib;CEGUIBase-0_d.lib;%(AdditionalLibraryDirectories)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)dependencies\CEGUI\cegui-0.8.7\build\lib</AdditionalLibraryDirectories>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -124,6 +128,10 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <Lib>
+      <AdditionalDependencies>CEGUIBase-0.lib;CEGUIOpenGLRenderer-0.lib;%(AdditionalLibraryDirectories)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)dependencies\CEGUI\cegui-0.8.7\build\lib</AdditionalLibraryDirectories>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
