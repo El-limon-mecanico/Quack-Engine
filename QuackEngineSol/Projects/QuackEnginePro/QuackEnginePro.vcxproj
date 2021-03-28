@@ -22,6 +22,9 @@
     <ClCompile Include="..\..\Src\QuackEngine\QuackEnginePro.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BULLET\BULLET.vcxproj">
+      <Project>{afa9a1a1-e075-44ab-8a4b-9e56ad484a01}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\FMOD\FMOD.vcxproj">
       <Project>{acc2e015-9e69-45d9-be67-b9a55bd44c46}</Project>
     </ProjectReference>
@@ -110,7 +113,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)src\FMOD;$(SolutionDir)src\OGRE</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\BULLET;$(SolutionDir)src\FMOD;$(SolutionDir)src\OGRE</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -125,7 +128,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)src\FMOD;$(SolutionDir)src\OGRE</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\BULLET;$(SolutionDir)src\FMOD;$(SolutionDir)src\OGRE</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
