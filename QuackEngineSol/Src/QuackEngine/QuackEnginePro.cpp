@@ -2,6 +2,7 @@
 #include <fstream>
 #include "FMOD.h"
 #include "OGRE.h"
+#include "BULLET.h"
 
 //para que no salga la consola en el modo release (en las propiedades del proyecto hay que poner que se
 //ejecute como aplicacion window no cmd (en la parte de vinculador))
@@ -25,7 +26,7 @@ WinMain(HINSTANCE zHInstance, HINSTANCE prevInstance, LPSTR lpCmdLine, int nCmdS
 		std::cerr << "ERROR: el fichero no se ha abierto\n";
 	}
 
-
+	BULLET_Init();
 	FMOD_Init();
 	OGRE_Init();
 
