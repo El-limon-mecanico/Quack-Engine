@@ -28,7 +28,7 @@ WinMain(HINSTANCE zHInstance, HINSTANCE prevInstance, LPSTR lpCmdLine, int nCmdS
 
 	BULLET_Init();
 	FMOD_Init();
-	OGRE_Init();
+	//OGRE_Init();
 
 	return 0;
 }
