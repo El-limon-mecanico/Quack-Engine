@@ -25,8 +25,11 @@ WinMain(HINSTANCE zHInstance, HINSTANCE prevInstance, LPSTR lpCmdLine, int nCmdS
 		std::cerr << "ERROR: el fichero no se ha abierto\n";
 	}
 
-	FMOD_Init();
+	//Fmod* fmod = new Fmod();
+	//fmod->createSound(std::string("singing.wav"), "Cantando");
+	//fmod->playSound(0, "Cantando");
 	//OGRE_Init();
+	while (true);
 
 	return 0;
 }

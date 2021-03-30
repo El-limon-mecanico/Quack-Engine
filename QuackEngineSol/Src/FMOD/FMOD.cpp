@@ -1,25 +1,21 @@
-#include <iostream>
+#include "FMOD.h"
 #include <fmod.hpp>
 #include <fmod_errors.h>
 
-
-void FMOD_Init()
+Fmod::Fmod()
 {
-	std::cout << "Aqui deberia estar cargando fmod\n";
-
+	std::cout << "Se esta inicializando FMOD\n";
 
 	FMOD_RESULT result;
-	FMOD::System* system = NULL;
-
-	result = FMOD::System_Create(&system);      // Create the main system object.
+	result = FMOD::System_Create(&systemFMOD_);      // Create the main system object.
 	if (result != FMOD_OK)
 	{
 		std::cout << "Error fmod 1\n";
 		printf("FMOD error! (%d) %s\n", result, FMOD_ErrorString(result));
 		exit(-1);
 	}
-	
-	result = system->init(512, FMOD_INIT_NORMAL, 0);    // Initialize FMOD.
+
+	result = systemFMOD_->init(512, FMOD_INIT_NORMAL, 0);    // Initialize FMOD.
 	if (result != FMOD_OK)
 	{
 		std::cout << "Error fmod 2\n";
@@ -27,26 +23,35 @@ void FMOD_Init()
 		exit(-1);
 	}
 
-	std::cout << "Se ha inicializado FMOD?\n";
-	
-	FMOD::Sound* sonido;
-	FMOD::Channel* channel = 0;
+	std::cout << "Se ha inicializado FMOD\n";
+}
 
-	FMOD_RESULT resultCreateSound = system->createSound("Assets/singing.wav", FMOD_DEFAULT,0,&sonido);
-	if(resultCreateSound != FMOD_OK)
+void Fmod::playSound(int channel, std::string id)
+{
+	auto it = sounds_.find(id);
+	if (it == sounds_.end())
+	{
+		std::cout << "No se ha encontrado el sonido: " + id << "\n";
+	}
+	else
+	{
+		FMOD::Channel* channelAux;
+		systemFMOD_->getChannel(channel, &channelAux);
+		systemFMOD_->playSound(sounds_[id], 0, false, &channelAux);
+	}
+}
+
+
+void Fmod::createSound(std::string sound, std::string id)
+{
+	FMOD::Sound* sonido;
+	std::string path = std::string("Assets/Sound/") + sound;
+	FMOD_RESULT resultCreateSound = systemFMOD_->createSound(path.c_str(), FMOD_DEFAULT, 0, &sonido);
+	if (resultCreateSound != FMOD_OK)
 	{
 		std::cout << "Algo ha petado\n";
-		printf("FMOD error! (%d) %s\n", result, FMOD_ErrorString(result));
+		printf("FMOD error! (%d) %s\n", resultCreateSound, FMOD_ErrorString(resultCreateSound));
 		exit(-1);
 	}
-	
-	FMOD_RESULT resultPlaySound = system->playSound(sonido, 0, false, &channel);
-
-	if (resultPlaySound != FMOD_OK)
-	{
-		printf("FMOD error! (%d) %s\n", result, FMOD_ErrorString(result));
-		exit(-1);
-	}
-
-	std::cout << "Se tendria que haber escuchado algo\n";
+	sounds_.insert(std::pair<std::string, FMOD::Sound*>(id, sonido));
 }
