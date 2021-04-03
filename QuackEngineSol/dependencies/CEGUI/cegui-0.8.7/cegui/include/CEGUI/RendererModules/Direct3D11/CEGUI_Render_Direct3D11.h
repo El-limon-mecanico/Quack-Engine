@@ -1,0 +1,6 @@
+#include "CEGUI\RendererModules\Direct3D11\GeometryBuffer.h"
+#include "CEGUI\RendererModules\Direct3D11\Renderer.h"
+#include "CEGUI\RendererModules\Direct3D11\RenderTarget.h"
+#include "CEGUI\RendererModules\Direct3D11\Texture.h"
+#include "CEGUI\RendererModules\Direct3D11\TextureTarget.h"
+#include "CEGUI\RendererModules\Direct3D11\ViewportTarget.h"
