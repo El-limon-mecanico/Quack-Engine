@@ -100,7 +100,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)dependencies\Bullet\Src\include;$(SolutionDir)dependencies\Ogre\build\include;$(SolutionDir)dependencies\Ogre\Src\OgreMain\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)dependencies\Bullet\Src\src;$(SolutionDir)dependencies\Ogre\build\include;$(SolutionDir)dependencies\Ogre\Src\OgreMain\include</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -108,7 +109,7 @@
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)dependencies\Ogre\build\lib\$(Configuration);$(SolutionDir)dependencies\Bullet\build\lib\$(Configuration)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Bullet3Collision_vs2010_debug.lib;Bullet3Dynamics_vs2010_debug.lib;Bullet3Geometry_vs2010_debug.lib;LinearMath_vs2010_debug.lib;OgreMain_d.lib</AdditionalDependencies>
+      <AdditionalDependencies>Bullet3Collision_Debug.lib;BulletCollision_Debug.lib;Bullet3Dynamics_Debug.lib;BulletDynamics_Debug.lib;Bullet3Geometry_Debug.lib;LinearMath_Debug.lib;OgreMain_d.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -119,7 +120,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)dependencies\Bullet\Src\include;$(SolutionDir)dependencies\Ogre\build\include;$(SolutionDir)dependencies\Ogre\Src\OgreMain\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)dependencies\Bullet\Src\src;$(SolutionDir)dependencies\Ogre\build\include;$(SolutionDir)dependencies\Ogre\Src\OgreMain\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -129,7 +130,7 @@
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)dependencies\Ogre\build\lib\$(Configuration);$(SolutionDir)dependencies\Bullet\build\lib\$(Configuration)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Bullet3Collision_vs2010.lib;Bullet3Dynamics_vs2010.lib;Bullet3Geometry_vs2010.lib;LinearMath_vs2010.lib;OgreMain.lib;</AdditionalDependencies>
+      <AdditionalDependencies>Bullet3Collision.lib;BulletCollision.lib;Bullet3Dynamics.lib;BulletDynamics.lib;Bullet3Geometry.lib;LinearMath.lib;OgreMain.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

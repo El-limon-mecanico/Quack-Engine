@@ -1,8 +1,9 @@
 #include "BULLET.h"
 #include "BtOgre.h"
 
+using namespace BtOgre;
 
-void BULLET_Init(){
+void BULLET_Init() {
 
 	Ogre::Root* root;
 	root = new Ogre::Root();
@@ -42,13 +43,16 @@ void BULLET_Init(){
 
 	mSceneMngr->setAmbientLight(Ogre::ColourValue(.5, .5, .5));
 
+	DynamicsWorld* _world = new DynamicsWorld(Ogre::Vector3(0, 1, 0));
 
-	while (true)
-	{
-		// Ogre::WindowEventUtilities::messagePump();  WindowEventUtilities se ha mudado con el traidor OgreBites y no sabemos como sustituir esta linea
 
-		if (mWindow->isClosed()) return;
 
-		if (!root->renderOneFrame()) return;
-	}
+	//while (true)
+	//{
+	//	// Ogre::WindowEventUtilities::messagePump();  WindowEventUtilities se ha mudado con el traidor OgreBites y no sabemos como sustituir esta linea
+
+	//	if (mWindow->isClosed()) return;
+
+	//	if (!root->renderOneFrame()) return;
+	//}
 }
