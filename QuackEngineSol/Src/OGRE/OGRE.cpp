@@ -12,7 +12,6 @@ void OGRE_Init()
 	root = new Ogre::Root();
 
 	Ogre::RenderWindow* mWindow;
-
 	root->showConfigDialog(NULL);
 
 	mWindow = root->initialise(true, "DIOS SANTO LA VENTANA");
@@ -46,13 +45,13 @@ void OGRE_Init()
 
 	mSceneMngr->setAmbientLight(Ogre::ColourValue(.5, .5, .5));
 
+	root->startRendering();
 
-	while (true)
-	{
-		// Ogre::WindowEventUtilities::messagePump();  WindowEventUtilities se ha mudado con el traidor OgreBites y no sabemos como sustituir esta linea
+	//while (true)
+	//{
+	//	//vp->update();
+	//	if (mWindow->isClosed()) return;
 
-		if (mWindow->isClosed()) return;
-
-		if (!root->renderOneFrame()) return;
-	}
+	//	if (!root->renderOneFrame()) return;
+	//}
 }
