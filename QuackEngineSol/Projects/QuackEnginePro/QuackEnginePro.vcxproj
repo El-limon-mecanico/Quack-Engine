@@ -19,7 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Src\QuackEngine\Component.cpp" />
+    <ClCompile Include="..\..\Src\QuackEngine\Entity.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\QuackEnginePro.cpp" />
+    <ClCompile Include="..\..\Src\QuackEngine\Scene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FMOD\FMOD.vcxproj">
@@ -28,6 +31,11 @@
     <ProjectReference Include="..\OGRE\OGRE.vcxproj">
       <Project>{44504115-0521-4978-abd2-5413482b1d06}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Src\QuackEngine\Component.h" />
+    <ClInclude Include="..\..\Src\QuackEngine\Entity.h" />
+    <ClInclude Include="..\..\Src\QuackEngine\Scene.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
