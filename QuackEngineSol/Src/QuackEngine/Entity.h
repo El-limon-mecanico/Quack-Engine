@@ -22,7 +22,7 @@ public:
 	Entity(): active_(true)  /*mngr_(mngr), //cmpArray_(), //groups_()*/{}
 	virtual ~Entity();
 
-	template<typename T, typename ...Ts>
+	/*template<typename T, typename ...Ts>
 	T* addComponent(Ts&&... args) {
 		T* c = new T(std::forward<Ts>(args)...);
 		c->SetEntity(this);
@@ -38,9 +38,9 @@ public:
 		components_.emplace_back(c);
 
 		return c;
-	}
+	}*/
 	
-	template<typename T>
+	/*template<typename T>
 	void removeComponent() {
 		auto id = ecs::cmpIdx<T>; //lo mismo que antes con el ID
 		if (cmpArray_[id] != nullptr) {
@@ -55,19 +55,19 @@ public:
 				}));
 			delete old_cmp;
 		}
-	}
+	}*/
 
-	template<typename T>
+	/*template<typename T>
 	inline T* getComponent() {
 		auto id = ecs::cmpIdx<T>;
 		return static_cast<T*>(cmpArray_[id]);
-	}
+	}*/
 
-	template<typename T>
+	/*template<typename T>
 	inline bool hasComponent() {
 		auto id = ecs::cmpIdx<T>;
 		return cmpArray_[id] != nullptr;
-	}
+	}*/
 
 	inline bool isActive() const {
 		return active_;
