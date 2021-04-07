@@ -1,5 +1,6 @@
 #include <iostream>
 #include <OgreRoot.h>
+#include "FMOD_Quack.h"
 
 
 void OGRE_Init()
@@ -21,4 +22,13 @@ void OGRE_Init()
 	
 	/*Ogre::SceneManager* scnMgr = root->createSceneManager();
 	Ogre::Camera* cam = scnMgr->createCamera("myCam");*/
+}
+
+void prueba(fmod_quack* fmod_sound)
+{
+	fmod_sound->createSound(std::string("singing.wav"), "Cantando");
+	fmod_sound->playSound(0, "Cantando", 1);
+	fmod_sound->createDSP(FMOD_DSP_TYPE_ECHO, std::string("Echo"));
+	fmod_sound->addDSP(0, std::string("Echo"));
+	fmod_sound->pauseChannel(0, false);
 }

@@ -1,6 +1,6 @@
 #include <iostream>
 #include <fstream>
-#include "FMOD.h"
+#include "FMOD_Quack.h"
 #include "OGRE.h"
 
 //para que no salga la consola en el modo release (en las propiedades del proyecto hay que poner que se
@@ -25,10 +25,10 @@ WinMain(HINSTANCE zHInstance, HINSTANCE prevInstance, LPSTR lpCmdLine, int nCmdS
 		std::cerr << "ERROR: el fichero no se ha abierto\n";
 	}
 
-	//Fmod* fmod = new Fmod();
-	//fmod->createSound(std::string("singing.wav"), "Cantando");
-	//fmod->playSound(0, "Cantando");
-	//OGRE_Init();
+	fmod_quack* fmod_sound = new fmod_quack();
+	
+	OGRE_Init();
+	prueba(fmod_sound);
 	while (true);
 
 	return 0;
