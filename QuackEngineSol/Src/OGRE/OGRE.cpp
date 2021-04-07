@@ -13,7 +13,6 @@ void OGRE_Init()
 	root = new Ogre::Root();
 
 	Ogre::RenderWindow* mWindow;
-
 	root->showConfigDialog(NULL);
 
 	mWindow = root->initialise(true, "DIOS SANTO LA VENTANA");
