@@ -1,6 +1,7 @@
 #include "FMOD_Quack.h"
 
 
+
 fmod_quack::fmod_quack()
 {
 	FMOD_Init();
@@ -83,19 +84,26 @@ void fmod_quack::addDSP(int channel, std::string isDSP)
 	}
 	else
 	{
-		FMOD::Channel* channelAux;
-		FMOD::ChannelGroup* channel_group;
-		systemFMOD_->getMasterChannelGroup(&channel_group);
-		channel_group->getChannel(channel, &channelAux);
-		channelAux->addDSP(0, dsp_[isDSP]);
+		getChannel(channel)->addDSP(0, dsp_[isDSP]);
 	}
 }
 
 void fmod_quack::pauseChannel(int channel, bool pause)
 {
+	getChannel(channel)->setPaused(pause);
+}
+
+void fmod_quack::stopChannel(int channel)
+{
+	getChannel(channel)->stop();
+}
+
+
+FMOD::Channel* fmod_quack::getChannel(int channel)
+{
 	FMOD::Channel* channelAux;
 	FMOD::ChannelGroup* channel_group;
 	systemFMOD_->getMasterChannelGroup(&channel_group);
 	channel_group->getChannel(channel, &channelAux);
-	channelAux->setPaused(pause);
+	return channelAux;
 }

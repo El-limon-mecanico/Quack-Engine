@@ -13,6 +13,7 @@ private:
 	std::map<std::string, FMOD::DSP*> dsp_;
 	FMOD::System* systemFMOD_ = NULL;
 
+	FMOD::Channel* getChannel(int channel);
 public:
 	fmod_quack();
 	~fmod_quack();
@@ -26,5 +27,6 @@ public:
 	void addDSP(int channel, std::string isDSP);
 
 	void pauseChannel(int channel, bool pause);
+	void stopChannel(int channel);
 };
 

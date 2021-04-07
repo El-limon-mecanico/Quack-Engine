@@ -30,5 +30,6 @@ void prueba(fmod_quack* fmod_sound)
 	fmod_sound->playSound(0, "Cantando", 1);
 	fmod_sound->createDSP(FMOD_DSP_TYPE_ECHO, std::string("Echo"));
 	fmod_sound->addDSP(0, std::string("Echo"));
-	fmod_sound->pauseChannel(0, false);
+	//fmod_sound->pauseChannel(0, true);
+	//fmod_sound->stopChannel(0);
 }
