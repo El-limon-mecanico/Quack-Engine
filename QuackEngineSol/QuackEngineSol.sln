@@ -9,6 +9,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FMOD", "Projects\FMOD\FMOD.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OGRE", "Projects\OGRE\OGRE.vcxproj", "{44504115-0521-4978-ABD2-5413482B1D06}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BULLET", "Projects\BULLET\BULLET.vcxproj", "{AFA9A1A1-E075-44AB-8A4B-9E56AD484A01}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -41,6 +43,14 @@ Global
 		{44504115-0521-4978-ABD2-5413482B1D06}.Release|x64.Build.0 = Release|x64
 		{44504115-0521-4978-ABD2-5413482B1D06}.Release|x86.ActiveCfg = Release|Win32
 		{44504115-0521-4978-ABD2-5413482B1D06}.Release|x86.Build.0 = Release|Win32
+		{AFA9A1A1-E075-44AB-8A4B-9E56AD484A01}.Debug|x64.ActiveCfg = Debug|x64
+		{AFA9A1A1-E075-44AB-8A4B-9E56AD484A01}.Debug|x64.Build.0 = Debug|x64
+		{AFA9A1A1-E075-44AB-8A4B-9E56AD484A01}.Debug|x86.ActiveCfg = Debug|Win32
+		{AFA9A1A1-E075-44AB-8A4B-9E56AD484A01}.Debug|x86.Build.0 = Debug|Win32
+		{AFA9A1A1-E075-44AB-8A4B-9E56AD484A01}.Release|x64.ActiveCfg = Release|x64
+		{AFA9A1A1-E075-44AB-8A4B-9E56AD484A01}.Release|x64.Build.0 = Release|x64
+		{AFA9A1A1-E075-44AB-8A4B-9E56AD484A01}.Release|x86.ActiveCfg = Release|Win32
+		{AFA9A1A1-E075-44AB-8A4B-9E56AD484A01}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
