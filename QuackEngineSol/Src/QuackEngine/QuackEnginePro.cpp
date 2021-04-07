@@ -27,7 +27,7 @@ WinMain(HINSTANCE zHInstance, HINSTANCE prevInstance, LPSTR lpCmdLine, int nCmdS
 	}
 
 	fmod_quack* fmod_sound = new fmod_quack();
-	BULLET_Init();
+	//BULLET_Init();
 	OGRE_Init();
 	prueba(fmod_sound);
 	while (true);

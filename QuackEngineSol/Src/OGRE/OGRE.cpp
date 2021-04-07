@@ -3,6 +3,7 @@
 #include <OgreEntity.h>
 #include "OgreViewport.h"
 #include "OgreRenderWindow.h"
+#include "FMOD_Quack.h"
 
 void OGRE_Init()
 {
@@ -47,16 +48,17 @@ void OGRE_Init()
 	mSceneMngr->setAmbientLight(Ogre::ColourValue(.5, .5, .5));
 
 
-	while (true)
+	/*while (true)
 	{
 		// Ogre::WindowEventUtilities::messagePump();  WindowEventUtilities se ha mudado con el traidor OgreBites y no sabemos como sustituir esta linea
 
 		if (mWindow->isClosed()) return;
 
 		if (!root->renderOneFrame()) return;
-	}
+	}*/
 }
 
+//PROVISIONAL DE EJEMPLO
 void prueba(fmod_quack* fmod_sound)
 {
 	fmod_sound->createSound(std::string("singing.wav"), "Cantando");
