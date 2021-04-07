@@ -1,6 +1,6 @@
 #include <iostream>
 #include <fstream>
-#include "FMOD.h"
+#include "FMOD_Quack.h"
 #include "OGRE.h"
 #include "BULLET.h"
 
@@ -26,9 +26,11 @@ WinMain(HINSTANCE zHInstance, HINSTANCE prevInstance, LPSTR lpCmdLine, int nCmdS
 		std::cerr << "ERROR: el fichero no se ha abierto\n";
 	}
 
+	fmod_quack* fmod_sound = new fmod_quack();
 	BULLET_Init();
-	FMOD_Init();
-	//OGRE_Init();
+	OGRE_Init();
+	prueba(fmod_sound);
+	while (true);
 
 	return 0;
 }
