@@ -19,9 +19,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Src\QuackEngine\Component.cpp" />
+    <ClCompile Include="..\..\Src\QuackEngine\Entity.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\QuackEnginePro.cpp" />
+    <ClCompile Include="..\..\Src\QuackEngine\Scene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BULLET\BULLET.vcxproj">
+    <Project>{afa9a1a1-e075-44ab-8a4b-9e56ad484a01}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\FMOD\FMOD.vcxproj">
       <Project>{acc2e015-9e69-45d9-be67-b9a55bd44c46}</Project>
     </ProjectReference>
@@ -31,6 +37,11 @@
     <ProjectReference Include="..\OGRE\OGRE.vcxproj">
       <Project>{44504115-0521-4978-abd2-5413482b1d06}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Src\QuackEngine\Component.h" />
+    <ClInclude Include="..\..\Src\QuackEngine\Entity.h" />
+    <ClInclude Include="..\..\Src\QuackEngine\Scene.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -113,7 +124,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)src\FMOD;$(SolutionDir)src\OGRE;$(SolutionDir)dependencies\Lua\$(Platform);$(SolutionDir)dependencies\LuaBridge\src;$(SolutionDir)src\LuaBridge</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\FMOD;$(SolutionDir)src\OGRE;$(SolutionDir)src\BULLET;$(SolutionDir)dependencies\Lua\$(Platform);$(SolutionDir)dependencies\LuaBridge\src;$(SolutionDir)src\LuaBridge</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -129,11 +140,11 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)src\FMOD;$(SolutionDir)src\OGRE;$(SolutionDir)dependencies\Lua\$(Platform);$(SolutionDir)dependencies\LuaBridge\src;$(SolutionDir)src\LuaBridge</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\BULLET;$(SolutionDir)src\FMOD;$(SolutionDir)src\OGRE;$(SolutionDir)dependencies\Lua\$(Platform);$(SolutionDir)dependencies\LuaBridge\src;$(SolutionDir)src\LuaBridge</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -165,7 +176,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
