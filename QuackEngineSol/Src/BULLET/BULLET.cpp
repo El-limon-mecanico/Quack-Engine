@@ -1,19 +1,56 @@
 #include "BULLET.h"
 #include "BtOgre.h"
+#include <SDL.h>
+#include <SDL_video.h>
+#include <SDL_syswm.h>
 #include <iostream>
 
 using namespace BtOgre;
 
 void BULLET_Init() {
 
+	SDL_Init(SDL_INIT_EVERYTHING);
+
+	if (!SDL_WasInit(SDL_INIT_VIDEO))
+		SDL_InitSubSystem(SDL_INIT_VIDEO);
+
+
 	Ogre::Root* root;
 	root = new Ogre::Root();
 
-	Ogre::RenderWindow* mWindow;
-
 	root->showConfigDialog(NULL);
 
-	mWindow = root->initialise(true, "DIOS SANTO LA VENTANA");
+	root->initialise(false);
+
+	Ogre::RenderWindow* mWindow;
+
+
+	Uint32 flags = SDL_WINDOW_ALLOW_HIGHDPI; //SDL_WINDOW_RESIZABLE
+
+	SDL_Window* sdlWindow = SDL_CreateWindow("COSAS DE VENTANEAR", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 800, 600, flags);
+
+	SDL_SysWMinfo wmInfo;
+	SDL_VERSION(&wmInfo.version);
+	if (SDL_GetWindowWMInfo(sdlWindow, &wmInfo) == SDL_FALSE) {
+		OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
+			"Couldn't get WM Info! (SDL2)",
+			"BaseApplication::setup");
+	}
+	Ogre::ConfigOptionMap CurrentGraphicsConfiguration = root->getRenderSystem()->getConfigOptions();
+
+	Ogre::NameValuePairList params;
+
+	params["FSAA"] = CurrentGraphicsConfiguration["FSAA"].currentValue;
+	params["vsync"] = CurrentGraphicsConfiguration["VSync"].currentValue;
+	params["gamma"] = CurrentGraphicsConfiguration["sRGB Gamma Conversion"].currentValue;
+
+	params["externalWindowHandle"] = Ogre::StringConverter::toString(size_t(wmInfo.info.win.window));
+
+
+	mWindow = root->createRenderWindow("COSAS DE VENTANEAR", 800, 600, false, &params);
+
+	SDL_SetWindowGrab(sdlWindow, SDL_bool(false));
+	SDL_ShowCursor(true);
 
 	Ogre::SceneManager* mSM;
 
@@ -31,7 +68,7 @@ void BULLET_Init() {
 	Ogre::SceneNode* mNodeCamera = mSM->getRootSceneNode()->createChildSceneNode();
 	mNodeCamera->attachObject(mCamera);
 
-	mNodeCamera->setPosition(0, 0, 0);
+	mNodeCamera->setPosition(200, 0, 0);
 	mNodeCamera->lookAt(Ogre::Vector3(0, 0, 0), Ogre::Node::TS_WORLD);
 
 	Ogre::Viewport* vp = mWindow->addViewport(mCamera);
@@ -43,6 +80,16 @@ void BULLET_Init() {
 		Ogre::Real(vp->getActualHeight()));
 
 	mSM->setAmbientLight(Ogre::ColourValue(.5, .5, .5));
+
+	root->startRendering();
+
+
+	Ogre::Entity* a = mSM->createEntity(Ogre::SceneManager::PrefabType::PT_CUBE);
+
+	Ogre::SceneNode* mNode = mSM->getRootSceneNode()->createChildSceneNode();
+
+	mNode->attachObject(a);
+
 
 	DynamicsWorld* _world = new DynamicsWorld(Ogre::Vector3(0, -5, 0));
 
@@ -65,7 +112,6 @@ void BULLET_Init() {
 	btRigidBody* planeRb = _world->addRigidBody(1, plane, BtOgre::ColliderType::CT_BOX);
 	planeRb->setGravity(btVector3(0, 5, 0));
 
-
 	while (true) {
 		std::cout << "CUBO: yPos->" << rb->getCenterOfMassPosition().y() <<
 			" rot: x->" << rb->getCenterOfMassTransform().getRotation().x() << " y->" << rb->getCenterOfMassTransform().getRotation().y()
@@ -74,9 +120,6 @@ void BULLET_Init() {
 			" rot: x->" << planeRb->getCenterOfMassTransform().getRotation().x() << " y->" << planeRb->getCenterOfMassTransform().getRotation().y()
 			<< " z->" << planeRb->getCenterOfMassTransform().getRotation().z() << std::endl;
 		_world->getBtWorld()->stepSimulation(0.0001);
-		root->_fireFrameStarted();
-		root->renderOneFrame();
-		root->_fireFrameEnded();
 	}
 
 	//while (true)
