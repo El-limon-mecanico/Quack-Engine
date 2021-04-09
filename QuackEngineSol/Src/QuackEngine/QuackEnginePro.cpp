@@ -1,11 +1,13 @@
 #include <iostream>
 #include <fstream>
 #include "FMOD.h"
-//#include "OGRE.h"
+#include "OGRE.h"
 #include "LuaBridgeTest.h"
 
 int main()
 {
+	CargarLua();
+
 	//esto es una prueba de los recursos
 	std::ifstream f("Assets/fichero.txt");
 	if(f.is_open())
@@ -18,7 +20,6 @@ int main()
 		std::cerr << "ERROR: el fichero no se ha abierto\n";
 	}
 
-	CargarLua();
 	//CargarFMOD();
 	//CargarOGRE();
 
