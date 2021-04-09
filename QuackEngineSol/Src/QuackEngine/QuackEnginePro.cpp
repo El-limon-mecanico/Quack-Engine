@@ -1,7 +1,8 @@
 #include <iostream>
 #include <fstream>
 #include "FMOD.h"
-#include "OGRE.h"
+//#include "OGRE.h"
+#include "LuaBridgeTest.h"
 
 int main()
 {
@@ -17,8 +18,9 @@ int main()
 		std::cerr << "ERROR: el fichero no se ha abierto\n";
 	}
 
-	CargarFMOD();
-	CargarOGRE();
+	CargarLua();
+	//CargarFMOD();
+	//CargarOGRE();
 
 
 	return 0;

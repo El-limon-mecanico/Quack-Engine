@@ -25,6 +25,9 @@
     <ProjectReference Include="..\FMOD\FMOD.vcxproj">
       <Project>{acc2e015-9e69-45d9-be67-b9a55bd44c46}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\LuaBridge\LuaBridge.vcxproj">
+      <Project>{16d28a0d-c8c4-450e-b191-6236b8ad7afe}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\OGRE\OGRE.vcxproj">
       <Project>{44504115-0521-4978-abd2-5413482b1d06}</Project>
     </ProjectReference>
@@ -110,7 +113,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)src\FMOD;$(SolutionDir)src\OGRE; $(SolutionDir)dependencies\LuaBridge\src\; $(SolutionDir)dependencies\Lua\$(Platform)\;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\FMOD;$(SolutionDir)src\OGRE; $(SolutionDir)src\LuaBridge;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -125,7 +128,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)src\FMOD;$(SolutionDir)src\OGRE; $(SolutionDir)dependencies\LuaBridge\src\; $(SolutionDir)dependencies\Lua\$(Platform)\;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\FMOD;$(SolutionDir)src\OGRE; $(SolutionDir)src\LuaBridge;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -140,7 +143,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)src\FMOD;$(SolutionDir)src\OGRE; $(SolutionDir)dependencies\LuaBridge\src\; $(SolutionDir)dependencies\Lua\$(Platform)\;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\FMOD;$(SolutionDir)src\OGRE; $(SolutionDir)src\LuaBridge;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -155,7 +158,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)src\FMOD;$(SolutionDir)src\OGRE; $(SolutionDir)dependencies\LuaBridge\src\; $(SolutionDir)dependencies\Lua\$(Platform)\;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\FMOD;$(SolutionDir)src\OGRE; $(SolutionDir)src\LuaBridge;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
