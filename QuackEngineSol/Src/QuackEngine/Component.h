@@ -1,6 +1,5 @@
 #pragma once
-#pragma once
-#include<iostream>
+#include <iostream>
 class Entity;
 
 class Component {
