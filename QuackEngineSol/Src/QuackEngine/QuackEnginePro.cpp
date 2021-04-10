@@ -3,6 +3,7 @@
 #include "FMOD_Quack.h"
 #include "OGRE.h"
 #include "BULLET.h"
+#include "LuaBridgeTest.h"
 
 //para que no salga la consola en el modo release (en las propiedades del proyecto hay que poner que se
 //ejecute como aplicacion window no cmd (en la parte de vinculador))
@@ -25,6 +26,10 @@ WinMain(HINSTANCE zHInstance, HINSTANCE prevInstance, LPSTR lpCmdLine, int nCmdS
 	{
 		std::cerr << "ERROR: el fichero no se ha abierto\n";
 	}
+
+	//CargarLua();
+	//CargarFMOD();
+	//CargarOGRE();
 
 	fmod_quack* fmod_sound = new fmod_quack();
 	//BULLET_Init();
