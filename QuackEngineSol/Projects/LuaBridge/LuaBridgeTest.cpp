@@ -3,17 +3,32 @@
 
 using namespace luabridge;
 
-lua_State* L;
 
-void CargarLua() {
-	L = luaL_newstate();
-	//luaL_dofile(L, "Assets/heroe.lua");
-	//luaL_openlibs(L);
-	//lua_pcall(L, 0, 0, 0);
-	//LuaRef s = getGlobal(L, "character");
-	//LuaRef n = s.getMetatable();
-	//std::string luastring = n.getGlobal(L, "name").cast<std::string>();
-	//std::cout << luastring << std::endl;
+
+void PruebasLua() {	
+    lua_State* L = luaL_newstate(); //crea el estado que luego abrirá un archivo (máquina virtual)
+	luaL_dofile(L, "Assets/heroe.lua"); //abre el archivo dado
+    luabridge::enableExceptions(L); //si no se pone esto peta feo
+	
+	//luaL_openlibs(L); //no se lo que hace, pero para lo que hacemos no es necesario
+    
+	//esto es para leer variables tal cual
+    LuaRef nameLuaRef = getGlobal(L, "name");
+	std::string name = nameLuaRef.cast<std::string>();	
+	std::cout << name << "\n";
+
+	//para cargar meta-tablas
+    LuaRef characterLuaRef = getGlobal(L, "character");
+    LuaRef characterMetaTable = characterLuaRef.getMetatable();;
+	try
+	{
+        std::string name2 = characterMetaTable.rawget("name");
+		std::cout << name2 << "\n";
+	}
+    catch (std::exception e)
+    {
+        std::cout << "La variable name no es del tipo correcto\n";
+    };
 }
 
 std::unordered_map<std::string, luabridge::LuaRef> getKeyValueMap(const luabridge::LuaRef& table)
@@ -33,5 +48,6 @@ std::unordered_map<std::string, luabridge::LuaRef> getKeyValueMap(const luabridg
     }
 
     lua_pop(L, 1); // pop table
+	
     return result;
 }

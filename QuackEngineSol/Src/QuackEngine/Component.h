@@ -1,6 +1,8 @@
 #pragma once
 #include <iostream>
 #include <unordered_map>
+#include "LuaBridgeTest.h"
+
 class Entity;
 
 class Component {
@@ -23,7 +25,7 @@ public:
 	}
 
 	//TODO cambiar a una tabla de lua
-	virtual bool init(const std::unordered_map<std::string, std::string>& parameterTable) = 0;
+	virtual bool init(const std::unordered_map<std::string, luabridge::LuaRef>& parameterTable) = 0;
 	virtual void update() {}
 	virtual void render() {}
 };

@@ -8,9 +8,9 @@ private:
 	std::string valor3;
 
 public:
-	Prueba(Entity* e = nullptr) : Component(e) {}
-	~Prueba() {}
+	Prueba(Entity* e = nullptr);
+	~Prueba();
 
 	//TODO cambiar a una tabla de lua
-	bool init(const std::unordered_map<std::string, std::string>& parameterTable);
+	virtual bool init(const std::unordered_map<std::string, luabridge::LuaRef>& parameterTable);
 };

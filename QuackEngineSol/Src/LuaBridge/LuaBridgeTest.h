@@ -2,7 +2,7 @@
 #include <unordered_map>
 #include <LuaBridge.h>
 
-void CargarLua();
+void PruebasLua();
 
 // function that converts a Lua table into an unordered_map of LuaRefs.
 // These LuaRefs need to be casted before use by calling lua_to*type*(LuaRef foo)

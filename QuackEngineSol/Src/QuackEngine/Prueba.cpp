@@ -1,6 +1,18 @@
 #include "Prueba.h"
 
-bool Prueba::init(const std::unordered_map<std::string, std::string>& parameterTable)
+
+Prueba::Prueba(Entity* e): Component(e)
+{
+	//cargar desde el componente desde lua para probar
+
+	//se deberia linkear este componente a la entidad (aun no existe)
+}
+
+Prueba::~Prueba()
+{
+}
+
+bool Prueba::init(const std::unordered_map<std::string, luabridge::LuaRef>& parameterTable)
 {
 	//TODO cambiar a gestion de tabla de lua
 	//valor1 = parameterTable.at("valor1");

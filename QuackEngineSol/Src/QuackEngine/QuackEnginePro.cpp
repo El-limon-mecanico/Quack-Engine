@@ -4,6 +4,7 @@
 #include "OGRE.h"
 #include "BULLET.h"
 #include "LuaBridgeTest.h"
+#include "Prueba.h"
 
 //para que no salga la consola en el modo release (en las propiedades del proyecto hay que poner que se
 //ejecute como aplicacion window no cmd (en la parte de vinculador))
@@ -27,15 +28,17 @@ WinMain(HINSTANCE zHInstance, HINSTANCE prevInstance, LPSTR lpCmdLine, int nCmdS
 		std::cerr << "ERROR: el fichero no se ha abierto\n";
 	}
 
-	//CargarLua();
+	PruebasLua();
 	//CargarFMOD();
 	//CargarOGRE();
 
-	fmod_quack* fmod_sound = new fmod_quack();
-	//BULLET_Init();
-	OGRE_Init();
-	prueba(fmod_sound);
-	while (true);
+	//fmod_quack* fmod_sound = new fmod_quack();
+	////BULLET_Init();
+	//OGRE_Init();
+	//prueba(fmod_sound);
+
+	Prueba* _componentePrueba = new Prueba(nullptr);
+	
 
 	return 0;
 }
