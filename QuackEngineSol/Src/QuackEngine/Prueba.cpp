@@ -1,23 +1,45 @@
 #include "Prueba.h"
 
 
-Prueba::Prueba(Entity* e): Component(e)
+Prueba::Prueba(Entity* e) : Component(e)
 {
-	//cargar desde el componente desde lua para probar
-
-	//se deberia linkear este componente a la entidad (aun no existe)
+	//TODO se deberia linkear este componente a la entidad (aun no existe)
 }
 
 Prueba::~Prueba()
 {
 }
 
-bool Prueba::init(const std::unordered_map<std::string, luabridge::LuaRef>& parameterTable)
+bool Prueba::init(luabridge::LuaRef parameterTable)
 {
-	//TODO cambiar a gestion de tabla de lua
-	//valor1 = parameterTable.at("valor1");
-	//valor2 = parameterTable.at("valor2");
-	//valor3 = parameterTable.at("valor3");
+	enableExceptions(parameterTable);
 
+	try
+	{
+		valor1 = parameterTable.rawget("valor1");
+	}
+	catch (std::exception e)
+	{
+		std::cout << "ERROR: La variable valor1 no es del tipo correcto\n";
+	}
+	
+	try
+	{
+		int val = parameterTable.rawget("valor2");
+		valor2 = new int(val);
+	}
+	catch (std::exception e)
+	{
+		std::cout << "ERROR: La variable valor2 no es del tipo correcto\n";
+	}
+
+	std::string aux = parameterTable.rawget("valor3");
+	valor3 = aux;
+
+
+	std::cout << "\nEstas son las variables que has puesto desde lua: \n";
+	std::cout << valor1 << "\n";
+	if(valor2 != nullptr)std::cout << *valor2 << "\n";
+	std::cout << valor3 << "\n";
 	return true;
 }

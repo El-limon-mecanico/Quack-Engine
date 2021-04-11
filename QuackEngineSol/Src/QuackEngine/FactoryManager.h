@@ -3,7 +3,6 @@
 
 class FactoryManager {
 private:
-	//TODO cambiar a una tabla de lua
 	std::unordered_map<std::string, ComponentFactory*> hashTable_;
 
 public:

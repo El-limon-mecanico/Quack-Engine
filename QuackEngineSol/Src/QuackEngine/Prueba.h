@@ -10,7 +10,7 @@ private:
 public:
 	Prueba(Entity* e = nullptr);
 	~Prueba();
-
-	//TODO cambiar a una tabla de lua
-	virtual bool init(const std::unordered_map<std::string, luabridge::LuaRef>& parameterTable);
+	
+	virtual bool init(luabridge::LuaRef parameterTable);
+	
 };

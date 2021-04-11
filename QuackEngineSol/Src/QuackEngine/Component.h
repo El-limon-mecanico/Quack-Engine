@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 #include <unordered_map>
-#include "LuaBridgeTest.h"
+#include <LuaBridge.h>
 
 class Entity;
 
@@ -23,9 +23,8 @@ public:
 	inline Entity* getEntity() {
 		return entity_;
 	}
-
-	//TODO cambiar a una tabla de lua
-	virtual bool init(const std::unordered_map<std::string, luabridge::LuaRef>& parameterTable) = 0;
+	
+	virtual bool init(luabridge::LuaRef parameterTable) = 0;
 	virtual void update() {}
 	virtual void render() {}
 };

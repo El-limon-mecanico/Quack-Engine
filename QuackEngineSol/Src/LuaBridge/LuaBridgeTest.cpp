@@ -7,7 +7,7 @@ using namespace luabridge;
 
 void PruebasLua() {	
     lua_State* L = luaL_newstate(); //crea el estado que luego abrirá un archivo (máquina virtual)
-	luaL_dofile(L, "Assets/heroe.lua"); //abre el archivo dado
+	luaL_dofile(L, "Assets/lua/heroe.lua"); //abre el archivo dado
     luabridge::enableExceptions(L); //si no se pone esto peta feo
 	
 	//luaL_openlibs(L); //no se lo que hace, pero para lo que hacemos no es necesario
@@ -18,11 +18,10 @@ void PruebasLua() {
 	std::cout << name << "\n";
 
 	//para cargar meta-tablas
-    LuaRef characterLuaRef = getGlobal(L, "character");
-    LuaRef characterMetaTable = characterLuaRef.getMetatable();;
+    LuaRef characterLuaRef = getGlobal(L, "character").getMetatable();
 	try
 	{
-        std::string name2 = characterMetaTable.rawget("name");
+        std::string name2 = characterLuaRef.rawget("name");
 		std::cout << name2 << "\n";
 	}
     catch (std::exception e)

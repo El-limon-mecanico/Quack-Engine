@@ -7,7 +7,7 @@ bool FactoryManager::add(const std::string& name, ComponentFactory* f)
 
 Component* FactoryManager::create(const std::string& name)
 {
-	ComponentFactory* f = hashTable_.at(name); //TODO cambiar a una tabla de lua
+	ComponentFactory* f = hashTable_.at(name);
 
 	if (f != nullptr) {
 		return f->create();
