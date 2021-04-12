@@ -1,8 +1,8 @@
 #include <iostream>
 #include <fstream>
 #include "FMOD_Quack.h"
-#include "OGRE.h"
-#include "BULLET.h"
+#include "Ogre_Quack.h"
+#include "PhysicsManager.h"
 #include "LuaBridgeTest.h"
 
 //para que no salga la consola en el modo release (en las propiedades del proyecto hay que poner que se
@@ -27,15 +27,20 @@ WinMain(HINSTANCE zHInstance, HINSTANCE prevInstance, LPSTR lpCmdLine, int nCmdS
 		std::cerr << "ERROR: el fichero no se ha abierto\n";
 	}
 
-	//CargarLua();
-	//CargarFMOD();
-	//CargarOGRE();
+	Ogre_Quack* ogQuack = new Ogre_Quack();
+
+	Ogre::Root* root = ogQuack->createRoot();
+
+	PhysicsManager* phyManager = new PhysicsManager(root);
+
+	ogQuack->setupRoot();
+
+	root->startRendering();
 
 	fmod_quack* fmod_sound = new fmod_quack();
-	//BULLET_Init();
-	OGRE_Init();
 	prueba(fmod_sound);
-	while (true);
+
+	//CargarLua();
 
 	return 0;
 }

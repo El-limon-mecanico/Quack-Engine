@@ -20,11 +20,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\BULLET\BtOgre.h" />
-    <ClInclude Include="..\..\Src\BULLET\BULLET.h" />
+    <ClInclude Include="..\..\Src\BULLET\PhysicsManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\BULLET\BtOgre.cpp" />
-    <ClCompile Include="..\..\Src\BULLET\BULLET.cpp" />
+    <ClCompile Include="..\..\Src\BULLET\PhysicsManager.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
