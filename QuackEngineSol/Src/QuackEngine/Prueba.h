@@ -8,7 +8,7 @@ private:
 	std::string valor3;
 
 public:
-	Prueba(Entity* e = nullptr);
+	Prueba(QuackEntity* e = nullptr);
 	~Prueba();
 	
 	virtual bool init(luabridge::LuaRef parameterTable);

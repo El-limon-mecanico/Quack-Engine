@@ -20,7 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\QuackEngine\Component.cpp" />
-    <ClCompile Include="..\..\Src\QuackEngine\Entity.cpp" />
+    <ClCompile Include="..\..\Src\QuackEngine\QuackEntity.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\FactoryManager.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\Prueba.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\PruebaFactory.cpp" />
@@ -45,7 +45,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\Src\QuackEngine\Component.h" />
     <ClInclude Include="..\..\Src\QuackEngine\ComponentFactory.h" />
-    <ClInclude Include="..\..\Src\QuackEngine\Entity.h" />
+    <ClInclude Include="..\..\Src\QuackEngine\QuackEntity.h" />
     <ClInclude Include="..\..\Src\QuackEngine\QuackEnginePro.h" />
     <ClInclude Include="..\..\Src\QuackEngine\QuackFrameListener.h" />
     <ClInclude Include="..\..\Src\QuackEngine\FactoryManager.h" />
@@ -136,6 +136,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)dependencies\FMOD\Src;$(SolutionDir)src\FMOD;$(SolutionDir)src\OGRE;$(SolutionDir)src\BULLET;$(SolutionDir)dependencies\Lua\$(Platform);$(SolutionDir)dependencies\LuaBridge\src;$(SolutionDir)src\LuaBridge;$(SolutionDir)dependencies\Bullet\Src\src;$(SolutionDir)dependencies\Ogre\Src\OgreMain\include;$(SolutionDir)dependencies\Ogre\build\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -152,6 +153,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)dependencies\FMOD\Src;$(SolutionDir)src\FMOD;$(SolutionDir)src\OGRE;$(SolutionDir)src\BULLET;$(SolutionDir)dependencies\Lua\$(Platform);$(SolutionDir)dependencies\LuaBridge\src;$(SolutionDir)src\LuaBridge;$(SolutionDir)dependencies\Bullet\Src\src;$(SolutionDir)dependencies\Ogre\Src\OgreMain\include;$(SolutionDir)dependencies\Ogre\build\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

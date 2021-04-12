@@ -3,24 +3,24 @@
 #include <unordered_map>
 #include <LuaBridge.h>
 
-class Entity;
+class QuackEntity;
 
 class Component {
 protected:
-	Entity* entity_;
+	QuackEntity* entity_;
 
 public:
-	Component(Entity* e = nullptr) :
+	Component(QuackEntity* e = nullptr) :
 		entity_(e) {
 	}
 
 	virtual ~Component() {}
 
-	inline void setEntity(Entity* e) {
+	inline void setEntity(QuackEntity* e) {
 		entity_ = e;
 	}
 
-	inline Entity* getEntity() {
+	inline QuackEntity* getEntity() {
 		return entity_;
 	}
 	

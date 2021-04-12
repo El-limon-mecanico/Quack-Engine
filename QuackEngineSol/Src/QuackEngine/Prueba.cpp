@@ -1,9 +1,9 @@
 #include "Prueba.h"
 
 
-Prueba::Prueba(Entity* e) : Component(e)
+Prueba::Prueba(QuackEntity* e) : Component(e)
 {
-	//TODO se deberia linkear este componente a la entidad (aun no existe)
+	
 }
 
 Prueba::~Prueba()
@@ -43,3 +43,4 @@ bool Prueba::init(luabridge::LuaRef parameterTable)
 	std::cout << valor3 << "\n";
 	return true;
 }
+

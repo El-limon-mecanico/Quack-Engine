@@ -10,6 +10,7 @@
 #include "LuaManager.h"
 #include "PruebaFactory.h"
 #include "FactoryManager.h"
+#include "QuackEntity.h"
 
 
 //TODO cambiar esto de sitio
@@ -21,10 +22,11 @@ void addCopmponentsFactories()
 	PruebaFactory* prueba_factory = new PruebaFactory();
 	FactoryManager::instance()->add("Prueba", prueba_factory);
 	
-		
-	Component* a = (FactoryManager::instance()->instance()->create("Prueba"));
+	QuackEntity* ent = new QuackEntity();
+	Prueba* p = static_cast<Prueba*>(ent->addComponent("Prueba"));
+	/*Component* a = (FactoryManager::instance()->instance()->create("Prueba"));
 	LuaRef pruebaLuaRef = readLuaFile("prueba.lua", "prueba");
-	a->init(pruebaLuaRef);
+	a->init(pruebaLuaRef);*/
 }
 
 
@@ -68,6 +70,7 @@ WinMain(HINSTANCE zHInstance, HINSTANCE prevInstance, LPSTR lpCmdLine, int nCmdS
 	//CargarLua();
 	//CargarFMOD();
 	//CargarOGRE();
+
 
 	QuackEnginePro* engine = QuackEnginePro::init();
 
