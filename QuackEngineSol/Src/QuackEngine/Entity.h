@@ -6,7 +6,8 @@
 #include <vector>
 #include <iostream>
 #include "Component.h"
-
+#include "FactoryManager.h"
+#include <unordered_map>
 
 class Entity {
 
@@ -15,30 +16,33 @@ protected:
 private:
 	bool active_;
 	std::vector<Component*> components_;
-	//std::array<Component*, ecs::maxComponent> cmpArray_;
-	//std::bitset<ecs::maxGroup> groups_;
+	std::string tag_;
+	std::unordered_map<std::string, Component*> cmpMap_;
+
 
 public:
-	Entity(): active_(true)  /*mngr_(mngr), //cmpArray_(), //groups_()*/{}
+	Entity(): active_(true){}
 	virtual ~Entity();
 
-	/*template<typename T, typename ...Ts>
-	T* addComponent(Ts&&... args) {
-		T* c = new T(std::forward<Ts>(args)...);
-		c->SetEntity(this);
-		c->Init();
-		//En principio no usaremos un archivo ECS donde guardamos un enum con los ID, pero ahora mismo no sabemos como hacerlo asi que lo copio asi tal cual xdd
-		constexpr auto id = ecs::cmpIdx<T>;
+	bool* addComponent(const std::string& name);
 
-		if (cmpArray_[id] != nullptr) {
-			RemoveComponent<T>();
-		}
+	//template<typename T, typename ...Ts>
+	//T* addComponent(Ts&&... args) {
+	//	T* c = new T(std::forward<Ts>(args)...);
+	//	c->SetEntity(this);
+	//	c->Init();
+	//	//En principio no usaremos un archivo ECS donde guardamos un enum con los ID, pero ahora mismo no sabemos como hacerlo asi que lo copio asi tal cual xdd
+	//	constexpr auto id = ecs::cmpIdx<T>;
 
-		cmpArray_[id] = c;
-		components_.emplace_back(c);
+	//	if (cmpArray_[id] != nullptr) {
+	//		RemoveComponent<T>();
+	//	}
 
-		return c;
-	}*/
+	//	cmpArray_[id] = c;
+	//	components_.emplace_back(c);
+
+	//	return c;
+	//}
 	
 	/*template<typename T>
 	void removeComponent() {

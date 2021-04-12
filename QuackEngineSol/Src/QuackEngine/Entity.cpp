@@ -5,6 +5,12 @@ Entity::~Entity() {
 	}
 }
 
+bool* Entity::addComponent(const std::string& name)
+{
+
+	return nullptr;
+}
+
 //Comentamos el Update y Render de Samir porque lo haremos diferente pero ykse
 	/*void Entity::update() {
 		std::size_t n = components_.size();
