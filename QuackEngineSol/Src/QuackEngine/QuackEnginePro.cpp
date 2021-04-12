@@ -13,11 +13,14 @@
 //TODO cambiar esto de sitio
 void addCopmponentsFactories()
 {
-	FactoryManager* fabricaDeManagers = new FactoryManager();
+	FactoryManager* f =	FactoryManager::init();
+
+	
 	PruebaFactory* prueba_factory = new PruebaFactory();
-	fabricaDeManagers->add("Prueba", prueba_factory);
+	FactoryManager::instance()->add("Prueba", prueba_factory);
+	
 		
-	Component* a = (fabricaDeManagers->create("Prueba"));
+	Component* a = (FactoryManager::instance()->instance()->create("Prueba"));
 	LuaRef pruebaLuaRef = readLuaFile("prueba.lua", "prueba");
 	a->init(pruebaLuaRef);
 }

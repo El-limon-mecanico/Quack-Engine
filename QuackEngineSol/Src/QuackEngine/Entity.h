@@ -19,7 +19,6 @@ private:
 	std::string tag_;
 	std::unordered_map<std::string, Component*> cmpMap_;
 
-
 public:
 	Entity(): active_(true){}
 	virtual ~Entity();

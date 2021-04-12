@@ -1,5 +1,12 @@
 #include "FactoryManager.h"
 
+std::unique_ptr<FactoryManager> instance_;
+
+FactoryManager::FactoryManager()
+{
+}
+
+
 bool FactoryManager::add(const std::string& name, ComponentFactory* f)
 {
 	try
