@@ -15,18 +15,18 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Src\BULLET\BULLET.h">
+    <ClInclude Include="..\..\Src\BULLET\BtOgre.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\BULLET\BtOgre.h">
+    <ClInclude Include="..\..\Src\BULLET\PhysicsManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Src\BULLET\BULLET.cpp">
+    <ClCompile Include="..\..\Src\BULLET\BtOgre.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\BULLET\BtOgre.cpp">
+    <ClCompile Include="..\..\Src\BULLET\PhysicsManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

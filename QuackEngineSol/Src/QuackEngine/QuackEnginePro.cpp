@@ -1,8 +1,8 @@
 #include <iostream>
 #include <fstream>
 #include "FMOD.h"
-#include "OGRE.h"
-#include "BULLET.h"
+#include "Ogre_Quack.h"
+#include "PhysicsManager.h"
 
 //para que no salga la consola en el modo release (en las propiedades del proyecto hay que poner que se
 //ejecute como aplicacion window no cmd (en la parte de vinculador))
@@ -26,9 +26,17 @@ WinMain(HINSTANCE zHInstance, HINSTANCE prevInstance, LPSTR lpCmdLine, int nCmdS
 		std::cerr << "ERROR: el fichero no se ha abierto\n";
 	}
 
-	BULLET_Init();
+	Ogre_Quack* ogQuack = new Ogre_Quack();
+
+	Ogre::Root* root = ogQuack->createRoot();
+
+	PhysicsManager* phyManager = new PhysicsManager(root);
+
+	ogQuack->setupRoot();
+
+	root->startRendering();
+
 	FMOD_Init();
-	//OGRE_Init();
 
 	return 0;
 }
