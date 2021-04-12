@@ -154,10 +154,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Src\CEGUI\CEGUI.cpp" />
+    <ClCompile Include="..\..\Src\CEGUI\CEGUIQuack.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Src\CEGUI\CEGUI.h" />
+    <ClInclude Include="..\..\Src\CEGUI\CEGUIQuack.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
