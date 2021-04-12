@@ -1,5 +1,7 @@
-#include <iostream>
+﻿#include <iostream>
 #include <fstream>
+#include <SDL.h>
+#undef main						// ESTO SE QUITA CUANDO TENGAMOS EL MAIN EN OTRO ARCHIVO
 #include "QuackEnginePro.h"
 #include "FMOD_Quack.h"
 #include "OgreQuack.h"
@@ -8,7 +10,9 @@
 #include "QuackFrameListener.h"
 
 //para que no salga la consola en el modo release (en las propiedades del proyecto hay que poner que se
-//ejecute como aplicacion window no cmd (en la parte de vinculador))�
+//ejecute como aplicacion window no cmd (en la parte de vinculador))ç
+
+
 
 // -------------- MOVER A OTRO ARCHIVO -------------- // 
 
@@ -57,7 +61,6 @@ WinMain(HINSTANCE zHInstance, HINSTANCE prevInstance, LPSTR lpCmdLine, int nCmdS
 
 std::unique_ptr<QuackEnginePro>  QuackEnginePro::instance_;
 
-
 void QuackEnginePro::setup()
 {
 	ogreQuack_ = new OgreQuack();
@@ -67,6 +70,10 @@ void QuackEnginePro::setup()
 	ogreQuack_->setupRoot();
 
 	mSM_ = ogreQuack_->getSceneManager();
+
+	window_ = ogreQuack_->getWindow();
+
+	sdlWindow_ = ogreQuack_->getSdlWindow();
 
 	physicsManager_ = new PhysicsManager(root_, mSM_);
 
@@ -90,5 +97,36 @@ void QuackEnginePro::start()
 
 void QuackEnginePro::update()
 {
+	pollEvents();
 	physicsManager_->stepPhysics(frameListener_->deltaTime());
+}
+
+
+void QuackEnginePro::pollEvents()
+{
+	if (sdlWindow_ == nullptr)
+		return;  // SDL events not initialized
+	SDL_Event event;
+	while (SDL_PollEvent(&event))
+	{
+		switch (event.type)
+		{
+		case SDL_QUIT:
+			root_->queueEndRendering();
+			break;
+		case SDL_WINDOWEVENT:
+			if (event.window.windowID == SDL_GetWindowID(sdlWindow_)) {
+				/*if (event.window.event == SDL_WINDOWEVENT_RESIZED)
+				{
+					Ogre::RenderWindow* win = window;
+					win->windowMovedOrResized();
+					frameListener_->windowResized(win);
+				}*/
+			}
+			break;
+		default:
+			//llamar a InputManager
+			break;
+		}
+	}
 }

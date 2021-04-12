@@ -8,6 +8,7 @@ class QuackFrameListener;
 class PhysicsManager;
 class fmod_quack;
 class OgreQuack;
+class SDL_Window;
 
 namespace Ogre {
 	class Root;
@@ -26,6 +27,8 @@ private:
 
 	Ogre::SceneManager* mSM_;
 
+	SDL_Window* sdlWindow_;
+
 	QuackFrameListener* frameListener_;
 
 	PhysicsManager* physicsManager_;
@@ -33,6 +36,8 @@ private:
 	OgreQuack* ogreQuack_;
 
 	fmod_quack* fmod_quack_;
+
+	void pollEvents();
 
 public:
 

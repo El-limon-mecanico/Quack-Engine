@@ -32,6 +32,8 @@ public:
 
 	RenderWindow* getWindow() { return window_; }
 
+	SDL_Window* getSdlWindow() { return sdlWindow_; }
+
 	SceneManager* getSceneManager() { return mSM_; }
 
 	Root* createRoot();
