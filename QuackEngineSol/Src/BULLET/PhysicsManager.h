@@ -1,9 +1,14 @@
 #ifndef _PHYSICS_MANAGER_
 #define _PHYSICS_MANAGER_
 
-#include "BtOgre.h"
+namespace Ogre {
+	class Root;
+	class SceneManager;
+}
 
-using namespace BtOgre;
+namespace BtOgre {
+	class DynamicsWorld;
+}
 
 class PhysicsManager {
 private:
@@ -12,13 +17,15 @@ private:
 
 	Ogre::SceneManager* mSM_;
 
-	DynamicsWorld* world_;
+	BtOgre::DynamicsWorld* world_;
 
 	void init();
 
+	void pruebas();
+
 public:
 
-	PhysicsManager(Ogre::Root* root) :root_(root) {
+	PhysicsManager(Ogre::Root* root, Ogre::SceneManager* msM) :root_(root), mSM_(msM) {
 		init();
 	}
 

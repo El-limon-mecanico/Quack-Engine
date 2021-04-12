@@ -2,7 +2,7 @@
 #include <fstream>
 #include "QuackEnginePro.h"
 #include "FMOD_Quack.h"
-#include "Ogre_Quack.h"
+#include "OgreQuack.h"
 #include "PhysicsManager.h"
 #include "LuaBridgeTest.h"
 #include "QuackFrameListener.h"
@@ -42,23 +42,53 @@ WinMain(HINSTANCE zHInstance, HINSTANCE prevInstance, LPSTR lpCmdLine, int nCmdS
 		std::cerr << "ERROR: el fichero no se ha abierto\n";
 	}
 
-	Ogre_Quack* ogQuack = new Ogre_Quack();
 
-	Ogre::Root* root = ogQuack->createRoot();
+	QuackEnginePro* engine = QuackEnginePro::init();
 
-	PhysicsManager* py = new PhysicsManager(root);
+	engine->setup();
 
-	ogQuack->setupRoot();
-
-	fmod_quack* fmod_sound = new fmod_quack();
-	prueba(fmod_sound);
-
-	//CargarLua();
-
-	root->startRendering();
+	engine->start();
 
 	return 0;
 }
 
 // -------------- MOVER A OTRO ARCHIVO -------------- // 
 
+
+std::unique_ptr<QuackEnginePro>  QuackEnginePro::instance_;
+
+
+void QuackEnginePro::setup()
+{
+	ogreQuack_ = new OgreQuack();
+
+	root_ = ogreQuack_->createRoot();
+
+	ogreQuack_->setupRoot();
+
+	mSM_ = ogreQuack_->getSceneManager();
+
+	physicsManager_ = new PhysicsManager(root_, mSM_);
+
+	fmod_quack_ = new fmod_quack();
+
+	prueba(fmod_quack_);
+	
+	frameListener_ = new QuackFrameListener();
+
+	root_->addFrameListener(frameListener_);
+
+	//CargarLua();	
+
+}
+
+void QuackEnginePro::start()
+{
+	root_->startRendering();
+}
+
+
+void QuackEnginePro::update()
+{
+	physicsManager_->stepPhysics(frameListener_->deltaTime());
+}

@@ -1,11 +1,11 @@
-#include "Ogre_Quack.h"
+#include "OgreQuack.h"
 #include "RTShaderSystem/OgreShaderGenerator.h"
 #include <SDL.h>
 #include <SDL_video.h>
 #include <SDL_syswm.h>
 
 
-Root* Ogre_Quack::createRoot()
+Root* OgreQuack::createRoot()
 {
 
 	SDL_Init(SDL_INIT_EVERYTHING);
@@ -15,7 +15,7 @@ Root* Ogre_Quack::createRoot()
 	return mRoot_;
 }
 
-void Ogre_Quack::setupRoot()
+void OgreQuack::setupRoot()
 {
 	mRoot_->showConfigDialog(NULL);
 
@@ -43,7 +43,7 @@ void Ogre_Quack::setupRoot()
 	Ogre::SceneNode* mNodeCamera = mSM_->getRootSceneNode()->createChildSceneNode();
 	mNodeCamera->attachObject(mCamera);
 
-	mNodeCamera->setPosition(250, 500, 500);
+	mNodeCamera->setPosition(0, 1000, 1000);
 	mNodeCamera->lookAt(Ogre::Vector3(0, 0, 0), Ogre::Node::TS_WORLD);
 
 	Ogre::Viewport* vp = window_->addViewport(mCamera);
@@ -65,25 +65,9 @@ void Ogre_Quack::setupRoot()
 	mLightNode->attachObject(luz);
 
 	mLightNode->setDirection(Ogre::Vector3(1, -1, -1));  //vec3.normalise();
-
-	Entity* e = mSM_->createEntity(SceneManager::PrefabType::PT_SPHERE);
-
-	SceneNode* node = mSM_->getRootSceneNode()->createChildSceneNode();
-
-	node->attachObject(e);
-
-	node->setPosition(Vector3(100, 0, 0));
-
-	Entity* e2 = mSM_->createEntity(SceneManager::PrefabType::PT_CUBE);
-
-	SceneNode* node2 = mSM_->getRootSceneNode()->createChildSceneNode();
-
-	node2->attachObject(e2);
-
-	node2->setPosition(Vector3(-100, 0, 0));
 }
 
-void Ogre_Quack::setupWindow()
+void OgreQuack::setupWindow()
 {
 	if (!SDL_WasInit(SDL_INIT_VIDEO))
 		SDL_InitSubSystem(SDL_INIT_VIDEO);

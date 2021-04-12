@@ -19,10 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Src\OGRE\Ogre_Quack.cpp" />
+    <ClCompile Include="..\..\Src\OGRE\OgreQuack.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Src\OGRE\Ogre_Quack.h" />
+    <ClInclude Include="..\..\Src\OGRE\OgreQuack.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

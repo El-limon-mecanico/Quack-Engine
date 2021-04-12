@@ -1,9 +1,13 @@
 #ifndef _QUACK_ENGINE_PRO_
 #define _QUACK_ENGINE_PRO_
 
+#include <memory>
+#include <assert.h>
 
 class QuackFrameListener;
 class PhysicsManager;
+class fmod_quack;
+class OgreQuack;
 
 namespace Ogre {
 	class Root;
@@ -12,10 +16,9 @@ namespace Ogre {
 }
 
 class QuackEnginePro {
-
-protected:
-
 private:
+
+	static std::unique_ptr<QuackEnginePro> instance_;
 
 	Ogre::Root* root_;
 
@@ -27,7 +30,32 @@ private:
 
 	PhysicsManager* physicsManager_;
 
+	OgreQuack* ogreQuack_;
+
+	fmod_quack* fmod_quack_;
+
 public:
+
+	QuackEnginePro() {}
+
+	~QuackEnginePro() {}
+
+	static QuackEnginePro* init() {
+		assert(instance_.get() == nullptr);
+		instance_.reset(new QuackEnginePro());
+		return instance_.get();
+	}
+
+	static QuackEnginePro* instance() {
+		assert(instance_.get() != nullptr);
+		return instance_.get();
+	}
+	
+	void setup();
+
+	void start();
+
+	void update();
 
 
 };

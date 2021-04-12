@@ -15,12 +15,12 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Src\OGRE\Ogre_Quack.h">
+    <ClInclude Include="..\..\Src\OGRE\OgreQuack.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Src\OGRE\Ogre_Quack.cpp">
+    <ClCompile Include="..\..\Src\OGRE\OgreQuack.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>

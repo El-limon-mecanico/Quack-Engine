@@ -8,7 +8,7 @@ namespace Ogre {
 	class Timer;
 }
 
-class QuackFrameListener : Ogre::FrameListener {
+class QuackFrameListener : public Ogre::FrameListener {
 private:
 
 	Ogre::Timer* timer_;
@@ -28,7 +28,7 @@ public:
 	virtual void windowClosed(Ogre::RenderWindow* rw) {}
 	virtual void windowFocusChange(Ogre::RenderWindow* rw) {}
 
-	double DeltaTime() { return deltaTime_; }
+	double deltaTime() { return deltaTime_; }
 
 };
 

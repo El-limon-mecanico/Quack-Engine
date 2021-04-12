@@ -7,7 +7,7 @@ class SDL_Window;
 
 using namespace Ogre;
 
-class Ogre_Quack {
+class OgreQuack {
 private:
 
 	Root* mRoot_;
@@ -26,11 +26,13 @@ private:
 
 public:
 
-	Ogre_Quack() {}
+	OgreQuack() {}
 
-	~Ogre_Quack() {}
+	~OgreQuack() {}
 
 	RenderWindow* getWindow() { return window_; }
+
+	SceneManager* getSceneManager() { return mSM_; }
 
 	Root* createRoot();
 
