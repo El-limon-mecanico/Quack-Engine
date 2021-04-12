@@ -22,6 +22,7 @@
     <ClCompile Include="..\..\Src\QuackEngine\Component.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\Entity.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\QuackEnginePro.cpp" />
+    <ClCompile Include="..\..\Src\QuackEngine\QuackFrameListener.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\Scene.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -41,6 +42,8 @@
   <ItemGroup>
     <ClInclude Include="..\..\Src\QuackEngine\Component.h" />
     <ClInclude Include="..\..\Src\QuackEngine\Entity.h" />
+    <ClInclude Include="..\..\Src\QuackEngine\QuackEnginePro.h" />
+    <ClInclude Include="..\..\Src\QuackEngine\QuackFrameListener.h" />
     <ClInclude Include="..\..\Src\QuackEngine\Scene.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
