@@ -60,10 +60,10 @@ void OGRE_Init()
 //PROVISIONAL DE EJEMPLO
 void prueba(fmod_quack* fmod_sound)
 {
-	fmod_sound->createSound(std::string("singing.wav"), "Cantando");
-	fmod_sound->playSound(0, "Cantando", 1);
-	fmod_sound->createDSP(FMOD_DSP_TYPE_ECHO, std::string("Echo"));
-	fmod_sound->addDSP(0, std::string("Echo"));
+	fmod_sound->createSound(std::string("song.wav"), "Cancion");
+	fmod_sound->playSound(0, "Cancion", 0.5);
+	//fmod_sound->createDSP(FMOD_DSP_TYPE_ECHO, std::string("Echo"));
+	//fmod_sound->addDSP(0, std::string("Echo"));
 	//fmod_sound->pauseChannel(0, true);
 	//fmod_sound->stopChannel(0);
 }

@@ -9,6 +9,6 @@ public:
 	FactoryManager() {}
 	~FactoryManager() {}
 
-	bool add(const std::string& name, ComponentFactory* f); //TODO manejar error
+	bool add(const std::string& name, ComponentFactory* f);
 	Component* create(const std::string& name);
 };

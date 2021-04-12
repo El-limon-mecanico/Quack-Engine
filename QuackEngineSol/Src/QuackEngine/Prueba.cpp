@@ -20,7 +20,7 @@ bool Prueba::init(luabridge::LuaRef parameterTable)
 	}
 	catch (std::exception e)
 	{
-		std::cout << "ERROR: La variable valor1 no es del tipo correcto\n";
+		std::cout << "ERROR: La variable valor1 no existo o no es del tipo correcto\n";
 	}
 	
 	try
@@ -30,7 +30,7 @@ bool Prueba::init(luabridge::LuaRef parameterTable)
 	}
 	catch (std::exception e)
 	{
-		std::cout << "ERROR: La variable valor2 no es del tipo correcto\n";
+		std::cout << "ERROR: La variable valor2 no existe no es del tipo correcto\n";
 	}
 
 	std::string aux = parameterTable.rawget("valor3");

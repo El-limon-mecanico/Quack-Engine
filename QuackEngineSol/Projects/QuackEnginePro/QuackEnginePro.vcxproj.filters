@@ -13,45 +13,75 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Archivos de encabezado\Ecs">
+      <UniqueIdentifier>{6107b9c6-f299-427c-85dc-c9f7f583fe26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Ecs\Factories">
+      <UniqueIdentifier>{8ec70036-523e-400b-8b6a-ca935dbb38b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Ecs\Entities">
+      <UniqueIdentifier>{ecc0444a-991c-4d8e-b6c2-edb8ca23db01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Ecs\Components">
+      <UniqueIdentifier>{12812cc3-51bc-44a1-bdfb-00ba28b1ead1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\Ecs">
+      <UniqueIdentifier>{2b082390-c10b-48ad-84f4-9d23c61d7ef3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\Ecs\Entities">
+      <UniqueIdentifier>{92f9207f-0c07-4320-8ccb-bfecbe5ee0c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\Ecs\Components">
+      <UniqueIdentifier>{f986a5ab-f965-4935-96ba-9c8aea96b75e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\Ecs\Factories">
+      <UniqueIdentifier>{8393df6a-2ad2-4fce-96c2-256e2f4e56d9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\QuackEngine\QuackEnginePro.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\QuackEngine\Entity.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\QuackEngine\Component.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\QuackEngine\Scene.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\QuackEngine\Entity.cpp">
+      <Filter>Archivos de origen\Ecs\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\QuackEngine\Component.cpp">
+      <Filter>Archivos de origen\Ecs\Components</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Src\QuackEngine\FactoryManager.cpp">
-      <Filter>Archivos de origen</Filter>
+      <Filter>Archivos de origen\Ecs\Factories</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\QuackEngine\Prueba.cpp">
-      <Filter>Archivos de origen</Filter>
+      <Filter>Archivos de origen\Ecs\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\QuackEngine\PruebaFactory.cpp">
+      <Filter>Archivos de origen\Ecs\Factories</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Src\QuackEngine\Entity.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\QuackEngine\Component.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\QuackEngine\Scene.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Src\QuackEngine\Component.h">
+      <Filter>Archivos de encabezado\Ecs\Components</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Src\QuackEngine\ComponentFactory.h">
-      <Filter>Archivos de encabezado</Filter>
+      <Filter>Archivos de encabezado\Ecs\Factories</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\QuackEngine\Entity.h">
+      <Filter>Archivos de encabezado\Ecs\Entities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\QuackEngine\FactoryManager.h">
-      <Filter>Archivos de encabezado</Filter>
+      <Filter>Archivos de encabezado\Ecs\Factories</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\QuackEngine\Prueba.h">
-      <Filter>Archivos de encabezado</Filter>
+      <Filter>Archivos de encabezado\Ecs\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\QuackEngine\PruebaFactory.h">
+      <Filter>Archivos de encabezado\Ecs\Factories</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

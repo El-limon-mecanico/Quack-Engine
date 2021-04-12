@@ -2,7 +2,14 @@
 
 bool FactoryManager::add(const std::string& name, ComponentFactory* f)
 {
-	return hashTable_.insert({ name, f }).second;
+	try
+	{
+		return hashTable_.insert({ name, f }).second;
+	}
+	catch (std::exception e)
+	{
+		std::cout << "ERROR: algo ha ido mal al insertar la factoria del componente " << name << " a la tabla hash\n";
+	}
 }
 
 Component* FactoryManager::create(const std::string& name)

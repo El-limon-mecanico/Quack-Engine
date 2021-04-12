@@ -6,6 +6,23 @@
 #include "LuaBridgeTest.h"
 #include "Prueba.h"
 #include "LuaManager.h"
+#include "PruebaFactory.h"
+#include "FactoryManager.h"
+
+
+//TODO cambiar esto de sitio
+void addCopmponentsFactories()
+{
+	FactoryManager* fabricaDeManagers = new FactoryManager();
+	PruebaFactory* prueba_factory = new PruebaFactory();
+	fabricaDeManagers->add("Prueba", prueba_factory);
+		
+	Component* a = (fabricaDeManagers->create("Prueba"));
+	LuaRef pruebaLuaRef = readLuaFile("prueba.lua", "prueba");
+	a->init(pruebaLuaRef);
+}
+
+
 
 //para que no salga la consola en el modo release (en las propiedades del proyecto hay que poner que se
 //ejecute como aplicacion window no cmd (en la parte de vinculador))
@@ -39,10 +56,9 @@ WinMain(HINSTANCE zHInstance, HINSTANCE prevInstance, LPSTR lpCmdLine, int nCmdS
 	//OGRE_Init();
 	//prueba(fmod_sound);
 
-	LuaRef pruebaLuaRef = readLuaFile("prueba.lua", "prueba");
-	Prueba* _componentePrueba = new Prueba(nullptr);
-	_componentePrueba->init(pruebaLuaRef);
-	
+	addCopmponentsFactories();
 
+	//while (true) {}
 	return 0;
 }
+	
