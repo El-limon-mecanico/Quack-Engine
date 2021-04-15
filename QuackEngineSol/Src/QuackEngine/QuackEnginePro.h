@@ -5,33 +5,21 @@
 #include <assert.h>
 
 class QuackFrameListener;
-class PhysicsManager;
+class BulletQuack;
 class fmod_quack;
 class OgreQuack;
 class SDL_Window;
-
-namespace Ogre {
-	class Root;
-	class RenderWindow;
-	class SceneManager;
-}
 
 class QuackEnginePro {
 private:
 
 	static std::unique_ptr<QuackEnginePro> instance_;
 
-	Ogre::Root* root_;
-
-	Ogre::RenderWindow* window_;
-
-	Ogre::SceneManager* mSM_;
-
 	SDL_Window* sdlWindow_;
 
 	QuackFrameListener* frameListener_;
 
-	PhysicsManager* physicsManager_;
+	BulletQuack* physicsManager_;
 
 	OgreQuack* ogreQuack_;
 
@@ -55,7 +43,13 @@ public:
 		assert(instance_.get() != nullptr);
 		return instance_.get();
 	}
-	
+
+	OgreQuack* getOgreQuack() { return ogreQuack_; }
+
+	BulletQuack* getPhysicsManager() { return physicsManager_; }
+
+	fmod_quack* getFmodQuack() { return fmod_quack_; }
+
 	void setup();
 
 	void start();

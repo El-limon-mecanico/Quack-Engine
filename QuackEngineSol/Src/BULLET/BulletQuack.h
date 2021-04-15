@@ -10,7 +10,7 @@ namespace BtOgre {
 	class DynamicsWorld;
 }
 
-class PhysicsManager {
+class BulletQuack {
 private:
 
 	Ogre::Root* root_;
@@ -25,11 +25,11 @@ private:
 
 public:
 
-	PhysicsManager(Ogre::Root* root, Ogre::SceneManager* msM) :root_(root), mSM_(msM) {
+	BulletQuack(Ogre::Root* root, Ogre::SceneManager* msM) :root_(root), mSM_(msM) {
 		init();
 	}
 
-	~PhysicsManager() {}
+	~BulletQuack() {}
 
 	void addSceneManager(Ogre::SceneManager* mngr) { mSM_ = mngr; }
 
