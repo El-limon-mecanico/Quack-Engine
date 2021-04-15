@@ -1,7 +1,12 @@
 #ifndef _OGRE_QUACK_
 #define _OGRE_QUACK_
 
-#include <Ogre.h>
+
+namespace Ogre {
+	class Root;
+	class SceneManager;
+	class RenderWindow;
+}
 
 class SDL_Window;
 
@@ -10,11 +15,11 @@ using namespace Ogre;
 class OgreQuack {
 private:
 
-	Root* mRoot_;
+	Ogre::Root* mRoot_;
 
-	SceneManager* mSM_;
+	Ogre::SceneManager* mSM_;
 
-	RenderWindow* window_;
+	Ogre::RenderWindow* window_;
 
 	SDL_Window* sdlWindow_;
 
@@ -30,13 +35,15 @@ public:
 
 	~OgreQuack() {}
 
-	RenderWindow* getWindow() { return window_; }
+	Ogre::RenderWindow* getWindow() { return window_; }
 
+	Ogre::SceneManager* getSceneManager() { return mSM_; }
+
+	Ogre::Root* getRoot() { return mRoot_; }
+	
 	SDL_Window* getSdlWindow() { return sdlWindow_; }
 
-	SceneManager* getSceneManager() { return mSM_; }
-
-	Root* createRoot();
+	void createRoot();
 
 	void setupRoot();
 

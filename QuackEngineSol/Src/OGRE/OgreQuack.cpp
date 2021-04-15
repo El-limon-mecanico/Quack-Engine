@@ -1,17 +1,15 @@
 #include "OgreQuack.h"
 #include "RTShaderSystem/OgreShaderGenerator.h"
+#include <Ogre.h>
 #include <SDL.h>
 #include <SDL_video.h>
 #include <SDL_syswm.h>
 
-Root* OgreQuack::createRoot()
+void OgreQuack::createRoot()
 {
-
 	SDL_Init(SDL_INIT_EVERYTHING);
 
 	mRoot_ = new Root();
-
-	return mRoot_;
 }
 
 void OgreQuack::setupRoot()

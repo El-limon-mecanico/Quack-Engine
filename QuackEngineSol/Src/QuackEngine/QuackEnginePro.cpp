@@ -1,11 +1,12 @@
 ﻿#include <iostream>
 #include <fstream>
+#include <OgreRoot.h>
 #include <SDL.h>
 #undef main						// ESTO SE QUITA CUANDO TENGAMOS EL MAIN EN OTRO ARCHIVO
 #include "QuackEnginePro.h"
 #include "FMOD_Quack.h"
 #include "OgreQuack.h"
-#include "PhysicsManager.h"
+#include "BulletQuack.h"
 #include "LuaBridgeTest.h"
 #include "QuackFrameListener.h"
 
@@ -65,25 +66,21 @@ void QuackEnginePro::setup()
 {
 	ogreQuack_ = new OgreQuack();
 
-	root_ = ogreQuack_->createRoot();
+	ogreQuack_->createRoot();
 
 	ogreQuack_->setupRoot();
 
-	mSM_ = ogreQuack_->getSceneManager();
-
-	window_ = ogreQuack_->getWindow();
-
 	sdlWindow_ = ogreQuack_->getSdlWindow();
 
-	physicsManager_ = new PhysicsManager(root_, mSM_);
+	physicsManager_ = new BulletQuack(ogreQuack_->getRoot(), ogreQuack_->getSceneManager());
 
 	fmod_quack_ = new fmod_quack();
 
 	prueba(fmod_quack_);
-	
+
 	frameListener_ = new QuackFrameListener();
 
-	root_->addFrameListener(frameListener_);
+	ogreQuack_->getRoot()->addFrameListener(frameListener_);
 
 	//CargarLua();	
 
@@ -91,7 +88,7 @@ void QuackEnginePro::setup()
 
 void QuackEnginePro::start()
 {
-	root_->startRendering();
+	ogreQuack_->getRoot()->startRendering();
 }
 
 
@@ -112,7 +109,7 @@ void QuackEnginePro::pollEvents()
 		switch (event.type)
 		{
 		case SDL_QUIT:
-			root_->queueEndRendering();
+			ogreQuack_->getRoot()->queueEndRendering();
 			break;
 		case SDL_WINDOWEVENT:
 			if (event.window.windowID == SDL_GetWindowID(sdlWindow_)) {
