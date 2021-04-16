@@ -1,14 +1,19 @@
-#include <iostream>
+﻿#include <iostream>
 #include <fstream>
+#include <OgreRoot.h>
+#include <SDL.h>
+#undef main						// ESTO SE QUITA CUANDO TENGAMOS EL MAIN EN OTRO ARCHIVO
 #include "QuackEnginePro.h"
 #include "FMOD_Quack.h"
 #include "OgreQuack.h"
-#include "PhysicsManager.h"
+#include "BulletQuack.h"
 #include "LuaBridgeTest.h"
 #include "QuackFrameListener.h"
 
 //para que no salga la consola en el modo release (en las propiedades del proyecto hay que poner que se
-//ejecute como aplicacion window no cmd (en la parte de vinculador))�
+//ejecute como aplicacion window no cmd (en la parte de vinculador))ç
+
+
 
 // -------------- MOVER A OTRO ARCHIVO -------------- // 
 
@@ -57,26 +62,25 @@ WinMain(HINSTANCE zHInstance, HINSTANCE prevInstance, LPSTR lpCmdLine, int nCmdS
 
 std::unique_ptr<QuackEnginePro>  QuackEnginePro::instance_;
 
-
 void QuackEnginePro::setup()
 {
 	ogreQuack_ = new OgreQuack();
 
-	root_ = ogreQuack_->createRoot();
+	ogreQuack_->createRoot();
 
 	ogreQuack_->setupRoot();
 
-	mSM_ = ogreQuack_->getSceneManager();
+	sdlWindow_ = ogreQuack_->getSdlWindow();
 
-	physicsManager_ = new PhysicsManager(root_, mSM_);
+	physicsManager_ = new BulletQuack(ogreQuack_->getRoot(), ogreQuack_->getSceneManager());
 
 	fmod_quack_ = new fmod_quack();
 
 	prueba(fmod_quack_);
-	
+
 	frameListener_ = new QuackFrameListener();
 
-	root_->addFrameListener(frameListener_);
+	ogreQuack_->getRoot()->addFrameListener(frameListener_);
 
 	//CargarLua();	
 
@@ -84,11 +88,42 @@ void QuackEnginePro::setup()
 
 void QuackEnginePro::start()
 {
-	root_->startRendering();
+	ogreQuack_->getRoot()->startRendering();
 }
 
 
 void QuackEnginePro::update()
 {
+	pollEvents();
 	physicsManager_->stepPhysics(frameListener_->deltaTime());
+}
+
+
+void QuackEnginePro::pollEvents()
+{
+	if (sdlWindow_ == nullptr)
+		return;  // SDL events not initialized
+	SDL_Event event;
+	while (SDL_PollEvent(&event))
+	{
+		switch (event.type)
+		{
+		case SDL_QUIT:
+			ogreQuack_->getRoot()->queueEndRendering();
+			break;
+		case SDL_WINDOWEVENT:
+			if (event.window.windowID == SDL_GetWindowID(sdlWindow_)) {
+				/*if (event.window.event == SDL_WINDOWEVENT_RESIZED)
+				{
+					Ogre::RenderWindow* win = window;
+					win->windowMovedOrResized();
+					frameListener_->windowResized(win);
+				}*/
+			}
+			break;
+		default:
+			//llamar a InputManager
+			break;
+		}
+	}
 }

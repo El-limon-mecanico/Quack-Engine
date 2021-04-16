@@ -18,7 +18,7 @@
     <ClInclude Include="..\..\Src\BULLET\BtOgre.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\BULLET\PhysicsManager.h">
+    <ClInclude Include="..\..\Src\BULLET\BulletQuack.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -26,7 +26,7 @@
     <ClCompile Include="..\..\Src\BULLET\BtOgre.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\BULLET\PhysicsManager.cpp">
+    <ClCompile Include="..\..\Src\BULLET\BulletQuack.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
