@@ -2,6 +2,6 @@
 
 Component* PruebaFactory::create()
 {
-	Prueba* prueba = new Prueba(); //"asi de triste"		
+	Prueba* prueba = new Prueba(); //"asi de triste"
 	return prueba;
 }

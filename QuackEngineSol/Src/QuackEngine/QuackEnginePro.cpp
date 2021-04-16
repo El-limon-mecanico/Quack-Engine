@@ -16,32 +16,23 @@
 //TODO cambiar esto de sitio
 void addCopmponentsFactories()
 {
-	FactoryManager* f =	FactoryManager::init();
-
+	FactoryManager::init();
 	
 	PruebaFactory* prueba_factory = new PruebaFactory();
-	FactoryManager::instance()->add("Prueba", prueba_factory);
-	
-	QuackEntity* ent = new QuackEntity();
-	Prueba* p = static_cast<Prueba*>(ent->addComponent("Prueba"));
-	/*Component* a = (FactoryManager::instance()->instance()->create("Prueba"));
-	LuaRef pruebaLuaRef = readLuaFile("prueba.lua", "prueba");
-	a->init(pruebaLuaRef);*/
+	FactoryManager::instance()->add("prueba", prueba_factory);
+
 }
 
 
-
-//para que no salga la consola en el modo release (en las propiedades del proyecto hay que poner que se
-//ejecute como aplicacion window no cmd (en la parte de vinculador))�
 
 // -------------- MOVER A OTRO ARCHIVO -------------- // 
 
 void prueba(fmod_quack* fmod_sound)
 {
-	fmod_sound->createSound(std::string("singing.wav"), "Cantando");
+	fmod_sound->createSound(std::string("song.wav"), "Cantando");
 	fmod_sound->playSound(0, "Cantando", 1);
 	fmod_sound->createDSP(FMOD_DSP_TYPE_ECHO, std::string("Echo"));
-	fmod_sound->addDSP(0, std::string("Echo"));
+	//fmod_sound->addDSP(0, std::string("Echo"));
 	//fmod_sound->pauseChannel(0, true);
 	//fmod_sound->stopChannel(0);
 }
@@ -73,8 +64,7 @@ WinMain(HINSTANCE zHInstance, HINSTANCE prevInstance, LPSTR lpCmdLine, int nCmdS
 
 
 	QuackEnginePro* engine = QuackEnginePro::init();
-
-	addCopmponentsFactories();
+	
 	engine->setup();
 
 	engine->start();
@@ -83,10 +73,15 @@ WinMain(HINSTANCE zHInstance, HINSTANCE prevInstance, LPSTR lpCmdLine, int nCmdS
 }
 	
 
+
+	
 // -------------- MOVER A OTRO ARCHIVO -------------- // 
 
-
+#include "Scene.h"
+	
 std::unique_ptr<QuackEnginePro>  QuackEnginePro::instance_;
+
+Scene* scene;
 
 
 void QuackEnginePro::setup()
@@ -115,11 +110,19 @@ void QuackEnginePro::setup()
 
 void QuackEnginePro::start()
 {
+	//crear las factorias
+	addCopmponentsFactories();
+	
+	//crear la primera escena
+	scene = new Scene("Scenes/scene1.lua", "scene1");
+	
 	root_->startRendering();
 }
 
 
+//aqui esta el bucle del juego
 void QuackEnginePro::update()
 {
+	//scene->update();
 	physicsManager_->stepPhysics(frameListener_->deltaTime());
 }

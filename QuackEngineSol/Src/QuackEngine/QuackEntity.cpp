@@ -1,4 +1,6 @@
 #include "QuackEntity.h"
+#include "LuaManager.h"
+
 QuackEntity::~QuackEntity() {
 	for (auto c : components_) {
 		delete c;
@@ -13,6 +15,7 @@ Component* QuackEntity::addComponent(const std::string& name)
 	else {
 		Component* c = FactoryManager::instance()->create(name);
 		c->setEntity(this);
+		c->init(readLuaFile(("lua/Components/"+name+".lua"),name));
 		components_.push_back(c);
 		cmpMap_.insert({ name , c });
 		return c;

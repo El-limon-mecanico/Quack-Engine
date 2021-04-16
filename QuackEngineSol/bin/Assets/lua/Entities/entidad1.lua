@@ -1,3 +1,3 @@
-﻿monoBetico = {
-    componentes = {"prueba", "prueba2"}
+﻿entidad1 = {
+    components = {"prueba"}
 }

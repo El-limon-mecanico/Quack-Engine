@@ -1,11 +1,16 @@
 #pragma once
 #include <string>
-//Esto es una copia del Manager.h maomeno
-//ohno
+#include <vector>
+#include "QuackEntity.h"
 
 class Scene
 {
+private:
+	std::vector<QuackEntity*> entities_;
+	
 public:
-	Scene(const std::string& name);
+	Scene(const std::string& file, const std::string& name);
 	~Scene();
+
+	void update();
 };
