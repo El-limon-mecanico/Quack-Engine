@@ -1,21 +1,19 @@
-﻿#include <iostream>
-#include <fstream>
+﻿#define QUACK_ENGINE_PRO_EXPORT
 #include <OgreRoot.h>
-#include <SDL.h>
-#undef main						// ESTO SE QUITA CUANDO TENGAMOS EL MAIN EN OTRO ARCHIVO
+#include <SDL_video.h>
+#include <SDL_events.h>
+#include <memory>
+#include <assert.h>
 #include "QuackEnginePro.h"
 #include "FMOD_Quack.h"
 #include "OgreQuack.h"
 #include "BulletQuack.h"
 #include "LuaBridgeTest.h"
-#include "QuackFrameListener.h"
+#include "QuackTime.h"
+
 
 //para que no salga la consola en el modo release (en las propiedades del proyecto hay que poner que se
 //ejecute como aplicacion window no cmd (en la parte de vinculador))ç
-
-
-
-// -------------- MOVER A OTRO ARCHIVO -------------- // 
 
 void prueba(fmod_quack* fmod_sound)
 {
@@ -27,60 +25,43 @@ void prueba(fmod_quack* fmod_sound)
 	//fmod_sound->stopChannel(0);
 }
 
-#if (defined _DEBUG) || !(defined _WIN32)
-int main() {
-#else
-#include <windows.h>
-int WINAPI
-WinMain(HINSTANCE zHInstance, HINSTANCE prevInstance, LPSTR lpCmdLine, int nCmdShow) {
-#endif
-
-	//esto es una prueba de los recursos
-	std::ifstream f("Assets/fichero.txt");
-	if (f.is_open())
-	{
-		std::cout << "El fichero se ha abierto\n";
-		f.close();
-	}
-	else
-	{
-		std::cerr << "ERROR: el fichero no se ha abierto\n";
-	}
-
-
-	QuackEnginePro* engine = QuackEnginePro::init();
-
-	engine->setup();
-
-	engine->start();
-
-	return 0;
-}
-
-// -------------- MOVER A OTRO ARCHIVO -------------- // 
-
-
 std::unique_ptr<QuackEnginePro>  QuackEnginePro::instance_;
 
+
+// AQUI FALTA MANEJO DE ERRORES Y EXCEPCIONES
+bool QuackEnginePro::Init()
+{
+	assert(instance_.get() == nullptr);
+	instance_.reset(new QuackEnginePro());
+	return instance_.get();
+}
+
+QuackEnginePro* QuackEnginePro::Instance()
+{
+	assert(instance_.get() != nullptr);
+	return instance_.get();
+}
+
+// AQUI FALTA MANEJO DE ERRORES Y EXCEPCIONES
 void QuackEnginePro::setup()
 {
-	ogreQuack_ = new OgreQuack();
+	quackTime_ = new QuackTime();
 
-	ogreQuack_->createRoot();
+	OgreQuack::Init();
 
-	ogreQuack_->setupRoot();
+	OgreQuack::Instance()->createRoot();
 
-	sdlWindow_ = ogreQuack_->getSdlWindow();
+	OgreQuack::Instance()->setupRoot();
 
-	physicsManager_ = new BulletQuack(ogreQuack_->getRoot(), ogreQuack_->getSceneManager());
+	sdlWindow_ = OgreQuack::Instance()->getSdlWindow();
+
+	BulletQuack::Init(OgreQuack::Instance()->getRoot(), OgreQuack::Instance()->getSceneManager());
 
 	fmod_quack_ = new fmod_quack();
 
 	prueba(fmod_quack_);
 
-	frameListener_ = new QuackFrameListener();
-
-	ogreQuack_->getRoot()->addFrameListener(frameListener_);
+	OgreQuack::Instance()->getRoot()->addFrameListener(quackTime_);
 
 	//CargarLua();	
 
@@ -88,14 +69,17 @@ void QuackEnginePro::setup()
 
 void QuackEnginePro::start()
 {
-	ogreQuack_->getRoot()->startRendering();
+	if (!updateStarted) update();
 }
-
 
 void QuackEnginePro::update()
 {
-	pollEvents();
-	physicsManager_->stepPhysics(frameListener_->deltaTime());
+	exit = false;
+	while (!exit) {
+		OgreQuack::Instance()->getRoot()->renderOneFrame();
+		pollEvents();
+		BulletQuack::Instance()->stepPhysics(time()->deltaTime());
+	}
 }
 
 
@@ -109,7 +93,8 @@ void QuackEnginePro::pollEvents()
 		switch (event.type)
 		{
 		case SDL_QUIT:
-			ogreQuack_->getRoot()->queueEndRendering();
+			OgreQuack::Instance()->getRoot()->queueEndRendering();
+			exit = true;
 			break;
 		case SDL_WINDOWEVENT:
 			if (event.window.windowID == SDL_GetWindowID(sdlWindow_)) {
@@ -126,4 +111,14 @@ void QuackEnginePro::pollEvents()
 			break;
 		}
 	}
+}
+
+fmod_quack* QuackEnginePro::getFmodQuack()
+{
+	return fmod_quack_;
+}
+
+QuackTime* QuackEnginePro::time()
+{
+	return quackTime_;
 }

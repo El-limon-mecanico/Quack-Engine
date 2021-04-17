@@ -27,7 +27,7 @@
     <ClCompile Include="..\..\Src\QuackEngine\Scene.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\QuackEngine\QuackFrameListener.cpp">
+    <ClCompile Include="..\..\Src\QuackEngine\QuackTime.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
@@ -44,7 +44,7 @@
     <ClInclude Include="..\..\Src\QuackEngine\QuackEnginePro.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\QuackEngine\QuackFrameListener.h">
+    <ClInclude Include="..\..\Src\QuackEngine\QuackTime.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

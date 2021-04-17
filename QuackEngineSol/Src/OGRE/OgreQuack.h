@@ -1,6 +1,7 @@
 #ifndef _OGRE_QUACK_
 #define _OGRE_QUACK_
 
+#include <memory>
 
 namespace Ogre {
 	class Root;
@@ -14,6 +15,8 @@ using namespace Ogre;
 
 class OgreQuack {
 private:
+
+	static std::unique_ptr<OgreQuack> instance_;
 
 	Ogre::Root* mRoot_;
 
@@ -30,6 +33,10 @@ private:
 	void setupWindow();
 
 public:
+
+	static bool Init();
+
+	static OgreQuack* Instance();
 
 	OgreQuack() {}
 

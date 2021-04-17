@@ -4,6 +4,23 @@
 #include <SDL.h>
 #include <SDL_video.h>
 #include <SDL_syswm.h>
+#include <assert.h>
+
+std::unique_ptr<OgreQuack>  OgreQuack::instance_;
+
+// AQUI FALTA MANEJO DE ERRORES Y EXCEPCIONES
+bool OgreQuack::Init() {
+	assert(instance_.get() == nullptr);
+	instance_.reset(new OgreQuack());
+	return instance_.get();
+}
+
+
+OgreQuack* OgreQuack::Instance() {
+	assert(instance_.get() != nullptr);
+	return instance_.get();
+}
+
 
 void OgreQuack::createRoot()
 {

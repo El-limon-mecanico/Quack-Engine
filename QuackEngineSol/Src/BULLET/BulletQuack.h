@@ -1,6 +1,8 @@
 #ifndef _PHYSICS_MANAGER_
 #define _PHYSICS_MANAGER_
 
+#include <memory>
+
 namespace Ogre {
 	class Root;
 	class SceneManager;
@@ -13,6 +15,8 @@ namespace BtOgre {
 class BulletQuack {
 private:
 
+	static std::unique_ptr<BulletQuack> instance_;
+
 	Ogre::Root* root_;
 
 	Ogre::SceneManager* mSM_;
@@ -24,6 +28,11 @@ private:
 	void pruebas();
 
 public:
+
+	static bool Init(Ogre::Root* root, Ogre::SceneManager* msM);
+
+	static BulletQuack* Instance();
+
 
 	BulletQuack(Ogre::Root* root, Ogre::SceneManager* msM) :root_(root), mSM_(msM) {
 		init();
