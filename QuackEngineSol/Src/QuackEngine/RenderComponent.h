@@ -12,6 +12,7 @@ class RenderComponent : public Component {
 private:
 
 	Ogre::SceneNode* node_;
+	Ogre::SceneManager* mSM_;
 public:
 	RenderComponent(QuackEntity* e = nullptr);
 	~RenderComponent();
@@ -21,5 +22,9 @@ public:
 	Ogre::SceneNode* getNode() { return node_; }
 
 	void setParent(Ogre::SceneNode* parent);
+
+	void setMeshByPrefab(Ogre::SceneManager::PrefabType prefab);
+
+	void setMeshByName(const std::string& name);
 
 };

@@ -58,6 +58,8 @@ public:
 
 	void update();
 
+	//MÉTODO PROVISIONAL: CON EL CAMBIO RECIENTE A SINGLETON, ESTO NO ES NECESARIO
+	OgreQuack* getOgreQuack() { return ogreQuack_; }
 
 };
 
