@@ -47,18 +47,6 @@ void prueba(fmod_quack* fmod_sound)
 
 std::unique_ptr<QuackEnginePro>  QuackEnginePro::instance_;
 
-	//esto es una prueba de los recursos
-	std::ifstream f("Assets/fichero.txt");
-	if (f.is_open())
-	{
-		std::cout << "El fichero se ha abierto\n";
-		f.close();
-	}
-	else
-	{
-		std::cerr << "ERROR: el fichero no se ha abierto\n";
-	}
-
 // AQUI FALTA MANEJO DE ERRORES Y EXCEPCIONES
 bool QuackEnginePro::Init()
 {
@@ -73,14 +61,7 @@ QuackEnginePro* QuackEnginePro::Instance()
 	return instance_.get();
 }
 	
-
-
-	
-// -------------- MOVER A OTRO ARCHIVO -------------- // 
-
 #include "Scene.h"
-	
-std::unique_ptr<QuackEnginePro>  QuackEnginePro::instance_;
 
 Scene* scene;
 

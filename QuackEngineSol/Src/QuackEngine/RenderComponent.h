@@ -8,6 +8,12 @@ namespace Ogre {
 	class SceneNode;
 }
 
+enum PrefabType {
+	PT_PLANE,
+	PT_CUBE,
+	PT_SPHERE
+};
+
 class RenderComponent : public Component {
 private:
 
@@ -23,7 +29,7 @@ public:
 
 	void setParent(Ogre::SceneNode* parent);
 
-	void setMeshByPrefab(Ogre::SceneManager::PrefabType prefab);
+	void setMeshByPrefab(PrefabType prefab);
 
 	void setMeshByName(const std::string& name);
 
