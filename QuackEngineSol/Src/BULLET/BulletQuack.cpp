@@ -1,16 +1,33 @@
-#include "PhysicsManager.h"
+#include "BulletQuack.h"
 #include "BtOgre.h"
+#include <assert.h>
 
 using namespace BtOgre;
 
-void PhysicsManager::init() {
+std::unique_ptr<BulletQuack>  BulletQuack::instance_;
+
+// AQUI FALTA MANEJO DE ERRORES Y EXCEPCIONES
+bool BulletQuack::Init(Ogre::Root* root, Ogre::SceneManager* msM) {
+	assert(instance_.get() == nullptr);
+	instance_.reset(new BulletQuack(root, msM));
+	return instance_.get();
+}
+
+BulletQuack* BulletQuack::Instance()
+{
+	assert(instance_.get() != nullptr);
+	return instance_.get();
+}
+
+
+void BulletQuack::init() {
 
 	world_ = new DynamicsWorld(Ogre::Vector3(0, -100, 0));
 
 	pruebas();
 }
 
-void PhysicsManager::pruebas()
+void BulletQuack::pruebas()
 {
 
 	Ogre::Entity* e = mSM_->createEntity(Ogre::SceneManager::PrefabType::PT_SPHERE);
@@ -24,16 +41,17 @@ void PhysicsManager::pruebas()
 	btRigidBody* rb = world_->addRigidBody(1, e, BtOgre::ColliderType::CT_SPHERE);
 
 
-	/*Ogre::Entity* e2 = mSM_->createEntity(Ogre::SceneManager::PrefabType::PT_SPHERE);
+	Ogre::Entity* e2 = mSM_->createEntity(Ogre::SceneManager::PrefabType::PT_SPHERE);
 
 	Ogre::SceneNode* mNode2 = mSM_->getRootSceneNode()->createChildSceneNode();
 
 	mNode2->attachObject(e2);
 
-	mNode2->setPosition(0, 500, 0);
+	mNode2->setPosition(50, 500, 0);
 
 	btRigidBody* rb2 = world_->addRigidBody(1, e2, BtOgre::ColliderType::CT_SPHERE);
 
+	/*
 
 	Ogre::Entity* e3 = mSM_->createEntity(Ogre::SceneManager::PrefabType::PT_SPHERE);
 
@@ -66,7 +84,7 @@ void PhysicsManager::pruebas()
 	planeRb->setGravity(btVector3(0, 0, 0));
 }
 
-void PhysicsManager::stepPhysics(double deltaTime)
+void BulletQuack::stepPhysics(double deltaTime)
 {
 	world_->getBtWorld()->stepSimulation(deltaTime);
 }

@@ -25,7 +25,7 @@
     <ClCompile Include="..\..\Src\QuackEngine\Prueba.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\PruebaFactory.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\QuackEnginePro.cpp" />
-    <ClCompile Include="..\..\Src\QuackEngine\QuackFrameListener.cpp" />
+    <ClCompile Include="..\..\Src\QuackEngine\QuackTime.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\RenderComponent.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\Scene.cpp" />
   </ItemGroup>
@@ -48,11 +48,11 @@
     <ClInclude Include="..\..\Src\QuackEngine\ComponentFactory.h" />
     <ClInclude Include="..\..\Src\QuackEngine\QuackEntity.h" />
     <ClInclude Include="..\..\Src\QuackEngine\QuackEnginePro.h" />
-    <ClInclude Include="..\..\Src\QuackEngine\QuackFrameListener.h" />
     <ClInclude Include="..\..\Src\QuackEngine\FactoryManager.h" />
     <ClInclude Include="..\..\Src\QuackEngine\Prueba.h" />
     <ClInclude Include="..\..\Src\QuackEngine\PruebaFactory.h" />
     <ClInclude Include="..\..\Src\QuackEngine\RenderComponent.h" />
+    <ClInclude Include="..\..\Src\QuackEngine\QuackTime.h" />
     <ClInclude Include="..\..\Src\QuackEngine\Scene.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -64,13 +64,13 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -136,13 +136,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)dependencies\FMOD\Src;$(SolutionDir)src\FMOD;$(SolutionDir)src\OGRE;$(SolutionDir)src\BULLET;$(SolutionDir)dependencies\Lua\$(Platform);$(SolutionDir)dependencies\LuaBridge\src;$(SolutionDir)src\LuaBridge;$(SolutionDir)dependencies\Bullet\Src\src;$(SolutionDir)dependencies\Ogre\Src\OgreMain\include;$(SolutionDir)dependencies\Ogre\build\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)dependencies\FMOD\Src;$(SolutionDir)src\FMOD;$(SolutionDir)src\OGRE;$(SolutionDir)src\BULLET;$(SolutionDir)dependencies\Lua\$(Platform);$(SolutionDir)dependencies\LuaBridge\src;$(SolutionDir)src\LuaBridge;$(SolutionDir)dependencies\Bullet\Src\src;$(SolutionDir)dependencies\Ogre\Src\OgreMain\include;$(SolutionDir)dependencies\Ogre\build\include;$(SolutionDir)dependencies\Ogre\build\Dependencies\include\SDL2</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>$(SolutionDir)lib\$(Platform)\$(Configuration)\BULLET.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\OGRE.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\LuaBridge.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\FMOD.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -153,7 +154,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)dependencies\FMOD\Src;$(SolutionDir)src\FMOD;$(SolutionDir)src\OGRE;$(SolutionDir)src\BULLET;$(SolutionDir)dependencies\Lua\$(Platform);$(SolutionDir)dependencies\LuaBridge\src;$(SolutionDir)src\LuaBridge;$(SolutionDir)dependencies\Bullet\Src\src;$(SolutionDir)dependencies\Ogre\Src\OgreMain\include;$(SolutionDir)dependencies\Ogre\build\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)dependencies\FMOD\Src;$(SolutionDir)src\FMOD;$(SolutionDir)src\OGRE;$(SolutionDir)src\BULLET;$(SolutionDir)dependencies\Lua\$(Platform);$(SolutionDir)dependencies\LuaBridge\src;$(SolutionDir)src\LuaBridge;$(SolutionDir)dependencies\Bullet\Src\src;$(SolutionDir)dependencies\Ogre\Src\OgreMain\include;$(SolutionDir)dependencies\Ogre\build\include;$(SolutionDir)dependencies\Ogre\build\Dependencies\include\SDL2</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
@@ -162,6 +163,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>$(SolutionDir)lib\$(Platform)\$(Configuration)\BULLET.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\OGRE.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\LuaBridge.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\FMOD.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -172,6 +174,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)dependencies\FMOD\Src;$(SolutionDir)src\FMOD;$(SolutionDir)src\OGRE;$(SolutionDir)src\BULLET;$(SolutionDir)dependencies\Lua\$(Platform);$(SolutionDir)dependencies\LuaBridge\src;$(SolutionDir)src\LuaBridge</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -188,6 +191,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)dependencies\FMOD\Src;$(SolutionDir)src\FMOD;$(SolutionDir)src\OGRE;$(SolutionDir)src\BULLET;$(SolutionDir)dependencies\Lua\$(Platform);$(SolutionDir)dependencies\LuaBridge\src;$(SolutionDir)src\LuaBridge</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

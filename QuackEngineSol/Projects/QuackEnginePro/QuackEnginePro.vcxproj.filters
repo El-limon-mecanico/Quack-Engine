@@ -57,7 +57,7 @@
     <ClCompile Include="..\..\Src\QuackEngine\PruebaFactory.cpp">
       <Filter>Archivos de origen\Ecs\Factories</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\QuackEngine\QuackFrameListener.cpp">
+    <ClCompile Include="..\..\Src\QuackEngine\QuackTime.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\QuackEngine\QuackEntity.cpp">
@@ -89,7 +89,7 @@
     <ClInclude Include="..\..\Src\QuackEngine\QuackEnginePro.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\QuackEngine\QuackFrameListener.h">
+    <ClInclude Include="..\..\Src\QuackEngine\QuackTime.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\QuackEngine\QuackEntity.h">

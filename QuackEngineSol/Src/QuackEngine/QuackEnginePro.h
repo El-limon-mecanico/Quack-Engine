@@ -1,65 +1,58 @@
 #ifndef _QUACK_ENGINE_PRO_
 #define _QUACK_ENGINE_PRO_
 
-#include <memory>
-#include <assert.h>
+#ifdef _MSC_VER
+#  ifdef QUACK_ENGINE_PRO_EXPORT
+#    define QUACK_ENGINE_PRO_API __declspec(dllexport)
+#  else
+#    define QUACK_ENGINE_PRO_API __declspec(dllimport)
+#  endif
+#endif
 
-class QuackFrameListener;
-class PhysicsManager;
+class QuackTime;
+class BulletQuack;
 class fmod_quack;
 class OgreQuack;
+class SDL_Window;
 
-namespace Ogre {
-	class Root;
-	class RenderWindow;
-	class SceneManager;
-	class SceneNode;
-}
-
-class QuackEnginePro {
+class QUACK_ENGINE_PRO_API QuackEnginePro {
 private:
 
 	static std::unique_ptr<QuackEnginePro> instance_;
 
-	Ogre::Root* root_;
+	SDL_Window* sdlWindow_;
 
-	Ogre::RenderWindow* window_;
-
-	Ogre::SceneManager* mSM_;
-
-	QuackFrameListener* frameListener_;
-
-	PhysicsManager* physicsManager_;
-
-	OgreQuack* ogreQuack_;
+	QuackTime* quackTime_;
 
 	fmod_quack* fmod_quack_;
 
-public:
+	void pollEvents();
 
-	QuackEnginePro() {}
-
-	~QuackEnginePro() {}
-
-	static QuackEnginePro* init() {
-		assert(instance_.get() == nullptr);
-		instance_.reset(new QuackEnginePro());
-		return instance_.get();
-	}
-
-	static QuackEnginePro* instance() {
-		assert(instance_.get() != nullptr);
-		return instance_.get();
-	}
-	
 	void setup();
-
-	void start();
 
 	void update();
 
-	//MÉTODO PROVISIONAL: CON EL CAMBIO RECIENTE A SINGLETON, ESTO NO ES NECESARIO
-	OgreQuack* getOgreQuack() { return ogreQuack_; }
+	bool updateStarted = false;
+
+	bool exit = true;
+
+public:
+
+	QuackEnginePro() {
+		setup();
+	}
+
+	~QuackEnginePro() {}
+
+	static bool Init();
+
+	static QuackEnginePro* Instance();
+
+	fmod_quack* getFmodQuack();
+
+	void start();
+
+	QuackTime* time();
 
 };
 
