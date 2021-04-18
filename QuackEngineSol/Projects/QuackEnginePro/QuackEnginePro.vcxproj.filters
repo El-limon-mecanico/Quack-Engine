@@ -63,6 +63,9 @@
     <ClCompile Include="..\..\Src\QuackEngine\QuackEntity.cpp">
       <Filter>Archivos de origen\Ecs\Entities</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\QuackEngine\RenderComponent.cpp">
+      <Filter>Archivos de origen\Ecs\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\QuackEngine\Scene.h">
@@ -91,6 +94,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\QuackEngine\QuackEntity.h">
       <Filter>Archivos de encabezado\Ecs\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\QuackEngine\RenderComponent.h">
+      <Filter>Archivos de encabezado\Ecs\Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

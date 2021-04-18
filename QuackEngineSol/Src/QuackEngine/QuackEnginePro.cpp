@@ -11,6 +11,7 @@
 #include "PruebaFactory.h"
 #include "FactoryManager.h"
 #include "QuackEntity.h"
+#include "RenderComponent.h"
 
 
 //TODO cambiar esto de sitio
@@ -114,7 +115,7 @@ void QuackEnginePro::start()
 	addCopmponentsFactories();
 	
 	//crear la primera escena
-	scene = new Scene("Scenes/scene1.lua", "scene1");
+	//scene = new Scene("Scenes/scene1.lua", "scene1");
 	
 	root_->startRendering();
 }
@@ -126,3 +127,6 @@ void QuackEnginePro::update()
 	//scene->update();
 	physicsManager_->stepPhysics(frameListener_->deltaTime());
 }
+
+
+

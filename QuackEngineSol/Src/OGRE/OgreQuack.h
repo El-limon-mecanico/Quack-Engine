@@ -34,6 +34,8 @@ public:
 
 	SceneManager* getSceneManager() { return mSM_; }
 
+	Root* getRoot() { return mRoot_; }
+
 	Root* createRoot();
 
 	void setupRoot();

@@ -13,6 +13,7 @@ namespace Ogre {
 	class Root;
 	class RenderWindow;
 	class SceneManager;
+	class SceneNode;
 }
 
 class QuackEnginePro {
