@@ -6,7 +6,7 @@
 
 
 
-QuackTime::QuackTime() : Ogre::FrameListener(), deltaTime_(0)
+QuackTime::QuackTime() : deltaTime_(0)
 {
 	lastFrameTime_ = std::chrono::high_resolution_clock::now();
 }
@@ -20,13 +20,11 @@ double QuackTime::deltaTime() {
 	return deltaTime_;
 }
 
-bool QuackTime::frameStarted(const Ogre::FrameEvent& evt)
+void QuackTime::frameStarted()
 {
 	std::chrono::duration<double> elapsed = std::chrono::high_resolution_clock::now() - lastFrameTime_;
 
 	deltaTime_ = elapsed.count();
 
 	lastFrameTime_ = std::chrono::high_resolution_clock::now();
-
-	return true;
 }

@@ -9,7 +9,6 @@
 #  endif
 #endif
 
-
 class QuackTime;
 class BulletQuack;
 class fmod_quack;

@@ -61,8 +61,6 @@ void QuackEnginePro::setup()
 
 	prueba(fmod_quack_);
 
-	OgreQuack::Instance()->getRoot()->addFrameListener(quackTime_);
-
 	//CargarLua();	
 
 }
@@ -76,6 +74,7 @@ void QuackEnginePro::update()
 {
 	exit = false;
 	while (!exit) {
+		quackTime_->frameStarted();
 		OgreQuack::Instance()->getRoot()->renderOneFrame();
 		pollEvents();
 		BulletQuack::Instance()->stepPhysics(time()->deltaTime());
