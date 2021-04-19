@@ -17,7 +17,8 @@ Render::~Render()
 
 bool Render::init(luabridge::LuaRef parameterTable)
 {
-	enableExceptions(parameterTable);
+	if(parameterTable.state())
+		enableExceptions(parameterTable);
 	mSM_ = OgreQuack::Instance()->getSceneManager();
 	ent_ = nullptr;
 	return true;

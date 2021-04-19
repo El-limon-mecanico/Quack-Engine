@@ -23,7 +23,7 @@ public:
 	Render(QuackEntity* e = nullptr);
 	~Render();
 
-	virtual bool init(luabridge::LuaRef parameterTable);
+	virtual bool init(luabridge::LuaRef parameterTable = { nullptr });
 
 	void setMeshByPrefab(PrefabType prefab);
 

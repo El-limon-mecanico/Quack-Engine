@@ -1,5 +1,4 @@
 #pragma once
-#include "ComponentFactory.h"
 #include "Render.h"
 #include <memory>
 #include <assert.h>
@@ -7,11 +6,11 @@
 class FactoryManager {
 
 public:
-	
+
 	FactoryManager(FactoryManager&) = delete;
 	FactoryManager& operator = (FactoryManager&) = delete;
-	  
-	virtual ~FactoryManager(){}
+
+	virtual ~FactoryManager() {}
 
 	static  FactoryManager* init()
 	{
@@ -24,8 +23,11 @@ public:
 		assert(instance_.get() != nullptr);
 		return instance_.get();
 	}
-	
-	bool add(const std::string& name, ComponentFactory* f);
+
+	template<typename T>
+	void add(const std::string& name) {
+		hashTable_[name] = &FactoryManager::createComponent<T>;
+	}
 
 	Component* create(const std::string& name);
 
@@ -33,7 +35,12 @@ protected:
 	static std::unique_ptr<FactoryManager> instance_;
 
 private:
-	std::unordered_map<std::string, ComponentFactory*> hashTable_;
+	template<typename T>
+	static Component* createComponent() {
+		return new T();
+	}
+
+	std::map<std::string, Component*(*)()> hashTable_;
 
 	FactoryManager();
 };

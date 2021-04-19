@@ -32,12 +32,13 @@ public:
 	~QuackEntity();
 
 	template<typename T, typename ... Targs>
-	T* addComponent(const std::string& name, Targs&&...mArgs) {
+	T* addComponent(Targs&&...mArgs) {
 		T* c = new T(std::forward<Targs>(mArgs)...);
 		c->setEntity(this);
-		c->init(readLuaFile(("lua/Components/" + name + ".lua"), name));
+		//c->init(readLuaFile(("lua/Components/" + name + ".lua"), name));
+		c->init();
 		components_.push_back(c);
-		cmpMap_.insert({ name , c });
+		//cmpMap_.insert({ name , c });
 		return c;
 	}
 

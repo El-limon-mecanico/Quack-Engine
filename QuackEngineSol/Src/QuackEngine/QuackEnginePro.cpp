@@ -10,7 +10,6 @@
 #include "BulletQuack.h"
 #include "LuaBridgeTest.h"
 #include "Prueba.h"
-#include "Factories.h"
 #include "LuaManager.h"
 #include "FactoryManager.h"
 #include "QuackEntity.h"
@@ -26,11 +25,7 @@ void addCopmponentsFactories()
 {
 	FactoryManager::init();
 	
-	PruebaFactory* prueba_factory = new PruebaFactory();
-	FactoryManager::instance()->add("prueba", prueba_factory);
-	RenderFactory* render_factory = new RenderFactory();
-	FactoryManager::instance()->add("render", render_factory);
-
+	FactoryManager::instance()->add<Render>("Render");
 }
 
 
@@ -47,8 +42,12 @@ void QuackEnginePro::prueba()
 	//fmod_sound->stopChannel(0);
 
 	QuackEntity* ent = new QuackEntity();
-	Render* r = ent->addComponent<Render>("render");
+	Render* r = ent->addComponent<Render>();
 	r->setMeshByPrefab(PrefabType::PT_CUBE);
+
+	//Component* r = ent->addComponent("Render");
+	//static_cast<Render*>(r)->setMeshByPrefab(PrefabType::PT_CUBE);
+
 	ent->getNode()->setPosition(0, 300, 0);
 }
 

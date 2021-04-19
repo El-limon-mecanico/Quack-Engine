@@ -23,7 +23,7 @@ public:
 		return entity_;
 	}
 	
-	virtual bool init(luabridge::LuaRef parameterTable) = 0;
+	virtual bool init(luabridge::LuaRef parameterTable = { nullptr }) = 0;
 	virtual void update() {}
 	virtual void render() {}
 };
