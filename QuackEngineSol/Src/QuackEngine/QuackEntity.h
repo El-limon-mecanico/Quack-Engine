@@ -9,6 +9,12 @@
 #include "FactoryManager.h"
 #include <unordered_map>
 
+namespace Ogre {
+	class Root;
+	class SceneManager;
+	class SceneNode;
+}
+
 class QuackEntity {
 
 protected:
@@ -18,9 +24,10 @@ private:
 	std::vector<Component*> components_;
 	std::string tag_;
 	std::unordered_map<std::string, Component*> cmpMap_;
+	Ogre::SceneNode* node_;
 
 public:
-	QuackEntity(bool active = true , std::string tag = "Default"): active_(active) , tag_(tag){}
+	QuackEntity(bool active = true, std::string tag = "Default");
 	~QuackEntity();
 
 	Component* addComponent(const std::string& name);
@@ -33,5 +40,7 @@ public:
 		active_ = state;
 	}
 	void removeComponent(const std::string& name);
+	Ogre::SceneNode* getNode() { return node_; }
+	void setParent(Ogre::SceneNode* parent);
 	void update();
 };

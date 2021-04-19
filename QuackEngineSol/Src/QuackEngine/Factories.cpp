@@ -1,4 +1,4 @@
-#include "PruebaFactory.h"
+#include "Factories.h"
 
 Component* PruebaFactory::create()
 {

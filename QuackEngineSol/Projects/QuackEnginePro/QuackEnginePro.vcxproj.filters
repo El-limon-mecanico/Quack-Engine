@@ -54,9 +54,6 @@
     <ClCompile Include="..\..\Src\QuackEngine\Prueba.cpp">
       <Filter>Archivos de origen\Ecs\Components</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\QuackEngine\PruebaFactory.cpp">
-      <Filter>Archivos de origen\Ecs\Factories</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\QuackEngine\QuackTime.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
@@ -65,6 +62,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\QuackEngine\RenderComponent.cpp">
       <Filter>Archivos de origen\Ecs\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\QuackEngine\Factories.cpp">
+      <Filter>Archivos de origen\Ecs\Factories</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -83,9 +83,6 @@
     <ClInclude Include="..\..\Src\QuackEngine\Prueba.h">
       <Filter>Archivos de encabezado\Ecs\Components</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\QuackEngine\PruebaFactory.h">
-      <Filter>Archivos de encabezado\Ecs\Factories</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\QuackEngine\QuackEnginePro.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
@@ -97,6 +94,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\QuackEngine\RenderComponent.h">
       <Filter>Archivos de encabezado\Ecs\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\QuackEngine\Factories.h">
+      <Filter>Archivos de encabezado\Ecs\Factories</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
