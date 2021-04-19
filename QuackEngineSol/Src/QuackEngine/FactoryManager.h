@@ -27,19 +27,6 @@ public:
 	
 	bool add(const std::string& name, ComponentFactory* f);
 
-	template<typename T>
-	T* create(const std::string& name) {
-
-		if (hashTable_.at(name)) {
-			return new T();
-		}
-		else {
-			std::cout << "No se ha podido crear el componente " << name << '\n';
-			return nullptr;
-		}
-	}
-	//TODO crear otra template que no use strings, cambiar la hashtable a <string, Component>
-
 	Component* create(const std::string& name);
 
 protected:

@@ -18,8 +18,6 @@ Render::~Render()
 bool Render::init(luabridge::LuaRef parameterTable)
 {
 	enableExceptions(parameterTable);
-	//ESTO HAY QUE CAMBIARLO A ACCESO POR SINGLETON---> OgreQuack::instance()->etc
-	//Además, no sé si hay que meter algo de Lua, la inicialización de la Mesh si tuviese, o de la cámara, o de la luz
 	mSM_ = OgreQuack::Instance()->getSceneManager();
 	ent_ = nullptr;
 	return true;
