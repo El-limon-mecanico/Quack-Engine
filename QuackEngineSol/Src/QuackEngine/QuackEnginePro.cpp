@@ -16,6 +16,7 @@
 #include "QuackEntity.h"
 #include "RenderComponent.h"
 #include "QuackTime.h"
+#include "CEGUIQuack.h"
 
 
 //para que no salga la consola en el modo release (en las propiedades del proyecto hay que poner que se
@@ -83,6 +84,8 @@ void QuackEnginePro::setup()
 	fmod_quack_ = new fmod_quack();
 
 	prueba(fmod_quack_);
+
+	cegui_ = new CEGUIQuack();
 
 	//CargarLua();
 

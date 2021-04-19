@@ -146,7 +146,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(SolutionDir)lib\$(Platform)\$(Configuration)\BULLET.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\OGRE.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\LuaBridge.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\FMOD.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)lib\$(Platform)\$(Configuration)\BULLET.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\OGRE.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\LuaBridge.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\FMOD.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\CEGUI.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImportLibrary>$(SolutionDir)lib\$(Platform)\$(Configuration)\$(TargetName).lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
@@ -167,7 +167,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(SolutionDir)lib\$(Platform)\$(Configuration)\BULLET.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\OGRE.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\LuaBridge.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\FMOD.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)lib\$(Platform)\$(Configuration)\BULLET.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\OGRE.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\LuaBridge.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\FMOD.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\CEGUI.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImportLibrary>$(SolutionDir)lib\$(Platform)\$(Configuration)\$(TargetName).lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
