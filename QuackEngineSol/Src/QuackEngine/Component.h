@@ -1,35 +1,30 @@
 #pragma once
-#pragma once
-#include<iostream>
-class Entity;
+#include <iostream>
+#include <unordered_map>
+#include <LuaBridge.h>
+
+class QuackEntity;
 
 class Component {
-	protected:
-		Entity* entity_;
+protected:
+	QuackEntity* entity_;
 
-	public:
-		Component(Entity* e = nullptr) :
-			entity_(e) {
-		}
+public:
+	Component(QuackEntity* e = nullptr) :
+		entity_(e) {
+	}
 
-		virtual ~Component() {
-		}
+	virtual ~Component() {}
 
-		inline void setEntity(Entity* e) {
-			entity_ = e;
-		}
+	inline void setEntity(QuackEntity* e) {
+		entity_ = e;
+	}
 
-		inline Entity* getEntity() {
-			return entity_;
-		}
-
-		virtual void init() {
-		}
-
-		virtual void update() {
-		}
-
-		virtual void render() {
-		}
-
+	inline QuackEntity* getEntity() {
+		return entity_;
+	}
+	
+	virtual bool init(luabridge::LuaRef parameterTable) = 0;
+	virtual void update() {}
+	virtual void render() {}
 };

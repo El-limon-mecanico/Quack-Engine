@@ -20,11 +20,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\BULLET\BtOgre.h" />
-    <ClInclude Include="..\..\Src\BULLET\PhysicsManager.h" />
+    <ClInclude Include="..\..\Src\BULLET\BulletQuack.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\BULLET\BtOgre.cpp" />
-    <ClCompile Include="..\..\Src\BULLET\PhysicsManager.cpp" />
+    <ClCompile Include="..\..\Src\BULLET\BulletQuack.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -129,7 +129,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)dependencies\Ogre\build\lib\$(Configuration);$(SolutionDir)dependencies\Bullet\build\lib\$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)dependencies\Ogre\build\lib\$(Configuration);$(SolutionDir)dependencies\Bullet\build\lib\$(Configuration);</AdditionalLibraryDirectories>
       <AdditionalDependencies>Bullet3Collision.lib;BulletCollision.lib;Bullet3Dynamics.lib;BulletDynamics.lib;Bullet3Geometry.lib;LinearMath.lib;OgreMain.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>

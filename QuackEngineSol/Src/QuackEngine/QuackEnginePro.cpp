@@ -1,82 +1,88 @@
-#include <iostream>
-#include <fstream>
+﻿#define QUACK_ENGINE_PRO_EXPORT
+#include <OgreRoot.h>
+#include <SDL_video.h>
+#include <SDL_events.h>
+#include <memory>
+#include <assert.h>
 #include "QuackEnginePro.h"
 #include "FMOD_Quack.h"
 #include "OgreQuack.h"
-#include "PhysicsManager.h"
+#include "BulletQuack.h"
 #include "LuaBridgeTest.h"
-#include "QuackFrameListener.h"
+#include "Prueba.h"
+#include "PruebaFactory.h"
+#include "LuaManager.h"
+#include "FactoryManager.h"
+#include "QuackEntity.h"
+#include "RenderComponent.h"
+#include "QuackTime.h"
+
 
 //para que no salga la consola en el modo release (en las propiedades del proyecto hay que poner que se
-//ejecute como aplicacion window no cmd (en la parte de vinculador))�
+//ejecute como aplicacion window no cmd (en la parte de vinculador))ç
+
+//TODO cambiar esto de sitio
+void addCopmponentsFactories()
+{
+	FactoryManager::init();
+	
+	PruebaFactory* prueba_factory = new PruebaFactory();
+	FactoryManager::instance()->add("prueba", prueba_factory);
+
+}
+
+
 
 // -------------- MOVER A OTRO ARCHIVO -------------- //
 
 void prueba(fmod_quack* fmod_sound)
 {
-	fmod_sound->createSound(std::string("singing.wav"), "Cantando");
+	fmod_sound->createSound(std::string("song.wav"), "Cantando");
 	fmod_sound->playSound(0, "Cantando", 1);
 	fmod_sound->createDSP(FMOD_DSP_TYPE_ECHO, std::string("Echo"));
-	fmod_sound->addDSP(0, std::string("Echo"));
+	//fmod_sound->addDSP(0, std::string("Echo"));
 	//fmod_sound->pauseChannel(0, true);
 	//fmod_sound->stopChannel(0);
 }
 
-#if (defined _DEBUG) || !(defined _WIN32)
-int main() {
-#else
-#include <windows.h>
-int WINAPI
-WinMain(HINSTANCE zHInstance, HINSTANCE prevInstance, LPSTR lpCmdLine, int nCmdShow) {
-#endif
+std::unique_ptr<QuackEnginePro>  QuackEnginePro::instance_;
 
-	//esto es una prueba de los recursos
-	std::ifstream f("Assets/fichero.txt");
-	if (f.is_open())
-	{
-		std::cout << "El fichero se ha abierto\n";
-		f.close();
-	}
-	else
-	{
-		std::cerr << "ERROR: el fichero no se ha abierto\n";
-	}
-
-
-	QuackEnginePro* engine = QuackEnginePro::init();
-
-	engine->setup();
-
-	engine->start();
-
-	return 0;
+// AQUI FALTA MANEJO DE ERRORES Y EXCEPCIONES
+bool QuackEnginePro::Init()
+{
+	assert(instance_.get() == nullptr);
+	instance_.reset(new QuackEnginePro());
+	return instance_.get();
 }
 
-// -------------- MOVER A OTRO ARCHIVO -------------- //
+QuackEnginePro* QuackEnginePro::Instance()
+{
+	assert(instance_.get() != nullptr);
+	return instance_.get();
+}
+	
+#include "Scene.h"
 
-
-std::unique_ptr<QuackEnginePro>  QuackEnginePro::instance_;
+Scene* scene;
 
 
 void QuackEnginePro::setup()
 {
-	ogreQuack_ = new OgreQuack();
+	quackTime_ = new QuackTime();
 
-	root_ = ogreQuack_->createRoot();
+	OgreQuack::Init();
 
-	ogreQuack_->setupRoot();
+	OgreQuack::Instance()->createRoot();
 
-	mSM_ = ogreQuack_->getSceneManager();
+	OgreQuack::Instance()->setupRoot();
 
-	physicsManager_ = new PhysicsManager(root_, mSM_);
+	sdlWindow_ = OgreQuack::Instance()->getSdlWindow();
+
+	BulletQuack::Init(OgreQuack::Instance()->getRoot(), OgreQuack::Instance()->getSceneManager());
 
 	fmod_quack_ = new fmod_quack();
 
 	prueba(fmod_quack_);
-
-	frameListener_ = new QuackFrameListener();
-
-	root_->addFrameListener(frameListener_);
 
 	//CargarLua();
 
@@ -84,11 +90,62 @@ void QuackEnginePro::setup()
 
 void QuackEnginePro::start()
 {
-	root_->startRendering();
+	if (!updateStarted){
+        addCopmponentsFactories();
+        update();
+    } 
+    
 }
 
 
 void QuackEnginePro::update()
 {
-	physicsManager_->stepPhysics(frameListener_->deltaTime());
+	exit = false;
+	while (!exit) {
+		quackTime_->frameStarted();
+		OgreQuack::Instance()->getRoot()->renderOneFrame();
+		pollEvents();
+		BulletQuack::Instance()->stepPhysics(time()->deltaTime());
+	}
+}
+
+
+void QuackEnginePro::pollEvents()
+{
+	if (sdlWindow_ == nullptr)
+		return;  // SDL events not initialized
+	SDL_Event event;
+	while (SDL_PollEvent(&event))
+	{
+		switch (event.type)
+		{
+		case SDL_QUIT:
+			OgreQuack::Instance()->getRoot()->queueEndRendering();
+			exit = true;
+			break;
+		case SDL_WINDOWEVENT:
+			if (event.window.windowID == SDL_GetWindowID(sdlWindow_)) {
+				/*if (event.window.event == SDL_WINDOWEVENT_RESIZED)
+				{
+					Ogre::RenderWindow* win = window;
+					win->windowMovedOrResized();
+					frameListener_->windowResized(win);
+				}*/
+			}
+			break;
+		default:
+			//llamar a InputManager
+			break;
+		}
+	}
+}
+
+fmod_quack* QuackEnginePro::getFmodQuack()
+{
+	return fmod_quack_;
+}
+
+QuackTime* QuackEnginePro::time()
+{
+	return quackTime_;
 }

@@ -20,9 +20,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\LuaBridge\LuaBridgeTest.h" />
+    <ClInclude Include="..\..\Src\LuaBridge\LuaManager.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="LuaBridgeTest.cpp" />
+    <ClCompile Include="..\..\Src\LuaBridge\LuaBridgeTest.cpp" />
+    <ClCompile Include="..\..\Src\LuaBridge\LuaManager.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
