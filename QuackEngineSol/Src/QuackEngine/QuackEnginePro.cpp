@@ -10,7 +10,7 @@
 #include "BulletQuack.h"
 #include "LuaBridgeTest.h"
 #include "Prueba.h"
-#include "PruebaFactory.h"
+#include "Factories.h"
 #include "LuaManager.h"
 #include "FactoryManager.h"
 #include "QuackEntity.h"
@@ -28,6 +28,13 @@ void addCopmponentsFactories()
 	
 	PruebaFactory* prueba_factory = new PruebaFactory();
 	FactoryManager::instance()->add("prueba", prueba_factory);
+	RenderComponentFactory* render_factory = new RenderComponentFactory();
+	FactoryManager::instance()->add("render", render_factory);
+
+	QuackEntity* ent = new QuackEntity();
+	RenderComponent* r = static_cast<RenderComponent*>(ent->addComponent("render"));
+	r->setMeshByPrefab(PrefabType::PT_CUBE);
+	ent->getNode()->setPosition(0, 300, 0);
 
 }
 

@@ -23,7 +23,7 @@
     <ClCompile Include="..\..\Src\QuackEngine\QuackEntity.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\FactoryManager.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\Prueba.cpp" />
-    <ClCompile Include="..\..\Src\QuackEngine\PruebaFactory.cpp" />
+    <ClCompile Include="..\..\Src\QuackEngine\Factories.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\QuackEnginePro.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\QuackTime.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\RenderComponent.cpp" />
@@ -50,7 +50,7 @@
     <ClInclude Include="..\..\Src\QuackEngine\QuackEnginePro.h" />
     <ClInclude Include="..\..\Src\QuackEngine\FactoryManager.h" />
     <ClInclude Include="..\..\Src\QuackEngine\Prueba.h" />
-    <ClInclude Include="..\..\Src\QuackEngine\PruebaFactory.h" />
+    <ClInclude Include="..\..\Src\QuackEngine\Factories.h" />
     <ClInclude Include="..\..\Src\QuackEngine\RenderComponent.h" />
     <ClInclude Include="..\..\Src\QuackEngine\QuackTime.h" />
     <ClInclude Include="..\..\Src\QuackEngine\Scene.h" />
