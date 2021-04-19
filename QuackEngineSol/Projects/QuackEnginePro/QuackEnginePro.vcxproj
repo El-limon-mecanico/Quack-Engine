@@ -144,6 +144,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>$(SolutionDir)lib\$(Platform)\$(Configuration)\BULLET.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\OGRE.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\LuaBridge.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\FMOD.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ImportLibrary>$(SolutionDir)lib\$(Platform)\$(Configuration)\$(TargetName).lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -164,6 +165,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>$(SolutionDir)lib\$(Platform)\$(Configuration)\BULLET.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\OGRE.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\LuaBridge.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\FMOD.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ImportLibrary>$(SolutionDir)lib\$(Platform)\$(Configuration)\$(TargetName).lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
