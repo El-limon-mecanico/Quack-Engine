@@ -14,18 +14,21 @@ namespace Ogre {
 	class Root;
 	class SceneManager;
 	class SceneNode;
+	class Entity;
 }
 
 class QuackEntity {
 
 protected:
-
+	Ogre::SceneNode* node_;
+	Ogre::SceneManager* mSM_;
+	Ogre::Entity* ogreEnt_;
 private:
 	bool active_;
 	std::vector<Component*> components_;
 	std::string tag_;
 	std::unordered_map<std::string, Component*> cmpMap_;
-	Ogre::SceneNode* node_;
+
 
 public:
 	QuackEntity(bool active = true, std::string tag = "Default");
@@ -53,6 +56,9 @@ public:
 	}
 	void removeComponent(const std::string& name);
 	Ogre::SceneNode* getNode() { return node_; }
+	Ogre::SceneManager* getSceneManager() { return mSM_; }
+	Ogre::Entity* getOgreEntity() { return ogreEnt_; }
+	void setOgreEntity(Ogre::Entity* e);
 	void setParent(Ogre::SceneNode* parent);
 	void update();
 };

@@ -4,8 +4,9 @@
 
 QuackEntity::QuackEntity(bool active, std::string tag) : active_(active), tag_(tag)
 {
-	Ogre::SceneManager* mSM = OgreQuack::Instance()->getSceneManager();
-	node_ = mSM->getRootSceneNode()->createChildSceneNode();
+	mSM_ = OgreQuack::Instance()->getSceneManager();
+	node_ = mSM_->getRootSceneNode()->createChildSceneNode();
+	setOgreEntity(mSM_->createEntity(Ogre::SceneManager::PrefabType::PT_CUBE)); //CAMBIAR ESTE CUBO POR UNA MALLA EMPTY QUE TENGAMOS EN EL RESOURCES
 }
 
 QuackEntity::~QuackEntity() {
@@ -62,6 +63,15 @@ Component* QuackEntity::getComponent(const std::string& name)
 	if (cmpMap_[name])
 		return cmpMap_[name];
 	return nullptr;
+}
+
+void QuackEntity::setOgreEntity(Ogre::Entity* e)
+{
+	Ogre::Entity* aux = ogreEnt_;
+	node_->detachAllObjects();
+	ogreEnt_ = e;
+	node_->attachObject(ogreEnt_);
+	delete aux; aux = nullptr;
 }
 
 //al igual por comodidad viene bien tener este método, pero realmente no es algo necesario y puede hacerse fuera de esto

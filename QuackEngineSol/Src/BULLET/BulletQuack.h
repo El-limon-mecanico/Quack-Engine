@@ -25,7 +25,6 @@ private:
 
 	void init();
 
-	void pruebas();
 
 public:
 
@@ -43,6 +42,8 @@ public:
 	void addSceneManager(Ogre::SceneManager* mngr) { mSM_ = mngr; }
 
 	void stepPhysics(double deltaTime);
+
+	BtOgre::DynamicsWorld* getWorld() { return world_; }
 };
 
 #endif // !_PHYSICS_MANAGER_

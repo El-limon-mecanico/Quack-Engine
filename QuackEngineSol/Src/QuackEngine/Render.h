@@ -16,9 +16,6 @@ enum PrefabType {
 };
 
 class Render : public Component {
-private:
-	Ogre::SceneManager* mSM_;
-	Ogre::Entity* ent_;
 public:
 	Render(QuackEntity* e = nullptr);
 	~Render();

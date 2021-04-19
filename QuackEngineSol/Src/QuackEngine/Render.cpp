@@ -19,15 +19,14 @@ bool Render::init(luabridge::LuaRef parameterTable)
 {
 	if(parameterTable.state())
 		enableExceptions(parameterTable);
-	mSM_ = OgreQuack::Instance()->getSceneManager();
-	ent_ = nullptr;
 	return true;
 }
 
 void Render::setMeshByPrefab(PrefabType prefab) {
 	OgrePrefab p = (OgrePrefab)prefab;
-	ent_ = mSM_->createEntity(p);
-	entity_->getNode()->attachObject(ent_);
+	Ogre::Entity* ent = entity_->getSceneManager()->createEntity(p);
+	entity_->setOgreEntity(ent);
+
 }
 
 void Render::setMeshByName(const std::string& name) {
