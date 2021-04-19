@@ -1,36 +1,37 @@
-#include "RenderComponent.h"
+#include "Render.h"
 #include "OgreQuack.h"
 #include "QuackEntity.h"
 #include <Ogre.h>
 
 using OgrePrefab = Ogre::SceneManager::PrefabType;
 
-RenderComponent::RenderComponent(QuackEntity* e) : Component(e)
+Render::Render(QuackEntity* e) : Component(e)
 {
-
 }
 
-RenderComponent::~RenderComponent()
+
+Render::~Render()
 {
 	//borrar basura creada al meter la mesh?¿ como el Ogre::Entity quizas no lo sé
 }
 
-bool RenderComponent::init(luabridge::LuaRef parameterTable)
+bool Render::init(luabridge::LuaRef parameterTable)
 {
 	enableExceptions(parameterTable);
 	//ESTO HAY QUE CAMBIARLO A ACCESO POR SINGLETON---> OgreQuack::instance()->etc
 	//Además, no sé si hay que meter algo de Lua, la inicialización de la Mesh si tuviese, o de la cámara, o de la luz
 	mSM_ = OgreQuack::Instance()->getSceneManager();
+	ent_ = nullptr;
 	return true;
 }
 
-void RenderComponent::setMeshByPrefab(PrefabType prefab) {
+void Render::setMeshByPrefab(PrefabType prefab) {
 	OgrePrefab p = (OgrePrefab)prefab;
-	Ogre::Entity* e = mSM_->createEntity(p);
-	entity_->getNode()->attachObject(e);
+	ent_ = mSM_->createEntity(p);
+	entity_->getNode()->attachObject(ent_);
 }
 
-void RenderComponent::setMeshByName(const std::string& name) {
+void Render::setMeshByName(const std::string& name) {
 
 }
 

@@ -13,7 +13,6 @@ public:
 	Component(QuackEntity* e = nullptr) :
 		entity_(e) {
 	}
-
 	virtual ~Component() {}
 
 	inline void setEntity(QuackEntity* e) {

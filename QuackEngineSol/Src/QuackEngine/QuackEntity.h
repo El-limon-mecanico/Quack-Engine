@@ -6,6 +6,7 @@
 #include <vector>
 #include <iostream>
 #include "Component.h"
+#include "LuaManager.h"
 #include "FactoryManager.h"
 #include <unordered_map>
 
@@ -29,6 +30,20 @@ private:
 public:
 	QuackEntity(bool active = true, std::string tag = "Default");
 	~QuackEntity();
+
+	template<typename T>
+	T* addComponent(const std::string& name) {
+		/*if (hasComponent(name))
+			return cmpMap_[name];*/
+			/*else {*/
+		T* c = FactoryManager::instance()->create<T>(name);
+		c->setEntity(this);
+		c->init(readLuaFile(("lua/Components/" + name + ".lua"), name));
+		components_.push_back(c);
+		cmpMap_.insert({ name , c });
+		return c;
+		/*}*/
+	}
 
 	Component* addComponent(const std::string& name);
 	Component* getComponent(const std::string& name);

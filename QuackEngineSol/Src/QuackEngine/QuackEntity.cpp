@@ -1,5 +1,4 @@
 #include "QuackEntity.h"
-#include "LuaManager.h"
 #include "OgreQuack.h"
 #include <Ogre.h>
 

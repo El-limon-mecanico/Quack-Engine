@@ -1,7 +1,7 @@
 #pragma once
 #include "ComponentFactory.h"
 #include "Prueba.h"
-#include "RenderComponent.h"
+#include "Render.h"
 #include "LuaManager.h"
 
 class PruebaFactory: public ComponentFactory
@@ -13,11 +13,11 @@ public:
 	virtual Component* create();
 };
 
-class RenderComponentFactory : public ComponentFactory
+class RenderFactory : public ComponentFactory
 {
 public:
-	RenderComponentFactory(){}
-	virtual ~RenderComponentFactory(){}
+	RenderFactory(){}
+	virtual ~RenderFactory(){}
 
 	virtual Component* create();
 };

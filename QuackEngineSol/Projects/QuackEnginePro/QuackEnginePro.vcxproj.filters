@@ -60,11 +60,14 @@
     <ClCompile Include="..\..\Src\QuackEngine\QuackEntity.cpp">
       <Filter>Archivos de origen\Ecs\Entities</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\QuackEngine\RenderComponent.cpp">
-      <Filter>Archivos de origen\Ecs\Components</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\QuackEngine\Factories.cpp">
       <Filter>Archivos de origen\Ecs\Factories</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\QuackEngine\Rigidbody.cpp">
+      <Filter>Archivos de origen\Ecs\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\QuackEngine\Render.cpp">
+      <Filter>Archivos de origen\Ecs\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -92,11 +95,14 @@
     <ClInclude Include="..\..\Src\QuackEngine\QuackEntity.h">
       <Filter>Archivos de encabezado\Ecs\Entities</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\QuackEngine\RenderComponent.h">
-      <Filter>Archivos de encabezado\Ecs\Components</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\QuackEngine\Factories.h">
       <Filter>Archivos de encabezado\Ecs\Factories</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\QuackEngine\Rigidbody.h">
+      <Filter>Archivos de encabezado\Ecs\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\QuackEngine\Render.h">
+      <Filter>Archivos de encabezado\Ecs\Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

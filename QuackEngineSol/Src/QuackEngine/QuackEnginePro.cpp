@@ -14,7 +14,7 @@
 #include "LuaManager.h"
 #include "FactoryManager.h"
 #include "QuackEntity.h"
-#include "RenderComponent.h"
+#include "Render.h"
 #include "QuackTime.h"
 
 
@@ -28,13 +28,8 @@ void addCopmponentsFactories()
 	
 	PruebaFactory* prueba_factory = new PruebaFactory();
 	FactoryManager::instance()->add("prueba", prueba_factory);
-	RenderComponentFactory* render_factory = new RenderComponentFactory();
+	RenderFactory* render_factory = new RenderFactory();
 	FactoryManager::instance()->add("render", render_factory);
-
-	QuackEntity* ent = new QuackEntity();
-	RenderComponent* r = static_cast<RenderComponent*>(ent->addComponent("render"));
-	r->setMeshByPrefab(PrefabType::PT_CUBE);
-	ent->getNode()->setPosition(0, 300, 0);
 
 }
 
@@ -42,14 +37,19 @@ void addCopmponentsFactories()
 
 // -------------- MOVER A OTRO ARCHIVO -------------- // 
 
-void prueba(fmod_quack* fmod_sound)
+void QuackEnginePro::prueba()
 {
-	fmod_sound->createSound(std::string("song.wav"), "Cantando");
-	fmod_sound->playSound(0, "Cantando", 1);
-	fmod_sound->createDSP(FMOD_DSP_TYPE_ECHO, std::string("Echo"));
+	fmod_quack_->createSound(std::string("song.wav"), "Cantando");
+	fmod_quack_->playSound(0, "Cantando", 1);
+	fmod_quack_->createDSP(FMOD_DSP_TYPE_ECHO, std::string("Echo"));
 	//fmod_sound->addDSP(0, std::string("Echo"));
 	//fmod_sound->pauseChannel(0, true);
 	//fmod_sound->stopChannel(0);
+
+	QuackEntity* ent = new QuackEntity();
+	Render* r = ent->addComponent<Render>("render");
+	r->setMeshByPrefab(PrefabType::PT_CUBE);
+	ent->getNode()->setPosition(0, 300, 0);
 }
 
 std::unique_ptr<QuackEnginePro>  QuackEnginePro::instance_;
@@ -89,8 +89,6 @@ void QuackEnginePro::setup()
 
 	fmod_quack_ = new fmod_quack();
 
-	prueba(fmod_quack_);
-
 	//CargarLua();	
 
 }
@@ -99,6 +97,7 @@ void QuackEnginePro::start()
 {
 	if (!updateStarted){
         addCopmponentsFactories();
+		prueba();
         update();
     } 
     

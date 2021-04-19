@@ -6,6 +6,7 @@ namespace Ogre {
 	class Root;
 	class SceneManager;
 	class SceneNode;
+	class Entity;
 }
 
 enum PrefabType {
@@ -14,12 +15,13 @@ enum PrefabType {
 	PT_SPHERE
 };
 
-class RenderComponent : public Component {
+class Render : public Component {
 private:
 	Ogre::SceneManager* mSM_;
+	Ogre::Entity* ent_;
 public:
-	RenderComponent(QuackEntity* e = nullptr);
-	~RenderComponent();
+	Render(QuackEntity* e = nullptr);
+	~Render();
 
 	virtual bool init(luabridge::LuaRef parameterTable);
 

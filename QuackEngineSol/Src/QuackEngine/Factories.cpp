@@ -6,8 +6,8 @@ Component* PruebaFactory::create()
 	return prueba;
 }
 
-Component* RenderComponentFactory::create()
+Component* RenderFactory::create()
 {
-	RenderComponent* f = new RenderComponent();
+	Render* f = new Render();
 	return f;
 }
