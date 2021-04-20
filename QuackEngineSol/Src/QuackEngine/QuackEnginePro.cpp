@@ -10,12 +10,13 @@
 #include "BulletQuack.h"
 #include "LuaBridgeTest.h"
 #include "Prueba.h"
-#include "PruebaFactory.h"
 #include "LuaManager.h"
 #include "FactoryManager.h"
 #include "QuackEntity.h"
-#include "RenderComponent.h"
+#include "Render.h"
 #include "QuackTime.h"
+#include "Rigidbody.h"
+#include "BtOgre.h"
 
 
 //para que no salga la consola en el modo release (en las propiedades del proyecto hay que poner que se
@@ -26,23 +27,50 @@ void addCopmponentsFactories()
 {
 	FactoryManager::init();
 	
-	PruebaFactory* prueba_factory = new PruebaFactory();
-	FactoryManager::instance()->add("prueba", prueba_factory);
-
+	FactoryManager::instance()->add<Render>("Render");
+	FactoryManager::instance()->add<Rigidbody>("Rigidbody");
 }
 
 
 
 // -------------- MOVER A OTRO ARCHIVO -------------- // 
 
-void prueba(fmod_quack* fmod_sound)
+void QuackEnginePro::prueba()
 {
-	fmod_sound->createSound(std::string("song.wav"), "Cantando");
-	fmod_sound->playSound(0, "Cantando", 1);
-	fmod_sound->createDSP(FMOD_DSP_TYPE_ECHO, std::string("Echo"));
+	/*fmod_quack_->createSound(std::string("song.wav"), "Cantando");
+	fmod_quack_->playSound(0, "Cantando", 1);
+	fmod_quack_->createDSP(FMOD_DSP_TYPE_ECHO, std::string("Echo"));*/
 	//fmod_sound->addDSP(0, std::string("Echo"));
 	//fmod_sound->pauseChannel(0, true);
 	//fmod_sound->stopChannel(0);
+
+	QuackEntity* sphere1 = new QuackEntity();
+	Render* r = sphere1->addComponent<Render>();
+	r->setMeshByPrefab(PrefabType::PT_SPHERE); //:)
+	Rigidbody* rb = sphere1->addComponent<Rigidbody>();
+	sphere1->getNode()->setPosition(0, 300, 0);
+
+	rb->setRigidbody(1, ColliderType::CT_SPHERE);
+
+	QuackEntity* sphere2 = new QuackEntity();
+	r = sphere2->addComponent<Render>();
+	r->setMeshByPrefab(PrefabType::PT_SPHERE); //:)))
+	rb = sphere2->addComponent<Rigidbody>();
+	sphere2->getNode()->setPosition(50, 500, 0);
+
+	rb->setRigidbody(1, ColliderType::CT_SPHERE);
+
+	QuackEntity* plane = new QuackEntity();
+	r = plane->addComponent<Render>();
+	r->setMeshByPrefab(PrefabType::PT_PLANE); //:)))
+	rb = plane->addComponent<Rigidbody>();
+
+	plane->getNode()->rotate(Ogre::Vector3(1, 0, 0), Ogre::Radian(Ogre::Degree(-90)));
+	plane->getNode()->scale(5, 5, 1);
+
+	rb->setRigidbody(0, ColliderType::CT_BOX);
+	rb->getRigidbody()->setGravity(btVector3(0, 0, 0));
+
 }
 
 std::unique_ptr<QuackEnginePro>  QuackEnginePro::instance_;
@@ -82,8 +110,6 @@ void QuackEnginePro::setup()
 
 	fmod_quack_ = new fmod_quack();
 
-	prueba(fmod_quack_);
-
 	//CargarLua();	
 
 }
@@ -92,6 +118,7 @@ void QuackEnginePro::start()
 {
 	if (!updateStarted){
         addCopmponentsFactories();
+		prueba();
         update();
     } 
     

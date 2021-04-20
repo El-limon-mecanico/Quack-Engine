@@ -36,6 +36,8 @@ private:
 
 	bool exit = true;
 
+	void prueba();
+
 public:
 
 	QuackEnginePro() {

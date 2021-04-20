@@ -1,5 +1,13 @@
 #include "QuackEntity.h"
-#include "LuaManager.h"
+#include "OgreQuack.h"
+#include <Ogre.h>
+
+QuackEntity::QuackEntity(bool active, std::string tag) : active_(active), tag_(tag)
+{
+	mSM_ = OgreQuack::Instance()->getSceneManager();
+	node_ = mSM_->getRootSceneNode()->createChildSceneNode();
+	setOgreEntity(mSM_->createEntity(Ogre::SceneManager::PrefabType::PT_CUBE)); //CAMBIAR ESTE CUBO POR UNA MALLA EMPTY QUE TENGAMOS EN EL RESOURCES
+}
 
 QuackEntity::~QuackEntity() {
 	for (auto c : components_) {
@@ -55,6 +63,21 @@ Component* QuackEntity::getComponent(const std::string& name)
 	if (cmpMap_[name])
 		return cmpMap_[name];
 	return nullptr;
+}
+
+void QuackEntity::setOgreEntity(Ogre::Entity* e)
+{
+	Ogre::Entity* aux = ogreEnt_;
+	node_->detachAllObjects();
+	ogreEnt_ = e;
+	node_->attachObject(ogreEnt_);
+	delete aux; aux = nullptr;
+}
+
+//al igual por comodidad viene bien tener este método, pero realmente no es algo necesario y puede hacerse fuera de esto
+void QuackEntity::setParent(Ogre::SceneNode* parent)
+{
+	parent->addChild((Node*)node_); //no se si esto es correcto alsjdhajlsdhalj no he testeado
 }
 
 //Comentamos el Update y Render de Samir porque lo haremos diferente pero ykse
