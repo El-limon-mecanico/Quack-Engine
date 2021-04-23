@@ -18,6 +18,7 @@
 #include "Rigidbody.h"
 #include "BtOgre.h"
 
+#include "Scene.h"
 
 //para que no salga la consola en el modo release (en las propiedades del proyecto hay que poner que se
 //ejecute como aplicacion window no cmd (en la parte de vinculador))ç
@@ -71,6 +72,7 @@ void QuackEnginePro::prueba()
 	rb->setRigidbody(0, ColliderType::CT_BOX);
 	rb->getRigidbody()->setGravity(btVector3(0, 0, 0));
 
+	Scene* primeraEscena = new Scene("Scenes/scene1.lua", "scene1");
 }
 
 std::unique_ptr<QuackEnginePro>  QuackEnginePro::instance_;

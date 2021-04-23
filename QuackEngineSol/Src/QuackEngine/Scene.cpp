@@ -9,10 +9,13 @@ Scene::Scene(const std::string& file, const std::string& name)
 	enableExceptions(refScene);
 
 	
-	std::list<std::string> entidades = refScene.rawget("entities");
-	std::vector<std::string> t = refScene.rawget("entities").cast<std::vector<std::string>>();
+	LuaRef entidades = refScene.rawget("entities");
+	std::cout << entidades.length() << "\n";
+	std::string a = entidades[1];
+	std::cout << a << "\n";
+	//std::vector<std::string> t = refScene.rawget("entities").cast<std::vector<std::string>>();
 
-	for(std::string entityName:entidades)
+	/*for(std::string entityName:entidades)
 	{
 		//creamos todas las entidades
 		QuackEntity* entity = new QuackEntity();
@@ -27,8 +30,7 @@ Scene::Scene(const std::string& file, const std::string& name)
 		{			
 			entity->addComponent(compName);
 		}
-	}
-	
+	}*/	
 }
 
 Scene::~Scene()
