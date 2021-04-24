@@ -3,34 +3,22 @@
 
 Scene::Scene(const std::string& file, const std::string& name)
 {
-	luabridge::LuaRef refScene = readLuaFile(file, name);
+	LuaRef refScene = readLuaFile(file, name);
 
 	//sacamos el vector de entidades y las creamos
 	enableExceptions(refScene);
 
-	
+	//leemos el vector que contiene las entidades
 	LuaRef entidades = refScene.rawget("entities");
-	std::cout << entidades.length() << "\n";
-	std::string a = entidades[1];
-	std::cout << a << "\n";
-	//std::vector<std::string> t = refScene.rawget("entities").cast<std::vector<std::string>>();
 
-	/*for(std::string entityName:entidades)
+	for(int i=1;i<= entidades.length();i++)
 	{
-		//creamos todas las entidades
-		QuackEntity* entity = new QuackEntity();
-		
-		//buscar el archivo de esta entidad y cargar sus componentes
-		std::string path = "lua/Entities/" + entityName + ".lua";
-		luabridge::LuaRef refEntity = readLuaFile(path, entityName);
-		std::vector<std::string> components = refScene.rawget("components");
+		std::string ent = entidades[i];
+		std::cout << "Cargando " << ent << "\n";
 
-		//creamos todos los componentes y se los añadimos a las entidades
-		for(std::string compName: components)
-		{			
-			entity->addComponent(compName);
-		}
-	}*/	
+		
+	}
+	
 }
 
 Scene::~Scene()

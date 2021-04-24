@@ -1,7 +1,7 @@
-﻿components = {"Test"}
+components ={"Test"}
 
 Test={
     damage = 3,
-    range = true,
+    range = true,    
     testo = "test1"
 }

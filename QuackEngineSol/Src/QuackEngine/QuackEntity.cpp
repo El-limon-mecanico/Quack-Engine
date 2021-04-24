@@ -16,16 +16,16 @@ QuackEntity::~QuackEntity() {
 	}
 }
 
-Component* QuackEntity::addComponent(const std::string& name)
+Component* QuackEntity::addComponent(const std::string& componentName, const std::string& fileName)
 {
-	if (hasComponent(name))
-		return cmpMap_[name];
+	if (hasComponent(componentName))
+		return cmpMap_[componentName];
 	else {
-		Component* c = FactoryManager::instance()->create(name);
+		Component* c = FactoryManager::instance()->create(componentName);
 		c->setEntity(this);
-		c->init(readLuaFile(("lua/Components/"+name+".lua"),name));
+		c->init(readLuaFile(("lua/Components/"+ fileName +".lua"), componentName));
 		components_.push_back(c);
-		cmpMap_.insert({ name , c });
+		cmpMap_.insert({ componentName , c });
 		return c;
 	}
 }
