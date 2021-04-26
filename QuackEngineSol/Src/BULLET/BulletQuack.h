@@ -5,45 +5,55 @@
 
 namespace Ogre {
 	class Root;
-	class SceneManager;
+	class SceneNode;
+	class Entity;
 }
 
 namespace BtOgre {
 	class DynamicsWorld;
+	class CollisionListener;
+	enum ColliderType;
 }
+
+class btCollisionConfiguration;
+class btCollisionDispatcher;
+class btConstraintSolver;
+class btBroadphaseInterface;
+class btDynamicsWorld;
+class btRigidBody;
 
 class BulletQuack {
 private:
 
 	static std::unique_ptr<BulletQuack> instance_;
 
-	Ogre::Root* root_;
-
-	Ogre::SceneManager* mSM_;
+	/*std::unique_ptr<btCollisionConfiguration> mCollisionConfig;
+	std::unique_ptr<btCollisionDispatcher> mDispatcher;
+	std::unique_ptr<btConstraintSolver> mSolver;
+	std::unique_ptr<btBroadphaseInterface> mBroadphase;
+	btDynamicsWorld* mBtWorld;*/
 
 	BtOgre::DynamicsWorld* world_;
 
 	void init();
 
+	//static void onTick(btDynamicsWorld* world, float timeStep);
 
 public:
 
-	static bool Init(Ogre::Root* root, Ogre::SceneManager* msM);
+	static bool Init();
 
 	static BulletQuack* Instance();
 
-
-	BulletQuack(Ogre::Root* root, Ogre::SceneManager* msM) :root_(root), mSM_(msM) {
+	BulletQuack() {
 		init();
 	}
 
 	~BulletQuack() {}
 
-	void addSceneManager(Ogre::SceneManager* mngr) { mSM_ = mngr; }
-
 	void stepPhysics(double deltaTime);
 
-	BtOgre::DynamicsWorld* getWorld() { return world_; }
+	btRigidBody* addRigidBody(Ogre::Entity* e, BtOgre::CollisionListener* listener, float mass = 1,  BtOgre::ColliderType col = (BtOgre::ColliderType)1);
 };
 
 #endif // !_PHYSICS_MANAGER_

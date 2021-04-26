@@ -6,7 +6,8 @@ QuackEntity::QuackEntity(bool active, std::string tag) : active_(active), tag_(t
 {
 	mSM_ = OgreQuack::Instance()->getSceneManager();
 	node_ = mSM_->getRootSceneNode()->createChildSceneNode();
-	//setOgreEntity(mSM_->createEntity(Ogre::SceneManager::PrefabType::PT_CUBE)); //CAMBIAR ESTE CUBO POR UNA MALLA EMPTY QUE TENGAMOS EN EL RESOURCES
+	setOgreEntity(mSM_->createEntity(Ogre::SceneManager::PrefabType::PT_CUBE)); //CAMBIAR ESTE CUBO POR UNA MALLA EMPTY QUE TENGAMOS EN EL RESOURCES
+	ogreEnt_->setVisible(false);
 }
 
 QuackEntity::~QuackEntity() {

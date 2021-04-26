@@ -13,7 +13,7 @@
 #include "LuaManager.h"
 #include "FactoryManager.h"
 #include "QuackEntity.h"
-#include "Render.h"
+#include "MeshRenderer.h"
 #include "QuackTime.h"
 #include "Rigidbody.h"
 #include "BtOgre.h"
@@ -28,7 +28,7 @@ void addCopmponentsFactories()
 {
 	FactoryManager::init();
 	
-	FactoryManager::instance()->add<Render>("Render");
+	FactoryManager::instance()->add<MeshRenderer>("MeshRenderer");
 	FactoryManager::instance()->add<Rigidbody>("Rigidbody");
 	FactoryManager::instance()->add<Prueba>("Prueba");
 }
@@ -47,30 +47,33 @@ void QuackEnginePro::prueba()
 	//fmod_sound->stopChannel(0);
 
 	QuackEntity* sphere1 = new QuackEntity();
-	Render* r = sphere1->addComponent<Render>();
+	MeshRenderer* r = sphere1->addComponent<MeshRenderer>();
 	r->setMeshByPrefab(PrefabType::PT_SPHERE); //:)
 	Rigidbody* rb = sphere1->addComponent<Rigidbody>();
+	rb->setNombre("esferita1");
 	sphere1->getNode()->setPosition(0, 300, 0);
 
-	rb->setRigidbody(1, ColliderType::CT_SPHERE);
+	rb->setRigidbody(1, BtOgre::ColliderType::CT_SPHERE);
 
 	QuackEntity* sphere2 = new QuackEntity();
-	r = sphere2->addComponent<Render>();
+	r = sphere2->addComponent<MeshRenderer>();
 	r->setMeshByPrefab(PrefabType::PT_SPHERE); //:)))
 	rb = sphere2->addComponent<Rigidbody>();
+	rb->setNombre("esferita2");
 	sphere2->getNode()->setPosition(50, 500, 0);
 
-	rb->setRigidbody(1, ColliderType::CT_SPHERE);
+	rb->setRigidbody(1, BtOgre::ColliderType::CT_SPHERE);
 
 	QuackEntity* plane = new QuackEntity();
-	r = plane->addComponent<Render>();
+	r = plane->addComponent<MeshRenderer>();
 	r->setMeshByPrefab(PrefabType::PT_PLANE); //:)))
 	rb = plane->addComponent<Rigidbody>();
+	rb->setNombre("plano");
 
 	plane->getNode()->rotate(Ogre::Vector3(1, 0, 0), Ogre::Radian(Ogre::Degree(-90)));
 	plane->getNode()->scale(5, 5, 1);
 
-	rb->setRigidbody(0, ColliderType::CT_BOX);
+	rb->setRigidbody(0);
 	rb->getRigidbody()->setGravity(btVector3(0, 0, 0));
 }
 
@@ -103,7 +106,7 @@ void QuackEnginePro::setup()
 
 	sdlWindow_ = OgreQuack::Instance()->getSdlWindow();
 
-	BulletQuack::Init(OgreQuack::Instance()->getRoot(), OgreQuack::Instance()->getSceneManager());
+	BulletQuack::Init();
 
 	fmod_quack_ = new fmod_quack();
 

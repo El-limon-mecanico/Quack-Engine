@@ -40,12 +40,6 @@ btBoxShape* createBoxCollider(const Ogre::MovableObject* mo)
 	return shape;
 }
 
-struct EntityCollisionListener
-{
-	const Ogre::MovableObject* entity;
-	CollisionListener* listener;
-};
-
 static void onTick(btDynamicsWorld* world, btScalar timeStep)
 {
 	int numManifolds = world->getDispatcher()->getNumManifolds();
@@ -59,31 +53,12 @@ static void onTick(btDynamicsWorld* world, btScalar timeStep)
            	auto body0 = static_cast<EntityCollisionListener*>(manifold->getBody0()->getUserPointer());
 			auto body1 = static_cast<EntityCollisionListener*>(manifold->getBody1()->getUserPointer());
 			if(body0->listener)
-				body0->listener->contact(body1->entity, mp);
+				body0->listener->contact(body1->listener, mp);
 			if(body1->listener)
-				body1->listener->contact(body0->entity, mp);
+				body1->listener->contact(body0->listener, mp);
         }
     }
 }
-
-/// wrapper with automatic memory management
-class RigidBody
-{
-	btRigidBody* mBtBody;
-	btDynamicsWorld* mBtWorld;
-public:
-    RigidBody(btRigidBody* btBody, btDynamicsWorld* btWorld) : mBtBody(btBody), mBtWorld(btWorld) {}
-	~RigidBody()
-	{
-		mBtWorld->removeRigidBody(mBtBody);
-		delete (EntityCollisionListener*)mBtBody->getUserPointer();
-		delete mBtBody->getMotionState();
-		delete mBtBody->getCollisionShape();
-		delete mBtBody;
-	}
-
-	btRigidBody* getBtBody() const { return mBtBody; }
-};
 
 DynamicsWorld::DynamicsWorld(const Ogre::Vector3& gravity)
 {

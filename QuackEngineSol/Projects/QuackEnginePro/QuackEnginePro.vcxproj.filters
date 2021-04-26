@@ -54,10 +54,10 @@
     <ClCompile Include="..\..\Src\QuackEngine\FactoryManager.cpp">
       <Filter>Archivos de origen\Ecs</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\QuackEngine\Render.cpp">
+    <ClCompile Include="..\..\Src\QuackEngine\Rigidbody.cpp">
       <Filter>Archivos de origen\Ecs\Components</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\QuackEngine\Rigidbody.cpp">
+    <ClCompile Include="..\..\Src\QuackEngine\MeshRenderer.cpp">
       <Filter>Archivos de origen\Ecs\Components</Filter>
     </ClCompile>
   </ItemGroup>
@@ -83,10 +83,10 @@
     <ClInclude Include="..\..\Src\QuackEngine\FactoryManager.h">
       <Filter>Archivos de encabezado\Ecs</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\QuackEngine\Render.h">
+    <ClInclude Include="..\..\Src\QuackEngine\Rigidbody.h">
       <Filter>Archivos de encabezado\Ecs\Components</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\QuackEngine\Rigidbody.h">
+    <ClInclude Include="..\..\Src\QuackEngine\MeshRenderer.h">
       <Filter>Archivos de encabezado\Ecs\Components</Filter>
     </ClInclude>
   </ItemGroup>

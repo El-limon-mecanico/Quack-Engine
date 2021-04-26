@@ -1,7 +1,6 @@
 #include "Rigidbody.h"
 #include "BulletQuack.h"
 #include "QuackEntity.h"
-#include "BtOgre.h"
 
 Rigidbody::Rigidbody(QuackEntity* e)
 {
@@ -18,10 +17,16 @@ bool Rigidbody::init(luabridge::LuaRef parameterTable)
 	return true;
 }
 
-void Rigidbody::setRigidbody(int mass, ColliderType type)
+void Rigidbody::setRigidbody(int mass, BtOgre::ColliderType type)
 {
-	BtOgre::ColliderType t = (BtOgre::ColliderType)type;
-	rb_ = BulletQuack::Instance()->getWorld()->addRigidBody(mass, entity_->getOgreEntity(), t);
+	rb_ = BulletQuack::Instance()->addRigidBody(entity_->getOgreEntity(), this, mass, type);
+}
+
+void Rigidbody::contact(BtOgre::CollisionListener* other, const btManifoldPoint& manifoldPoint)
+{
+	Rigidbody* otherObj = static_cast<Rigidbody*>(other);
+
+	std::cout << "Yo " << nombre << " me he chocado con " << otherObj->nombre << "\n\n";
 }
 
 
