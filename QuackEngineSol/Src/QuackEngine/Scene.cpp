@@ -46,6 +46,7 @@ bool Scene::createEntity(const std::string& fileName)
 	for(int i=1;i<=components.length();i++)
 	{
 		//carga los componentes
+		enableExceptions(components[i]);
 		entity->addComponent(components[i], readElementFromFile(state, components[i]));
 	}
 

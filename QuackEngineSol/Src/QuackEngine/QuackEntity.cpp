@@ -24,7 +24,7 @@ Component* QuackEntity::addComponent(const std::string& componentName, LuaRef pa
 		std::cout << "Cargando el componente: " << componentName << "\n";
 		Component* c = FactoryManager::instance()->create(componentName);
 		c->setEntity(this);
-		if (param.isNil()) std::cout << "ERROR: no se ha podido cargar el componente " << componentName << "\n";
+		if (param.isNil()) std::cout << "ERROR: no se ha podido cargar los valores del componente " << componentName << "\n";
 		else c->init(param);
 		components_.push_back(c);
 		cmpMap_.insert({ componentName , c });

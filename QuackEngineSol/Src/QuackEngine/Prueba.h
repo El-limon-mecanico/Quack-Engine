@@ -1,6 +1,7 @@
 #pragma once
 #include "Component.h"
 
+
 class Prueba : public Component {
 private:
 	int valor1;
