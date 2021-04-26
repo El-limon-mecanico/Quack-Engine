@@ -46,6 +46,6 @@ bool Prueba::init(luabridge::LuaRef parameterTable)
 
 void Prueba::update()
 {
-	std::cout << " Update de Prueba\n";
+	//std::cout << " Update de Prueba\n";
 }
 

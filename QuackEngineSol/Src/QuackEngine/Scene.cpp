@@ -19,13 +19,13 @@ Scene::Scene(const std::string& file, const std::string& name)
 
 		//crea las entidades con sus compoenntes
 		//con el nombre ent, se busca el .lua y se cree lo que pone alli
-		createEntity(ent);
+		if(!createEntity(ent)) std::cout << "ERROR: no se ha podidio cargar la entidad: " << ent;
 	}
 	
 	
 }
 
-void Scene::createEntity(const std::string& fileName)
+bool Scene::createEntity(const std::string& fileName)
 {
 	QuackEntity* entity = new QuackEntity();
 	entities_.push_back(entity);
@@ -36,13 +36,20 @@ void Scene::createEntity(const std::string& fileName)
 	lua_State* state = readFileLua(path);
 
 	//leemos el array de componentes
-	LuaRef components = readElementFromFile(state, "Components");
+	LuaRef components = NULL;
+	
+	components = readElementFromFile(state, "Components");
 
+	//comprobamos errores
+	if(components.isNil()) { std::cout << "ERROR: No se ha podido leer el Array 'Components' \n"; return false; }
+	
 	for(int i=1;i<=components.length();i++)
 	{
 		//carga los componentes
 		entity->addComponent(components[i], readElementFromFile(state, components[i]));
 	}
+
+	return true;
 }
 
 Scene::~Scene()
@@ -51,7 +58,7 @@ Scene::~Scene()
 
 void Scene::update()
 {
-	std::cout << "New frame\n";
+	//std::cout << "New frame\n";
 	for(QuackEntity* entity:entities_)
 	{
 		entity->update();

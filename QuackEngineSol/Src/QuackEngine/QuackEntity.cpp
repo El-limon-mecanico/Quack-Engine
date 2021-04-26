@@ -21,10 +21,11 @@ Component* QuackEntity::addComponent(const std::string& componentName, LuaRef pa
 	if (hasComponent(componentName)) //para no repetir componentes
 		return cmpMap_[componentName];
 	else {
-		std::cout << "Añadiendo componente: " << componentName << "\n";
+		std::cout << "Cargando el componente: " << componentName << "\n";
 		Component* c = FactoryManager::instance()->create(componentName);
 		c->setEntity(this);
-		c->init(param);
+		if (param.isNil()) std::cout << "ERROR: no se ha podido cargar el componente " << componentName << "\n";
+		else c->init(param);
 		components_.push_back(c);
 		cmpMap_.insert({ componentName , c });
 		return c;

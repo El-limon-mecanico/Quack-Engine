@@ -1,4 +1,4 @@
-Components ={"Prueba"}
+Components ={"Prueba", "a"}
 
 Prueba = {
     valor1 = 1,
