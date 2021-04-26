@@ -6,7 +6,7 @@ QuackEntity::QuackEntity(bool active, std::string tag) : active_(active), tag_(t
 {
 	mSM_ = OgreQuack::Instance()->getSceneManager();
 	node_ = mSM_->getRootSceneNode()->createChildSceneNode();
-	setOgreEntity(mSM_->createEntity(Ogre::SceneManager::PrefabType::PT_CUBE)); //CAMBIAR ESTE CUBO POR UNA MALLA EMPTY QUE TENGAMOS EN EL RESOURCES
+	//setOgreEntity(mSM_->createEntity(Ogre::SceneManager::PrefabType::PT_CUBE)); //CAMBIAR ESTE CUBO POR UNA MALLA EMPTY QUE TENGAMOS EN EL RESOURCES
 }
 
 QuackEntity::~QuackEntity() {
@@ -23,7 +23,7 @@ Component* QuackEntity::addComponent(const std::string& componentName, const std
 	else {
 		Component* c = FactoryManager::instance()->create(componentName);
 		c->setEntity(this);
-		c->init(readLuaFile(("lua/Components/"+ fileName +".lua"), componentName));
+		//c->init(readElementFromFile(("lua/Components/"+ fileName +".lua"), componentName));
 		components_.push_back(c);
 		cmpMap_.insert({ componentName , c });
 		return c;

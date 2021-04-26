@@ -14,6 +14,7 @@ class BulletQuack;
 class fmod_quack;
 class OgreQuack;
 class SDL_Window;
+class Scene;
 
 class QUACK_ENGINE_PRO_API QuackEnginePro {
 private:
@@ -37,6 +38,8 @@ private:
 	bool exit = true;
 
 	void prueba();
+
+	Scene* scene_;
 
 public:
 

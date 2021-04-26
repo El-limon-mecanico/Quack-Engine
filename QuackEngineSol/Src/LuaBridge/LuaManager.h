@@ -2,4 +2,6 @@
 #include "LuaBridge.h"
 using namespace luabridge;
 
-LuaRef readLuaFile(std::string file, std::string tableName);
+LuaRef readElementFromFile(lua_State* state, std::string tableName);
+
+lua_State* readFileLua(std::string file);

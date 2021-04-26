@@ -71,8 +71,6 @@ void QuackEnginePro::prueba()
 
 	rb->setRigidbody(0, ColliderType::CT_BOX);
 	rb->getRigidbody()->setGravity(btVector3(0, 0, 0));
-
-	Scene* primeraEscena = new Scene("Scenes/scene1.lua", "scene1");
 }
 
 std::unique_ptr<QuackEnginePro>  QuackEnginePro::instance_;
@@ -90,10 +88,6 @@ QuackEnginePro* QuackEnginePro::Instance()
 	assert(instance_.get() != nullptr);
 	return instance_.get();
 }
-	
-#include "Scene.h"
-
-Scene* scene;
 
 
 void QuackEnginePro::setup()
@@ -112,8 +106,7 @@ void QuackEnginePro::setup()
 
 	fmod_quack_ = new fmod_quack();
 
-	//CargarLua();	
-
+	scene_ = new Scene("Scenes/scene1.lua", "scene1");
 }
 
 void QuackEnginePro::start()
@@ -131,6 +124,8 @@ void QuackEnginePro::update()
 {
 	exit = false;
 	while (!exit) {
+		scene_->update(); //actualizamos la escena que actualiza las entidades
+		
 		quackTime_->frameStarted();
 		OgreQuack::Instance()->getRoot()->renderOneFrame();
 		pollEvents();
