@@ -17,16 +17,37 @@ Render::~Render()
 
 bool Render::init(luabridge::LuaRef parameterTable)
 {
-	if(parameterTable.state())
-		enableExceptions(parameterTable);
+	mSM_ = OgreQuack::Instance()->getSceneManager();
+	node_ = mSM_->getRootSceneNode()->createChildSceneNode();
+
+	std::string type;
+	readVariable<std::string>(parameterTable, "Type", type);
+
+	if (type == "Sphere")
+		setOgreEntity(mSM_->createEntity(Ogre::SceneManager::PrefabType::PT_SPHERE));
+	else if (type == "Cube")
+		setOgreEntity(mSM_->createEntity(Ogre::SceneManager::PrefabType::PT_CUBE));
+	else if (type == "Plane")
+		setOgreEntity(mSM_->createEntity(Ogre::SceneManager::PrefabType::PT_PLANE));
+	else std::cout << "ERROR: no existe el tipo de prefab: " << type << "\n";
+
+
+
 	return true;
 }
 
-void Render::setMeshByPrefab(PrefabType prefab) {
-	OgrePrefab p = (OgrePrefab)prefab;
-	Ogre::Entity* ent = entity_->getSceneManager()->createEntity(p);
-	entity_->setOgreEntity(ent);
+void Render::setOgreEntity(Ogre::Entity* e)
+{
+	Ogre::Entity* aux = ogreEnt_;
+	node_->detachAllObjects();
+	ogreEnt_ = e;
+	node_->attachObject(ogreEnt_);
+	delete aux; aux = nullptr;
+}
 
+void Render::setParent(Ogre::SceneNode* parent)
+{
+	parent->addChild((Node*)node_); //no se si esto es correcto alsjdhajlsdhalj no he testeado
 }
 
 void Render::setMeshByName(const std::string& name) {

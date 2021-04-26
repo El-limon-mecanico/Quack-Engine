@@ -46,32 +46,32 @@ void QuackEnginePro::prueba()
 	//fmod_sound->pauseChannel(0, true);
 	//fmod_sound->stopChannel(0);
 
-	QuackEntity* sphere1 = new QuackEntity();
-	Render* r = sphere1->addComponent<Render>();
-	r->setMeshByPrefab(PrefabType::PT_SPHERE); //:)
-	Rigidbody* rb = sphere1->addComponent<Rigidbody>();
-	sphere1->getNode()->setPosition(0, 300, 0);
+	//QuackEntity* sphere1 = new QuackEntity();
+	//Render* r = sphere1->addComponent<Render>();
+	//r->setMeshByPrefab(PrefabType::PT_SPHERE); //:)
+	//Rigidbody* rb = sphere1->addComponent<Rigidbody>();
+	////sphere1->getNode()->setPosition(0, 300, 0);
 
-	rb->setRigidbody(1, ColliderType::CT_SPHERE);
+	//rb->setRigidbody(1, ColliderType::CT_SPHERE);
 
-	QuackEntity* sphere2 = new QuackEntity();
-	r = sphere2->addComponent<Render>();
-	r->setMeshByPrefab(PrefabType::PT_SPHERE); //:)))
-	rb = sphere2->addComponent<Rigidbody>();
-	sphere2->getNode()->setPosition(50, 500, 0);
+	//QuackEntity* sphere2 = new QuackEntity();
+	//r = sphere2->addComponent<Render>();
+	//r->setMeshByPrefab(PrefabType::PT_SPHERE); //:)))
+	//rb = sphere2->addComponent<Rigidbody>();
+	//sphere2->getNode()->setPosition(50, 500, 0);
 
-	rb->setRigidbody(1, ColliderType::CT_SPHERE);
+	//rb->setRigidbody(1, ColliderType::CT_SPHERE);
 
-	QuackEntity* plane = new QuackEntity();
-	r = plane->addComponent<Render>();
-	r->setMeshByPrefab(PrefabType::PT_PLANE); //:)))
-	rb = plane->addComponent<Rigidbody>();
+	//QuackEntity* plane = new QuackEntity();
+	//r = plane->addComponent<Render>();
+	//r->setMeshByPrefab(PrefabType::PT_PLANE); //:)))
+	//rb = plane->addComponent<Rigidbody>();
 
-	plane->getNode()->rotate(Ogre::Vector3(1, 0, 0), Ogre::Radian(Ogre::Degree(-90)));
-	plane->getNode()->scale(5, 5, 1);
+	//plane->getNode()->rotate(Ogre::Vector3(1, 0, 0), Ogre::Radian(Ogre::Degree(-90)));
+	//plane->getNode()->scale(5, 5, 1);
 
-	rb->setRigidbody(0, ColliderType::CT_BOX);
-	rb->getRigidbody()->setGravity(btVector3(0, 0, 0));
+	//rb->setRigidbody(0, ColliderType::CT_BOX);
+	//rb->getRigidbody()->setGravity(btVector3(0, 0, 0));
 }
 
 std::unique_ptr<QuackEnginePro>  QuackEnginePro::instance_;
@@ -127,9 +127,9 @@ void QuackEnginePro::update()
 	exit = false;
 	while (!exit) {
 		scene_->update(); //actualizamos la escena que actualiza las entidades
+		OgreQuack::Instance()->getRoot()->renderOneFrame(); //que hace esto??? comentaaaaaaad el codigoooooooooo!!!
 		
 		quackTime_->frameStarted();
-		OgreQuack::Instance()->getRoot()->renderOneFrame();
 		pollEvents();
 		BulletQuack::Instance()->stepPhysics(time()->deltaTime());
 	}

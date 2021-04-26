@@ -16,13 +16,23 @@ enum PrefabType {
 };
 
 class Render : public Component {
+protected:
+	Ogre::SceneNode* node_;
+	Ogre::SceneManager* mSM_;
+	Ogre::Entity* ogreEnt_;
+
+	void setOgreEntity(Ogre::Entity* e);
+	void setParent(Ogre::SceneNode* parent);
+
 public:
 	Render(QuackEntity* e = nullptr);
 	~Render();
 
 	virtual bool init(luabridge::LuaRef parameterTable = { nullptr });
 
-	void setMeshByPrefab(PrefabType prefab);
-
 	void setMeshByName(const std::string& name);
+	
+	Ogre::SceneNode* getNode() { return node_; }
+	Ogre::SceneManager* getSceneManager() { return mSM_; }
+	Ogre::Entity* getOgreEntity() { return ogreEnt_; }
 };

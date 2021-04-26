@@ -60,6 +60,9 @@
     <ClCompile Include="..\..\Src\QuackEngine\Rigidbody.cpp">
       <Filter>Archivos de origen\Ecs\Components</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\QuackEngine\Bola.cpp">
+      <Filter>Archivos de origen\Ecs\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\QuackEngine\Scene.h">
@@ -87,6 +90,9 @@
       <Filter>Archivos de encabezado\Ecs\Components</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\QuackEngine\Rigidbody.h">
+      <Filter>Archivos de encabezado\Ecs\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\QuackEngine\Bola.h">
       <Filter>Archivos de encabezado\Ecs\Components</Filter>
     </ClInclude>
   </ItemGroup>

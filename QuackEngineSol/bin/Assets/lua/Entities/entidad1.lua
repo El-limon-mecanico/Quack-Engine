@@ -1,3 +1,5 @@
-﻿entidad1 = {
-    components = {"prueba"}
+﻿Components = {"Render"}
+
+Render = {
+    Type = "Sphere"
 }

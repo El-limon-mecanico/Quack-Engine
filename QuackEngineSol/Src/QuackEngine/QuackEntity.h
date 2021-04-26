@@ -18,11 +18,6 @@ namespace Ogre {
 }
 
 class QuackEntity {
-
-protected:
-	Ogre::SceneNode* node_;
-	Ogre::SceneManager* mSM_;
-	Ogre::Entity* ogreEnt_;
 private:
 	bool active_;
 	std::vector<Component*> components_;
@@ -57,9 +52,6 @@ public:
 		active_ = state;
 	}
 	void removeComponent(const std::string& name);
-	Ogre::SceneNode* getNode() { return node_; }
-	Ogre::SceneManager* getSceneManager() { return mSM_; }
-	Ogre::Entity* getOgreEntity() { return ogreEnt_; }
 	void setOgreEntity(Ogre::Entity* e);
 	void setParent(Ogre::SceneNode* parent);
 	void update();

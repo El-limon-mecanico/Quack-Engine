@@ -1,5 +1,6 @@
 #include "Prueba.h"
 #include "LuaManager.h"
+#include "checkML.h"
 
 //template<typename T>
 //extern bool readVariable(LuaRef& table, const std::string& variableName, T& variable);
@@ -12,7 +13,6 @@ Prueba::Prueba(QuackEntity* e) : Component(e)
 Prueba::~Prueba()
 {
 }
-
 
 bool Prueba::init(luabridge::LuaRef parameterTable)
 {	

@@ -5,6 +5,7 @@
 
 #if (defined _DEBUG) || !(defined _WIN32)
 int main() {
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 #else
 #include <windows.h>
 int WINAPI

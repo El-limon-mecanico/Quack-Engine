@@ -21,7 +21,5 @@ bool Rigidbody::init(luabridge::LuaRef parameterTable)
 void Rigidbody::setRigidbody(int mass, ColliderType type)
 {
 	BtOgre::ColliderType t = (BtOgre::ColliderType)type;
-	rb_ = BulletQuack::Instance()->getWorld()->addRigidBody(mass, entity_->getOgreEntity(), t);
+	//TODO//rb_ = BulletQuack::Instance()->getWorld()->addRigidBody(mass, entity_->getOgreEntity(), t);
 }
-
-
