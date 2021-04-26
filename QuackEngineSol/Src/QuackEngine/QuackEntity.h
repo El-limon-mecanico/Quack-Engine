@@ -47,7 +47,7 @@ public:
 
 	//el component name es el nombre del componente como tal (mismo nombre para varias entidades con el mismo componente),
 	//filename es el nombre del .lua de la entidad donde esta el prefab como tal
-	Component* addComponent(const std::string& componentName, const std::string& fileName);
+	Component* addComponent(const std::string& componentName, LuaRef param);
 	Component* getComponent(const std::string& name);
 	inline bool hasComponent(const std::string& name);
 	inline bool isActive() const {

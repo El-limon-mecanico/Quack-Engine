@@ -30,6 +30,7 @@ void addCopmponentsFactories()
 	
 	FactoryManager::instance()->add<Render>("Render");
 	FactoryManager::instance()->add<Rigidbody>("Rigidbody");
+	FactoryManager::instance()->add<Prueba>("Prueba");
 }
 
 
@@ -106,13 +107,14 @@ void QuackEnginePro::setup()
 
 	fmod_quack_ = new fmod_quack();
 
+	addCopmponentsFactories();
+	
 	scene_ = new Scene("Scenes/scene1.lua", "scene1");
 }
 
 void QuackEnginePro::start()
 {
 	if (!updateStarted){
-        addCopmponentsFactories();
 		prueba();
         update();
     } 

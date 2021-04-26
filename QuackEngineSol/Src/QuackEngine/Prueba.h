@@ -11,6 +11,6 @@ public:
 	Prueba(QuackEntity* e = nullptr);
 	~Prueba();
 	
-	virtual bool init(luabridge::LuaRef parameterTable);
-	
+	virtual bool init(luabridge::LuaRef parameterTable) override;
+	virtual void update() override;
 };

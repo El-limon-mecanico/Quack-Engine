@@ -27,10 +27,22 @@ Scene::Scene(const std::string& file, const std::string& name)
 
 void Scene::createEntity(const std::string& fileName)
 {
+	QuackEntity* entity = new QuackEntity();
+	entities_.push_back(entity);
+	
 	std::string path = "Entities/" + fileName + ".lua";
 	
-	//primero leemos 
-	
+	//primero leemos el archivo (state)
+	lua_State* state = readFileLua(path);
+
+	//leemos el array de componentes
+	LuaRef components = readElementFromFile(state, "Components");
+
+	for(int i=1;i<=components.length();i++)
+	{
+		//carga los componentes
+		entity->addComponent(components[i], readElementFromFile(state, components[i]));
+	}
 }
 
 Scene::~Scene()

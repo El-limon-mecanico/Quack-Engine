@@ -1,3 +1,3 @@
 ﻿scene1 = {
-    entities = {"Test1", "entidad2"}
+    entities = {"Test1"}
 }

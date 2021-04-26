@@ -1,7 +1,7 @@
-components ={"Test"}
+Components ={"Prueba"}
 
-Test={
-    damage = 3,
-    range = true,    
-    testo = "test1"
+Prueba = {
+    valor1 = 1,
+    valor2 = 3,
+    valor3 = "Quack"
 }
