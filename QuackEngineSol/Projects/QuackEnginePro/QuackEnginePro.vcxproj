@@ -26,7 +26,7 @@
     <ClCompile Include="..\..\Src\QuackEngine\Prueba.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\QuackEnginePro.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\QuackTime.cpp" />
-    <ClCompile Include="..\..\Src\QuackEngine\Render.cpp" />
+    <ClCompile Include="..\..\Src\QuackEngine\MeshRenderer.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\Rigidbody.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\Scene.cpp" />
   </ItemGroup>
@@ -52,7 +52,7 @@
     <ClInclude Include="..\..\Src\QuackEngine\FactoryManager.h" />
     <ClInclude Include="..\..\Src\QuackEngine\Prueba.h" />
     <ClInclude Include="..\..\Src\QuackEngine\QuackTime.h" />
-    <ClInclude Include="..\..\Src\QuackEngine\Render.h" />
+    <ClInclude Include="..\..\Src\QuackEngine\MeshRenderer.h" />
     <ClInclude Include="..\..\Src\QuackEngine\Rigidbody.h" />
     <ClInclude Include="..\..\Src\QuackEngine\Scene.h" />
   </ItemGroup>

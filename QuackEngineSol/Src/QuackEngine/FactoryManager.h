@@ -1,7 +1,7 @@
 #pragma once
-#include "Render.h"
 #include <memory>
 #include <assert.h>
+#include "Component.h"
 
 class FactoryManager {
 
