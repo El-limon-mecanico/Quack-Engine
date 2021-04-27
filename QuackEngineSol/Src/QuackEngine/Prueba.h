@@ -11,6 +11,13 @@ public:
 	Prueba(QuackEntity* e = nullptr);
 	~Prueba();
 	
-	virtual bool init(luabridge::LuaRef parameterTable) override;
+	virtual bool init(luabridge::LuaRef parameterTable = { nullptr }) override;
+
 	virtual void update() override;
+
+	virtual void onCollisionEnter(QuackEntity* other) override;
+
+	virtual void onCollisionStay(QuackEntity* other) override;
+
+	virtual void onCollisionExit(QuackEntity* other) override;
 };

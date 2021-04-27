@@ -4,29 +4,37 @@
 
 //no se si esto es lo correcto para acceder a las clases que necesito?¿?¿?¿
 
+const float TIME_TO_EXIT = 0.1f;
 
 class Rigidbody : public Component, public BtOgre::CollisionListener {
 private:
 
+	struct CollisionInfo {
+		QuackEntity* other = 0;
+		float time = 0;
+	};
+
 	btRigidBody* rb_;
 
-public:
+	std::vector<CollisionInfo> collisions;
 
-	std::string nombre = "name";
+public:
 
 	Rigidbody(QuackEntity* e = nullptr);
 
 	~Rigidbody();
 
-	void setNombre(std::string nomb) { nombre = nomb; }
+	virtual bool init(luabridge::LuaRef parameterTable = { nullptr }) override;
 
-	virtual bool init(luabridge::LuaRef parameterTable = { nullptr });
+	virtual void preUpdate() override;
+
+	//virtual void update();
+
+	virtual void lateUpdate() override;
 
 	void setRigidbody(int mass = 1, BtOgre::ColliderType type = BtOgre::ColliderType::CT_BOX);
 	
 	btRigidBody* getRigidbody() { return rb_; }
-
-	//virtual void contact(Ogre::MovableObject* other, const btManifoldPoint& manifoldPoint){}
 
 	virtual void contact( CollisionListener* other, const btManifoldPoint& manifoldPoint);
 	

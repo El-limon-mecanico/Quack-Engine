@@ -27,11 +27,12 @@ private:
 	bool active_;
 	std::vector<Component*> components_;
 	std::string tag_;
+	std::string name_;
 	std::unordered_map<std::string, Component*> cmpMap_;
 
 
 public:
-	QuackEntity(bool active = true, std::string tag = "Default");
+	QuackEntity(std::string name = "DefaultName", bool active = true, std::string tag = "Default");
 	~QuackEntity();
 
 	template<typename T, typename ... Targs>
@@ -49,7 +50,9 @@ public:
 	//filename es el nombre del .lua de la entidad donde esta el prefab como tal
 	Component* addComponent(const std::string& componentName, LuaRef param);
 	Component* getComponent(const std::string& name);
+
 	inline bool hasComponent(const std::string& name);
+
 	inline bool isActive() const {
 		return active_;
 	}
@@ -60,7 +63,22 @@ public:
 	Ogre::SceneNode* getNode() { return node_; }
 	Ogre::SceneManager* getSceneManager() { return mSM_; }
 	Ogre::Entity* getOgreEntity() { return ogreEnt_; }
+
 	void setOgreEntity(Ogre::Entity* e);
+
 	void setParent(Ogre::SceneNode* parent);
+
+	std::string name() { return name_; }
+
+	void preUpdate();
+
 	void update();
+
+	void lateUpdate();
+
+	void onCollisionEnter(QuackEntity* other);
+
+	void onCollisionStay(QuackEntity* other);
+
+	void onCollisionExit(QuackEntity* other);
 };

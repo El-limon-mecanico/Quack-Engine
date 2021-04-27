@@ -14,7 +14,6 @@
 #include "FactoryManager.h"
 #include "QuackEntity.h"
 #include "MeshRenderer.h"
-#include "QuackTime.h"
 #include "Rigidbody.h"
 #include "BtOgre.h"
 
@@ -27,7 +26,7 @@
 void addCopmponentsFactories()
 {
 	FactoryManager::init();
-	
+
 	FactoryManager::instance()->add<MeshRenderer>("MeshRenderer");
 	FactoryManager::instance()->add<Rigidbody>("Rigidbody");
 	FactoryManager::instance()->add<Prueba>("Prueba");
@@ -46,35 +45,37 @@ void QuackEnginePro::prueba()
 	//fmod_sound->pauseChannel(0, true);
 	//fmod_sound->stopChannel(0);
 
-	QuackEntity* sphere1 = new QuackEntity();
+	QuackEntity* sphere1 = new QuackEntity("esferita1");
 	MeshRenderer* r = sphere1->addComponent<MeshRenderer>();
 	r->setMeshByPrefab(PrefabType::PT_SPHERE); //:)
 	Rigidbody* rb = sphere1->addComponent<Rigidbody>();
-	rb->setNombre("esferita1");
 	sphere1->getNode()->setPosition(0, 300, 0);
 
 	rb->setRigidbody(1, BtOgre::ColliderType::CT_SPHERE);
 
-	QuackEntity* sphere2 = new QuackEntity();
+	QuackEntity* sphere2 = new QuackEntity("esferita2");
+	sphere2->addComponent<Prueba>();
 	r = sphere2->addComponent<MeshRenderer>();
 	r->setMeshByPrefab(PrefabType::PT_SPHERE); //:)))
 	rb = sphere2->addComponent<Rigidbody>();
-	rb->setNombre("esferita2");
 	sphere2->getNode()->setPosition(50, 500, 0);
 
 	rb->setRigidbody(1, BtOgre::ColliderType::CT_SPHERE);
 
-	QuackEntity* plane = new QuackEntity();
+	QuackEntity* plane = new QuackEntity("PlanoToGuapo");
 	r = plane->addComponent<MeshRenderer>();
 	r->setMeshByPrefab(PrefabType::PT_PLANE); //:)))
 	rb = plane->addComponent<Rigidbody>();
-	rb->setNombre("plano");
 
 	plane->getNode()->rotate(Ogre::Vector3(1, 0, 0), Ogre::Radian(Ogre::Degree(-90)));
 	plane->getNode()->scale(5, 5, 1);
 
 	rb->setRigidbody(0);
 	rb->getRigidbody()->setGravity(btVector3(0, 0, 0));
+
+	scene_->addEntity(sphere1);
+	scene_->addEntity(sphere2);
+	scene_->addEntity(plane);
 }
 
 std::unique_ptr<QuackEnginePro>  QuackEnginePro::instance_;
@@ -111,17 +112,17 @@ void QuackEnginePro::setup()
 	fmod_quack_ = new fmod_quack();
 
 	addCopmponentsFactories();
-	
-	scene_ = new Scene("Scenes/scene1.lua", "scene1");
+
+	scene_ = new Scene("Scenes/scene1.lua", "scene1");  // NECESITAMOS UN SCENE MANAGER QUE GUARDE LAS ESCENAS Y LAS MANEJE 
 }
 
 void QuackEnginePro::start()
 {
-	if (!updateStarted){
+	if (!updateStarted) {
 		prueba();
-        update();
-    } 
-    
+		update();
+	}
+
 }
 
 
@@ -129,12 +130,19 @@ void QuackEnginePro::update()
 {
 	exit = false;
 	while (!exit) {
-		scene_->update(); //actualizamos la escena que actualiza las entidades
-		
 		quackTime_->frameStarted();
-		OgreQuack::Instance()->getRoot()->renderOneFrame();
-		pollEvents();
+
+		scene_->preUpdate();
+
 		BulletQuack::Instance()->stepPhysics(time()->deltaTime());
+
+		pollEvents();
+
+		scene_->update(); //actualizamos la escena que actualiza las entidades	
+
+		OgreQuack::Instance()->getRoot()->renderOneFrame();
+
+		scene_->lateUpdate();
 	}
 }
 

@@ -90,12 +90,6 @@ namespace BtOgre {
 		virtual void contact(CollisionListener* other, const btManifoldPoint& manifoldPoint) = 0;
 	};
 
-	struct EntityCollisionListener
-	{
-		const Ogre::MovableObject* entity;
-		CollisionListener* listener;
-	};
-
 	/// wrapper with automatic memory management
 	class RigidBody
 	{
@@ -106,7 +100,7 @@ namespace BtOgre {
 		~RigidBody()
 		{
 			mBtWorld->removeRigidBody(mBtBody);
-			delete (EntityCollisionListener*)mBtBody->getUserPointer();
+			delete mBtBody->getUserPointer();
 			delete mBtBody->getMotionState();
 			delete mBtBody->getCollisionShape();
 			delete mBtBody;

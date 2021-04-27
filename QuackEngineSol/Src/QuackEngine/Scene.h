@@ -14,5 +14,12 @@ public:
 	Scene(const std::string& file, const std::string& name);
 	~Scene();
 
+	void addEntity(QuackEntity* e); 
+
+	void preUpdate();
+
 	void update();
+
+	void lateUpdate();
+
 };

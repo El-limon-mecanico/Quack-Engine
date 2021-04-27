@@ -22,8 +22,19 @@ public:
 	inline QuackEntity* getEntity() {
 		return entity_;
 	}
-	
+
 	virtual bool init(luabridge::LuaRef parameterTable = { nullptr }) = 0;
+
+	virtual void preUpdate() {}
+
 	virtual void update() {}
-	virtual void render() {}
+
+	virtual void lateUpdate() {}
+
+	virtual void onCollisionEnter(QuackEntity* other) {}
+
+	virtual void onCollisionStay(QuackEntity* other) {}
+
+	virtual void onCollisionExit(QuackEntity* other) {}
+
 };

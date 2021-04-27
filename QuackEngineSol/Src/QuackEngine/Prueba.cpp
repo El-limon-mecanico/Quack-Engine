@@ -1,9 +1,9 @@
 #include "Prueba.h"
-
+#include "QuackEntity.h"
 
 Prueba::Prueba(QuackEntity* e) : Component(e)
 {
-	
+
 }
 
 Prueba::~Prueba()
@@ -12,6 +12,9 @@ Prueba::~Prueba()
 
 bool Prueba::init(luabridge::LuaRef parameterTable)
 {
+	if (!parameterTable.state())
+		return false;
+
 	enableExceptions(parameterTable);
 
 	try
@@ -22,7 +25,7 @@ bool Prueba::init(luabridge::LuaRef parameterTable)
 	{
 		std::cout << "ERROR: La variable valor1 no existo o no es del tipo correcto\n";
 	}
-	
+
 	try
 	{
 		int val = parameterTable.rawget("valor2");
@@ -39,13 +42,28 @@ bool Prueba::init(luabridge::LuaRef parameterTable)
 
 	std::cout << "\nEstas son las variables que has puesto desde lua: \n";
 	std::cout << valor1 << "\n";
-	if(valor2 != nullptr)std::cout << *valor2 << "\n";
+	if (valor2 != nullptr)std::cout << *valor2 << "\n";
 	std::cout << valor3 << "\n";
 	return true;
 }
 
 void Prueba::update()
 {
-	std::cout << " Update de Prueba\n";
+	//std::cout << " Update de Prueba\n";
+}
+
+void Prueba::onCollisionEnter(QuackEntity* other)
+{
+	std::cout << "Yo " << entity_->name() << " acabo de chocar con " << other->name() << "\n\n";
+}
+
+void Prueba::onCollisionStay(QuackEntity* other)
+{
+	//std::cout << "Yo " << entity_->name() << " sigo chocando con " << other->name() << "\n\n";
+}
+
+void Prueba::onCollisionExit(QuackEntity* other)
+{
+	std::cout << "Yo " << entity_->name() << " he dejado de chocar con " << other->name() << "\n\n";
 }
 
