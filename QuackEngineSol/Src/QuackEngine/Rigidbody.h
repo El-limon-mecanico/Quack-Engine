@@ -14,10 +14,7 @@ private:
 		float time = 0;
 	};
 
-class Rigidbody : public Component {
-private:
 	btRigidBody* rb_ = nullptr;
-	btRigidBody* rb_;
 
 	std::vector<CollisionInfo> collisions;
 

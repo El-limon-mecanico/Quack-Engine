@@ -2,6 +2,7 @@
 #include "BulletQuack.h"
 #include "QuackEntity.h"
 #include "BtOgre.h"
+#include "MeshRenderer.h"
 #include "QuackEnginePro.h"
 
 Rigidbody::Rigidbody(QuackEntity* e) : collisions(std::vector<CollisionInfo>())
@@ -18,10 +19,10 @@ bool Rigidbody::init(luabridge::LuaRef parameterTable)
 	std::string type = readVariable<std::string>(parameterTable, "Type");
 	int mass = readVariable<int>(parameterTable, "Mass");
 	
-	if (type == "Box") setRigidbody(mass,ColliderType::CT_BOX);
-	else if (type == "Sphere")setRigidbody(mass, ColliderType::CT_SPHERE);
-	else if (type == "Trimesh")setRigidbody(mass, ColliderType::CT_TRIMESH);
-	else if (type == "Hull")setRigidbody(mass, ColliderType::CT_HULL);
+	if (type == "Box") setRigidbody(mass, BtOgre::ColliderType::CT_BOX);
+	else if (type == "Sphere")setRigidbody(mass, BtOgre::ColliderType::CT_SPHERE);
+	else if (type == "Trimesh")setRigidbody(mass, BtOgre::ColliderType::CT_TRIMESH);
+	else if (type == "Hull")setRigidbody(mass, BtOgre::ColliderType::CT_HULL);
 
 	
 	
@@ -29,7 +30,7 @@ bool Rigidbody::init(luabridge::LuaRef parameterTable)
 }
 
 
-void Rigidbody::setRigidbody(int mass, ColliderType type)
+void Rigidbody::setRigidbody(int mass, BtOgre::ColliderType type)
 {
 	BtOgre::ColliderType t = (BtOgre::ColliderType)type;
  	Render* renderCmp = entity_->getComponent<Render>("Render");
@@ -55,10 +56,6 @@ void Rigidbody::lateUpdate()
 	}
 }
 
-void Rigidbody::setRigidbody(int mass, BtOgre::ColliderType type)
-{
-	rb_ = BulletQuack::Instance()->addRigidBody(entity_->getOgreEntity(), this, mass, type);
-}
 
 void Rigidbody::contact(BtOgre::CollisionListener* other, const btManifoldPoint& manifoldPoint)
 {

@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Component.h"
 
 namespace Ogre {
@@ -6,6 +7,7 @@ namespace Ogre {
 	class SceneManager;
 	class SceneNode;
 	class Entity;
+	class Mesh;
 }
 
 enum PrefabType {
