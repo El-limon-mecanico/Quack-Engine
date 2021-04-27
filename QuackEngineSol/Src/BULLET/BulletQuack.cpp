@@ -9,7 +9,7 @@ std::unique_ptr<BulletQuack>  BulletQuack::instance_;
 
 // AQUI FALTA MANEJO DE ERRORES Y EXCEPCIONES
 bool BulletQuack::Init() {
-	assert(instance_.get() == nullptr));
+	assert(instance_.get() == nullptr);
 	instance_.reset(new BulletQuack());
 	return instance_.get();
 }

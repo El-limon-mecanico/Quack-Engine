@@ -1,6 +1,6 @@
-﻿Components = {"Render", "Rigidbody"}
+﻿Components = {"MeshRenderer", "Rigidbody"}
 
-Render = {
+MeshRenderer = {
     Type = "Sphere"
 }
 

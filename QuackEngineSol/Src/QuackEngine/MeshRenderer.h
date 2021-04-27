@@ -16,7 +16,7 @@ enum PrefabType {
 	PT_SPHERE
 };
 
-class Render : public Component {
+class MeshRenderer : public Component {
 protected:
 	Ogre::SceneNode* node_;
 	Ogre::SceneManager* mSM_;
@@ -26,11 +26,12 @@ protected:
 	void setParent(Ogre::SceneNode* parent);
 
 public:
-	Render(QuackEntity* e = nullptr);
-	~Render();
+	MeshRenderer(QuackEntity* e = nullptr);
+	~MeshRenderer();
 
 	virtual bool init(luabridge::LuaRef parameterTable = { nullptr });
 
+	void setMeshByPrefab(PrefabType prefab);
 	void setMeshByName(const std::string& name);
 	
 	Ogre::SceneNode* getNode() { return node_; }
