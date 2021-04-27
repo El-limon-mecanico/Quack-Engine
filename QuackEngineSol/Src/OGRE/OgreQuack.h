@@ -40,7 +40,7 @@ public:
 
 	OgreQuack() {}
 
-	~OgreQuack() {}
+	~OgreQuack();
 
 	Ogre::RenderWindow* getWindow() { return window_; }
 

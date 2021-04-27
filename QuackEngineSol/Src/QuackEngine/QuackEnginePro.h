@@ -28,6 +28,8 @@ private:
 
 	fmod_quack* fmod_quack_;
 
+	Scene* scene_;
+
 	void pollEvents();
 
 	void setup();
@@ -40,7 +42,6 @@ private:
 
 	void prueba();
 
-	Scene* scene_;
 
 public:
 
@@ -48,7 +49,7 @@ public:
 		setup();
 	}
 
-	~QuackEnginePro() {}
+	~QuackEnginePro();
 
 	static bool Init();
 

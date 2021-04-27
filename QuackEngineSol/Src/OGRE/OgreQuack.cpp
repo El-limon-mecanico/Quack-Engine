@@ -5,6 +5,7 @@
 #include <SDL_video.h>
 #include <SDL_syswm.h>
 #include <assert.h>
+#include "checkML.h"
 
 std::unique_ptr<OgreQuack>  OgreQuack::instance_;
 
@@ -19,6 +20,13 @@ bool OgreQuack::Init() {
 OgreQuack* OgreQuack::Instance() {
 	assert(instance_.get() != nullptr);
 	return instance_.get();
+}
+
+OgreQuack::~OgreQuack() {
+	delete window_;		window_ = nullptr;
+	delete mSM_;		mSM_	= nullptr;
+	delete sdlWindow_;	sdlWindow_ = nullptr;
+	delete mRoot_;		mRoot_	= nullptr;
 }
 
 

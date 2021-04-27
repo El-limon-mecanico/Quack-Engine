@@ -7,6 +7,17 @@ fmod_quack::fmod_quack()
 	FMOD_Init();
 }
 
+fmod_quack::~fmod_quack()
+{
+	for (auto soundPair : sounds_) {
+		delete soundPair.second; soundPair.second = nullptr;
+	}
+	for (auto dspPair : dsp_) {
+		delete dspPair.second; dspPair.second = nullptr;
+	}
+	delete systemFMOD_;	systemFMOD_ = nullptr;
+}
+
 void fmod_quack::FMOD_Init()
 {
 	std::cout << "Se esta inicializando FMOD\n";

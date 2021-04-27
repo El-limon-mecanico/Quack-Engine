@@ -4,6 +4,7 @@
 #include <SDL_events.h>
 #include <memory>
 #include <assert.h>
+//#include "checkML.h"
 #include "QuackEnginePro.h"
 #include "FMOD_Quack.h"
 #include "OgreQuack.h"
@@ -86,6 +87,12 @@ void QuackEnginePro::prueba()
 }
 
 std::unique_ptr<QuackEnginePro>  QuackEnginePro::instance_;
+
+QuackEnginePro::~QuackEnginePro() {
+	delete fmod_quack_; fmod_quack_ = nullptr;
+	delete quackTime_;	quackTime_ = nullptr;
+	delete scene_;		scene_ = nullptr;
+};
 
 // AQUI FALTA MANEJO DE ERRORES Y EXCEPCIONES
 bool QuackEnginePro::Init()
