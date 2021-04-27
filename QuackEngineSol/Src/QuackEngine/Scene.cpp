@@ -43,7 +43,7 @@ bool Scene::createEntity(const std::string& fileName)
 	//comprobamos errores
 	if(components.isNil()) { std::cout << "ERROR: No se ha podido leer el Array 'Components' \n"; return false; }
 	
-	for(int i=1;i<=components.length();i++)
+	for (int i = 1; i <= components.length(); i++)
 	{
 		//carga los componentes
 		enableExceptions(components[i]);

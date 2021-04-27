@@ -77,6 +77,12 @@ void QuackEnginePro::prueba()
 // 	scene_->addEntity(sphere1);
 // 	scene_->addEntity(sphere2);
 // 	scene_->addEntity(plane);
+	// rb->setRigidbody(0);
+	// rb->getRigidbody()->setGravity(btVector3(0, 0, 0));
+
+	// scene_->addEntity(sphere1);
+	// scene_->addEntity(sphere2);
+	// scene_->addEntity(plane);
 }
 
 std::unique_ptr<QuackEnginePro>  QuackEnginePro::instance_;
