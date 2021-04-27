@@ -24,14 +24,15 @@ bool MeshRenderer::init(luabridge::LuaRef parameterTable)
 	std::string type = readVariable<std::string>(parameterTable, "Type");
 
 	if (type == "Sphere")
-		setOgreEntity(mSM_->createEntity(Ogre::SceneManager::PrefabType::PT_SPHERE));
+		ogreEnt_ = mSM_->createEntity(Ogre::SceneManager::PrefabType::PT_SPHERE);
 	else if (type == "Cube")
-		setOgreEntity(mSM_->createEntity(Ogre::SceneManager::PrefabType::PT_CUBE));
+		ogreEnt_ = mSM_->createEntity(Ogre::SceneManager::PrefabType::PT_CUBE);
 	else if (type == "Plane")
-		setOgreEntity(mSM_->createEntity(Ogre::SceneManager::PrefabType::PT_PLANE));
+		ogreEnt_ = mSM_->createEntity(Ogre::SceneManager::PrefabType::PT_PLANE);
 	else std::cout << "ERROR: no existe el tipo de prefab: " << type << "\n";
 
 	ogreEnt_->setVisible(true);
+	node_->attachObject(ogreEnt_);
 	return true;
 }
 

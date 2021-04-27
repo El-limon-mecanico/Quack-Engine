@@ -21,8 +21,7 @@ protected:
 	Ogre::SceneNode* node_;
 	Ogre::SceneManager* mSM_;
 	Ogre::Entity* ogreEnt_;
-
-	void setOgreEntity(Ogre::Entity* e);
+	
 	void setParent(Ogre::SceneNode* parent);
 
 public:

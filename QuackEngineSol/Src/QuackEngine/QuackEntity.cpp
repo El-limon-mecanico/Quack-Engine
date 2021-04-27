@@ -4,9 +4,6 @@
 
 QuackEntity::QuackEntity(std::string name, bool active, std::string tag) : active_(active), name_(name), tag_(tag)
 {
-	//mSM_ = OgreQuack::Instance()->getSceneManager();
-	//node_ = mSM_->getRootSceneNode()->createChildSceneNode();
-	//setOgreEntity(mSM_->createEntity(Ogre::SceneManager::PrefabType::PT_CUBE)); //CAMBIAR ESTE CUBO POR UNA MALLA EMPTY QUE TENGAMOS EN EL RESOURCES
 }
 
 QuackEntity::~QuackEntity() {
@@ -16,7 +13,6 @@ QuackEntity::~QuackEntity() {
 	}
 }
 
-#include "Prueba.h"
 Component* QuackEntity::addComponent(const std::string& componentName, LuaRef param)
 {
 	if (hasComponent(componentName)) //para no repetir componentes
@@ -57,7 +53,6 @@ inline bool QuackEntity::hasComponent(const std::string& name)
 {
 	return cmpMap_[name];
 }
-
 
 
 void QuackEntity::preUpdate()
