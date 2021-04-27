@@ -23,7 +23,7 @@ BulletQuack* BulletQuack::Instance()
 
 void BulletQuack::init() {
 
-	world_ = new DynamicsWorld(Ogre::Vector3(0, -100, 0));
+	world_ = new DynamicsWorld(Ogre::Vector3(0, -980, 0));
 
 	////Bullet initialisation.
 	//mCollisionConfig.reset(new btDefaultCollisionConfiguration());
