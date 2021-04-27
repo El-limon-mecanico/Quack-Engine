@@ -1,7 +1,6 @@
 #pragma once
 #include "Component.h"
 
-//no se si esto es lo correcto para acceder a las clases que necesito?¿?¿?¿
 namespace Ogre {
 	class Root;
 	class SceneManager;

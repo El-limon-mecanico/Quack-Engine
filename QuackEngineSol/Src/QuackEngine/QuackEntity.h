@@ -22,8 +22,7 @@ private:
 	bool active_;
 	std::vector<Component*> components_;
 	std::string tag_;
-	std::unordered_map<std::string, Component*> cmpMap_;
-
+	std::map<std::string, Component*> cmpMap_;
 
 public:
 	QuackEntity(bool active = true, std::string tag = "Default");
@@ -43,7 +42,17 @@ public:
 	//el component name es el nombre del componente como tal (mismo nombre para varias entidades con el mismo componente),
 	//filename es el nombre del .lua de la entidad donde esta el prefab como tal
 	Component* addComponent(const std::string& componentName, LuaRef param);
-	Component* getComponent(const std::string& name);
+
+	template<typename T>
+	T* getComponent(const std::string& name)
+	{
+		auto it = cmpMap_.find(name);
+		if (it != cmpMap_.end())
+			return (T*)cmpMap_[name];
+		return nullptr;
+	}
+
+	
 	inline bool hasComponent(const std::string& name);
 	inline bool isActive() const {
 		return active_;

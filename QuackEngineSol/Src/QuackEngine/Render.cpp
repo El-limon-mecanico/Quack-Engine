@@ -31,8 +31,6 @@ bool Render::init(luabridge::LuaRef parameterTable)
 		setOgreEntity(mSM_->createEntity(Ogre::SceneManager::PrefabType::PT_PLANE));
 	else std::cout << "ERROR: no existe el tipo de prefab: " << type << "\n";
 
-
-
 	return true;
 }
 

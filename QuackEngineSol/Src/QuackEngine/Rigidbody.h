@@ -24,7 +24,7 @@ enum ColliderType
 
 class Rigidbody : public Component {
 private:
-	btRigidBody* rb_;
+	btRigidBody* rb_ = nullptr;
 public:
 	Rigidbody(QuackEntity* e = nullptr);
 	~Rigidbody();

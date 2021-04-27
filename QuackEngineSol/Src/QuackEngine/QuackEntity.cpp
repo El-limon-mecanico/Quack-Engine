@@ -16,6 +16,7 @@ QuackEntity::~QuackEntity() {
 	}
 }
 
+#include "Prueba.h"
 Component* QuackEntity::addComponent(const std::string& componentName, LuaRef param)
 {
 	if (hasComponent(componentName)) //para no repetir componentes
@@ -27,7 +28,10 @@ Component* QuackEntity::addComponent(const std::string& componentName, LuaRef pa
 		if (param.isNil()) std::cout << "ERROR: no se ha podido cargar los valores del componente " << componentName << "\n";
 		else c->init(param);
 		components_.push_back(c);
-		cmpMap_.insert({ componentName , c });
+
+		cmpMap_.emplace(componentName, c);
+		cmpMap_[componentName] = c; //sin esta linea, el map guarda null por algún motivo
+		
 		return c;
 	}
 }
@@ -58,13 +62,6 @@ void QuackEntity::update()
 inline bool QuackEntity::hasComponent(const std::string& name)
 {
 	return cmpMap_[name];
-}
-
-Component* QuackEntity::getComponent(const std::string& name)
-{
-	if (cmpMap_[name])
-		return cmpMap_[name];
-	return nullptr;
 }
 
 
