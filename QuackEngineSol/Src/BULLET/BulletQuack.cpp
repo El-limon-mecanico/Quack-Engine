@@ -6,6 +6,7 @@ using namespace BtOgre;
 
 std::unique_ptr<BulletQuack>  BulletQuack::instance_;
 
+
 // AQUI FALTA MANEJO DE ERRORES Y EXCEPCIONES
 bool BulletQuack::Init() {
 	assert(instance_.get() == nullptr);

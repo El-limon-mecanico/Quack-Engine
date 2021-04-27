@@ -3,16 +3,8 @@ using namespace luabridge;
 
 LuaRef readElementFromFile(lua_State* state, std::string tableName)
 {
-	enableExceptions(state);
-	try
-	{
-		LuaRef aux = getGlobal(state, tableName.c_str()).getMetatable();
-		return aux;
-	}
-	catch (std::exception e)
-	{
-		std::cout << "No se ha podido cargar el elemento: " + tableName;
-	}
+	LuaRef aux = getGlobal(state, tableName.c_str()).getMetatable();
+	return aux;
 }
 
 lua_State* readFileLua(std::string file)

@@ -1,12 +1,13 @@
 #include "MeshRenderer.h"
-#include "OgreQuack.h"
 #include "QuackEntity.h"
+#include "OgreQuack.h"
 #include <Ogre.h>
 
 using OgrePrefab = Ogre::SceneManager::PrefabType;
 
 MeshRenderer::MeshRenderer(QuackEntity* e) : Component(e)
 {
+	
 }
 
 
@@ -17,17 +18,27 @@ MeshRenderer::~MeshRenderer()
 
 bool MeshRenderer::init(luabridge::LuaRef parameterTable)
 {
-	if(parameterTable.state())
-		enableExceptions(parameterTable);
-	entity_->getOgreEntity()->setVisible(true);
+	mSM_ = OgreQuack::Instance()->getSceneManager();
+	node_ = mSM_->getRootSceneNode()->createChildSceneNode();
+
+	std::string type = readVariable<std::string>(parameterTable, "Type");
+
+	if (type == "Sphere")
+		ogreEnt_ = mSM_->createEntity(Ogre::SceneManager::PrefabType::PT_SPHERE);
+	else if (type == "Cube")
+		ogreEnt_ = mSM_->createEntity(Ogre::SceneManager::PrefabType::PT_CUBE);
+	else if (type == "Plane")
+		ogreEnt_ = mSM_->createEntity(Ogre::SceneManager::PrefabType::PT_PLANE);
+	else std::cout << "ERROR: no existe el tipo de prefab: " << type << "\n";
+
+	ogreEnt_->setVisible(true);
+	node_->attachObject(ogreEnt_);
 	return true;
 }
 
 void MeshRenderer::setMeshByPrefab(PrefabType prefab) {
 	OgrePrefab p = (OgrePrefab)prefab;
-	Ogre::Entity* ent = entity_->getSceneManager()->createEntity(p);
-	entity_->setOgreEntity(ent);
-
+	ogreEnt_ = mSM_->createEntity(p);
 }
 
 void MeshRenderer::setMeshByName(const std::string& name) {
@@ -36,12 +47,10 @@ void MeshRenderer::setMeshByName(const std::string& name) {
 
 Ogre::Mesh* MeshRenderer::getMesh() const
 {
-	return entity_->getOgreEntity()->getMesh().get();
+	return ogreEnt_->getMesh().get();
 }
 
 void MeshRenderer::setVisible(bool visible)
 {
-	entity_->getOgreEntity()->setVisible(visible);
+	ogreEnt_->setVisible(visible);
 }
-
-

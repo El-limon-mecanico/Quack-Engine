@@ -4,10 +4,6 @@
 
 QuackEntity::QuackEntity(std::string name, bool active, std::string tag) : active_(active), name_(name), tag_(tag)
 {
-	mSM_ = OgreQuack::Instance()->getSceneManager();
-	node_ = mSM_->getRootSceneNode()->createChildSceneNode();
-	setOgreEntity(mSM_->createEntity(Ogre::SceneManager::PrefabType::PT_CUBE)); //CAMBIAR ESTE CUBO POR UNA MALLA EMPTY QUE TENGAMOS EN EL RESOURCES
-	ogreEnt_->setVisible(false);
 }
 
 QuackEntity::~QuackEntity() {
@@ -22,12 +18,16 @@ Component* QuackEntity::addComponent(const std::string& componentName, LuaRef pa
 	if (hasComponent(componentName)) //para no repetir componentes
 		return cmpMap_[componentName];
 	else {
-		std::cout << "Añadiendo componente: " << componentName << "\n";
+		std::cout << "Cargando el componente: " << componentName << "\n";
 		Component* c = FactoryManager::instance()->create(componentName);
 		c->setEntity(this);
-		c->init(param);
+		if (param.isNil()) std::cout << "ERROR: no se ha podido cargar los valores del componente " << componentName << "\n";
+		else c->init(param);
 		components_.push_back(c);
-		cmpMap_.insert({ componentName , c });
+
+		cmpMap_.emplace(componentName, c);
+		cmpMap_[componentName] = c; //sin esta linea, el map guarda null por algï¿½n motivo
+		
 		return c;
 	}
 }
@@ -54,27 +54,6 @@ inline bool QuackEntity::hasComponent(const std::string& name)
 	return cmpMap_[name];
 }
 
-Component* QuackEntity::getComponent(const std::string& name)
-{
-	if (cmpMap_[name])
-		return cmpMap_[name];
-	return nullptr;
-}
-
-void QuackEntity::setOgreEntity(Ogre::Entity* e)
-{
-	Ogre::Entity* aux = ogreEnt_;
-	node_->detachAllObjects();
-	ogreEnt_ = e;
-	node_->attachObject(ogreEnt_);
-	delete aux; aux = nullptr;
-}
-
-//al igual por comodidad viene bien tener este método, pero realmente no es algo necesario y puede hacerse fuera de esto
-void QuackEntity::setParent(Ogre::SceneNode* parent)
-{
-	parent->addChild((Node*)node_); //no se si esto es correcto alsjdhajlsdhalj no he testeado
-}
 
 void QuackEntity::preUpdate()
 {
