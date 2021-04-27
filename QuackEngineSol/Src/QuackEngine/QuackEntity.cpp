@@ -2,7 +2,7 @@
 #include "OgreQuack.h"
 #include <Ogre.h>
 
-QuackEntity::QuackEntity(bool active, std::string tag) : active_(active), tag_(tag)
+QuackEntity::QuackEntity(std::string name, bool active, std::string tag) : active_(active), name_(name), tag_(tag)
 {
 	//mSM_ = OgreQuack::Instance()->getSceneManager();
 	//node_ = mSM_->getRootSceneNode()->createChildSceneNode();
@@ -30,7 +30,7 @@ Component* QuackEntity::addComponent(const std::string& componentName, LuaRef pa
 		components_.push_back(c);
 
 		cmpMap_.emplace(componentName, c);
-		cmpMap_[componentName] = c; //sin esta linea, el map guarda null por algún motivo
+		cmpMap_[componentName] = c; //sin esta linea, el map guarda null por algï¿½n motivo
 		
 		return c;
 	}
@@ -53,12 +53,6 @@ void QuackEntity::removeComponent(const std::string& name)
 	cmpMap_[name] = nullptr;
 }
 
-void QuackEntity::update()
-{
-	for (Component* c : components_)
-		c->update();
-}
-
 inline bool QuackEntity::hasComponent(const std::string& name)
 {
 	return cmpMap_[name];
@@ -66,17 +60,38 @@ inline bool QuackEntity::hasComponent(const std::string& name)
 
 
 
-//Comentamos el Update y Render de Samir porque lo haremos diferente pero ykse
-	/*void Entity::update() {
-		std::size_t n = components_.size();
-		for (auto i = 0u; i < n; i++) {
-			components_[i]->update();
-		}
-	}
+void QuackEntity::preUpdate()
+{
+	for (Component* c : components_)
+		c->preUpdate();
+}
 
-	void Entity::render() {
-		std::size_t n = components_.size();
-		for (auto i = 0u; i < n; i++) {
-			components_[i]->render();
-		}
-	}*/
+void QuackEntity::update()
+{
+	for (Component* c : components_)
+		c->update();
+}
+
+void QuackEntity::lateUpdate()
+{
+	for (Component* c : components_)
+		c->lateUpdate();
+}
+
+void QuackEntity::onCollisionEnter(QuackEntity* other)
+{
+	for (Component* c : components_)
+		c->onCollisionEnter(other);
+}
+
+void QuackEntity::onCollisionStay(QuackEntity* other)
+{
+	for (Component* c : components_)
+		c->onCollisionStay(other);
+}
+
+void QuackEntity::onCollisionExit(QuackEntity* other)
+{
+	for (Component* c : components_)
+		c->onCollisionExit(other);
+}

@@ -12,7 +12,7 @@ Scene::Scene(const std::string& file, const std::string& name)
 	//leemos el vector que contiene las entidades
 	LuaRef entidades = refScene.rawget("entities");
 
-	for(int i=1;i<= entidades.length();i++)
+	for (int i = 1; i <= entidades.length(); i++)
 	{
 		std::string ent = entidades[i];
 		std::cout << "Cargando " << ent << "\n";
@@ -21,17 +21,17 @@ Scene::Scene(const std::string& file, const std::string& name)
 		//con el nombre ent, se busca el .lua y se cree lo que pone alli
 		if(!createEntity(ent)) std::cout << "ERROR: no se ha podidio cargar la entidad: " << ent;
 	}
-	
-	
+
+
 }
 
 bool Scene::createEntity(const std::string& fileName)
 {
 	QuackEntity* entity = new QuackEntity();
 	entities_.push_back(entity);
-	
+
 	std::string path = "Entities/" + fileName + ".lua";
-	
+
 	//primero leemos el archivo (state)
 	lua_State* state = readFileLua(path);
 
@@ -57,11 +57,33 @@ Scene::~Scene()
 {
 }
 
+void Scene::addEntity(QuackEntity* e)
+{
+	if (e)
+		entities_.push_back(e);
+}
+
+void Scene::preUpdate()
+{
+	for (QuackEntity* entity : entities_)
+	{
+		entity->preUpdate();
+	}
+}
+
 void Scene::update()
 {
 	//std::cout << "New frame\n";
-	for(QuackEntity* entity:entities_)
+	for (QuackEntity* entity : entities_)
 	{
 		entity->update();
+	}
+}
+
+void Scene::lateUpdate()
+{
+	for (QuackEntity* entity : entities_)
+	{
+		entity->lateUpdate();
 	}
 }

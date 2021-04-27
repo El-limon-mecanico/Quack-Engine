@@ -4,10 +4,11 @@
 
 //template<typename T>
 //extern bool readVariable(LuaRef& table, const std::string& variableName, T& variable);
+#include "QuackEntity.h"
 
 Prueba::Prueba(QuackEntity* e) : Component(e)
 {
-	
+
 }
 
 Prueba::~Prueba()
@@ -31,5 +32,20 @@ bool Prueba::init(luabridge::LuaRef parameterTable)
 void Prueba::update()
 {
 	//std::cout << " Update de Prueba\n";
+}
+
+void Prueba::onCollisionEnter(QuackEntity* other)
+{
+	std::cout << "Yo " << entity_->name() << " acabo de chocar con " << other->name() << "\n\n";
+}
+
+void Prueba::onCollisionStay(QuackEntity* other)
+{
+	//std::cout << "Yo " << entity_->name() << " sigo chocando con " << other->name() << "\n\n";
+}
+
+void Prueba::onCollisionExit(QuackEntity* other)
+{
+	std::cout << "Yo " << entity_->name() << " he dejado de chocar con " << other->name() << "\n\n";
 }
 

@@ -34,4 +34,8 @@ public:
 	Ogre::SceneNode* getNode() { return node_; }
 	Ogre::SceneManager* getSceneManager() { return mSM_; }
 	Ogre::Entity* getOgreEntity() { return ogreEnt_; }
+	
+	Ogre::Mesh* getMesh() const;
+	
+	void setVisible(bool visible);
 };

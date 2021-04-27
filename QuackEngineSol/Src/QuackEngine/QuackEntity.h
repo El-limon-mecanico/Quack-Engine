@@ -22,10 +22,12 @@ private:
 	bool active_;
 	std::vector<Component*> components_;
 	std::string tag_;
-	std::map<std::string, Component*> cmpMap_;
+	std::string name_;
+	std::unordered_map<std::string, Component*> cmpMap_;
+
 
 public:
-	QuackEntity(bool active = true, std::string tag = "Default");
+	QuackEntity(std::string name = "DefaultName", bool active = true, std::string tag = "Default");
 	~QuackEntity();
 
 	template<typename T, typename ... Targs>
@@ -54,6 +56,7 @@ public:
 
 	
 	inline bool hasComponent(const std::string& name);
+
 	inline bool isActive() const {
 		return active_;
 	}
@@ -62,6 +65,20 @@ public:
 	}
 	void removeComponent(const std::string& name);
 	void setOgreEntity(Ogre::Entity* e);
+
 	void setParent(Ogre::SceneNode* parent);
+
+	std::string name() { return name_; }
+
+	void preUpdate();
+
 	void update();
+
+	void lateUpdate();
+
+	void onCollisionEnter(QuackEntity* other);
+
+	void onCollisionStay(QuackEntity* other);
+
+	void onCollisionExit(QuackEntity* other);
 };

@@ -9,7 +9,8 @@
 #  endif
 #endif
 
-class QuackTime;
+#include "QuackTime.h"
+
 class BulletQuack;
 class fmod_quack;
 class OgreQuack;

@@ -13,8 +13,7 @@
 #include "LuaManager.h"
 #include "FactoryManager.h"
 #include "QuackEntity.h"
-#include "Render.h"
-#include "QuackTime.h"
+#include "MeshRenderer.h"
 #include "Rigidbody.h"
 #include "BtOgre.h"
 
@@ -27,8 +26,8 @@
 void addCopmponentsFactories()
 {
 	FactoryManager::init();
-	
-	FactoryManager::instance()->add<Render>("Render");
+
+	FactoryManager::instance()->add<MeshRenderer>("MeshRenderer");
 	FactoryManager::instance()->add<Rigidbody>("Rigidbody");
 	FactoryManager::instance()->add<Prueba>("Prueba");
 }
@@ -72,6 +71,12 @@ void QuackEnginePro::prueba()
 
 	//rb->setRigidbody(0, ColliderType::CT_BOX);
 	//rb->getRigidbody()->setGravity(btVector3(0, 0, 0));
+	//rb->setRigidbody(0);
+// 	rb->getRigidbody()->setGravity(btVector3(0, 0, 0));
+
+// 	scene_->addEntity(sphere1);
+// 	scene_->addEntity(sphere2);
+// 	scene_->addEntity(plane);
 }
 
 std::unique_ptr<QuackEnginePro>  QuackEnginePro::instance_;
@@ -103,22 +108,22 @@ void QuackEnginePro::setup()
 
 	sdlWindow_ = OgreQuack::Instance()->getSdlWindow();
 
-	BulletQuack::Init(OgreQuack::Instance()->getRoot(), OgreQuack::Instance()->getSceneManager());
+	BulletQuack::Init();
 
 	fmod_quack_ = new fmod_quack();
 
 	addCopmponentsFactories();
-	
-	scene_ = new Scene("Scenes/scene1.lua", "scene1");
+
+	scene_ = new Scene("Scenes/scene1.lua", "scene1");  // NECESITAMOS UN SCENE MANAGER QUE GUARDE LAS ESCENAS Y LAS MANEJE 
 }
 
 void QuackEnginePro::start()
 {
-	if (!updateStarted){
+	if (!updateStarted) {
 		prueba();
-        update();
-    } 
-    
+		update();
+	}
+
 }
 
 
@@ -126,12 +131,19 @@ void QuackEnginePro::update()
 {
 	exit = false;
 	while (!exit) {
-		scene_->update(); //actualizamos la escena que actualiza las entidades
-		OgreQuack::Instance()->getRoot()->renderOneFrame(); //que hace esto??? comentaaaaaaad el codigoooooooooo!!!
-		
 		quackTime_->frameStarted();
-		pollEvents();
+
+		scene_->preUpdate();
+
 		BulletQuack::Instance()->stepPhysics(time()->deltaTime());
+
+		pollEvents();
+
+		scene_->update(); //actualizamos la escena que actualiza las entidades	
+
+		OgreQuack::Instance()->getRoot()->renderOneFrame();
+
+		scene_->lateUpdate();
 	}
 }
 
