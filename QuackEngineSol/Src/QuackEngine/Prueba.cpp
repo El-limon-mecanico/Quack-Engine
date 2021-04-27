@@ -1,9 +1,6 @@
 #include "Prueba.h"
 #include "LuaManager.h"
 #include "checkML.h"
-
-//template<typename T>
-//extern bool readVariable(LuaRef& table, const std::string& variableName, T& variable);
 #include "QuackEntity.h"
 
 Prueba::Prueba(QuackEntity* e) : Component(e)
@@ -13,6 +10,11 @@ Prueba::Prueba(QuackEntity* e) : Component(e)
 
 Prueba::~Prueba()
 {
+
+#if (!defined _DEBUG) && (defined _WIN32)
+	delete valor2;		// dejar comentado para que estemos seguros de que siempre se estan viendo los memory leaks
+	//std::cout << "WARNING: La basura no esta apareciendo en la salida, deberia haber al menos 4 bytes de basura\n";
+#endif
 }
 
 bool Prueba::init(luabridge::LuaRef parameterTable)

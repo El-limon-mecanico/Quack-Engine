@@ -1,5 +1,6 @@
 #include "Scene.h"
 #include "LuaManager.h"
+//#include "checkML.h"
 
 Scene::Scene(const std::string& file, const std::string& name)
 {
@@ -55,6 +56,10 @@ bool Scene::createEntity(const std::string& fileName)
 
 Scene::~Scene()
 {
+	for (QuackEntity* qEnt : entities_) {
+		delete qEnt;
+		qEnt = nullptr;
+	}
 }
 
 void Scene::addEntity(QuackEntity* e)
