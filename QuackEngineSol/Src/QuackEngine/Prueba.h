@@ -10,6 +10,8 @@ private:
 public:
 	Prueba(QuackEntity* e = nullptr);
 	~Prueba();
+
+	static std::string GetName() { return "Prueba"; }
 	
 	virtual bool init(luabridge::LuaRef parameterTable = { nullptr }) override;
 

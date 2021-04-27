@@ -7,7 +7,8 @@ using OgrePrefab = Ogre::SceneManager::PrefabType;
 
 MeshRenderer::MeshRenderer(QuackEntity* e) : Component(e)
 {
-	
+	mSM_ = OgreQuack::Instance()->getSceneManager();
+	node_ = mSM_->getRootSceneNode()->createChildSceneNode();
 }
 
 
@@ -18,9 +19,6 @@ MeshRenderer::~MeshRenderer()
 
 bool MeshRenderer::init(luabridge::LuaRef parameterTable)
 {
-	mSM_ = OgreQuack::Instance()->getSceneManager();
-	node_ = mSM_->getRootSceneNode()->createChildSceneNode();
-
 	std::string type = readVariable<std::string>(parameterTable, "Type");
 
 	if (type == "Sphere")
@@ -42,7 +40,10 @@ bool MeshRenderer::init(luabridge::LuaRef parameterTable)
 
 void MeshRenderer::setMeshByPrefab(PrefabType prefab) {
 	OgrePrefab p = (OgrePrefab)prefab;
+	node_->detachAllObjects();
 	ogreEnt_ = mSM_->createEntity(p);
+	ogreEnt_->setVisible(true);
+	node_->attachObject(ogreEnt_);
 }
 
 void MeshRenderer::setMeshByName(const std::string& name) {

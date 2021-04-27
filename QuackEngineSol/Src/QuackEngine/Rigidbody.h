@@ -24,6 +24,8 @@ public:
 
 	~Rigidbody();
 
+	static std::string GetName() { return "Rigidbody"; }
+
 	virtual bool init(luabridge::LuaRef parameterTable = { nullptr }) override;
 
 	virtual void preUpdate() override;

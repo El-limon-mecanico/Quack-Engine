@@ -1,4 +1,4 @@
-﻿Components = {"MeshRenderer", "Rigidbody"}
+﻿Components = {"MeshRenderer", "Rigidbody", "Prueba"}
 
 MeshRenderer = {
     Type = "Sphere",
@@ -8,4 +8,10 @@ MeshRenderer = {
 Rigidbody = {
     Type = "Sphere",
     Mass = 1
+}
+
+Prueba = {
+    valor1 = 1,
+    valor2 = 3,
+    valor3 = "Quack"
 }

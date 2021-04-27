@@ -23,6 +23,8 @@ public:
 		return entity_;
 	}
 
+	// static std::string GetName() = 0 ;   HAY QUE REDEFINIRLO EN CADA COMPONENTE , SI NO NO FUNCIONA
+
 	virtual bool init(luabridge::LuaRef parameterTable = { nullptr }) = 0;
 
 	virtual void preUpdate() {}

@@ -28,7 +28,7 @@ Scene::Scene(const std::string& file, const std::string& name)
 
 bool Scene::createEntity(const std::string& fileName)
 {
-	QuackEntity* entity = new QuackEntity();
+	QuackEntity* entity = new QuackEntity(fileName);
 	entities_.push_back(entity);
 
 	std::string path = "Entities/" + fileName + ".lua";
