@@ -23,8 +23,6 @@ bool Rigidbody::init(luabridge::LuaRef parameterTable)
 	else if (type == "Sphere")setRigidbody(mass, BtOgre::ColliderType::CT_SPHERE);
 	else if (type == "Trimesh")setRigidbody(mass, BtOgre::ColliderType::CT_TRIMESH);
 	else if (type == "Hull")setRigidbody(mass, BtOgre::ColliderType::CT_HULL);
-
-	
 	
 	
 	return true;

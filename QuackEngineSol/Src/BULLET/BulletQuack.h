@@ -15,11 +15,6 @@ namespace BtOgre {
 	enum ColliderType;
 }
 
-//class btCollisionConfiguration;
-//class btCollisionDispatcher;
-//class btConstraintSolver;
-//class btBroadphaseInterface;
-//class btDynamicsWorld;
 class btRigidBody;
 
 class BulletQuack {
@@ -27,17 +22,9 @@ private:
 
 	static std::unique_ptr<BulletQuack> instance_;
 
-	/*std::unique_ptr<btCollisionConfiguration> mCollisionConfig;
-	std::unique_ptr<btCollisionDispatcher> mDispatcher;
-	std::unique_ptr<btConstraintSolver> mSolver;
-	std::unique_ptr<btBroadphaseInterface> mBroadphase;
-	btDynamicsWorld* mBtWorld;*/
-
 	BtOgre::DynamicsWorld* world_;
 
 	void init();
-
-	//static void onTick(btDynamicsWorld* world, float timeStep);
 
 public:
 
