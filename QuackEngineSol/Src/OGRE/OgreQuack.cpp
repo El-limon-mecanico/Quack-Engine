@@ -5,7 +5,6 @@
 #include <SDL_video.h>
 #include <SDL_syswm.h>
 #include <assert.h>
-#include "checkML.h"
 
 std::unique_ptr<OgreQuack>  OgreQuack::instance_;
 

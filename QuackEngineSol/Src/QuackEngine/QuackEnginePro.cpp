@@ -4,7 +4,6 @@
 #include <SDL_events.h>
 #include <memory>
 #include <assert.h>
-//#include "checkML.h"
 #include "QuackEnginePro.h"
 #include "FMOD_Quack.h"
 #include "OgreQuack.h"

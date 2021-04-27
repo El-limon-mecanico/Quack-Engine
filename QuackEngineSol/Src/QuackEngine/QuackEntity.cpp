@@ -1,7 +1,6 @@
 #include "QuackEntity.h"
 #include "OgreQuack.h"
 #include <Ogre.h>
-//#include "checkML.h"
 
 QuackEntity::QuackEntity(std::string name, bool active, std::string tag) : active_(active), name_(name), tag_(tag)
 {

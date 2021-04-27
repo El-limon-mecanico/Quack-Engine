@@ -1,6 +1,5 @@
 #include "Scene.h"
 #include "LuaManager.h"
-//#include "checkML.h"
 
 Scene::Scene(const std::string& file, const std::string& name)
 {
