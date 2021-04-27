@@ -20,8 +20,7 @@ bool Render::init(luabridge::LuaRef parameterTable)
 	mSM_ = OgreQuack::Instance()->getSceneManager();
 	node_ = mSM_->getRootSceneNode()->createChildSceneNode();
 
-	std::string type;
-	readVariable<std::string>(parameterTable, "Type", type);
+	std::string type = readVariable<std::string>(parameterTable, "Type");
 
 	if (type == "Sphere")
 		setOgreEntity(mSM_->createEntity(Ogre::SceneManager::PrefabType::PT_SPHERE));
