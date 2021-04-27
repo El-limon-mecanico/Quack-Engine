@@ -15,11 +15,11 @@ namespace BtOgre {
 	enum ColliderType;
 }
 
-class btCollisionConfiguration;
-class btCollisionDispatcher;
-class btConstraintSolver;
-class btBroadphaseInterface;
-class btDynamicsWorld;
+//class btCollisionConfiguration;
+//class btCollisionDispatcher;
+//class btConstraintSolver;
+//class btBroadphaseInterface;
+//class btDynamicsWorld;
 class btRigidBody;
 
 class BulletQuack {
