@@ -26,6 +26,7 @@ bool Rigidbody::init(luabridge::LuaRef parameterTable)
 
 	
 	
+	
 	return true;
 }
 

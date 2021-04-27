@@ -1,7 +1,11 @@
-﻿components = {"Test"}
+﻿Components = {"MeshRenderer", "Rigidbody"}
 
-Test={
-    damage = 3,
-    range = true,
-    testo = "test1"
+MeshRenderer = {
+    Type = "Sphere",
+    Position = {50,500,0}
+}
+
+Rigidbody = {
+    Type = "Sphere",
+    Mass = 1
 }
