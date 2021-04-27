@@ -2,7 +2,7 @@
 #include "Component.h"
 #include "BtOgre.h"
 
-//no se si esto es lo correcto para acceder a las clases que necesito?¿?¿?¿
+//no se si esto es lo correcto para acceder a las clases que necesito?ï¿½?ï¿½?ï¿½
 
 const float TIME_TO_EXIT = 0.1f;
 
@@ -14,7 +14,7 @@ private:
 		float time = 0;
 	};
 
-	btRigidBody* rb_;
+	btRigidBody* rb_ = nullptr;
 
 	std::vector<CollisionInfo> collisions;
 
