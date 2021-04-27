@@ -1,11 +1,11 @@
 ﻿Components = {"MeshRenderer", "Rigidbody"}
 
 MeshRenderer = {
-    Type = "Sphere",
-    Position = {50,500,0}
+    Type = "Plane",
+    Position = {0,0,0}
 }
 
 Rigidbody = {
-    Type = "Sphere",
+    Type = "Plane",
     Mass = 1
 }

@@ -26,6 +26,7 @@ bool Rigidbody::init(luabridge::LuaRef parameterTable)
 
 	
 	
+	
 	return true;
 }
 
@@ -33,7 +34,7 @@ bool Rigidbody::init(luabridge::LuaRef parameterTable)
 void Rigidbody::setRigidbody(int mass, BtOgre::ColliderType type)
 {
 	BtOgre::ColliderType t = (BtOgre::ColliderType)type;
- 	MeshRenderer* renderCmp = entity_->getComponent<MeshRenderer>("MeshRenderer");
+ 	MeshRenderer* renderCmp = entity_->getComponent<MeshRenderer>();
 	rb_ = BulletQuack::Instance()->addRigidBody(renderCmp->getOgreEntity(), this, mass, type);
 }
 

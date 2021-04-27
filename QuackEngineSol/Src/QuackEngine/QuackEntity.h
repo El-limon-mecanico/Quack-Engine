@@ -34,10 +34,8 @@ public:
 	T* addComponent(Targs&&...mArgs) {
 		T* c = new T(std::forward<Targs>(mArgs)...);
 		c->setEntity(this);
-		//c->init(readElementFromFile(("lua/Components/" + name + ".lua"), name));
-		c->init();
 		components_.push_back(c);
-		//cmpMap_.insert({ name , c });
+		cmpMap_.insert({ T::GetName() , c });
 		return c;
 	}
 
@@ -46,15 +44,16 @@ public:
 	Component* addComponent(const std::string& componentName, LuaRef param);
 
 	template<typename T>
-	T* getComponent(const std::string& name)
+	T* getComponent()
 	{
+		std::string name = T::GetName();
 		auto it = cmpMap_.find(name);
 		if (it != cmpMap_.end())
 			return (T*)cmpMap_[name];
 		return nullptr;
 	}
 
-	
+
 	inline bool hasComponent(const std::string& name);
 
 	inline bool isActive() const {
