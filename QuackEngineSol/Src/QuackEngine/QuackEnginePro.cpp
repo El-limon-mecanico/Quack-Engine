@@ -18,6 +18,7 @@
 #include "BtOgre.h"
 
 #include "Scene.h"
+#include "SceneMng.h"
 
 //para que no salga la consola en el modo release (en las propiedades del proyecto hay que poner que se
 //ejecute como aplicacion window no cmd (en la parte de vinculador))ç
@@ -48,8 +49,8 @@ void QuackEnginePro::prueba()
 
 	rb->setRigidbody(0);
 	rb->getRigidbody()->setGravity(btVector3(0, 0, 0));
-
-	scene_->addEntity(plane);
+	
+	sceneManager_->getCurrentScene()->addEntity(plane);
 }
 
 std::unique_ptr<QuackEnginePro>  QuackEnginePro::instance_;
@@ -57,7 +58,7 @@ std::unique_ptr<QuackEnginePro>  QuackEnginePro::instance_;
 QuackEnginePro::~QuackEnginePro() {
 	delete fmod_quack_; fmod_quack_ = nullptr;
 	delete quackTime_;	quackTime_ = nullptr;
-	delete scene_;		scene_ = nullptr;
+	delete sceneManager_;		sceneManager_ = nullptr;
 };
 
 // AQUI FALTA MANEJO DE ERRORES Y EXCEPCIONES
@@ -93,7 +94,8 @@ void QuackEnginePro::setup()
 
 	addCopmponentsFactories();
 
-	scene_ = new Scene("Scenes/scene1.lua", "scene1");  // NECESITAMOS UN SCENE MANAGER QUE GUARDE LAS ESCENAS Y LAS MANEJE 
+	sceneManager_ = new SceneMng();
+	sceneManager_->loadScene("Scenes/scene1.lua", "scene1");
 }
 
 void QuackEnginePro::start()
@@ -112,17 +114,17 @@ void QuackEnginePro::update()
 	while (!exit) {
 		quackTime_->frameStarted();
 
-		scene_->preUpdate();
+		sceneManager_->preUpdate();
 
 		BulletQuack::Instance()->stepPhysics(time()->deltaTime());
 
 		pollEvents();
 
-		scene_->update(); //actualizamos la escena que actualiza las entidades	
+		sceneManager_->update(); //actualizamos la escena que actualiza las entidades	
 
 		OgreQuack::Instance()->getRoot()->renderOneFrame();
 
-		scene_->lateUpdate();
+		sceneManager_->lateUpdate();
 	}
 }
 
