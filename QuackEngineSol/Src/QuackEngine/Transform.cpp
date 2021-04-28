@@ -5,9 +5,9 @@ bool Transform::init(luabridge::LuaRef parameterTable)
 	LuaRef pos = readVariable<LuaRef>(parameterTable, "Position");
 	setPos(pos[1], pos[2], pos[3]);
 	LuaRef scale = readVariable<LuaRef>(parameterTable, "Scale");
-	setScale(pos[1], pos[2], pos[3]);
+	setScale(scale[1], scale[2], scale[3]);
 	LuaRef rotation = readVariable<LuaRef>(parameterTable, "Rotation");
-	setRotation(pos[1], pos[2], pos[3]);
+	setRotation(rotation[1], rotation[2], rotation[3]);
 
 	//TODO: HAY QUE METER LOS HIJOS POR LUA
 

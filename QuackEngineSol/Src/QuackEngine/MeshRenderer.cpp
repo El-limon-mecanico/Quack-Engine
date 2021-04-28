@@ -35,6 +35,7 @@ bool MeshRenderer::init(luabridge::LuaRef parameterTable)
 	
 	ogreEnt_->setVisible(true);
 	node_->attachObject(ogreEnt_);
+
 	return true;
 }
 

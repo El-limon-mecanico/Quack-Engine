@@ -33,6 +33,7 @@ public:
 #pragma endregion
 	virtual ~Transform() {};
 	virtual bool init(luabridge::LuaRef parameterTable = { nullptr }) override;
+	static std::string GetName() { return "Transform"; }
 
 	void cleanChildren();
 	inline int childrenCount() const { return children_.size(); }

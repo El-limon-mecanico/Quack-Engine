@@ -10,6 +10,7 @@
 #include "BulletQuack.h"
 #include "LuaBridgeTest.h"
 #include "Prueba.h"
+#include "Transform.h"
 #include "LuaManager.h"
 #include "FactoryManager.h"
 #include "QuackEntity.h"
@@ -31,6 +32,7 @@ void addCopmponentsFactories()
 	FactoryManager::instance()->add<MeshRenderer>();
 	FactoryManager::instance()->add<Rigidbody>();
 	FactoryManager::instance()->add<Prueba>();
+	FactoryManager::instance()->add<Transform>();
 }
 
 
