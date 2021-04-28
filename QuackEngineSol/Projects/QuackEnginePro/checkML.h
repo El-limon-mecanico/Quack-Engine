@@ -1,5 +1,4 @@
-
-#ifdef _DEBUG
+ï»¿#ifdef _DEBUG
 #define _CRTDBG_MAP_ALLOC
 #include <stdlib.h>
 #include <crtdbg.h>
@@ -9,6 +8,6 @@
 #endif
 #endif
 
-// Agrega checkML.h al proyecto e inclúyelo en todos los módulos del proyecto 
-// Escribe el siguiente comando al inicio de la función main
+// Agrega checkML.h al proyecto e incluyelo en todos los modulos del proyecto 
+// Escribe el siguiente comando al inicio de la funcion main
 // _CrtSetDbgFlag ( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF ); 
