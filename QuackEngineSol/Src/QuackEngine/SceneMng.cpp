@@ -1,8 +1,7 @@
 #include "SceneMng.h"
 
-SceneMng::SceneMng()
-{
-}
+
+std::unique_ptr<SceneMng> SceneMng::instance_;
 
 SceneMng::~SceneMng()
 {
@@ -12,6 +11,19 @@ SceneMng::~SceneMng()
 		delete sceneQueue_.front();
 		sceneQueue_.pop();
 	}
+}
+
+bool SceneMng::Init()
+{
+	assert(instance_.get() == nullptr);
+	instance_.reset(new SceneMng());
+	return instance_.get();
+}
+
+SceneMng* SceneMng::Instance()
+{
+	assert(instance_.get() != nullptr);
+	return instance_.get();
 }
 
 void SceneMng::loadScene(std::string file, std::string sceneName)

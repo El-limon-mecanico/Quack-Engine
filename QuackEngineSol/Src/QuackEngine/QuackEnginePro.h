@@ -15,8 +15,6 @@ class BulletQuack;
 class fmod_quack;
 class OgreQuack;
 class SDL_Window;
-class Scene;
-class SceneMng;
 
 class QUACK_ENGINE_PRO_API QuackEnginePro {
 private:
@@ -28,9 +26,6 @@ private:
 	QuackTime* quackTime_;
 
 	fmod_quack* fmod_quack_;
-
-	Scene* scene_;
-	SceneMng* sceneManager_;
 
 	void pollEvents();
 

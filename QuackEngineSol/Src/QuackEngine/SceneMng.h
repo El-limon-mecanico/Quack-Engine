@@ -6,10 +6,16 @@
 class SceneMng
 {
 private:
+	static std::unique_ptr<SceneMng> instance_;
+	
 	std::queue<Scene*> sceneQueue_;
 
 public:
-	SceneMng();
+
+	static bool Init();
+	static SceneMng* Instance();
+	
+	SceneMng(){}
 	~SceneMng();
 
 	void loadScene(std::string file, std::string sceneName);
