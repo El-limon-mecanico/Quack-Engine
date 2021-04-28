@@ -3,7 +3,7 @@ using namespace luabridge;
 
 LuaRef readElementFromFile(lua_State* state, std::string tableName)
 {
-	LuaRef aux = getGlobal(state, tableName.c_str()).getMetatable();
+	LuaRef aux = getGlobal(state, tableName.c_str());
 	return aux;
 }
 
