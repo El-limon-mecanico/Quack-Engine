@@ -21,7 +21,7 @@ void Transform::cleanChildren()
 	children_.clear();
 }
 
-inline Vector3D Transform::getLocalPos() const
+inline Vector3D Transform::getGlobalPos() const
 {
 	if (!hasParent())
 		return getPos();
@@ -29,7 +29,7 @@ inline Vector3D Transform::getLocalPos() const
 		return getPos() + parent_->getPos();
 }
 
-inline float Transform::getLocalPosX() const
+inline float Transform::getGlobalPosX() const
 {
 	if (!hasParent())
 		return getPosX();
@@ -37,7 +37,7 @@ inline float Transform::getLocalPosX() const
 		return getPosX() + parent_->getPosX();
 }
 
-inline float Transform::getLocalPosY() const
+inline float Transform::getGlobalPosY() const
 {
 	if (!hasParent())
 		return getPosY();
@@ -45,7 +45,7 @@ inline float Transform::getLocalPosY() const
 		return getPosY() + parent_->getPosY();
 }
 
-inline float Transform::getLocalPosZ() const
+inline float Transform::getGlobalPosZ() const
 {
 	if (!hasParent())
 		return getPosZ();
@@ -53,7 +53,7 @@ inline float Transform::getLocalPosZ() const
 		return getPosZ() + parent_->getPosZ();
 }
 
-inline Vector3D Transform::getLocalScale() const
+inline Vector3D Transform::getGlobalScale() const
 {
 	if (!hasParent())
 		return getScale();
@@ -61,7 +61,7 @@ inline Vector3D Transform::getLocalScale() const
 		return getScale() + parent_->getScale();
 }
 
-inline float Transform::getLocalScaleX() const
+inline float Transform::getGlobalScaleX() const
 {
 	if (!hasParent())
 		return getScaleX();
@@ -69,7 +69,7 @@ inline float Transform::getLocalScaleX() const
 		return getScaleX() + parent_->getScaleX();
 }
 
-inline float Transform::getLocalScaleY() const
+inline float Transform::getGlobalScaleY() const
 {
 	if (!hasParent())
 		return getScaleY();
@@ -77,7 +77,7 @@ inline float Transform::getLocalScaleY() const
 		return getScaleY() + parent_->getScaleY();
 }
 
-inline float Transform::getLocalScaleZ() const
+inline float Transform::getGlobalScaleZ() const
 {
 	if (!hasParent())
 		return getScaleZ();
@@ -85,7 +85,7 @@ inline float Transform::getLocalScaleZ() const
 		return getScaleZ() + parent_->getScaleZ();
 }
 
-inline Vector3D Transform::getLocalRotation() const
+inline Vector3D Transform::getGlobalRotation() const
 {
 	if (!hasParent())
 		return getRotation();
@@ -93,7 +93,7 @@ inline Vector3D Transform::getLocalRotation() const
 		return getRotation() + parent_->getRotation();
 }
 
-inline float Transform::getLocalRotationX() const
+inline float Transform::getGlobalRotationX() const
 {
 	if (!hasParent())
 		return getRotationX();
@@ -101,7 +101,7 @@ inline float Transform::getLocalRotationX() const
 		return getRotationX() + parent_->getRotationX();
 }
 
-inline float Transform::getLocalRotationY() const
+inline float Transform::getGlobalRotationY() const
 {
 	if (!hasParent())
 		return getRotationY();
@@ -109,7 +109,7 @@ inline float Transform::getLocalRotationY() const
 		return getRotationY() + parent_->getRotationY();
 }
 
-inline float Transform::getLocalRotationZ() const
+inline float Transform::getGlobalRotationZ() const
 {
 	if (!hasParent())
 		return getRotationZ();
@@ -135,3 +135,101 @@ inline QuackEntity* Transform::getChildByName(std::string name) const
 	}
 	return nullptr;
 }
+#pragma region globalSetters
+
+#pragma region globalPos
+
+//set the value of vector which contains the pos
+inline void Transform::setGlobalPos(float x, float y, float z) {
+    parent_!=nullptr ? pos_.set(Vector3D(x,y,z)-parent_->getPos()) : pos_.set(x,y,z);
+}
+///set the value of vector which contains the pos
+inline void Transform::setGlobalPos(Vector3D& pos) {
+	parent_ != nullptr ? pos_.set(pos - parent_->getPos()):pos_.set(pos);
+}
+///set the value of vector which contains the pos
+inline void Transform::setGlobalPos(Vector3D&& pos) {
+	parent_ != nullptr ? pos_.set(pos - parent_->getPos()):pos_.set(pos);
+}
+///set the value of vector which contains the pos
+inline void Transform::setGlobalPos(Vector3D* pos) {
+	parent_ != nullptr ? pos_.set(Vector3D(pos) - parent_->getPos()):pos_.set(pos);
+}
+///set the value x of the pos vector
+inline void Transform::setGlobalPosX(float x) {
+	parent_ != nullptr ? pos_.setX(x - parent_->getPosX()) : pos_.setX(x);
+}
+///set the value y of the pos vector
+inline void Transform::setGlobalPosY(float y) {
+	parent_ != nullptr ? pos_.setY(y - parent_->getPosY()):pos_.setY(y);
+}
+///set the value z of the rotation vector
+inline void Transform::setGlobalPosZ(float z) {
+	parent_ != nullptr ? pos_.setZ(z - parent_->getPosZ()):pos_.setZ(z);
+}
+#pragma endregion
+
+#pragma region globalScale
+
+//set the value of vector which contains the pos
+inline void Transform::setGlobalScale(float x, float y, float z) {
+	parent_ != nullptr ? scale_.set(Vector3D(x, y, z) - parent_->getScale()):scale_.set(x,y,z);
+}
+///set the value of vector which contains the scale
+inline void Transform::setGlobalScale(Vector3D& scale) {
+	parent_ != nullptr ? scale_.set(scale - parent_->getScale()):scale_.set(scale);
+}
+///set the value of vector which contains the scale
+inline void Transform::setGlobalScale(Vector3D&& scale) {
+	parent_ != nullptr ? scale_.set(scale - parent_->getScale()):scale_.set(scale);
+}
+///set the value of vector which contains the scale
+inline void Transform::setGlobalScale(Vector3D* scale) {
+	parent_ != nullptr ? scale_.set(Vector3D(scale) - parent_->getScale()):scale_.set(scale);
+}
+///set the value x of the scale vector
+inline void Transform::setGlobalScaleX(float x) {
+	parent_ != nullptr ? scale_.setX(x - parent_->getScaleX()):scale_.setX(x);
+}
+///set the value y of the scale vector
+inline void Transform::setGlobalScaleY(float y) {
+	parent_ != nullptr ? scale_.setY(y - parent_->getScaleY()):scale_.setY(y);
+}
+///set the value z of the rotation vector
+inline void Transform::setGlobalScaleZ(float z) {
+	parent_ != nullptr ? scale_.setZ(z - parent_->getScaleZ()):scale_.setZ(z);
+}
+#pragma endregion
+
+#pragma region globalRotation
+
+//set the value of vector which contains the pos
+inline void Transform::setGlobalRotation(float x, float y, float z) {
+	parent_ != nullptr ? rotation_.set(Vector3D(x, y, z) - parent_->getRotation()):rotation_.set(x,y,z);
+}
+///set the value of vector which contains the rotation
+inline void Transform::setGlobalRotation(Vector3D& rotation) {
+	parent_ != nullptr ? rotation_.set(rotation - parent_->getRotation()):rotation_.set(rotation);
+}
+///set the value of vector which contains the rotation
+inline void Transform::setGlobalRotation(Vector3D&& rotation) {
+	parent_ != nullptr ? rotation_.set(rotation - parent_->getRotation()):rotation_.set(rotation);
+}
+///set the value of vector which contains the rotation
+inline void Transform::setGlobalRotation(Vector3D* rotation) {
+	parent_ != nullptr ? rotation_.set(Vector3D(rotation) - parent_->getRotation()):rotation_.set(rotation);
+}
+///set the value x of the rotation vector
+inline void Transform::setGlobalRotationX(float x) {
+	parent_ != nullptr ? rotation_.setX(x - parent_->getRotationX()):rotation_.setX(x);
+}
+///set the value y of the rotation vector
+inline void Transform::setGlobalRotationY(float y) {
+	parent_ != nullptr ? rotation_.setY(y - parent_->getRotationY()):rotation_.setY(y);
+}
+///set the value z of the rotation vector
+inline void Transform::setGlobalRotationZ(float z) {
+	parent_ != nullptr ? rotation_.setZ(z - parent_->getRotationZ()):rotation_.setZ(z);
+}
+#pragma endregion
+#pragma endregion
