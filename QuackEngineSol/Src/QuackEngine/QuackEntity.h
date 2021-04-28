@@ -25,7 +25,6 @@ private:
 	std::string name_;
 	std::unordered_map<std::string, Component*> cmpMap_;
 
-
 public:
 	QuackEntity(std::string name = "DefaultName", bool active = true, std::string tag = "Default");
 	~QuackEntity();
@@ -63,12 +62,9 @@ public:
 		active_ = state;
 	}
 	void removeComponent(const std::string& name);
-	void setOgreEntity(Ogre::Entity* e);
-
-	void setParent(Ogre::SceneNode* parent);
 
 	std::string name() { return name_; }
-
+	std::string tag() { return tag_; }
 	void preUpdate();
 
 	void update();
@@ -80,4 +76,5 @@ public:
 	void onCollisionStay(QuackEntity* other);
 
 	void onCollisionExit(QuackEntity* other);
+
 };

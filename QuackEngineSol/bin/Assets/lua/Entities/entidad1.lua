@@ -1,4 +1,4 @@
-﻿Components = {"MeshRenderer", "Rigidbody", "Prueba"}
+﻿Components = {"MeshRenderer", "Rigidbody", "Prueba", "Transform"}
 
 MeshRenderer = {
     Type = "Sphere",
@@ -14,4 +14,10 @@ Prueba = {
     valor1 = 1,
     valor2 = 3,
     valor3 = "Quack"
+}
+
+Transform = {
+    Position = {0,300,0},
+    Scale = {1,1,1},
+    Rotation = {0,0,0}
 }
