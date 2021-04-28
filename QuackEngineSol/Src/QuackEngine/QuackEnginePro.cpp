@@ -52,7 +52,7 @@ void QuackEnginePro::prueba()
 	rb->setRigidbody(0);
 	rb->getRigidbody()->setGravity(btVector3(0, 0, 0));
 	
-	sceneManager_->getCurrentScene()->addEntity(plane);
+	SceneMng::Instance()->getCurrentScene()->addEntity(plane);
 }
 
 std::unique_ptr<QuackEnginePro>  QuackEnginePro::instance_;
@@ -60,7 +60,6 @@ std::unique_ptr<QuackEnginePro>  QuackEnginePro::instance_;
 QuackEnginePro::~QuackEnginePro() {
 	delete fmod_quack_; fmod_quack_ = nullptr;
 	delete quackTime_;	quackTime_ = nullptr;
-	delete sceneManager_;		sceneManager_ = nullptr;
 };
 
 // AQUI FALTA MANEJO DE ERRORES Y EXCEPCIONES
@@ -96,8 +95,8 @@ void QuackEnginePro::setup()
 
 	addCopmponentsFactories();
 
-	sceneManager_ = new SceneMng();
-	sceneManager_->loadScene("Scenes/scene1.lua", "scene1");
+	SceneMng::Init();
+	SceneMng::Instance()->loadScene("Scenes/scene1.lua", "scene1");
 }
 
 void QuackEnginePro::start()
@@ -116,17 +115,17 @@ void QuackEnginePro::update()
 	while (!exit) {
 		quackTime_->frameStarted();
 
-		sceneManager_->preUpdate();
+		SceneMng::Instance()->preUpdate();
 
 		BulletQuack::Instance()->stepPhysics(time()->deltaTime());
 
 		pollEvents();
 
-		sceneManager_->update(); //actualizamos la escena que actualiza las entidades	
+		SceneMng::Instance()->update(); //actualizamos la escena que actualiza las entidades	
 
 		OgreQuack::Instance()->getRoot()->renderOneFrame();
 
-		sceneManager_->lateUpdate();
+		SceneMng::Instance()->lateUpdate();
 	}
 }
 

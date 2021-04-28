@@ -3,9 +3,6 @@
 #include "QuackEnginePro.h"
 //#include <Windows.h>
 
-
-
-
 QuackTime::QuackTime() : deltaTime_(0)
 {
 	lastFrameTime_ = std::chrono::high_resolution_clock::now();

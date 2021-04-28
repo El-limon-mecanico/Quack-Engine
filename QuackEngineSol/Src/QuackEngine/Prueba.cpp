@@ -1,7 +1,6 @@
 #include "Prueba.h"
 #include "LuaManager.h"
 #include "QuackEntity.h"
-#include "checkML.h"
 
 Prueba::Prueba(QuackEntity* e) : Component(e)
 {
