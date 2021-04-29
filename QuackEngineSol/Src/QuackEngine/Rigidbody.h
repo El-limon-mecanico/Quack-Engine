@@ -29,6 +29,8 @@ private:
 	std::vector<CollisionInfo> collisions;
 	
 	static void sendContacts(void* first, void* other, const btManifoldPoint& manifoldPoint);
+	
+	void contact(Rigidbody* other, const btManifoldPoint& manifoldPoint);
 
 public:
 
@@ -42,14 +44,9 @@ public:
 
 	virtual void preUpdate() override;
 
-	//virtual void update();
-
 	virtual void lateUpdate() override;
 
 	void setRigidbody(int mass, BtOgre::ColliderType type);
 	
 	btRigidBody* getRigidbody() { return rb_; }
-
-	void contact(Rigidbody* other, const btManifoldPoint& manifoldPoint);
-	
 };
