@@ -33,8 +33,8 @@ void BulletQuack::stepPhysics(double deltaTime)
 	//mBtWorld->stepSimulation(deltaTime);
 }
 
-btRigidBody* BulletQuack::addRigidBody(Ogre::Entity* e, CollisionListener* listener, float mass, BtOgre::ColliderType col)
+btRigidBody* BulletQuack::addRigidBody(float mass, const Ogre::Entity* ent, BtOgre::ColliderType ct, void(*p)(void*, void*, const btManifoldPoint& mnf), void* listener)
 {
 
-	return world_->addRigidBody(mass, e, col, listener);
+	return world_->addRigidBody(mass, ent, ct, p, listener);
 }

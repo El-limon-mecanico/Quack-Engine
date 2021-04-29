@@ -16,6 +16,7 @@ namespace BtOgre {
 }
 
 class btRigidBody;
+class btManifoldPoint;
 
 class BulletQuack {
 private:
@@ -40,7 +41,7 @@ public:
 
 	void stepPhysics(double deltaTime);
 
-	btRigidBody* addRigidBody(Ogre::Entity* e, BtOgre::CollisionListener* listener, float mass = 1,  BtOgre::ColliderType col = (BtOgre::ColliderType)1);
+	btRigidBody* addRigidBody(float mass, const Ogre::Entity* ent, BtOgre::ColliderType ct, void(*p)(void* , void*, const btManifoldPoint& mnf), void* listener);
 };
 
 #endif // !_PHYSICS_MANAGER_

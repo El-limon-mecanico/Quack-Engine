@@ -49,7 +49,7 @@ void QuackEnginePro::prueba()
 	r->getNode()->rotate(Ogre::Vector3(1, 0, 0), Ogre::Radian(Ogre::Degree(-90)));
 	r->getNode()->scale(5, 5, 1);
 
-	rb->setRigidbody(0);
+	rb->setRigidbody(0,BtOgre::ColliderType::CT_BOX);
 	rb->getRigidbody()->setGravity(btVector3(0, 0, 0));
 	
 	SceneMng::Instance()->getCurrentScene()->addEntity(plane);

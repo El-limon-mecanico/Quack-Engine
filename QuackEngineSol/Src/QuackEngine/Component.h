@@ -3,6 +3,10 @@
 #include <unordered_map>
 #include <LuaBridge.h>
 
+namespace luabridge{
+	class LuaRef;
+}
+
 class QuackEntity;
 
 class Component {

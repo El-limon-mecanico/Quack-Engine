@@ -80,14 +80,13 @@ namespace BtOgre {
 		CT_HULL
 	};
 
-
 	class CollisionListener
 	{
 	public:
-		CollisionListener(){}
-		~CollisionListener() {}
-		//virtual void contact(Ogre::MovableObject* other, const btManifoldPoint& manifoldPoint) = 0;
-		virtual void contact(CollisionListener* other, const btManifoldPoint& manifoldPoint) = 0;
+		CollisionListener(void(*d)(void*, void* other, const btManifoldPoint& mnf), void* o) : p(d), obj(o) {};
+		~CollisionListener() {};
+		void(*p)(void*, void* other, const btManifoldPoint& mnf);
+		void* obj;
 	};
 
 	/// wrapper with automatic memory management
@@ -123,7 +122,7 @@ namespace BtOgre {
 		~DynamicsWorld();
 		DynamicsWorld(btDynamicsWorld* btWorld) : mBtWorld(btWorld) {}
 
-		btRigidBody* addRigidBody(float mass, const Ogre::Entity* ent, ColliderType ct, CollisionListener* listener = 0);
+		btRigidBody* addRigidBody(float mass, const Ogre::Entity* ent, ColliderType ct, void(*p)(void*, void* other, const btManifoldPoint& mnf), void* listener = 0);
 
 		btDynamicsWorld* getBtWorld() const { return mBtWorld; }
 	};

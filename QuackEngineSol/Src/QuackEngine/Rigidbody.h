@@ -1,17 +1,27 @@
 #pragma once
 #include "Component.h"
-#include "BtOgre.h"
-
+#include "Vector3D.h"
 //no se si esto es lo correcto para acceder a las clases que necesito?�?�?�
 
 const float TIME_TO_EXIT = 0.1f;
 
-class Rigidbody : public Component, public BtOgre::CollisionListener {
+
+namespace BtOgre {
+	class DynamicsWorld;
+	class CollisionListener;
+	enum ColliderType;
+}
+
+class btManifoldPoint;
+class btRigidBody;
+
+class Rigidbody : public Component{
 private:
 
 	struct CollisionInfo {
 		QuackEntity* other = 0;
 		float time = 0;
+		Vector3D point;
 	};
 
 	btRigidBody* rb_ = nullptr;
@@ -34,10 +44,10 @@ public:
 
 	virtual void lateUpdate() override;
 
-	void setRigidbody(int mass = 1, BtOgre::ColliderType type = BtOgre::ColliderType::CT_BOX);
+	void setRigidbody(int mass, BtOgre::ColliderType type);
 	
 	btRigidBody* getRigidbody() { return rb_; }
 
-	virtual void contact( CollisionListener* other, const btManifoldPoint& manifoldPoint);
+	void contact(void* other, const btManifoldPoint& manifoldPoint);
 	
 };
