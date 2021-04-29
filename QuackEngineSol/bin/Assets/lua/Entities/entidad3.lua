@@ -1,4 +1,4 @@
-﻿Components = {"MeshRenderer", "Rigidbody"}
+﻿Components = {"MeshRenderer", "Rigidbody", "Transform"}
 
 Transform = {
     Position = {0,0,0},
