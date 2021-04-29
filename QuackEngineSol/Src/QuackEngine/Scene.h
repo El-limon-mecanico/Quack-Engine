@@ -8,7 +8,7 @@ class Scene
 private:
 	std::vector<QuackEntity*> entities_;
 
-	bool createEntity(const std::string& fileName);
+	bool createEntity(const std::string& fileName, LuaRef entInfo);
 
 public:
 	Scene(const std::string& file, const std::string& name);

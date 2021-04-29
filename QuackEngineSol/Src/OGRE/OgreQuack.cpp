@@ -21,6 +21,13 @@ OgreQuack* OgreQuack::Instance() {
 	return instance_.get();
 }
 
+OgreQuack::~OgreQuack() {
+	delete window_;		window_ = nullptr;
+	delete mSM_;		mSM_	= nullptr;
+	delete sdlWindow_;	sdlWindow_ = nullptr;
+	delete mRoot_;		mRoot_	= nullptr;
+}
+
 
 void OgreQuack::createRoot()
 {

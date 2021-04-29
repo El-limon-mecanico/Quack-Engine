@@ -5,7 +5,7 @@ Scene::Scene(const std::string& file, const std::string& name)
 {
 	lua_State* state = readFileLua(file);
 	LuaRef refScene = readElementFromFile(state, name);
-
+	int aaa = refScene.length();
 	//sacamos el vector de entidades y las creamos
 	enableExceptions(refScene);
 
@@ -19,42 +19,36 @@ Scene::Scene(const std::string& file, const std::string& name)
 
 		//crea las entidades con sus compoenntes
 		//con el nombre ent, se busca el .lua y se cree lo que pone alli
-		if(!createEntity(ent)) std::cout << "ERROR: no se ha podidio cargar la entidad: " << ent;
+		LuaRef entInfo = readElementFromFile(state, ent);
+		if(!createEntity(ent, entInfo)) std::cout << "ERROR: no se ha podidio cargar la entidad: " << ent;
 	}
-
-
 }
 
-bool Scene::createEntity(const std::string& fileName)
+bool Scene::createEntity(const std::string& fileName, LuaRef entInfo)
 {
-	QuackEntity* entity = new QuackEntity();
+	QuackEntity* entity = new QuackEntity(fileName);
 	entities_.push_back(entity);
 
-	std::string path = "Entities/" + fileName + ".lua";
-
-	//primero leemos el archivo (state)
-	lua_State* state = readFileLua(path);
-
 	//leemos el array de componentes
-	LuaRef components = NULL;
-	
-	components = readElementFromFile(state, "Components");
-
-	//comprobamos errores
-	if(components.isNil()) { std::cout << "ERROR: No se ha podido leer el Array 'Components' \n"; return false; }
-	
-	for(int i=1;i<=components.length();i++)
+	LuaRef components = entInfo.rawget("Components");
+	//comprobacion de errores
+	if (components.isNil()) { std::cout << "ERROR: No se ha podido leer el Array 'Components' \n"; return false; }
+		
+	for (int i = 1; i <= components.length(); i++)
 	{
 		//carga los componentes
 		enableExceptions(components[i]);
-		entity->addComponent(components[i], readElementFromFile(state, components[i]));
+		entity->addComponent(components[i], entInfo.rawget(components[i]));
 	}
-
 	return true;
 }
 
 Scene::~Scene()
 {
+	for (QuackEntity* qEnt : entities_) {
+		delete qEnt;
+		qEnt = nullptr;
+	}
 }
 
 void Scene::addEntity(QuackEntity* e)

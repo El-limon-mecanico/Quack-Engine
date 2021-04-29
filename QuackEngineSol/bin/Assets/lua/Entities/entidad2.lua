@@ -1,7 +1,17 @@
-﻿components = {"Test"}
+﻿Components = {"MeshRenderer", "Rigidbody", "Transform"}
 
-Test={
-    damage = 3,
-    range = true,
-    testo = "test1"
+Transform = {
+    Position = {50,500,0},
+    Scale = {1,1,1},
+    Rotation = {0,0,0}
+}
+
+MeshRenderer = {
+    Type = "Sphere",
+    Position = {50,500,0}
+}
+
+Rigidbody = {
+    Type = "Sphere",
+    Mass = 1
 }

@@ -25,7 +25,6 @@ private:
 	std::string name_;
 	std::unordered_map<std::string, Component*> cmpMap_;
 
-
 public:
 	QuackEntity(std::string name = "DefaultName", bool active = true, std::string tag = "Default");
 	~QuackEntity();
@@ -34,16 +33,25 @@ public:
 	T* addComponent(Targs&&...mArgs) {
 		T* c = new T(std::forward<Targs>(mArgs)...);
 		c->setEntity(this);
-		//c->init(readElementFromFile(("lua/Components/" + name + ".lua"), name));
-		c->init();
 		components_.push_back(c);
-		//cmpMap_.insert({ name , c });
+		cmpMap_.insert({ T::GetName() , c });
 		return c;
 	}
 
 	//el component name es el nombre del componente como tal (mismo nombre para varias entidades con el mismo componente),
 	//filename es el nombre del .lua de la entidad donde esta el prefab como tal
 	Component* addComponent(const std::string& componentName, LuaRef param);
+
+	template<typename T>
+	T* getComponent()
+	{
+		std::string name = T::GetName();
+		auto it = cmpMap_.find(name);
+		if (it != cmpMap_.end())
+			return (T*)cmpMap_[name];
+		return nullptr;
+	}
+
 
 	template<typename T>
 	T* getComponent(const std::string& name)
@@ -64,12 +72,9 @@ public:
 		active_ = state;
 	}
 	void removeComponent(const std::string& name);
-	void setOgreEntity(Ogre::Entity* e);
-
-	void setParent(Ogre::SceneNode* parent);
 
 	std::string name() { return name_; }
-
+	std::string tag() { return tag_; }
 	void preUpdate();
 
 	void update();
@@ -81,4 +86,5 @@ public:
 	void onCollisionStay(QuackEntity* other);
 
 	void onCollisionExit(QuackEntity* other);
+
 };

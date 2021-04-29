@@ -54,9 +54,9 @@ namespace BtOgre {
 				auto body0 = static_cast<CollisionListener*>(manifold->getBody0()->getUserPointer());
 				auto body1 = static_cast<CollisionListener*>(manifold->getBody1()->getUserPointer());
 				if (body0)
-					body0->contact(body1, mp);
+					body0->p(body0->obj, body1->obj, mp);
 				if (body1)
-					body1->contact(body0, mp);
+					body1->p(body1->obj, body0->obj, mp);
 			}
 		}
 	}
@@ -75,7 +75,7 @@ namespace BtOgre {
 		mBtWorld->setInternalTickCallback(onTick);
 	}
 
-	btRigidBody* DynamicsWorld::addRigidBody(float mass, const Ogre::Entity* ent, ColliderType ct, CollisionListener* listener)
+	btRigidBody* DynamicsWorld::addRigidBody(float mass, const Ogre::Entity* ent, ColliderType ct, void(*p)(void*, void* other, const btManifoldPoint& mnf), void* listener)
 	{
 		auto node = ent->getParentSceneNode();
 		RigidBodyState* state = new RigidBodyState(node);
@@ -103,7 +103,7 @@ namespace BtOgre {
 
 		auto rb = new btRigidBody(mass, state, cs, inertia);
 		mBtWorld->addRigidBody(rb);
-		rb->setUserPointer(listener);
+		rb->setUserPointer(new CollisionListener(p, listener));
 
 		// transfer ownership to node
 		auto bodyWrapper = std::make_shared<RigidBody>(rb, mBtWorld);

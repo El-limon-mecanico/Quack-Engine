@@ -28,6 +28,8 @@ public:
 	MeshRenderer(QuackEntity* e = nullptr);
 	~MeshRenderer();
 
+	static std::string GetName() { return "MeshRenderer"; }
+
 	virtual bool init(luabridge::LuaRef parameterTable = { nullptr });
 
 	void setMeshByPrefab(PrefabType prefab);

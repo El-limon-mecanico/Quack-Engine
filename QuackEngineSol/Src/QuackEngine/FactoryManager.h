@@ -25,8 +25,8 @@ public:
 	}
 
 	template<typename T>
-	void add(const std::string& name) {
-		hashTable_[name] = &FactoryManager::createComponent<T>;
+	void add() {
+		hashTable_[T::GetName()] = &FactoryManager::createComponent<T>;
 	}
 
 	Component* create(const std::string& name);

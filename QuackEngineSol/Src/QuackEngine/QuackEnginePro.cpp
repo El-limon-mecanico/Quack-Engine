@@ -10,6 +10,7 @@
 #include "BulletQuack.h"
 #include "LuaBridgeTest.h"
 #include "Prueba.h"
+#include "Transform.h"
 #include "LuaManager.h"
 #include "FactoryManager.h"
 #include "QuackEntity.h"
@@ -18,6 +19,7 @@
 #include "BtOgre.h"
 
 #include "Scene.h"
+#include "SceneMng.h"
 
 //para que no salga la consola en el modo release (en las propiedades del proyecto hay que poner que se
 //ejecute como aplicacion window no cmd (en la parte de vinculador))ç
@@ -27,9 +29,10 @@ void addCopmponentsFactories()
 {
 	FactoryManager::init();
 
-	FactoryManager::instance()->add<MeshRenderer>("MeshRenderer");
-	FactoryManager::instance()->add<Rigidbody>("Rigidbody");
-	FactoryManager::instance()->add<Prueba>("Prueba");
+	FactoryManager::instance()->add<MeshRenderer>();
+	FactoryManager::instance()->add<Rigidbody>();
+	FactoryManager::instance()->add<Prueba>();
+	FactoryManager::instance()->add<Transform>();
 }
 
 
@@ -38,48 +41,33 @@ void addCopmponentsFactories()
 
 void QuackEnginePro::prueba()
 {
-	/*fmod_quack_->createSound(std::string("song.wav"), "Cantando");
-	fmod_quack_->playSound(0, "Cantando", 1);
-	fmod_quack_->createDSP(FMOD_DSP_TYPE_ECHO, std::string("Echo"));*/
+	// fmod_quack_->createSound(std::string("song.wav"), "Cantando");
+	// fmod_quack_->playSound(0, "Cantando", 1);
+	// fmod_quack_->createDSP(FMOD_DSP_TYPE_ECHO, std::string("Echo"));
 	//fmod_sound->addDSP(0, std::string("Echo"));
 	//fmod_sound->pauseChannel(0, true);
 	//fmod_sound->stopChannel(0);
 
-	//QuackEntity* sphere1 = new QuackEntity();
-	//Render* r = sphere1->addComponent<Render>();
-	//r->setMeshByPrefab(PrefabType::PT_SPHERE); //:)
-	//Rigidbody* rb = sphere1->addComponent<Rigidbody>();
-	////sphere1->getNode()->setPosition(0, 300, 0);
+	QuackEntity* plane = new QuackEntity("PlanoToGuapo");
+	MeshRenderer* r = plane->addComponent<MeshRenderer>();
+	r->setMeshByPrefab(PrefabType::PT_PLANE); //:)))
+	Rigidbody* rb = plane->addComponent<Rigidbody>();
 
-	//rb->setRigidbody(1, ColliderType::CT_SPHERE);
+	r->getNode()->rotate(Ogre::Vector3(1, 0, 0), Ogre::Radian(Ogre::Degree(-90)));
+	r->getNode()->scale(5, 5, 1);
 
-	//QuackEntity* sphere2 = new QuackEntity();
-	//r = sphere2->addComponent<Render>();
-	//r->setMeshByPrefab(PrefabType::PT_SPHERE); //:)))
-	//rb = sphere2->addComponent<Rigidbody>();
-	//sphere2->getNode()->setPosition(50, 500, 0);
-
-	//rb->setRigidbody(1, ColliderType::CT_SPHERE);
-
-	//QuackEntity* plane = new QuackEntity();
-	//r = plane->addComponent<Render>();
-	//r->setMeshByPrefab(PrefabType::PT_PLANE); //:)))
-	//rb = plane->addComponent<Rigidbody>();
-
-	//plane->getNode()->rotate(Ogre::Vector3(1, 0, 0), Ogre::Radian(Ogre::Degree(-90)));
-	//plane->getNode()->scale(5, 5, 1);
-
-	//rb->setRigidbody(0, ColliderType::CT_BOX);
-	//rb->getRigidbody()->setGravity(btVector3(0, 0, 0));
-	//rb->setRigidbody(0);
-// 	rb->getRigidbody()->setGravity(btVector3(0, 0, 0));
-
-// 	scene_->addEntity(sphere1);
-// 	scene_->addEntity(sphere2);
-// 	scene_->addEntity(plane);
+	rb->setRigidbody(0,BtOgre::ColliderType::CT_BOX);
+	rb->getRigidbody()->setGravity(btVector3(0, 0, 0));
+	
+	SceneMng::Instance()->getCurrentScene()->addEntity(plane);
 }
 
 std::unique_ptr<QuackEnginePro>  QuackEnginePro::instance_;
+
+QuackEnginePro::~QuackEnginePro() {
+	delete fmod_quack_; fmod_quack_ = nullptr;
+	delete quackTime_;	quackTime_ = nullptr;
+};
 
 // AQUI FALTA MANEJO DE ERRORES Y EXCEPCIONES
 bool QuackEnginePro::Init()
@@ -114,7 +102,8 @@ void QuackEnginePro::setup()
 
 	addCopmponentsFactories();
 
-	scene_ = new Scene("Scenes/scene1.lua", "scene1");  // NECESITAMOS UN SCENE MANAGER QUE GUARDE LAS ESCENAS Y LAS MANEJE 
+	SceneMng::Init();
+	SceneMng::Instance()->loadScene("Scenes/scene1.lua", "scene1");
 }
 
 void QuackEnginePro::start()
@@ -133,17 +122,17 @@ void QuackEnginePro::update()
 	while (!exit) {
 		quackTime_->frameStarted();
 
-		scene_->preUpdate();
+		SceneMng::Instance()->preUpdate();
 
 		BulletQuack::Instance()->stepPhysics(time()->deltaTime());
 
 		pollEvents();
 
-		scene_->update(); //actualizamos la escena que actualiza las entidades	
+		SceneMng::Instance()->update(); //actualizamos la escena que actualiza las entidades	
 
 		OgreQuack::Instance()->getRoot()->renderOneFrame();
 
-		scene_->lateUpdate();
+		SceneMng::Instance()->lateUpdate();
 	}
 }
 

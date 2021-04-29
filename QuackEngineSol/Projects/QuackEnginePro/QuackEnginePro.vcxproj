@@ -29,6 +29,8 @@
     <ClCompile Include="..\..\Src\QuackEngine\MeshRenderer.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\Rigidbody.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\Scene.cpp" />
+    <ClCompile Include="..\..\Src\QuackEngine\SceneMng.cpp" />
+    <ClCompile Include="..\..\Src\QuackEngine\Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BULLET\BULLET.vcxproj">
@@ -55,6 +57,10 @@
     <ClInclude Include="..\..\Src\QuackEngine\MeshRenderer.h" />
     <ClInclude Include="..\..\Src\QuackEngine\Rigidbody.h" />
     <ClInclude Include="..\..\Src\QuackEngine\Scene.h" />
+    <ClInclude Include="..\..\Src\QuackEngine\SceneMng.h" />
+    <ClInclude Include="..\..\Src\QuackEngine\Transform.h" />
+    <ClInclude Include="..\..\Src\QuackEngine\Vector3D.h" />
+    <ClInclude Include="checkML.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

@@ -63,6 +63,12 @@
     <ClCompile Include="..\..\Src\QuackEngine\Bola.cpp">
       <Filter>Archivos de origen\Ecs\Components</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\QuackEngine\Transform.cpp">
+      <Filter>Archivos de origen\Ecs\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\QuackEngine\SceneMng.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\QuackEngine\Scene.h">
@@ -94,6 +100,18 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\QuackEngine\Bola.h">
       <Filter>Archivos de encabezado\Ecs\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\QuackEngine\Transform.h">
+      <Filter>Archivos de encabezado\Ecs\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\QuackEngine\Vector3D.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\QuackEngine\SceneMng.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="checkML.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
