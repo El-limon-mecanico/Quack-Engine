@@ -19,7 +19,7 @@ class Rigidbody : public Component{
 private:
 
 	struct CollisionInfo {
-		QuackEntity* other = 0;
+		Rigidbody* rb = nullptr;
 		float time = 0;
 		Vector3D point;
 	};
@@ -27,6 +27,8 @@ private:
 	btRigidBody* rb_ = nullptr;
 
 	std::vector<CollisionInfo> collisions;
+	
+	static void sendContacts(void* first, void* other, const btManifoldPoint& manifoldPoint);
 
 public:
 
@@ -48,6 +50,6 @@ public:
 	
 	btRigidBody* getRigidbody() { return rb_; }
 
-	void contact(void* other, const btManifoldPoint& manifoldPoint);
+	void contact(Rigidbody* other, const btManifoldPoint& manifoldPoint);
 	
 };
