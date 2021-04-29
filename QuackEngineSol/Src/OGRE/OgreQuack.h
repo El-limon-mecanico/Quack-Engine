@@ -7,6 +7,7 @@ namespace Ogre {
 	class Root;
 	class SceneManager;
 	class RenderWindow;
+	class FileSystemLayer;
 }
 
 class SDL_Window;
@@ -23,6 +24,8 @@ private:
 	Ogre::SceneManager* mSM_;
 
 	Ogre::RenderWindow* window_;
+
+	Ogre::FileSystemLayer* mFSLayer_;
 
 	SDL_Window* sdlWindow_;
 
@@ -54,6 +57,6 @@ public:
 
 	void setupRoot();
 
-
+	void loadResources();
 };
 #endif // !_OGRE_QUACK_

@@ -7,7 +7,7 @@ Transform = {
 }
 
 MeshRenderer = {
-    Type = "Plane",
+    Mesh = "Plane",
     Position = {0,0,0}
 }
 

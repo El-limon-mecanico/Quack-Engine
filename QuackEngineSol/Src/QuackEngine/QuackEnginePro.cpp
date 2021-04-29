@@ -87,6 +87,8 @@ void QuackEnginePro::setup()
 
 	OgreQuack::Instance()->setupRoot();
 
+	OgreQuack::Instance()->loadResources(); //Ogre resources
+
 	sdlWindow_ = OgreQuack::Instance()->getSdlWindow();
 
 	BulletQuack::Init();

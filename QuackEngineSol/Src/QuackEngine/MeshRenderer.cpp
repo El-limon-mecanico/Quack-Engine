@@ -19,16 +19,20 @@ MeshRenderer::~MeshRenderer()
 
 bool MeshRenderer::init(luabridge::LuaRef parameterTable)
 {
-	std::string type = readVariable<std::string>(parameterTable, "Type");
+	std::string mesh = readVariable<std::string>(parameterTable, "Mesh");
 
-	if (type == "Sphere")
+	if (mesh == "Sphere")
 		ogreEnt_ = mSM_->createEntity(Ogre::SceneManager::PrefabType::PT_SPHERE);
-	else if (type == "Cube")
+	else if (mesh == "Cube")
 		ogreEnt_ = mSM_->createEntity(Ogre::SceneManager::PrefabType::PT_CUBE);
-	else if (type == "Plane")
+	else if (mesh == "Plane")
 		ogreEnt_ = mSM_->createEntity(Ogre::SceneManager::PrefabType::PT_PLANE);
-	else std::cout << "ERROR: no existe el tipo de prefab: " << type << "\n";
-
+	else try {
+		ogreEnt_ = mSM_->createEntity(mesh);
+	}
+	catch (std::exception& e) {
+		std::cout << "ERROR: no existe la malla " << mesh << '\n';
+	}
 
 	LuaRef pos = readVariable<LuaRef>(parameterTable, "Position");
 	node_->setPosition(pos[1], pos[2], pos[3]);

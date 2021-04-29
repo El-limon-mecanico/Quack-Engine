@@ -22,6 +22,7 @@ Rigidbody::~Rigidbody()
 
 bool Rigidbody::init(luabridge::LuaRef parameterTable)
 {
+	//TODO: control de errores si no carga una variable
 	std::string type = readVariable<std::string>(parameterTable, "Type");
 	int mass = readVariable<int>(parameterTable, "Mass");
 

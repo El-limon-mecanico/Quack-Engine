@@ -6,7 +6,7 @@ entidad1 = {
     Components = {"MeshRenderer", "Transform","Rigidbody", "Prueba"},
 
     MeshRenderer = {
-        Type = "Sphere",
+        Mesh = "ninja.mesh",
         Position = {0,150,0}
     },
 
@@ -38,7 +38,7 @@ entidad2 = {
     },
 
     MeshRenderer = {
-        Type = "Sphere",
+        Mesh = "Sphere",
         Position = {50,500,0}
     },
 
