@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 #include <unordered_map>
-#include <LuaBridge.h>
+#include "LuaManager.h"
 
 namespace luabridge{
 	class LuaRef;

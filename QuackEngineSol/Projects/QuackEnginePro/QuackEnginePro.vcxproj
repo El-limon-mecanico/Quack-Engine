@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\QuackEngine\Bola.h" />
+    <ClInclude Include="..\..\Src\QuackEngine\checkML.h" />
     <ClInclude Include="..\..\Src\QuackEngine\Component.h" />
     <ClInclude Include="..\..\Src\QuackEngine\QuackEntity.h" />
     <ClInclude Include="..\..\Src\QuackEngine\QuackEnginePro.h" />
@@ -60,7 +61,6 @@
     <ClInclude Include="..\..\Src\QuackEngine\SceneMng.h" />
     <ClInclude Include="..\..\Src\QuackEngine\Transform.h" />
     <ClInclude Include="..\..\Src\QuackEngine\Vector3D.h" />
-    <ClInclude Include="checkML.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

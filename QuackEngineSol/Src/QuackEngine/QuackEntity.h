@@ -6,9 +6,11 @@
 #include <vector>
 #include <iostream>
 #include "Component.h"
-#include "LuaManager.h"
-#include "FactoryManager.h"
 #include <unordered_map>
+
+namespace luabridge {
+	class LuaRef;
+}
 
 namespace Ogre {
 	class Root;
@@ -40,7 +42,7 @@ public:
 
 	//el component name es el nombre del componente como tal (mismo nombre para varias entidades con el mismo componente),
 	//filename es el nombre del .lua de la entidad donde esta el prefab como tal
-	Component* addComponent(const std::string& componentName, LuaRef param);
+	Component* addComponent(const std::string& componentName, luabridge::LuaRef param);
 
 	template<typename T>
 	T* getComponent()

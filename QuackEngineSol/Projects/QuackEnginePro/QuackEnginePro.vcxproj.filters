@@ -110,7 +110,7 @@
     <ClInclude Include="..\..\Src\QuackEngine\SceneMng.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="checkML.h">
+    <ClInclude Include="..\..\Src\QuackEngine\checkML.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
