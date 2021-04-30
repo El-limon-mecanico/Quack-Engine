@@ -1,21 +1,22 @@
 //#include <iostream>
-//#include <CEGUI\CEGUI.h>
 #include "CEGUIQuack.h"
 #include <CEGUI/CEGUI.h>
 #include <CEGUI/RendererModules/Ogre/Renderer.h>
+#include <CEGUI/RenderTarget.h>
+#include <Ogre.h>
 //#include <CEGUI\ScriptModules\Lua\CEGUILua.h>
 
-void CEGUIQuack::init()
+void CEGUIQuack::init(Ogre::RenderTarget* target)
 {
 	if (ogreRenderer_ == nullptr)
 	{
-		ogreRenderer_ == &CEGUI::OgreRenderer::bootstrapSystem();
+		ogreRenderer_ = &CEGUI::OgreRenderer::bootstrapSystem(*target);
 		setUpResources();
 	}
 
 	context_ = &CEGUI::System::getSingleton().createGUIContext(ogreRenderer_->getDefaultRenderTarget());
-	root_ = CEGUI::WindowManager::getSingleton().createWindow("DefaultWindow", "root");
-	context_->setRootWindow(root_);
+	window_ = CEGUI::WindowManager::getSingleton().createWindow("DefaultWindow", "root");
+	context_->setRootWindow(window_);
 }
 
 void CEGUIQuack::destroy()
@@ -33,11 +34,11 @@ void CEGUIQuack::draw()
 void CEGUIQuack::setUpResources()
 {
 	CEGUI::DefaultResourceProvider* resourceProvider = static_cast<CEGUI::DefaultResourceProvider*>(CEGUI::System::getSingleton().getResourceProvider());
-	resourceProvider->setResourceGroupDirectory("imagesets", "Assets/UI/imagesets");
-	resourceProvider->setResourceGroupDirectory("schemes", "Assets/UI/schemes");
-	resourceProvider->setResourceGroupDirectory("fonts", "Assets/UI/fonts");
-	resourceProvider->setResourceGroupDirectory("layouts", "Assets/UI/layouts");
-	resourceProvider->setResourceGroupDirectory("looknfeels", "Assets/UI/looknfeels");
+	//resourceProvider->setResourceGroupDirectory("imagesets", "Assets/UI/imagesets/");
+	//resourceProvider->setResourceGroupDirectory("schemes", "Assets/UI/schemes/");
+	//resourceProvider->setResourceGroupDirectory("fonts", "Assets/UI/fonts/");
+	//resourceProvider->setResourceGroupDirectory("layouts", "Assets/UI/layouts/");
+	//resourceProvider->setResourceGroupDirectory("looknfeels", "Assets/UI/looknfeels/");
 
 	CEGUI::ImageManager::setImagesetDefaultResourceGroup("imagesets");
 	CEGUI::Scheme::setDefaultResourceGroup("schemes");
@@ -59,6 +60,6 @@ void CEGUIQuack::setFont(std::string filename)
 CEGUI::Window* CEGUIQuack::createWidget(std::string type, std::string name)
 {
 	CEGUI::Window* newWindow = CEGUI::WindowManager::getSingleton().createWindow(type, name);
-	root_->addChild(newWindow);
+	window_->addChild(newWindow);
 	return newWindow;
 }

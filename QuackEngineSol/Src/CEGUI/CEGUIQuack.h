@@ -5,6 +5,12 @@
 
 #include <string>
 
+namespace Ogre {
+	class RenderWindow;
+	class RenderTarget;
+	class Root;
+}
+
 namespace CEGUI 
 {
 	class OgreRenderer;
@@ -18,7 +24,7 @@ class CEGUIQuack
 private:
 	CEGUI::OgreRenderer* ogreRenderer_ = nullptr;
 	CEGUI::System* ceguiSystem_ = nullptr;
-	CEGUI::Window* root_ = nullptr;
+	CEGUI::Window* window_ = nullptr;
 	CEGUI::GUIContext* context_ = nullptr;
 
 	void setUpResources();
@@ -27,10 +33,10 @@ private:
 	//std::map<std::string, FMOD::DSP*> dsp_;
 public:
 	
-	CEGUIQuack() { init(); };
+	CEGUIQuack(Ogre::RenderTarget* t) { init(t); };
 	~CEGUIQuack() {};
 
-	void init();
+	void init(Ogre::RenderTarget* target);
 	void destroy();
 
 	void draw();

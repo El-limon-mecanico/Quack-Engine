@@ -85,7 +85,7 @@ void QuackEnginePro::setup()
 
 	prueba(fmod_quack_);
 
-	cegui_ = new CEGUIQuack();
+	cegui_ = new CEGUIQuack(OgreQuack::Instance()->getRoot()->getRenderTarget("ventana to guapa"));
 
 	//CargarLua();
 

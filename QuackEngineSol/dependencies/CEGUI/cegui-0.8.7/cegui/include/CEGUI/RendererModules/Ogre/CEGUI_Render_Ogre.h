@@ -1,8 +1,0 @@
-#include "CEGUI\RendererModules\Ogre\GeometryBuffer.h"
-#include "CEGUI\RendererModules\Ogre\ImageCodec.h"
-#include "CEGUI\RendererModules\Ogre\Renderer.h"
-#include "CEGUI\RendererModules\Ogre\RenderTarget.h"
-#include "CEGUI\RendererModules\Ogre\ResourceProvider.h"
-#include "CEGUI\RendererModules\Ogre\Texture.h"
-#include "CEGUI\RendererModules\Ogre\TextureTarget.h"
-#include "CEGUI\RendererModules\Ogre\WindowTarget.h"
