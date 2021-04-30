@@ -3,42 +3,81 @@
 
 Scene::Scene(const std::string& file, const std::string& name)
 {
-	luabridge::LuaRef refScene = readLuaFile(file, name);
-
+	lua_State* state = readFileLua(file);
+	LuaRef refScene = readElementFromFile(state, name);
+	int aaa = refScene.length();
 	//sacamos el vector de entidades y las creamos
 	enableExceptions(refScene);
 
-	
-	std::list<std::string> entidades = refScene.rawget("entities");
-	std::vector<std::string> t = refScene.rawget("entities").cast<std::vector<std::string>>();
+	//leemos el vector que contiene las entidades
+	LuaRef entidades = refScene.rawget("entities");
 
-	for(std::string entityName:entidades)
+	for (int i = 1; i <= entidades.length(); i++)
 	{
-		//creamos todas las entidades
-		QuackEntity* entity = new QuackEntity();
-		
-		//buscar el archivo de esta entidad y cargar sus componentes
-		std::string path = "lua/Entities/" + entityName + ".lua";
-		luabridge::LuaRef refEntity = readLuaFile(path, entityName);
-		std::vector<std::string> components = refScene.rawget("components");
+		std::string ent = entidades[i];
+		std::cout << "Cargando " << ent << "\n";
 
-		//creamos todos los componentes y se los añadimos a las entidades
-		for(std::string compName: components)
-		{			
-			entity->addComponent(compName);
-		}
+		//crea las entidades con sus compoenntes
+		//con el nombre ent, se busca el .lua y se cree lo que pone alli
+		LuaRef entInfo = readElementFromFile(state, ent);
+		if(!createEntity(ent, entInfo)) std::cout << "ERROR: no se ha podidio cargar la entidad: " << ent;
 	}
-	
+}
+
+bool Scene::createEntity(const std::string& fileName, LuaRef entInfo)
+{
+	QuackEntity* entity = new QuackEntity(fileName);
+	entities_.push_back(entity);
+
+	//leemos el array de componentes
+	LuaRef components = entInfo.rawget("Components");
+	//comprobacion de errores
+	if (components.isNil()) { std::cout << "ERROR: No se ha podido leer el Array 'Components' \n"; return false; }
+		
+	for (int i = 1; i <= components.length(); i++)
+	{
+		//carga los componentes
+		enableExceptions(components[i]);
+		entity->addComponent(components[i], entInfo.rawget(components[i]));
+	}
+	return true;
 }
 
 Scene::~Scene()
 {
+	for (QuackEntity* qEnt : entities_) {
+		delete qEnt;
+		qEnt = nullptr;
+	}
+}
+
+void Scene::addEntity(QuackEntity* e)
+{
+	if (e)
+		entities_.push_back(e);
+}
+
+void Scene::preUpdate()
+{
+	for (QuackEntity* entity : entities_)
+	{
+		entity->preUpdate();
+	}
 }
 
 void Scene::update()
 {
-	for(QuackEntity* entity:entities_)
+	//std::cout << "New frame\n";
+	for (QuackEntity* entity : entities_)
 	{
 		entity->update();
+	}
+}
+
+void Scene::lateUpdate()
+{
+	for (QuackEntity* entity : entities_)
+	{
+		entity->lateUpdate();
 	}
 }

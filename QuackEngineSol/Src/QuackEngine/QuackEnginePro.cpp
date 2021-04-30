@@ -10,14 +10,19 @@
 #include "BulletQuack.h"
 #include "LuaBridgeTest.h"
 #include "Prueba.h"
-#include "PruebaFactory.h"
+#include "Transform.h"
 #include "LuaManager.h"
 #include "FactoryManager.h"
 #include "QuackEntity.h"
+#include "MeshRenderer.h"
+#include "Rigidbody.h"
+#include "BtOgre.h"
 #include "RenderComponent.h"
 #include "QuackTime.h"
 #include "CEGUIQuack.h"
 
+#include "Scene.h"
+#include "SceneMng.h"
 
 //para que no salga la consola en el modo release (en las propiedades del proyecto hay que poner que se
 //ejecute como aplicacion window no cmd (en la parte de vinculador))ç
@@ -26,27 +31,40 @@
 void addCopmponentsFactories()
 {
 	FactoryManager::init();
-	
-	PruebaFactory* prueba_factory = new PruebaFactory();
-	FactoryManager::instance()->add("prueba", prueba_factory);
 
+	FactoryManager::instance()->add<MeshRenderer>();
+	FactoryManager::instance()->add<Rigidbody>();
+	FactoryManager::instance()->add<Prueba>();
+	FactoryManager::instance()->add<Transform>();
 }
 
 
 
 // -------------- MOVER A OTRO ARCHIVO -------------- //
 
-void prueba(fmod_quack* fmod_sound)
+void QuackEnginePro::prueba()
 {
-	fmod_sound->createSound(std::string("song.wav"), "Cantando");
-	fmod_sound->playSound(0, "Cantando", 1);
-	fmod_sound->createDSP(FMOD_DSP_TYPE_ECHO, std::string("Echo"));
-	//fmod_sound->addDSP(0, std::string("Echo"));
-	//fmod_sound->pauseChannel(0, true);
-	//fmod_sound->stopChannel(0);
+	QuackEntity* plane = new QuackEntity("PlanoToGuapo");
+	MeshRenderer* r = plane->addComponent<MeshRenderer>();
+	r->setMeshByPrefab(PrefabType::PT_PLANE); //:)))
+	Rigidbody* rb = plane->addComponent<Rigidbody>();
+
+	r->getNode()->rotate(Ogre::Vector3(1, 0, 0), Ogre::Radian(Ogre::Degree(-90)));
+	r->getNode()->scale(5, 5, 1);
+	r->getNode()->setPosition(0, -300, 0);
+
+	rb->setRigidbody(0,BtOgre::ColliderType::CT_BOX);
+	rb->getRigidbody()->setGravity(btVector3(0, 0, 0));
+	
+	SceneMng::Instance()->getCurrentScene()->addEntity(plane);
 }
 
 std::unique_ptr<QuackEnginePro>  QuackEnginePro::instance_;
+
+QuackEnginePro::~QuackEnginePro() {
+	delete fmod_quack_; fmod_quack_ = nullptr;
+	delete quackTime_;	quackTime_ = nullptr;
+};
 
 // AQUI FALTA MANEJO DE ERRORES Y EXCEPCIONES
 bool QuackEnginePro::Init()
@@ -61,10 +79,6 @@ QuackEnginePro* QuackEnginePro::Instance()
 	assert(instance_.get() != nullptr);
 	return instance_.get();
 }
-	
-#include "Scene.h"
-
-Scene* scene;
 
 
 void QuackEnginePro::setup()
@@ -77,14 +91,18 @@ void QuackEnginePro::setup()
 
 	OgreQuack::Instance()->setupRoot();
 
+	OgreQuack::Instance()->loadResources(); //Ogre resources
+
 	sdlWindow_ = OgreQuack::Instance()->getSdlWindow();
 
-	BulletQuack::Init(OgreQuack::Instance()->getRoot(), OgreQuack::Instance()->getSceneManager());
+	BulletQuack::Init();
 
 	fmod_quack_ = new fmod_quack();
 
-	prueba(fmod_quack_);
+	addCopmponentsFactories();
 
+	SceneMng::Init();
+	SceneMng::Instance()->loadScene("Scenes/scene1.lua", "scene1");
 	cegui_ = new CEGUIQuack(OgreQuack::Instance()->getRoot()->getRenderTarget("ventana to guapa"));
 
 	//CargarLua();
@@ -93,11 +111,11 @@ void QuackEnginePro::setup()
 
 void QuackEnginePro::start()
 {
-	if (!updateStarted){
-        addCopmponentsFactories();
-        update();
-    } 
-    
+	if (!updateStarted) {
+		prueba();
+		update();
+	}
+
 }
 
 
@@ -106,9 +124,18 @@ void QuackEnginePro::update()
 	exit = false;
 	while (!exit) {
 		quackTime_->frameStarted();
-		OgreQuack::Instance()->getRoot()->renderOneFrame();
-		pollEvents();
+
+		SceneMng::Instance()->preUpdate();
+
 		BulletQuack::Instance()->stepPhysics(time()->deltaTime());
+
+		pollEvents();
+
+		SceneMng::Instance()->update(); //actualizamos la escena que actualiza las entidades	
+
+		OgreQuack::Instance()->getRoot()->renderOneFrame();
+
+		SceneMng::Instance()->lateUpdate();
 	}
 }
 

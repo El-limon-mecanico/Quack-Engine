@@ -9,7 +9,8 @@
 #  endif
 #endif
 
-class QuackTime;
+#include "QuackTime.h"
+
 class BulletQuack;
 class fmod_quack;
 class OgreQuack;
@@ -39,13 +40,16 @@ private:
 
 	bool exit = true;
 
+	void prueba();
+
+
 public:
 
 	QuackEnginePro() {
 		setup();
 	}
 
-	~QuackEnginePro() {}
+	~QuackEnginePro();
 
 	static bool Init();
 

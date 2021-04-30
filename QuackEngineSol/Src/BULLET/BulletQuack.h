@@ -5,44 +5,43 @@
 
 namespace Ogre {
 	class Root;
-	class SceneManager;
+	class SceneNode;
+	class Entity;
 }
 
 namespace BtOgre {
 	class DynamicsWorld;
+	class CollisionListener;
+	enum ColliderType;
 }
+
+class btRigidBody;
+class btManifoldPoint;
 
 class BulletQuack {
 private:
 
 	static std::unique_ptr<BulletQuack> instance_;
 
-	Ogre::Root* root_;
-
-	Ogre::SceneManager* mSM_;
-
 	BtOgre::DynamicsWorld* world_;
 
 	void init();
 
-	void pruebas();
-
 public:
 
-	static bool Init(Ogre::Root* root, Ogre::SceneManager* msM);
+	static bool Init();
 
 	static BulletQuack* Instance();
 
-
-	BulletQuack(Ogre::Root* root, Ogre::SceneManager* msM) :root_(root), mSM_(msM) {
+	BulletQuack() {
 		init();
 	}
 
 	~BulletQuack() {}
 
-	void addSceneManager(Ogre::SceneManager* mngr) { mSM_ = mngr; }
-
 	void stepPhysics(double deltaTime);
+
+	btRigidBody* addRigidBody(float mass, const Ogre::Entity* ent, BtOgre::ColliderType ct, void(*p)(void* , void*, const btManifoldPoint& mnf), void* listener);
 };
 
 #endif // !_PHYSICS_MANAGER_

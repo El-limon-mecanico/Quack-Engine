@@ -24,7 +24,7 @@ void PruebasLua() {
         std::string name2 = characterLuaRef.rawget("name");
 		std::cout << name2 << "\n";
 	}
-    catch (std::exception e)
+    catch (std::exception& e)
     {
         std::cout << "La variable name no es del tipo correcto\n";
     };

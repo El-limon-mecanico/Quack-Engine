@@ -1,10 +1,12 @@
 #include <iostream>
 #include <fstream>
 #include "QuackEnginePro.h"
+#include "checkML.h"
 
 
 #if (defined _DEBUG) || !(defined _WIN32)
 int main() {
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 #else
 #include <windows.h>
 int WINAPI
@@ -22,6 +24,7 @@ WinMain(HINSTANCE zHInstance, HINSTANCE prevInstance, LPSTR lpCmdLine, int nCmdS
 	{
 		std::cerr << "ERROR: el fichero no se ha abierto\n";
 	}
+
 
 	// AQUI FALTA MANEJO DE ERRORES Y EXCEPCIONES
 	if (QuackEnginePro::Init()) {

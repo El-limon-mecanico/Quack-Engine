@@ -19,15 +19,18 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Src\QuackEngine\Bola.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\Component.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\QuackEntity.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\FactoryManager.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\Prueba.cpp" />
-    <ClCompile Include="..\..\Src\QuackEngine\PruebaFactory.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\QuackEnginePro.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\QuackTime.cpp" />
-    <ClCompile Include="..\..\Src\QuackEngine\RenderComponent.cpp" />
+    <ClCompile Include="..\..\Src\QuackEngine\MeshRenderer.cpp" />
+    <ClCompile Include="..\..\Src\QuackEngine\Rigidbody.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\Scene.cpp" />
+    <ClCompile Include="..\..\Src\QuackEngine\SceneMng.cpp" />
+    <ClCompile Include="..\..\Src\QuackEngine\Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CEGUI\CEGUI.vcxproj">
@@ -47,16 +50,20 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Src\QuackEngine\Bola.h" />
+    <ClInclude Include="..\..\Src\QuackEngine\checkML.h" />
     <ClInclude Include="..\..\Src\QuackEngine\Component.h" />
-    <ClInclude Include="..\..\Src\QuackEngine\ComponentFactory.h" />
     <ClInclude Include="..\..\Src\QuackEngine\QuackEntity.h" />
     <ClInclude Include="..\..\Src\QuackEngine\QuackEnginePro.h" />
     <ClInclude Include="..\..\Src\QuackEngine\FactoryManager.h" />
     <ClInclude Include="..\..\Src\QuackEngine\Prueba.h" />
-    <ClInclude Include="..\..\Src\QuackEngine\PruebaFactory.h" />
-    <ClInclude Include="..\..\Src\QuackEngine\RenderComponent.h" />
     <ClInclude Include="..\..\Src\QuackEngine\QuackTime.h" />
+    <ClInclude Include="..\..\Src\QuackEngine\MeshRenderer.h" />
+    <ClInclude Include="..\..\Src\QuackEngine\Rigidbody.h" />
     <ClInclude Include="..\..\Src\QuackEngine\Scene.h" />
+    <ClInclude Include="..\..\Src\QuackEngine\SceneMng.h" />
+    <ClInclude Include="..\..\Src\QuackEngine\Transform.h" />
+    <ClInclude Include="..\..\Src\QuackEngine\Vector3D.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

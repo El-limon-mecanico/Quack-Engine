@@ -6,26 +6,57 @@
 #include <vector>
 #include <iostream>
 #include "Component.h"
-#include "FactoryManager.h"
 #include <unordered_map>
 
+namespace luabridge {
+	class LuaRef;
+}
+
+namespace Ogre {
+	class Root;
+	class SceneManager;
+	class SceneNode;
+	class Entity;
+}
+
 class QuackEntity {
-
-protected:
-
 private:
 	bool active_;
 	std::vector<Component*> components_;
 	std::string tag_;
+	std::string name_;
 	std::unordered_map<std::string, Component*> cmpMap_;
 
 public:
-	QuackEntity(bool active = true , std::string tag = "Default"): active_(active) , tag_(tag){}
+	QuackEntity(std::string name = "DefaultName", bool active = true, std::string tag = "Default");
 	~QuackEntity();
 
-	Component* addComponent(const std::string& name);
-	Component* getComponent(const std::string& name);
+	template<typename T, typename ... Targs>
+	T* addComponent(Targs&&...mArgs) {
+		T* c = new T(std::forward<Targs>(mArgs)...);
+		c->setEntity(this);
+		components_.push_back(c);
+		cmpMap_.insert({ T::GetName() , c });
+		return c;
+	}
+
+	//el component name es el nombre del componente como tal (mismo nombre para varias entidades con el mismo componente),
+	//filename es el nombre del .lua de la entidad donde esta el prefab como tal
+	Component* addComponent(const std::string& componentName, luabridge::LuaRef param);
+
+	template<typename T>
+	T* getComponent()
+	{
+		std::string name = T::GetName();
+		auto it = cmpMap_.find(name);
+		if (it != cmpMap_.end())
+			return (T*)cmpMap_[name];
+		return nullptr;
+	}
+
+
 	inline bool hasComponent(const std::string& name);
+
 	inline bool isActive() const {
 		return active_;
 	}
@@ -33,5 +64,19 @@ public:
 		active_ = state;
 	}
 	void removeComponent(const std::string& name);
+
+	std::string name() { return name_; }
+	std::string tag() { return tag_; }
+	void preUpdate();
+
 	void update();
+
+	void lateUpdate();
+
+	void onCollisionEnter(QuackEntity* other);
+
+	void onCollisionStay(QuackEntity* other);
+
+	void onCollisionExit(QuackEntity* other);
+
 };

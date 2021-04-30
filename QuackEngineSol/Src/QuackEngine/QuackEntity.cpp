@@ -1,5 +1,13 @@
 #include "QuackEntity.h"
+#include "OgreQuack.h"
+#include "FactoryManager.h"
 #include "LuaManager.h"
+#include <Ogre.h>
+
+
+QuackEntity::QuackEntity(std::string name, bool active, std::string tag) : active_(active), name_(name), tag_(tag)
+{
+}
 
 QuackEntity::~QuackEntity() {
 	for (auto c : components_) {
@@ -8,16 +16,21 @@ QuackEntity::~QuackEntity() {
 	}
 }
 
-Component* QuackEntity::addComponent(const std::string& name)
+Component* QuackEntity::addComponent(const std::string& componentName, LuaRef param)
 {
-	if (hasComponent(name))
-		return cmpMap_[name];
+	if (hasComponent(componentName)) //para no repetir componentes
+		return cmpMap_[componentName];
 	else {
-		Component* c = FactoryManager::instance()->create(name);
+		std::cout << "Cargando el componente: " << componentName << "\n";
+		Component* c = FactoryManager::instance()->create(componentName);
 		c->setEntity(this);
-		c->init(readLuaFile(("lua/Components/"+name+".lua"),name));
+		if (param.isNil()) std::cout << "ERROR: no se ha podido cargar los valores del componente " << componentName << "\n";
+		else c->init(param);
 		components_.push_back(c);
-		cmpMap_.insert({ name , c });
+
+		cmpMap_.emplace(componentName, c);
+		cmpMap_[componentName] = c; //sin esta linea, el map guarda null por alg�n motivo
+		
 		return c;
 	}
 }
@@ -39,35 +52,44 @@ void QuackEntity::removeComponent(const std::string& name)
 	cmpMap_[name] = nullptr;
 }
 
+inline bool QuackEntity::hasComponent(const std::string& name)
+{
+	return cmpMap_[name];
+}
+
+
+void QuackEntity::preUpdate()
+{
+	for (Component* c : components_)
+		c->preUpdate();
+}
+
 void QuackEntity::update()
 {
 	for (Component* c : components_)
 		c->update();
 }
 
-inline bool QuackEntity::hasComponent(const std::string& name)
+void QuackEntity::lateUpdate()
 {
-	return cmpMap_[name];
+	for (Component* c : components_)
+		c->lateUpdate();
 }
 
-Component* QuackEntity::getComponent(const std::string& name)
+void QuackEntity::onCollisionEnter(QuackEntity* other)
 {
-	if (cmpMap_[name])
-		return cmpMap_[name];
-	return nullptr;
+	for (Component* c : components_)
+		c->onCollisionEnter(other);
 }
 
-//Comentamos el Update y Render de Samir porque lo haremos diferente pero ykse
-	/*void Entity::update() {
-		std::size_t n = components_.size();
-		for (auto i = 0u; i < n; i++) {
-			components_[i]->update();
-		}
-	}
+void QuackEntity::onCollisionStay(QuackEntity* other)
+{
+	for (Component* c : components_)
+		c->onCollisionStay(other);
+}
 
-	void Entity::render() {
-		std::size_t n = components_.size();
-		for (auto i = 0u; i < n; i++) {
-			components_[i]->render();
-		}
-	}*/
+void QuackEntity::onCollisionExit(QuackEntity* other)
+{
+	for (Component* c : components_)
+		c->onCollisionExit(other);
+}
