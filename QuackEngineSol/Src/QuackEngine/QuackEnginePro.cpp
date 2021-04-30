@@ -17,7 +17,6 @@
 #include "MeshRenderer.h"
 #include "Rigidbody.h"
 #include "BtOgre.h"
-#include "RenderComponent.h"
 #include "QuackTime.h"
 #include "CEGUIQuack.h"
 
@@ -101,12 +100,11 @@ void QuackEnginePro::setup()
 
 	addCopmponentsFactories();
 
-	SceneMng::Init();
-	SceneMng::Instance()->loadScene("Scenes/scene1.lua", "scene1");
-	cegui_ = new CEGUIQuack(OgreQuack::Instance()->getRoot()->getRenderTarget("ventana to guapa"));
+	//cegui_ = new CEGUIQuack(OgreQuack::Instance()->getRoot()->getRenderTarget("ventana to guapa"));
 
 	//CargarLua();
-
+	SceneMng::Init();
+	SceneMng::Instance()->loadScene("Scenes/scene1.lua", "scene1");
 }
 
 void QuackEnginePro::start()
