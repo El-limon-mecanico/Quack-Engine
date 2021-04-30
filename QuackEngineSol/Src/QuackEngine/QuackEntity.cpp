@@ -76,20 +76,20 @@ void QuackEntity::lateUpdate()
 		c->lateUpdate();
 }
 
-void QuackEntity::onCollisionEnter(QuackEntity* other)
+void QuackEntity::onCollisionEnter(QuackEntity* other , Vector3D point)
 {
 	for (Component* c : components_)
-		c->onCollisionEnter(other);
+		c->onCollisionEnter(other, point);
 }
 
-void QuackEntity::onCollisionStay(QuackEntity* other)
+void QuackEntity::onCollisionStay(QuackEntity* other , Vector3D point)
 {
 	for (Component* c : components_)
-		c->onCollisionStay(other);
+		c->onCollisionStay(other, point);
 }
 
-void QuackEntity::onCollisionExit(QuackEntity* other)
+void QuackEntity::onCollisionExit(QuackEntity* other , Vector3D point)
 {
 	for (Component* c : components_)
-		c->onCollisionExit(other);
+		c->onCollisionExit(other, point);
 }

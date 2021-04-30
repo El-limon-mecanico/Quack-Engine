@@ -1,10 +1,13 @@
 #pragma once
 #include "Component.h"
-#include "Vector3D.h"
-//no se si esto es lo correcto para acceder a las clases que necesito?�?�?�
 
 const float TIME_TO_EXIT = 0.1f;
 
+
+enum ForceMode {
+	FORCE,
+	IMPULSE
+};
 
 namespace BtOgre {
 	class DynamicsWorld;
@@ -49,4 +52,20 @@ public:
 	void setRigidbody(int mass, BtOgre::ColliderType type);
 	
 	btRigidBody* getRigidbody() { return rb_; }
+
+	void setMass(float mass);
+
+	float getMass();
+
+	void addForce(Vector3D force, ForceMode mode = FORCE, bool local = false);
+
+	void addTorque(Vector3D force, ForceMode mode = FORCE, bool local = false);
+
+	void clearForce();
+
+	void setGravity(Vector3D gravity);
+
+	void setStatic();
+
+	bool isStatic();
 };

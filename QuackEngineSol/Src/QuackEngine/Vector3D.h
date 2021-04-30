@@ -25,15 +25,15 @@ public:
 	}
 
 	Vector3D(const Vector3D &v) :
-			x_(v.getX()), y_(v.getY()), z_(v.getZ()) {
+			x_(v.x()), y_(v.y()), z_(v.z()) {
 	}
 
 	Vector3D(Vector3D &&v) :
-			x_(v.getX()), y_(v.getY()), z_(v.getZ()) {
+			x_(v.x()), y_(v.y()), z_(v.z()) {
 	}
 
 	Vector3D(const Vector3D *v) :
-			x_(v->getX()), y_(v->getY()), z_(v->getZ()) {
+			x_(v->x()), y_(v->y()), z_(v->z()) {
 	}
 
 	Vector3D(float x, float y, float z) :
@@ -44,18 +44,18 @@ public:
 	}
 
 	// various getters
-	inline float getX() const {
+	inline float x() const {
 		return x_;
 	}
 
-	inline float getY() const {
+	inline float y() const {
 		return y_;
 	}
 
-    inline float getZ() const {
+    inline float z() const {
 		return z_;
 	}
-	inline Vector3D getForOgre(){
+	inline Vector3D toOgre(){
 		return *this*100;
 	}
 	// various setters

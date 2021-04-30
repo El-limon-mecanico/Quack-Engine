@@ -73,10 +73,10 @@ public:
 
 	void lateUpdate();
 
-	void onCollisionEnter(QuackEntity* other);
+	void onCollisionEnter(QuackEntity* other , Vector3D point);
 
-	void onCollisionStay(QuackEntity* other);
+	void onCollisionStay(QuackEntity* other , Vector3D point);
 
-	void onCollisionExit(QuackEntity* other);
+	void onCollisionExit(QuackEntity* other , Vector3D point);
 
 };

@@ -2,6 +2,7 @@
 #include <iostream>
 #include <unordered_map>
 #include "LuaManager.h"
+#include "Vector3D.h"
 
 namespace luabridge{
 	class LuaRef;
@@ -37,10 +38,10 @@ public:
 
 	virtual void lateUpdate() {}
 
-	virtual void onCollisionEnter(QuackEntity* other) {}
+	virtual void onCollisionEnter(QuackEntity* other , Vector3D point) {}
 
-	virtual void onCollisionStay(QuackEntity* other) {}
+	virtual void onCollisionStay(QuackEntity* other , Vector3D point) {}
 
-	virtual void onCollisionExit(QuackEntity* other) {}
+	virtual void onCollisionExit(QuackEntity* other , Vector3D point) {}
 
 };

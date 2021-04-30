@@ -17,7 +17,7 @@ entidad1 = {
     },
 
     Rigidbody = {
-        Type = "Sphere",
+        Type = "Hull",
         Mass = 1
     },
 
@@ -38,7 +38,7 @@ entidad2 = {
     },
 
     MeshRenderer = {
-        Mesh = "Suzanne.mesh",
+        Mesh = "Sphere",
         Position = {50,500,0}
     },
 

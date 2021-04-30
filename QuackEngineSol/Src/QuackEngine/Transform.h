@@ -48,13 +48,13 @@ public:
 	inline Vector3D getLocalPos() const { return localPos_; };
 	inline Vector3D getGlobalPos() const;
 	//Return the value of the x in pos vector
-	inline float getLocalPosX() const { return localScale_.getX(); };
+	inline float getLocalPosX() const { return localScale_.x(); };
 	inline float getGlobalPosX() const;
 	//Return the value of the y in pos vector
-	inline float getLocalPosY() const { return localScale_.getY(); };
+	inline float getLocalPosY() const { return localScale_.y(); };
 	inline float getGlobalPosY() const;
 	//Return the value of the z in pos vector
-	inline float getLocalPosZ() const { return localScale_.getZ(); };
+	inline float getLocalPosZ() const { return localScale_.z(); };
 	inline float getGlobalPosZ() const;
 #pragma endregion
 #pragma region scale_
@@ -62,13 +62,13 @@ public:
 	inline Vector3D getLocalScale() const { return localScale_; };
 	inline Vector3D getGlobalScale() const;
 	//Return the value of the width
-	inline float getLocalScaleX() const { return localScale_.getX(); };
+	inline float getLocalScaleX() const { return localScale_.x(); };
 	inline float getGlobalScaleX() const;
 	//Return the value of the height
-	inline float getLocalScaleY() const { return localScale_.getY(); };
+	inline float getLocalScaleY() const { return localScale_.y(); };
 	inline float getGlobalScaleY() const;
 	//Return the value of the depth
-	inline float getLocalScaleZ() const { return localScale_.getZ(); };
+	inline float getLocalScaleZ() const { return localScale_.z(); };
 	inline float getGlobalScaleZ() const;
 #pragma endregion
 #pragma region rotation_
@@ -76,13 +76,13 @@ public:
 	inline Vector3D getLocalRotation() const { return localRotation_; };
 	inline Vector3D getGlobalRotation() const;
 	//Return the value of the the rotation in x
-	inline float getLocalRotationX() const { return localRotation_.getX(); };
+	inline float getLocalRotationX() const { return localRotation_.x(); };
 	inline float getGlobalRotationX() const;
 	//Return the value of the the rotation in x
-	inline float getLocalRotationY() const { return localRotation_.getY(); };
+	inline float getLocalRotationY() const { return localRotation_.y(); };
 	inline float getGlobalRotationY() const;
 	//Return the value of the the rotation in x
-	inline float getLocalRotationZ() const { return localRotation_.getZ(); };
+	inline float getLocalRotationZ() const { return localRotation_.z(); };
 	inline float getGlobalRotationZ() const;
 #pragma endregion
 	inline std::vector<Transform*> getChildren() const { return children_; }
