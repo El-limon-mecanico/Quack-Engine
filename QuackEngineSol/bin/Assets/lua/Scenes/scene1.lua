@@ -1,17 +1,17 @@
 ﻿scene1 = {
-    entities = {"entidad1", "entidad2"}
+    entities = {"entidad1"}
 }
 
 entidad1 = {
     Components = {"MeshRenderer", "Transform","Rigidbody", "Prueba"},
 
     MeshRenderer = {
-        Mesh = "ninja.mesh",
-        Position = {0,150,0}
+        Mesh = "Suzanne.mesh",
+        Position = {0,500,0}
     },
 
     Transform = {
-        Position = {0,300,0},
+        Position = {0,500,0},
         Scale = {1,1,1},
         Rotation = {0,0,0}
     },
@@ -38,7 +38,7 @@ entidad2 = {
     },
 
     MeshRenderer = {
-        Mesh = "Sphere",
+        Mesh = "Suzanne.mesh",
         Position = {50,500,0}
     },
 
