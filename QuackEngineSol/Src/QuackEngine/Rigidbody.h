@@ -12,13 +12,19 @@ enum ForceMode {
 namespace BtOgre {
 	class DynamicsWorld;
 	class CollisionListener;
-	enum ColliderType;
 }
+
+enum ColliderType {
+	CT_BOX,
+	CT_SPHERE,
+	CT_TRIMESH,
+	CT_HULL
+};
 
 class btManifoldPoint;
 class btRigidBody;
 
-class Rigidbody : public Component{
+class Rigidbody : public Component {
 private:
 
 	struct CollisionInfo {
@@ -30,9 +36,9 @@ private:
 	btRigidBody* rb_ = nullptr;
 
 	std::vector<CollisionInfo> collisions;
-	
+
 	static void sendContacts(void* first, void* other, const btManifoldPoint& manifoldPoint);
-	
+
 	void contact(Rigidbody* other, const btManifoldPoint& manifoldPoint);
 
 public:
@@ -49,8 +55,8 @@ public:
 
 	virtual void lateUpdate() override;
 
-	void setRigidbody(int mass, BtOgre::ColliderType type);
-	
+	void setRigidbody(int mass, ColliderType type);
+
 	btRigidBody* getRigidbody() { return rb_; }
 
 	void setMass(float mass);

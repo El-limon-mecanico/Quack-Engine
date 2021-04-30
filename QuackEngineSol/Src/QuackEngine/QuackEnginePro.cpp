@@ -16,7 +16,6 @@
 #include "QuackEntity.h"
 #include "MeshRenderer.h"
 #include "Rigidbody.h"
-#include "BtOgre.h"
 
 #include "Scene.h"
 #include "SceneMng.h"
@@ -50,8 +49,7 @@ void QuackEnginePro::prueba()
 	r->getNode()->scale(5, 5, 1);
 	r->getNode()->setPosition(0, -300, 0);
 
-	rb->setRigidbody(0,BtOgre::ColliderType::CT_BOX);
-	rb->getRigidbody()->setGravity(btVector3(0, 0, 0));
+	rb->setRigidbody(0, ColliderType::CT_BOX);
 	
 	SceneMng::Instance()->getCurrentScene()->addEntity(plane);
 }
