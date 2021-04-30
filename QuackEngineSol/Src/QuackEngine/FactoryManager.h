@@ -12,12 +12,7 @@ public:
 
 	virtual ~FactoryManager() {}
 
-	static  FactoryManager* init()
-	{
-		assert(instance_.get() == nullptr);
-		instance_.reset(new FactoryManager());
-		return instance_.get();
-	}
+	static  FactoryManager* init();
 
 	static FactoryManager* instance() {
 		assert(instance_.get() != nullptr);
