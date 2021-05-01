@@ -1,21 +1,30 @@
 #pragma once
 #include "Component.h"
-#include "Vector3D.h"
-//no se si esto es lo correcto para acceder a las clases que necesito?�?�?�
 
 const float TIME_TO_EXIT = 0.1f;
 
 
+enum ForceMode {
+	FORCE,
+	IMPULSE
+};
+
 namespace BtOgre {
 	class DynamicsWorld;
 	class CollisionListener;
-	enum ColliderType;
 }
+
+enum ColliderType {
+	CT_BOX,
+	CT_SPHERE,
+	CT_TRIMESH,
+	CT_HULL
+};
 
 class btManifoldPoint;
 class btRigidBody;
 
-class Rigidbody : public Component{
+class Rigidbody : public Component {
 private:
 
 	struct CollisionInfo {
@@ -27,9 +36,9 @@ private:
 	btRigidBody* rb_ = nullptr;
 
 	std::vector<CollisionInfo> collisions;
-	
+
 	static void sendContacts(void* first, void* other, const btManifoldPoint& manifoldPoint);
-	
+
 	void contact(Rigidbody* other, const btManifoldPoint& manifoldPoint);
 
 public:
@@ -46,7 +55,23 @@ public:
 
 	virtual void lateUpdate() override;
 
-	void setRigidbody(int mass, BtOgre::ColliderType type);
-	
+	void setRigidbody(int mass, ColliderType type);
+
 	btRigidBody* getRigidbody() { return rb_; }
+
+	void setMass(float mass);
+
+	float getMass();
+
+	void addForce(Vector3D force, ForceMode mode = FORCE, bool local = false);
+
+	void addTorque(Vector3D force, ForceMode mode = FORCE, bool local = false);
+
+	void clearForce();
+
+	void setGravity(Vector3D gravity);
+
+	void setStatic();
+
+	bool isStatic();
 };

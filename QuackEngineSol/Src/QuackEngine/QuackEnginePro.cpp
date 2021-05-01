@@ -9,6 +9,7 @@
 #include "OgreQuack.h"
 #include "BulletQuack.h"
 #include "LuaBridgeTest.h"
+#include "checkML.h"
 #include "Prueba.h"
 #include "Transform.h"
 #include "LuaManager.h"
@@ -16,7 +17,6 @@
 #include "QuackEntity.h"
 #include "MeshRenderer.h"
 #include "Rigidbody.h"
-#include "BtOgre.h"
 #include "QuackTime.h"
 #include "CEGUIQuack.h"
 
@@ -27,7 +27,7 @@
 //ejecute como aplicacion window no cmd (en la parte de vinculador))ç
 
 //TODO cambiar esto de sitio
-void addCopmponentsFactories()
+void addComponentsFactories()
 {
 	FactoryManager::init();
 
@@ -52,8 +52,7 @@ void QuackEnginePro::prueba()
 	r->getNode()->scale(5, 5, 1);
 	r->getNode()->setPosition(0, -300, 0);
 
-	rb->setRigidbody(0,BtOgre::ColliderType::CT_BOX);
-	rb->getRigidbody()->setGravity(btVector3(0, 0, 0));
+	rb->setRigidbody(0, ColliderType::CT_BOX);
 	
 	SceneMng::Instance()->getCurrentScene()->addEntity(plane);
 }
@@ -68,6 +67,11 @@ QuackEnginePro::~QuackEnginePro() {
 // AQUI FALTA MANEJO DE ERRORES Y EXCEPCIONES
 bool QuackEnginePro::Init()
 {
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+#if (defined _DEBUG) && (defined _WIN32)
+	int* a = new int();		// dejar comentado para que estemos seguros de que siempre se estan viendo los memory leaks
+#endif
+
 	assert(instance_.get() == nullptr);
 	instance_.reset(new QuackEnginePro());
 	return instance_.get();
@@ -98,7 +102,7 @@ void QuackEnginePro::setup()
 
 	fmod_quack_ = new fmod_quack();
 
-	addCopmponentsFactories();
+	addComponentsFactories();
 
 	//cegui_ = new CEGUIQuack(OgreQuack::Instance()->getRoot()->getRenderTarget("ventana to guapa"));
 
