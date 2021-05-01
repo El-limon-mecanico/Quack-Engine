@@ -5,7 +5,7 @@
 #include <bitset>
 #include <vector>
 #include <iostream>
-#include "Component.h"
+#include "Transform.h"
 #include <unordered_map>
 
 namespace luabridge {
@@ -26,6 +26,7 @@ private:
 	std::string tag_;
 	std::string name_;
 	std::unordered_map<std::string, Component*> cmpMap_;
+	Transform* transform_;
 
 public:
 	QuackEntity(std::string name = "DefaultName", bool active = true, std::string tag = "Default");
@@ -52,6 +53,10 @@ public:
 		if (it != cmpMap_.end())
 			return (T*)cmpMap_[name];
 		return nullptr;
+	}
+
+	Transform* transform() {
+		return transform_;
 	}
 
 

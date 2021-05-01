@@ -8,7 +8,7 @@ using OgrePrefab = Ogre::SceneManager::PrefabType;
 MeshRenderer::MeshRenderer(QuackEntity* e) : Component(e)
 {
 	mSM_ = OgreQuack::Instance()->getSceneManager();
-	node_ = mSM_->getRootSceneNode()->createChildSceneNode();
+	node_ = entity_->transform()->getNode();
 }
 
 
@@ -45,7 +45,7 @@ bool MeshRenderer::init(luabridge::LuaRef parameterTable)
 
 void MeshRenderer::setMeshByPrefab(PrefabType prefab) {
 	OgrePrefab p = (OgrePrefab)prefab;
-	node_->detachAllObjects();
+	entity_->transform()->getNode()->detachAllObjects();
 	ogreEnt_ = mSM_->createEntity(p);
 	ogreEnt_->setVisible(true);
 	node_->attachObject(ogreEnt_);

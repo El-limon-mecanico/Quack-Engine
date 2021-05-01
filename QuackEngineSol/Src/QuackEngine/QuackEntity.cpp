@@ -7,6 +7,7 @@
 
 QuackEntity::QuackEntity(std::string name, bool active, std::string tag) : active_(active), name_(name), tag_(tag)
 {
+	transform_ = new Transform();
 }
 
 QuackEntity::~QuackEntity() {

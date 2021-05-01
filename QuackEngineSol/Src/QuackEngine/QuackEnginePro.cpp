@@ -46,8 +46,8 @@ void QuackEnginePro::prueba()
 	r->setMeshByPrefab(PrefabType::PT_PLANE); //:)))
 	Rigidbody* rb = plane->addComponent<Rigidbody>();
 
-	r->getNode()->rotate(Ogre::Vector3(1, 0, 0), Ogre::Radian(Ogre::Degree(-90)));
-	r->getNode()->scale(5, 5, 1);
+	/*r->getNode()->rotate(Ogre::Vector3(1, 0, 0), Ogre::Radian(Ogre::Degree(-90)));
+	r->getNode()->scale(5, 5, 1);*/
 
 	rb->setRigidbody(0,BtOgre::ColliderType::CT_BOX);
 	rb->getRigidbody()->setGravity(btVector3(0, 0, 0));
@@ -90,6 +90,8 @@ void QuackEnginePro::setup()
 	OgreQuack::Instance()->loadResources(); //Ogre resources
 
 	sdlWindow_ = OgreQuack::Instance()->getSdlWindow();
+
+	Transform::InitRoot();
 
 	BulletQuack::Init();
 

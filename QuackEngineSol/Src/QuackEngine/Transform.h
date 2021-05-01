@@ -2,42 +2,63 @@
 #pragma once
 #include "Component.h"
 #include "Vector3D.h"
+
+
+namespace Ogre {
+	class SceneNode;
+	//class Vector3;
+}
+
+
 class Transform :
 	public Component
 {
 private:
+	//Root
+	Transform(Ogre::SceneNode* n);
+	static Transform* trRoot_;
+
 	//Save the position of this transform
-	Vector3D localPos_;
-	Vector3D localScale_;
-	Vector3D localRotation_;
+
+	Ogre::SceneNode* node_;
 	std::vector<Transform*> children_;
 	Transform* parent_;
 public:
-	Transform() {}
-#pragma region Operators
+	Transform(Vector3D pos = Vector3D(), Vector3D rot = Vector3D(), Vector3D scale = Vector3D(1, 1, 1));
+	virtual ~Transform() {};
+
+	Vector3D position;
+	Vector3D rotate;
+	Vector3D scale;
+
 	inline Transform& operator=(const Transform& t) {
-		localPos_ = t.localPos_;
-		localScale_ = t.localScale_;
-		localRotation_ = t.localRotation_;
+		position = t.position;
+		scale = t.scale;
+		rotate = t.rotate;
 		entity_ = t.entity_;
 		return *this;
 	}
 	inline Transform& operator=(Transform&& t) noexcept {
-		localPos_ = t.localPos_;
-		localScale_ = t.localScale_;
-		localRotation_ = t.localRotation_;
+		position = t.position;
+		scale = t.scale;
+		rotate = t.rotate;
 		t.entity_ = nullptr;
 		return *this;
 	}
-#pragma endregion
-	virtual ~Transform() {};
-	virtual bool init(luabridge::LuaRef parameterTable = { nullptr }) override;
 
+	virtual bool init(luabridge::LuaRef parameterTable = { nullptr }) override;
+	static bool InitRoot();
 	void cleanChildren();
 	inline int childrenCount() const { return children_.size(); }
 	void addChild(Transform* child) { children_.push_back(child); child->setParent(this); }
 	inline bool hasChild() const { return childrenCount() != 0; }
 	inline bool hasParent() const { return parent_ != nullptr; }
+
+	Ogre::SceneNode* getNode();
+	virtual void preUpdate() override;
+	virtual void update() override;
+	virtual void lateUpdate() override;
+
 
 //-GETTERS LOCALES: Sirven para obtener la posición de un objeto RELATIVA A SU PADRE. La posición guardada en el transform SIEMPRE será la relativa.
 	//Estos métodos devuelven la posición local con respecto al padre que guarda un objeto.
@@ -45,44 +66,44 @@ public:
 #pragma region getters
 #pragma region pos_
 	//Return the vector which contains the pos
-	inline Vector3D getLocalPos() const { return localPos_; };
+	inline Vector3D getLocalPos() const { return position; };
 	inline Vector3D getGlobalPos() const;
 	//Return the value of the x in pos vector
-	inline float getLocalPosX() const { return localScale_.getX(); };
+	inline float getLocalPosX() const { return scale.getX(); };
 	inline float getGlobalPosX() const;
 	//Return the value of the y in pos vector
-	inline float getLocalPosY() const { return localScale_.getY(); };
+	inline float getLocalPosY() const { return scale.getY(); };
 	inline float getGlobalPosY() const;
 	//Return the value of the z in pos vector
-	inline float getLocalPosZ() const { return localScale_.getZ(); };
+	inline float getLocalPosZ() const { return scale.getZ(); };
 	inline float getGlobalPosZ() const;
 #pragma endregion
 #pragma region scale_
 	//Return the vector which contains the scale
-	inline Vector3D getLocalScale() const { return localScale_; };
+	inline Vector3D getLocalScale() const { return scale; };
 	inline Vector3D getGlobalScale() const;
 	//Return the value of the width
-	inline float getLocalScaleX() const { return localScale_.getX(); };
+	inline float getLocalScaleX() const { return scale.getX(); };
 	inline float getGlobalScaleX() const;
 	//Return the value of the height
-	inline float getLocalScaleY() const { return localScale_.getY(); };
+	inline float getLocalScaleY() const { return scale.getY(); };
 	inline float getGlobalScaleY() const;
 	//Return the value of the depth
-	inline float getLocalScaleZ() const { return localScale_.getZ(); };
+	inline float getLocalScaleZ() const { return scale.getZ(); };
 	inline float getGlobalScaleZ() const;
 #pragma endregion
 #pragma region rotation_
 	//Return the vector which contains the scale
-	inline Vector3D getLocalRotation() const { return localRotation_; };
+	inline Vector3D getLocalRotation() const { return rotate; };
 	inline Vector3D getGlobalRotation() const;
 	//Return the value of the the rotation in x
-	inline float getLocalRotationX() const { return localRotation_.getX(); };
+	inline float getLocalRotationX() const { return rotate.getX(); };
 	inline float getGlobalRotationX() const;
 	//Return the value of the the rotation in x
-	inline float getLocalRotationY() const { return localRotation_.getY(); };
+	inline float getLocalRotationY() const { return rotate.getY(); };
 	inline float getGlobalRotationY() const;
 	//Return the value of the the rotation in x
-	inline float getLocalRotationZ() const { return localRotation_.getZ(); };
+	inline float getLocalRotationZ() const { return rotate.getZ(); };
 	inline float getGlobalRotationZ() const;
 #pragma endregion
 	inline std::vector<Transform*> getChildren() const { return children_; }
@@ -102,19 +123,19 @@ public:
 	
 
 	//set the value of vector which contains the pos
-	inline void setLocalPos(float x, float y, float z) { localPos_.set(x, y, z); };
+	inline void setLocalPos(float x, float y, float z) { position.set(x, y, z); };
 	///set the vsetLocalPosf vector which contains the pos
-	inline void setLocalPos(Vector3D& pos) { localPos_.set(pos); };
+	inline void setLocalPos(Vector3D& pos) { position.set(pos); };
 	///set the vsetLocalPosf vector which contains the pos
-	inline void setLocalPos(Vector3D&& pos) { localPos_.set(pos); };
+	inline void setLocalPos(Vector3D&& pos) { position.set(pos); };
 	///set the vsetLocalPosf vector which contains the pos
-	inline void setLocalPos(Vector3D* pos) { localPos_.set(pos); };
+	inline void setLocalPos(Vector3D* pos) { position.set(pos); };
 	///set the vsetLocalPos of the pos vector
-	inline void setLocalPosX(float x) { localPos_.setX(x); }
+	inline void setLocalPosX(float x) { position.setX(x); }
 	///set the vsetLocalPos of the pos vector
-	inline void setLocalPosY(float y) { localPos_.setY(y); }
+	inline void setLocalPosY(float y) { position.setY(y); }
 	///set the vsetLocalPos of the rotation vector
-	inline void setLocalPosZ(float z) { localRotation_.setZ(z); }
+	inline void setLocalPosZ(float z) { rotate.setZ(z); }
 
 	//set the value of vector which contains the pos
 	inline void setGlobalPos(float x, float y, float z);
@@ -132,19 +153,19 @@ public:
 #pragma endregion
 #pragma region scale_
 	//set the value of vector which contains the scale
-	inline void setScale(float x, float y, float z) { localScale_.set(x, y, z); };
+	inline void setScale(float x, float y, float z) { scale.set(x, y, z); };
 	///set the value of vector which contains the scale
-	inline void setScale(Vector3D& scale) { localScale_.set(scale); };
+	inline void setScale(Vector3D& scale) { scale.set(scale); };
 	///set the value of vector which contains the scale
-	inline void setScale(Vector3D&& scale) { localScale_.set(scale); };
+	inline void setScale(Vector3D&& scale) { scale.set(scale); };
 	///set the value of vector which contains the scale
-	inline void setScale(Vector3D* scale) { localScale_.set(scale); };
+	//inline void setScale(Vector3D* scale) { scale.set(scale); };
 	///set the value x of the scale vector
-	inline void setScaleX(float x) { localScale_.setX(x); }
+	inline void setScaleX(float x) { scale.setX(x); }
 	///set the value y of the scale vector
-	inline void setScaleY(float y) { localScale_.setY(y); }
+	inline void setScaleY(float y) { scale.setY(y); }
 	///set the value z of the rotation vector
-	inline void setScaleZ(float z) { localRotation_.setZ(z); }
+	inline void setScaleZ(float z) { rotate.setZ(z); }
 
 	//set the value of vector which contains the scale
 	inline void setGlobalScale(float x, float y, float z);
@@ -162,19 +183,19 @@ public:
 #pragma endregion
 #pragma region rotation_
 	//set the value of vector which contains the rotation
-	inline void setRotation(float x, float y, float z) { localRotation_.set(x, y, z); };
+	inline void setRotation(float x, float y, float z) { rotate.set(x, y, z); };
 	///set the value of vector which contains the rotation
-	inline void setRotation(Vector3D& rotation) { localRotation_.set(rotation); };
+	inline void setRotation(Vector3D& rotation) { rotate.set(rotation); };
 	///set the value of vector which contains the rotation
-	inline void setRotation(Vector3D&& rotation) { localRotation_.set(rotation); };
+	inline void setRotation(Vector3D&& rotation) { rotate.set(rotation); };
 	///set the value of vector which contains the rotation
-	inline void setRotation(Vector3D* rotation) { localRotation_.set(rotation); };
+	inline void setRotation(Vector3D* rotation) { rotate.set(rotation); };
 	///set the value x of the rotation vector
-	inline void setRotationX(float x) { localRotation_.setX(x); }
+	inline void setRotationX(float x) { rotate.setX(x); }
 	///set the value y of the rotation vector
-	inline void setRotationY(float y) { localRotation_.setY(y); }
+	inline void setRotationY(float y) { rotate.setY(y); }
 	///set the value z of the rotation vector
-	inline void setRotationZ(float z) { localRotation_.setZ(z); }
+	inline void setRotationZ(float z) { rotate.setZ(z); }
 
 	//set the value of vector which contains the rotation
 	inline void setGlobalRotation(float x, float y, float z);
@@ -192,5 +213,8 @@ public:
 #pragma endregion
 	void setParent(Transform* parent) { parent_ = parent; }
 	void eraseParent() { parent_ = nullptr; }
+
+	//Vector3D vectorToOgre(Ogre::Vector3 v);
+
 #pragma endregion
 };

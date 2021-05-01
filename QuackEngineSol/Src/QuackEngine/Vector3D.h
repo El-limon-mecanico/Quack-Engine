@@ -56,7 +56,7 @@ public:
 		return z_;
 	}
 	inline Vector3D getForOgre(){
-		return *this*100;
+		return *this*100; //comprobar el numerito y palante
 	}
 	// various setters
 	inline void setX(float x) {

@@ -21,8 +21,7 @@ protected:
 	Ogre::SceneNode* node_;
 	Ogre::SceneManager* mSM_;
 	Ogre::Entity* ogreEnt_;
-	
-	void setParent(Ogre::SceneNode* parent);
+
 
 public:
 	MeshRenderer(QuackEntity* e = nullptr);
@@ -34,8 +33,7 @@ public:
 
 	void setMeshByPrefab(PrefabType prefab);
 	void setMeshByName(const std::string& name);
-	
-	Ogre::SceneNode* getNode() { return node_; }
+
 	Ogre::SceneManager* getSceneManager() { return mSM_; }
 	Ogre::Entity* getOgreEntity() { return ogreEnt_; }
 	
