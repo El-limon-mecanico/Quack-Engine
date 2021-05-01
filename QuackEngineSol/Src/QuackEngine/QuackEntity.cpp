@@ -36,6 +36,23 @@ Component* QuackEntity::addComponent(const std::string& componentName, LuaRef pa
 	}
 }
 
+void QuackEntity::removeComponent(const std::string& componentName)
+{
+	if (!hasComponent(componentName))
+		return;
+
+	Component* c = cmpMap_[componentName];
+	for (auto it = components_.begin(); it != components_.end(); it++) {
+		if ((*it) == c) {
+			components_.erase(it);
+			break;
+		}
+	}
+
+	delete cmpMap_[componentName];
+	cmpMap_[componentName] = nullptr;
+}
+
 void QuackEntity::preUpdate()
 {
 	for (Component* c : components_)

@@ -46,10 +46,10 @@ public:
 	template<typename T>
 	T* getComponent()
 	{
-		std::string name = T::GetName();
-		auto it = cmpMap_.find(name);
+		std::string componentName = T::GetName();
+		auto it = cmpMap_.find(componentName);
 		if (it != cmpMap_.end())
-			return (T*)cmpMap_[name];
+			return (T*)cmpMap_[componentName];
 		return nullptr;
 	}
 
@@ -68,6 +68,8 @@ public:
 	inline void setActive(bool state) {
 		active_ = state;
 	}
+
+	void removeComponent(const std::string& componentName);
 
 	template<typename T>
 	void removeComponent()
