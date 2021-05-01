@@ -31,68 +31,31 @@ public:
 	QuackEntity(std::string name = "DefaultName", bool active = true, std::string tag = "Default");
 	~QuackEntity();
 
-	template<typename T, typename ... Targs>
-	T* addComponent(Targs&&...mArgs) {
-		T* c = new T(std::forward<Targs>(mArgs)...);
-		c->setEntity(this);
-		components_.push_back(c);
-		cmpMap_.insert({ T::GetName() , c });
-		return c;
-	}
+	std::string& name() {	return name_;	 }
+	std::string& tag() {		return tag_;	 }
+	inline bool isActive() const {		return active_;		}
+	inline void setActive(bool state) {		active_ = state;	}
 
 	//el component name es el nombre del componente como tal (mismo nombre para varias entidades con el mismo componente)
 	Component* addComponent(const std::string& componentName, luabridge::LuaRef param);
+	template<typename T, typename ... Targs>
+	T* addComponent(Targs&&...mArgs);
 
 	template<typename T>
-	T* getComponent()
-	{
-		std::string componentName = T::GetName();
-		auto it = cmpMap_.find(componentName);
-		if (it != cmpMap_.end())
-			return (T*)cmpMap_[componentName];
-		return nullptr;
-	}
+	T* getComponent();
+	Component* getComponent(const std::string& componentName);
 
 	template <typename T>
-	inline bool hasComponent() {
-		return cmpMap_[T::GetName()];
-	}
-
+	inline bool hasComponent();
 	inline bool hasComponent(const std::string& componentName) {
-		return cmpMap_[componentName];
+		return cmpMap_[componentName] != nullptr;
 	}
-
-	inline bool isActive() const {
-		return active_;
-	}
-	inline void setActive(bool state) {
-		active_ = state;
-	}
-
-	void removeComponent(const std::string& componentName);
 
 	template<typename T>
-	void removeComponent()
-	{
-		std::string name = T::GetName();
+	void removeComponent();
+	void removeComponent(const std::string& componentName);
 
-		if (!hasComponent(name))
-			return;
 
-		Component* c = cmpMap_[name];
-		for (auto it = components_.begin(); it != components_.end(); it++) {
-			if ((*it) == c) {
-				components_.erase(it);
-				break;
-			}
-		}
-
-		delete cmpMap_[name];
-		cmpMap_[name] = nullptr;
-	};
-
-	std::string name() { return name_; }
-	std::string tag() { return tag_; }
 	void preUpdate();
 
 	void update();
@@ -106,3 +69,28 @@ public:
 	void onCollisionExit(QuackEntity* other , Vector3D point);
 
 };
+
+template<typename T>
+T* QuackEntity::getComponent() {
+	return (T*)getComponent(T::GetName());
+}
+
+template <typename T>
+inline bool QuackEntity::hasComponent() {
+	return hasComponent(T::GetName());
+}
+
+template<typename T>
+void QuackEntity::removeComponent() {
+	return removeComponent(T::GetName());
+}
+
+template<typename T, typename ... Targs>
+T* QuackEntity::addComponent(Targs&&...mArgs)
+{
+	T* c = new T(std::forward<Targs>(mArgs)...);
+	c->setEntity(this);
+	components_.push_back(c);
+	cmpMap_.insert({ T::GetName() , c });
+	return c;
+}

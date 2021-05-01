@@ -36,6 +36,14 @@ Component* QuackEntity::addComponent(const std::string& componentName, LuaRef pa
 	}
 }
 
+Component* QuackEntity::getComponent(const std::string& componentName)
+{
+	auto it = cmpMap_.find(componentName);
+	if (it != cmpMap_.end())
+		return cmpMap_[componentName];
+	return nullptr;
+}
+
 void QuackEntity::removeComponent(const std::string& componentName)
 {
 	if (!hasComponent(componentName))
@@ -55,36 +63,42 @@ void QuackEntity::removeComponent(const std::string& componentName)
 
 void QuackEntity::preUpdate()
 {
-	for (Component* c : components_)
-		c->preUpdate();
+	if (active_)
+		for (Component* c : components_)
+			c->preUpdate();
 }
 
 void QuackEntity::update()
 {
-	for (Component* c : components_)
-		c->update();
+	if (active_)
+		for (Component* c : components_)
+			c->update();
 }
 
 void QuackEntity::lateUpdate()
 {
-	for (Component* c : components_)
-		c->lateUpdate();
+	if (active_)
+		for (Component* c : components_)
+			c->lateUpdate();
 }
 
-void QuackEntity::onCollisionEnter(QuackEntity* other , Vector3D point)
+void QuackEntity::onCollisionEnter(QuackEntity* other, Vector3D point)
 {
-	for (Component* c : components_)
-		c->onCollisionEnter(other, point);
+	if (active_)
+		for (Component* c : components_)
+			c->onCollisionEnter(other, point);
 }
 
-void QuackEntity::onCollisionStay(QuackEntity* other , Vector3D point)
+void QuackEntity::onCollisionStay(QuackEntity* other, Vector3D point)
 {
-	for (Component* c : components_)
-		c->onCollisionStay(other, point);
+	if (active_)
+		for (Component* c : components_)
+			c->onCollisionStay(other, point);
 }
 
-void QuackEntity::onCollisionExit(QuackEntity* other , Vector3D point)
+void QuackEntity::onCollisionExit(QuackEntity* other, Vector3D point)
 {
-	for (Component* c : components_)
-		c->onCollisionExit(other, point);
+	if (active_)
+		for (Component* c : components_)
+			c->onCollisionExit(other, point);
 }
