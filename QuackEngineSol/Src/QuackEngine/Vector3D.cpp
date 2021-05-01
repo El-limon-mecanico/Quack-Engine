@@ -1,6 +1,5 @@
 #include "Vector3D.h"
-#include <Ogre.h>
-#include <LinearMath/btVector3.h>
+#include "BtOgre.h"
 #include <cassert>
 
 
@@ -27,24 +26,68 @@ Vector3D::Vector3D(btVector3 v) :
 {
 }
 
-Ogre::Vector3 Vector3D::toOgre()
+Ogre::Vector3 Vector3D::toOgrePosition()
 {
-	return Ogre::Vector3(x() * 100, y() * 100, z() * 100);
+	return toOgre(*this * 100);
 }
 
-btVector3 Vector3D::toBullet()
+btVector3 Vector3D::toBulletPosition()
 {
-	return btVector3(x() * 100, y() * 100, z() * 100);
+	return toBullet(*this * 100);
+}
+
+Ogre::Quaternion Vector3D::toOgreRotation()
+{
+	Ogre::Vector3 v = { x_, y_,z_ };
+	Ogre::Quaternion q(&v);
+	return q;
+}
+
+btQuaternion Vector3D::toBulletRotation()
+{
+	return btQuaternion(x_, y_, z_);
+}
+
+Ogre::Vector3 Vector3D::toOgre(Vector3D v)
+{
+	return Ogre::Vector3(v.x(), v.y(), v.z());
+}
+
+btVector3 Vector3D::toBullet(Vector3D v)
+{
+	return btVector3(v.x(), v.y(), v.z());
 }
 
 Vector3D Vector3D::fromOgre(Ogre::Vector3 v)
 {
-	return Vector3D(v.x / 100, v.y / 100, v.z / 100);
+	return Vector3D(v.x, v.y, v.z);
 }
 
 Vector3D Vector3D::fromBullet(btVector3 v)
 {
-	return Vector3D(v.x() / 100, v.y() / 100, v.z() / 100);
+	return Vector3D(v.x(), v.y(), v.z());
+}
+
+Vector3D Vector3D::fromOgrePosition(Ogre::Vector3 v)
+{
+	return fromOgre(v / 100);
+}
+
+Vector3D Vector3D::fromBulletPosition(btVector3 v)
+{
+	return fromBullet(v / 100);
+}
+
+Vector3D Vector3D::fromOgreRotation(Ogre::Quaternion q)
+{
+	Ogre::Vector3 v;
+	q.ToAxes(&v);
+	return fromOgre(v);
+}
+
+Vector3D Vector3D::fromBulletRotation(btQuaternion q)
+{
+	return fromBullet(q.getAxis());
 }
 
 void Vector3D::rotate(Vector3D rot)

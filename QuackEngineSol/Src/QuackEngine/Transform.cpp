@@ -75,14 +75,15 @@ Ogre::SceneNode* Transform::getNode()
 
 void Transform::physicsUpdate()
 {
-	position = Vector3D::fromOgre(node_->getPosition());
-
-	std::cout << position.x() << " " << position.y() << " " << position.z() << "\n";
+	position = Vector3D::fromOgrePosition(node_->getPosition());
+	//rotation = Vector3D::fromOgreRotation(node_->getOrientation());				// ARREGLAR ROTACION
 }
 
 void Transform::lateUpdate()
 {
-	node_->setPosition(position.toOgre());
+	node_->setPosition(position.toOgrePosition());
+	node_->setOrientation(rotation.toOgreRotation());
+	node_->setScale(Vector3D::toOgre(scale));
 }
 
 void Transform::Translate(Vector3D t, bool global)
@@ -91,7 +92,7 @@ void Transform::Translate(Vector3D t, bool global)
 }
 void Transform::Rotate(Vector3D r, bool global)
 {
-
+	
 }
 void Transform::Scale(Vector3D s, bool global)
 {

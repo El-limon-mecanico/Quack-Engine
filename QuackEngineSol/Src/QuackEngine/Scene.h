@@ -25,6 +25,8 @@ public:
 
 	void physicsUpdate();
 
+	void fixedUpdate();
+
 	void update();
 
 	void lateUpdate();

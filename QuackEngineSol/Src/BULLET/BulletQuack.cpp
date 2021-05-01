@@ -27,9 +27,9 @@ void BulletQuack::init() {
 }
 
 
-void BulletQuack::stepPhysics(double deltaTime)
+void BulletQuack::stepPhysics(double deltaTime, float fixedTimeStep)
 {
-	world_->getBtWorld()->stepSimulation(deltaTime);
+	world_->getBtWorld()->stepSimulation(deltaTime, 1, fixedTimeStep);
 	//mBtWorld->stepSimulation(deltaTime);
 }
 

@@ -76,6 +76,15 @@ void Scene::physicsUpdate()
 	}
 }
 
+void Scene::fixedUpdate()
+{
+	//std::cout << "New frame\n";
+	for (QuackEntity* entity : entities_)
+	{
+		entity->fixedUpdate();
+	}
+}
+
 void Scene::update()
 {
 	//std::cout << "New frame\n";

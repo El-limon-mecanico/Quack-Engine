@@ -112,6 +112,14 @@ void QuackEntity::physicsUpdate()
 				c->physicsUpdate();
 }
 
+void QuackEntity::fixedUpdate()
+{
+	if (active_)
+		for (Component* c : components_)
+			if (c->isEnable())
+				c->fixedUpdate();
+}
+
 void QuackEntity::update()
 {
 	if (active_)

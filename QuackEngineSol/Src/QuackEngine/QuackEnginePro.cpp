@@ -123,13 +123,20 @@ void QuackEnginePro::update()
 	while (!exit) {
 		quackTime_->frameStarted();
 
+		fixedTime += time()->deltaTime();
+
 		SceneMng::Instance()->preUpdate();
 
-		BulletQuack::Instance()->stepPhysics(time()->deltaTime());
+		BulletQuack::Instance()->stepPhysics(time()->deltaTime(), FIXED_TIME_UPDATE);
 
 		SceneMng::Instance()->physicsUpdate();
 
 		pollEvents();
+
+		if (fixedTime > FIXED_TIME_UPDATE) {
+			SceneMng::Instance()->fixedUpdate();
+			fixedTime = 0;
+		}
 
 		SceneMng::Instance()->update(); //actualizamos la escena que actualiza las entidades	
 

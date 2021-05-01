@@ -51,7 +51,7 @@ void Rigidbody::preUpdate()
 
 	btTransform tr = rb_->getCenterOfMassTransform();
 
-	tr.setOrigin(transform->position.toBullet());
+	tr.setOrigin(transform->position.toBulletPosition());
 
 	rb_->setWorldTransform(tr);
 	rb_->getMotionState()->setWorldTransform(tr);						// TO DO , ROTACION
@@ -115,17 +115,17 @@ float Rigidbody::getMass()
 void Rigidbody::addForce(Vector3D force, ForceMode mode, bool local)
 {
 	if (mode)
-		rb_->applyCentralImpulse(force.toBullet());
+		rb_->applyCentralImpulse(force.toBulletPosition());
 	else
-		rb_->applyCentralForce(force.toBullet());
+		rb_->applyCentralForce(force.toBulletPosition());
 }
 
 void Rigidbody::addTorque(Vector3D force, ForceMode mode, bool local)
 {
 	if (mode)
-		rb_->applyTorque(force.toBullet());
+		rb_->applyTorque(force.toBulletPosition());
 	else
-		rb_->applyTorqueImpulse(force.toBullet());
+		rb_->applyTorqueImpulse(force.toBulletPosition());
 }
 
 
@@ -136,7 +136,7 @@ void Rigidbody::clearForce()
 
 void Rigidbody::setGravity(Vector3D gravity)
 {
-	rb_->setGravity(gravity.toBullet());
+	rb_->setGravity(gravity.toBulletPosition());
 }
 
 void Rigidbody::setStatic()

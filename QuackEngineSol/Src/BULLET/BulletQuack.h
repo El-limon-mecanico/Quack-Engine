@@ -39,7 +39,7 @@ public:
 
 	~BulletQuack() {}
 
-	void stepPhysics(double deltaTime);
+	void stepPhysics(double deltaTime, float fixedTimeStep = 0.02);
 
 	void changeMass(float mass, btRigidBody* rb);
 

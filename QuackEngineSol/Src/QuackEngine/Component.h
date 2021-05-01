@@ -55,6 +55,8 @@ public:
 
 	virtual void physicsUpdate() {}
 
+	virtual void fixedUpdate() {}
+
 	virtual void update() {}
 
 	virtual void lateUpdate() {}
