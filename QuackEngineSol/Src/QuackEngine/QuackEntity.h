@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <algorithm>
 #include <array>
@@ -32,56 +32,69 @@ public:
 	QuackEntity(std::string name = "DefaultName", bool active = true, std::string tag = "Default");
 	~QuackEntity();
 
-	template<typename T, typename ... Targs>
-	T* addComponent(Targs&&...mArgs) {
-		T* c = new T(std::forward<Targs>(mArgs)...);
-		c->setEntity(this);
-		components_.push_back(c);
-		cmpMap_.insert({ T::GetName() , c });
-		return c;
-	}
+	std::string& name() {	return name_;	 }
+	std::string& tag() {		return tag_;	 }
+	inline bool isActive() const {		return active_;		}
+	inline void setActive(bool state) {		active_ = state;	}
 
-	//el component name es el nombre del componente como tal (mismo nombre para varias entidades con el mismo componente),
-	//filename es el nombre del .lua de la entidad donde esta el prefab como tal
+	//el component name es el nombre del componente como tal (mismo nombre para varias entidades con el mismo componente)
 	Component* addComponent(const std::string& componentName, luabridge::LuaRef param);
+	template<typename T, typename ... Targs>
+	T* addComponent(Targs&&...mArgs);
 
 	template<typename T>
-	T* getComponent()
-	{
-		std::string name = T::GetName();
-		auto it = cmpMap_.find(name);
-		if (it != cmpMap_.end())
-			return (T*)cmpMap_[name];
-		return nullptr;
+	T* getComponent();
+	Component* getComponent(const std::string& componentName);
+
+	template <typename T>
+	inline bool hasComponent();
+	inline bool hasComponent(const std::string& componentName) {
+		return cmpMap_[componentName] != nullptr;
 	}
 
 	Transform* transform() {
 		return transform_;
 	}
+	template<typename T>
+	void removeComponent();
+	void removeComponent(const std::string& componentName);
 
 
-	inline bool hasComponent(const std::string& name);
-
-	inline bool isActive() const {
-		return active_;
-	}
-	inline void setActive(bool state) {
-		active_ = state;
-	}
-	void removeComponent(const std::string& name);
-
-	std::string name() { return name_; }
-	std::string tag() { return tag_; }
 	void preUpdate();
 
 	void update();
 
 	void lateUpdate();
 
-	void onCollisionEnter(QuackEntity* other);
+	void onCollisionEnter(QuackEntity* other , Vector3D point);
 
-	void onCollisionStay(QuackEntity* other);
+	void onCollisionStay(QuackEntity* other , Vector3D point);
 
-	void onCollisionExit(QuackEntity* other);
+	void onCollisionExit(QuackEntity* other , Vector3D point);
 
 };
+
+template<typename T>
+T* QuackEntity::getComponent() {
+	return (T*)getComponent(T::GetName());
+}
+
+template <typename T>
+inline bool QuackEntity::hasComponent() {
+	return hasComponent(T::GetName());
+}
+
+template<typename T>
+void QuackEntity::removeComponent() {
+	return removeComponent(T::GetName());
+}
+
+template<typename T, typename ... Targs>
+T* QuackEntity::addComponent(Targs&&...mArgs)
+{
+	T* c = new T(std::forward<Targs>(mArgs)...);
+	c->setEntity(this);
+	components_.push_back(c);
+	cmpMap_.insert({ T::GetName() , c });
+	return c;
+}

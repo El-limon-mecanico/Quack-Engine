@@ -3,6 +3,7 @@
 #include "FactoryManager.h"
 #include "LuaManager.h"
 #include <Ogre.h>
+#include "checkML.h"
 
 
 QuackEntity::QuackEntity(std::string name, bool active, std::string tag) : active_(active), name_(name), tag_(tag)
@@ -31,17 +32,25 @@ Component* QuackEntity::addComponent(const std::string& componentName, LuaRef pa
 
 		cmpMap_.emplace(componentName, c);
 		cmpMap_[componentName] = c; //sin esta linea, el map guarda null por alg�n motivo
-		
+
 		return c;
 	}
 }
 
-void QuackEntity::removeComponent(const std::string& name)
+Component* QuackEntity::getComponent(const std::string& componentName)
 {
-	if (!hasComponent(name))
+	auto it = cmpMap_.find(componentName);
+	if (it != cmpMap_.end())
+		return cmpMap_[componentName];
+	return nullptr;
+}
+
+void QuackEntity::removeComponent(const std::string& componentName)
+{
+	if (!hasComponent(componentName))
 		return;
 
-	Component* c = cmpMap_[name];
+	Component* c = cmpMap_[componentName];
 	for (auto it = components_.begin(); it != components_.end(); it++) {
 		if ((*it) == c) {
 			components_.erase(it);
@@ -49,48 +58,48 @@ void QuackEntity::removeComponent(const std::string& name)
 		}
 	}
 
-	delete cmpMap_[name];
-	cmpMap_[name] = nullptr;
+	delete cmpMap_[componentName];
+	cmpMap_[componentName] = nullptr;
 }
-
-inline bool QuackEntity::hasComponent(const std::string& name)
-{
-	return cmpMap_[name];
-}
-
 
 void QuackEntity::preUpdate()
 {
-	for (Component* c : components_)
-		c->preUpdate();
+	if (active_)
+		for (Component* c : components_)
+			c->preUpdate();
 }
 
 void QuackEntity::update()
 {
-	for (Component* c : components_)
-		c->update();
+	if (active_)
+		for (Component* c : components_)
+			c->update();
 }
 
 void QuackEntity::lateUpdate()
 {
-	for (Component* c : components_)
-		c->lateUpdate();
+	if (active_)
+		for (Component* c : components_)
+			c->lateUpdate();
 }
 
-void QuackEntity::onCollisionEnter(QuackEntity* other)
+void QuackEntity::onCollisionEnter(QuackEntity* other, Vector3D point)
 {
-	for (Component* c : components_)
-		c->onCollisionEnter(other);
+	if (active_)
+		for (Component* c : components_)
+			c->onCollisionEnter(other, point);
 }
 
-void QuackEntity::onCollisionStay(QuackEntity* other)
+void QuackEntity::onCollisionStay(QuackEntity* other, Vector3D point)
 {
-	for (Component* c : components_)
-		c->onCollisionStay(other);
+	if (active_)
+		for (Component* c : components_)
+			c->onCollisionStay(other, point);
 }
 
-void QuackEntity::onCollisionExit(QuackEntity* other)
+void QuackEntity::onCollisionExit(QuackEntity* other, Vector3D point)
 {
-	for (Component* c : components_)
-		c->onCollisionExit(other);
+	if (active_)
+		for (Component* c : components_)
+			c->onCollisionExit(other, point);
 }

@@ -101,7 +101,8 @@ void OgreQuack::loadResources()
 		cf.load(resourcesPath);
 	}
 	catch (std::exception& e) {
-		std::cout << "ERROR: no existe el archivo de recursos\n";
+		std::cout << "ERROR: no existe el archivo de recursos " << resourcesPath << ". No se han cargado algunos recursos.\n";
+		return;
 	}
 
 	std::string mSolutionPath = resourcesPath;

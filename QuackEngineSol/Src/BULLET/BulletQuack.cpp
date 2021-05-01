@@ -33,6 +33,18 @@ void BulletQuack::stepPhysics(double deltaTime)
 	//mBtWorld->stepSimulation(deltaTime);
 }
 
+void BulletQuack::changeMass(float mass, btRigidBody* rb)
+{
+	world_->getBtWorld()->removeRigidBody(rb);
+
+	btVector3 inertia;
+	rb->getCollisionShape()->calculateLocalInertia(mass, inertia);
+	rb->setMassProps(mass, inertia);
+
+	//Add the rigid body to the dynamics world
+	world_->getBtWorld()->addRigidBody(rb);
+}
+
 btRigidBody* BulletQuack::addRigidBody(float mass, const Ogre::Entity* ent, BtOgre::ColliderType ct, void(*p)(void*, void*, const btManifoldPoint& mnf), void* listener)
 {
 

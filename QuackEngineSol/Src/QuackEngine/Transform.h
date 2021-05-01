@@ -60,9 +60,9 @@ public:
 	virtual void lateUpdate() override;
 
 
-//-GETTERS LOCALES: Sirven para obtener la posición de un objeto RELATIVA A SU PADRE. La posición guardada en el transform SIEMPRE será la relativa.
-	//Estos métodos devuelven la posición local con respecto al padre que guarda un objeto.
-//-GETTERS GLOBALES: Sirven para obtener la posición de un objeto EN EL MUNDO. Estos métodos devuelven la suma de la posición local + la posición local del padre.
+//-GETTERS LOCALES: Sirven para obtener la posiciï¿½n de un objeto RELATIVA A SU PADRE. La posiciï¿½n guardada en el transform SIEMPRE serï¿½ la relativa.
+	//Estos mï¿½todos devuelven la posiciï¿½n local con respecto al padre que guarda un objeto.
+//-GETTERS GLOBALES: Sirven para obtener la posiciï¿½n de un objeto EN EL MUNDO. Estos mï¿½todos devuelven la suma de la posiciï¿½n local + la posiciï¿½n local del padre.
 #pragma region getters
 #pragma region pos_
 	//Return the vector which contains the pos
@@ -113,10 +113,10 @@ public:
 	inline QuackEntity* getChildByName(std::string name) const;
 	static std::string GetName() { return "Transform"; }
 #pragma endregion
-//-SETTERS LOCALES: Sirven para cambiar la posición de un objeto RELATIVA A SU PADRE. La posición guardada en el transform SIEMPRE será la relativa.
-	//Modifican la posición relativa al padre de manera directa, indicando a cuantas unidades debe estar alejado del padre.
-//-SETTERS GLOBALES: Sirven para cambiar la posición de un objeto RELATIVA AL MUNDO. Estos métodos modifican la posicion relativa al padre a través de una
-	//posición en coordenadas mundiales.
+//-SETTERS LOCALES: Sirven para cambiar la posiciï¿½n de un objeto RELATIVA A SU PADRE. La posiciï¿½n guardada en el transform SIEMPRE serï¿½ la relativa.
+	//Modifican la posiciï¿½n relativa al padre de manera directa, indicando a cuantas unidades debe estar alejado del padre.
+//-SETTERS GLOBALES: Sirven para cambiar la posiciï¿½n de un objeto RELATIVA AL MUNDO. Estos mï¿½todos modifican la posicion relativa al padre a travï¿½s de una
+	//posiciï¿½n en coordenadas mundiales.
 #pragma region setters
 	
 #pragma region pos_
