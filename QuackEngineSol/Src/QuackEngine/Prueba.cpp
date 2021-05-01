@@ -10,11 +10,7 @@ Prueba::Prueba(QuackEntity* e) : Component(e)
 
 Prueba::~Prueba()
 {
-
-#if (!defined _DEBUG) && (defined _WIN32)
-	delete valor2;		// dejar comentado para que estemos seguros de que siempre se estan viendo los memory leaks
-	//std::cout << "WARNING: La basura no esta apareciendo en la salida, deberia haber al menos 4 bytes de basura\n";
-#endif
+	delete valor2;
 }
 
 bool Prueba::init(luabridge::LuaRef parameterTable)

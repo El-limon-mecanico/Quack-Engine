@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <algorithm>
 #include <array>
@@ -40,8 +40,7 @@ public:
 		return c;
 	}
 
-	//el component name es el nombre del componente como tal (mismo nombre para varias entidades con el mismo componente),
-	//filename es el nombre del .lua de la entidad donde esta el prefab como tal
+	//el component name es el nombre del componente como tal (mismo nombre para varias entidades con el mismo componente)
 	Component* addComponent(const std::string& componentName, luabridge::LuaRef param);
 
 	template<typename T>
@@ -54,8 +53,14 @@ public:
 		return nullptr;
 	}
 
+	template <typename T>
+	inline bool hasComponent() {
+		return cmpMap_[T::GetName()];
+	}
 
-	inline bool hasComponent(const std::string& name);
+	inline bool hasComponent(const std::string& componentName) {
+		return cmpMap_[componentName];
+	}
 
 	inline bool isActive() const {
 		return active_;
@@ -63,7 +68,26 @@ public:
 	inline void setActive(bool state) {
 		active_ = state;
 	}
-	void removeComponent(const std::string& name);
+
+	template<typename T>
+	void removeComponent()
+	{
+		std::string name = T::GetName();
+
+		if (!hasComponent(name))
+			return;
+
+		Component* c = cmpMap_[name];
+		for (auto it = components_.begin(); it != components_.end(); it++) {
+			if ((*it) == c) {
+				components_.erase(it);
+				break;
+			}
+		}
+
+		delete cmpMap_[name];
+		cmpMap_[name] = nullptr;
+	};
 
 	std::string name() { return name_; }
 	std::string tag() { return tag_; }

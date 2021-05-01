@@ -3,6 +3,7 @@
 #include "FactoryManager.h"
 #include "LuaManager.h"
 #include <Ogre.h>
+#include "checkML.h"
 
 
 QuackEntity::QuackEntity(std::string name, bool active, std::string tag) : active_(active), name_(name), tag_(tag)
@@ -30,33 +31,10 @@ Component* QuackEntity::addComponent(const std::string& componentName, LuaRef pa
 
 		cmpMap_.emplace(componentName, c);
 		cmpMap_[componentName] = c; //sin esta linea, el map guarda null por alg�n motivo
-		
+
 		return c;
 	}
 }
-
-void QuackEntity::removeComponent(const std::string& name)
-{
-	if (!hasComponent(name))
-		return;
-
-	Component* c = cmpMap_[name];
-	for (auto it = components_.begin(); it != components_.end(); it++) {
-		if ((*it) == c) {
-			components_.erase(it);
-			break;
-		}
-	}
-
-	delete cmpMap_[name];
-	cmpMap_[name] = nullptr;
-}
-
-inline bool QuackEntity::hasComponent(const std::string& name)
-{
-	return cmpMap_[name];
-}
-
 
 void QuackEntity::preUpdate()
 {

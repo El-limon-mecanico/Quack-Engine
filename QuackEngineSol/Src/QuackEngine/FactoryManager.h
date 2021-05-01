@@ -2,6 +2,7 @@
 #include <memory>
 #include <assert.h>
 #include "Component.h"
+#include "checkML.h"
 
 class FactoryManager {
 

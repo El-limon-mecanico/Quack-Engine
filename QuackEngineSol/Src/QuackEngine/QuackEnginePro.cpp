@@ -9,6 +9,7 @@
 #include "OgreQuack.h"
 #include "BulletQuack.h"
 #include "LuaBridgeTest.h"
+#include "checkML.h"
 #include "Prueba.h"
 #include "Transform.h"
 #include "LuaManager.h"
@@ -24,7 +25,7 @@
 //ejecute como aplicacion window no cmd (en la parte de vinculador))ç
 
 //TODO cambiar esto de sitio
-void addCopmponentsFactories()
+void addComponentsFactories()
 {
 	FactoryManager::init();
 
@@ -64,6 +65,11 @@ QuackEnginePro::~QuackEnginePro() {
 // AQUI FALTA MANEJO DE ERRORES Y EXCEPCIONES
 bool QuackEnginePro::Init()
 {
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+#if (defined _DEBUG) && (defined _WIN32)
+	int* a = new int();		// dejar comentado para que estemos seguros de que siempre se estan viendo los memory leaks
+#endif
+
 	assert(instance_.get() == nullptr);
 	instance_.reset(new QuackEnginePro());
 	return instance_.get();
@@ -94,7 +100,7 @@ void QuackEnginePro::setup()
 
 	fmod_quack_ = new fmod_quack();
 
-	addCopmponentsFactories();
+	addComponentsFactories();
 
 	SceneMng::Init();
 	SceneMng::Instance()->loadScene("Scenes/scene1.lua", "scene1");
