@@ -1,6 +1,5 @@
 #pragma once
 #include "Component.h"
-#include "Transform.h"
 
 const float TIME_TO_EXIT = 0.1f;
 

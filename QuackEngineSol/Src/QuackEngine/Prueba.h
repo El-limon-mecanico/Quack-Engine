@@ -1,6 +1,5 @@
 #pragma once
 #include "Component.h"
-#include "Transform.h"
 #include "checkML.h"
 
 class Prueba : public Component {
