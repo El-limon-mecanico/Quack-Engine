@@ -42,7 +42,11 @@ QuackEntity* QuackEntity::RootEntity()
 
 Component* QuackEntity::addComponent(const std::string& componentName, LuaRef param)
 {
-	if (hasComponent(componentName)) //para no repetir componentes
+	if (componentName == "Transform") {
+		transform_->init(param);
+		return transform_;
+	}
+	else if (hasComponent(componentName)) //para no repetir componentes
 		return cmpMap_[componentName];
 	else {
 		std::cout << "Cargando el componente: " << componentName << "\n";

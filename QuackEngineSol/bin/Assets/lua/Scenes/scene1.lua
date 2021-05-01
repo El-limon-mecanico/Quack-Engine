@@ -6,7 +6,7 @@ entidad1 = {
     Components = {"Transform", "MeshRenderer","Rigidbody", "Prueba"},
 
     Transform = {
-        Position = {0,500,0},
+        Position = {0,5,0},
         Scale = {1,1,1},
         Rotation = {0,0,0}
     },
