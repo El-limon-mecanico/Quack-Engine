@@ -36,6 +36,11 @@ void SceneMng::preUpdate()
 	sceneQueue_.front()->preUpdate();
 }
 
+void SceneMng::physicsUpdate()
+{
+	sceneQueue_.front()->physicsUpdate();
+}
+
 void SceneMng::update()
 {
 	sceneQueue_.front()->update();

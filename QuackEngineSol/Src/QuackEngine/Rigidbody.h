@@ -1,5 +1,6 @@
 #pragma once
 #include "Component.h"
+#include "Transform.h"
 
 const float TIME_TO_EXIT = 0.1f;
 
@@ -35,11 +36,17 @@ private:
 
 	btRigidBody* rb_ = nullptr;
 
+	float mass_ = 1;
+
+	ColliderType colType_ = CT_BOX;
+
 	std::vector<CollisionInfo> collisions;
 
 	static void sendContacts(void* first, void* other, const btManifoldPoint& manifoldPoint);
 
 	void contact(Rigidbody* other, const btManifoldPoint& manifoldPoint);
+
+	bool firsEnable_ = true;
 
 public:
 
@@ -54,6 +61,10 @@ public:
 	virtual void preUpdate() override;
 
 	virtual void lateUpdate() override;
+
+	virtual void onEnable() override;
+
+	virtual void onDisable() override;
 
 	void setRigidbody(int mass, ColliderType type);
 

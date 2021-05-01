@@ -41,18 +41,18 @@ void addComponentsFactories()
 
 void QuackEnginePro::prueba()
 {
-	QuackEntity* plane = new QuackEntity("PlanoToGuapo");
-	MeshRenderer* r = plane->addComponent<MeshRenderer>();
-	r->setMeshByPrefab(PrefabType::PT_PLANE); //:)))
-	Rigidbody* rb = plane->addComponent<Rigidbody>();
+	//QuackEntity* plane = new QuackEntity("PlanoToGuapo");
+	//MeshRenderer* r = plane->addComponent<MeshRenderer>();
+	//r->setMeshByPrefab(PrefabType::PT_PLANE); //:)))
+	//Rigidbody* rb = plane->addComponent<Rigidbody>();
 
-	r->getNode()->rotate(Ogre::Vector3(1, 0, 0), Ogre::Radian(Ogre::Degree(-90)));
-	r->getNode()->scale(5, 5, 1);
-	r->getNode()->setPosition(0, -300, 0);
+	///*r->getNode()->rotation(Ogre::Vector3(1, 0, 0), Ogre::Radian(Ogre::Degree(-90)));
+	//r->getNode()->scale(5, 5, 1);
+	//r->getNode()->setPosition(0, -300, 0);*/
 
-	rb->setRigidbody(0, ColliderType::CT_BOX);
-	
-	SceneMng::Instance()->getCurrentScene()->addEntity(plane);
+	//rb->setRigidbody(0, ColliderType::CT_BOX);
+	//
+	//SceneMng::Instance()->getCurrentScene()->addEntity(plane);
 }
 
 std::unique_ptr<QuackEnginePro>  QuackEnginePro::instance_;
@@ -96,7 +96,7 @@ void QuackEnginePro::setup()
 
 	sdlWindow_ = OgreQuack::Instance()->getSdlWindow();
 
-	Transform::InitRoot();
+	QuackEntity::Init();
 
 	BulletQuack::Init();
 
@@ -114,7 +114,6 @@ void QuackEnginePro::start()
 		prueba();
 		update();
 	}
-
 }
 
 
@@ -127,6 +126,8 @@ void QuackEnginePro::update()
 		SceneMng::Instance()->preUpdate();
 
 		BulletQuack::Instance()->stepPhysics(time()->deltaTime());
+
+		SceneMng::Instance()->physicsUpdate();
 
 		pollEvents();
 

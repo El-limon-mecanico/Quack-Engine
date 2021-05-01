@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Src\QuackEngine\Component.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\QuackEntity.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\FactoryManager.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\Prueba.cpp" />
@@ -30,6 +29,7 @@
     <ClCompile Include="..\..\Src\QuackEngine\Scene.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\SceneMng.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\Transform.cpp" />
+    <ClCompile Include="..\..\Src\QuackEngine\Vector3D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BULLET\BULLET.vcxproj">

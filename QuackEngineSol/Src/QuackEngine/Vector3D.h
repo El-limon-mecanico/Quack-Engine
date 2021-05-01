@@ -12,6 +12,16 @@
  * modify the state are the different setters (and operator=).
  *
  */
+
+namespace Ogre {
+	template<int dims, typename T>
+	class Vector;
+	typedef float Real;
+	typedef Vector<3, Real> Vector3;
+}
+
+class btVector3;
+
 class Vector3D {
 private:
 	float x_;  // First coordinate
@@ -40,6 +50,10 @@ public:
 			x_(x), y_(y), z_(z) {
 	}
 
+	Vector3D(Ogre::Vector3 v);
+
+	Vector3D(btVector3 v);
+
 	~Vector3D() {
 	}
 
@@ -55,9 +69,15 @@ public:
     inline float z() const {
 		return z_;
 	}
-	inline Vector3D getForOgre(){
-		return *this*100; //comprobar el numerito y palante
-	}
+
+	Ogre::Vector3 toOgre();
+
+	btVector3 toBullet();
+
+	static Vector3D fromOgre(Ogre::Vector3 v);
+
+	static Vector3D fromBullet(btVector3 v);
+
 	// various setters
 	inline void setX(float x) {
 		x_ = x;
@@ -123,17 +143,14 @@ public:
 		return *this / magnitude();
 	}
 
-	// counter clockwise rotation in a normal coordinate system, and
-	// it is clockwise rotation if we work with a coordinate system
-	// in which the vertical axe is flipped (it is like a mirror over
-	// the horizontal axe)-- which the case when working with the SDL.
-	//
-	Vector3D rotate(float degrees) const;
+	void rotate(Vector3D rot);
+
+	Vector3D rotation(Vector3D rot) const;
 
 	// Computes the angle between 'this' and 'v'. The result is
 	// between -180 and 180, and is such that the following holds:
 	//
-	//   this->rotate(angle) == v
+	//   this->rotation(angle) == v
 	//
 	float angle(const Vector3D &v) const;
 
@@ -142,9 +159,19 @@ public:
 		return Vector3D(x_ - v.x_, y_ - v.y_, z_ +v.z_);
 	}
 
+	inline Vector3D operator-=(const Vector3D& v) {
+		*this = *this - v;
+		return *this;
+	}
+
 	// vector addition
 	inline Vector3D operator+(const Vector3D &v) const {
 		return Vector3D(x_ + v.x_, y_ + v.y_, z_ + v.z_);
+	}
+
+	inline Vector3D operator+=(const Vector3D& v) {
+		*this = *this + v;
+		return *this;
 	}
 
 	// multiplication by constant (scaling)

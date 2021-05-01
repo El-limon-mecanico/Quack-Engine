@@ -23,6 +23,8 @@ public:
 
 	void preUpdate();
 
+	void physicsUpdate();
+
 	void update();
 
 	void lateUpdate();

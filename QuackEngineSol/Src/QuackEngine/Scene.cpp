@@ -40,6 +40,7 @@ bool Scene::createEntity(const std::string& fileName, LuaRef entInfo)
 		enableExceptions(components[i]);
 		entity->addComponent(components[i], entInfo.rawget(components[i]));
 	}
+	entity->setActive(true);
 	return true;
 }
 
@@ -53,8 +54,10 @@ Scene::~Scene()
 
 void Scene::addEntity(QuackEntity* e)
 {
-	if (e)
+	if (e) {
 		entities_.push_back(e);
+		e->start();
+	}
 }
 
 void Scene::preUpdate()
@@ -62,6 +65,14 @@ void Scene::preUpdate()
 	for (QuackEntity* entity : entities_)
 	{
 		entity->preUpdate();
+	}
+}
+
+void Scene::physicsUpdate()
+{
+	for (QuackEntity* entity : entities_)
+	{
+		entity->physicsUpdate();
 	}
 }
 

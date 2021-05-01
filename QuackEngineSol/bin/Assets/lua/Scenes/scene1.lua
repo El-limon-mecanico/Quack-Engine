@@ -3,17 +3,16 @@
 }
 
 entidad1 = {
-    Components = {"MeshRenderer", "Transform","Rigidbody", "Prueba"},
-
-    MeshRenderer = {
-        Mesh = "Suzanne.mesh",
-        Position = {0,500,0}
-    },
+    Components = {"Transform", "MeshRenderer","Rigidbody", "Prueba"},
 
     Transform = {
         Position = {0,500,0},
         Scale = {1,1,1},
         Rotation = {0,0,0}
+    },
+
+    MeshRenderer = {
+        Mesh = "Suzanne.mesh",
     },
 
     Rigidbody = {
@@ -29,7 +28,7 @@ entidad1 = {
 }
 
 entidad2 = {
-    Components = {"MeshRenderer", "Rigidbody"},
+    Components = {"Transform", "MeshRenderer", "Rigidbody"},
 
     Transform = {
         Position = {50,500,0},

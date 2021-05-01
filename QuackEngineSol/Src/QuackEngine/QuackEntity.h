@@ -21,6 +21,10 @@ namespace Ogre {
 
 class QuackEntity {
 private:
+	//Root
+	QuackEntity(Transform* tr);
+	static std::unique_ptr<QuackEntity> qeRoot_;					
+
 	bool active_;
 	std::vector<Component*> components_;
 	std::string tag_;
@@ -32,10 +36,20 @@ public:
 	QuackEntity(std::string name = "DefaultName", bool active = true, std::string tag = "Default");
 	~QuackEntity();
 
+	static void Init();
+
+	QuackEntity* RootEntity();
+
 	std::string& name() {	return name_;	 }
 	std::string& tag() {		return tag_;	 }
 	inline bool isActive() const {		return active_;		}
-	inline void setActive(bool state) {		active_ = state;	}
+	inline void setActive(bool state) {		
+		active_ = state;
+		if (active_)
+			onEnable();
+		else
+			onDisable();
+	}
 
 	//el component name es el nombre del componente como tal (mismo nombre para varias entidades con el mismo componente)
 	Component* addComponent(const std::string& componentName, luabridge::LuaRef param);
@@ -59,8 +73,11 @@ public:
 	void removeComponent();
 	void removeComponent(const std::string& componentName);
 
+	void start();
 
 	void preUpdate();
+
+	void physicsUpdate();
 
 	void update();
 
@@ -72,6 +89,9 @@ public:
 
 	void onCollisionExit(QuackEntity* other , Vector3D point);
 
+	void onEnable();
+
+	void onDisable();
 };
 
 template<typename T>

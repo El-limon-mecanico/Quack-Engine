@@ -30,6 +30,8 @@ bool Prueba::init(luabridge::LuaRef parameterTable)
 void Prueba::update()
 {
 	entity_->getComponent<Rigidbody>()->addTorque(Vector3D(0, 10, 0));
+	if (entity_->transform()->position.y() < -10)
+		entity_->transform()->position += Vector3D(0, 10, 0);
 	//std::cout << " Update de Prueba\n";
 }
 

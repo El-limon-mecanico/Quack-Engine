@@ -24,12 +24,12 @@ bool Rigidbody::init(luabridge::LuaRef parameterTable)
 {
 	//TODO: control de errores si no carga una variable
 	std::string type = readVariable<std::string>(parameterTable, "Type");
-	int mass = readVariable<int>(parameterTable, "Mass");
+	mass_ = readVariable<int>(parameterTable, "Mass");
 
-	if (type == "Box") setRigidbody(mass, ColliderType::CT_BOX);
-	else if (type == "Sphere")setRigidbody(mass, ColliderType::CT_SPHERE);
-	else if (type == "Trimesh")setRigidbody(mass, ColliderType::CT_TRIMESH);
-	else if (type == "Hull")setRigidbody(mass, ColliderType::CT_HULL);
+	if (type == "Box") colType_ = CT_BOX;
+	else if (type == "Sphere")colType_ = CT_SPHERE;
+	else if (type == "Trimesh")colType_ = CT_TRIMESH;
+	else if (type == "Hull")colType_ = CT_HULL;
 
 
 	return true;
@@ -48,6 +48,14 @@ void Rigidbody::preUpdate()
 {
 	for (CollisionInfo& obj : collisions)
 		obj.time += QuackEnginePro::Instance()->time()->deltaTime();
+
+	btTransform tr = rb_->getCenterOfMassTransform();
+
+	tr.setOrigin(transform->position.toBullet());
+
+	rb_->setWorldTransform(tr);
+	rb_->getMotionState()->setWorldTransform(tr);						// TO DO , ROTACION
+
 }
 
 void Rigidbody::lateUpdate()
@@ -60,6 +68,21 @@ void Rigidbody::lateUpdate()
 		else
 			it++;
 	}
+}
+
+void Rigidbody::onEnable()
+{
+	if (firsEnable_) {
+		setRigidbody(mass_, colType_);
+	}
+	else {
+		BulletQuack::Instance()->addRigidBody(rb_);
+	}
+}
+
+void Rigidbody::onDisable()
+{
+	BulletQuack::Instance()->removeRigidBody(rb_);
 }
 
 void Rigidbody::contact(Rigidbody* other, const btManifoldPoint& manifoldPoint)
@@ -91,24 +114,18 @@ float Rigidbody::getMass()
 
 void Rigidbody::addForce(Vector3D force, ForceMode mode, bool local)
 {
-	force = force.toOgre();
-	btVector3 f = btVector3(force.x(), force.y(), force.z());
-
 	if (mode)
-		rb_->applyCentralImpulse(f);
+		rb_->applyCentralImpulse(force.toBullet());
 	else
-		rb_->applyCentralForce(f);
+		rb_->applyCentralForce(force.toBullet());
 }
 
 void Rigidbody::addTorque(Vector3D force, ForceMode mode, bool local)
 {
-	force = force.toOgre();
-	btVector3 f = btVector3(force.x(), force.y(), force.z());
-
 	if (mode)
-		rb_->applyTorque(f);
+		rb_->applyTorque(force.toBullet());
 	else
-		rb_->applyTorqueImpulse(f);
+		rb_->applyTorqueImpulse(force.toBullet());
 }
 
 
@@ -119,9 +136,7 @@ void Rigidbody::clearForce()
 
 void Rigidbody::setGravity(Vector3D gravity)
 {
-	gravity = gravity.toOgre();
-	btVector3 f = btVector3(gravity.x(), gravity.y(), gravity.z());
-	rb_->setGravity(f);
+	rb_->setGravity(gravity.toBullet());
 }
 
 void Rigidbody::setStatic()

@@ -22,7 +22,8 @@ protected:
 	Ogre::SceneManager* mSM_;
 	Ogre::Entity* ogreEnt_;
 
-
+	bool firsEnable_ = true;
+	bool visible_ = true;
 public:
 	MeshRenderer(QuackEntity* e = nullptr);
 	~MeshRenderer();
@@ -39,5 +40,9 @@ public:
 	
 	Ogre::Mesh* getMesh() const;
 	
-	void setVisible(bool visible);
+	void setVisible(bool visible_);
+
+	virtual void onEnable() override;
+
+	virtual void onDisable() override;
 };
