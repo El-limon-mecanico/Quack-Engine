@@ -20,6 +20,7 @@
 
 #include "Scene.h"
 #include "SceneMng.h"
+#include "ResourceMng.h"
 
 //para que no salga la consola en el modo release (en las propiedades del proyecto hay que poner que se
 //ejecute como aplicacion window no cmd (en la parte de vinculador))ç
@@ -84,18 +85,16 @@ QuackEnginePro* QuackEnginePro::Instance()
 	return instance_.get();
 }
 
-
 void QuackEnginePro::setup()
 {
 	quackTime_ = new QuackTime();
 
 	OgreQuack::Init();
-
 	OgreQuack::Instance()->createRoot();
-
 	OgreQuack::Instance()->setupRoot();
 
-	OgreQuack::Instance()->loadResources(); //Ogre resources
+	ResourceMng::Init(); 
+	ResourceMng::Instance()->setup(); //Carga de recursos
 
 	sdlWindow_ = OgreQuack::Instance()->getSdlWindow();
 

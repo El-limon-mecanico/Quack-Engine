@@ -31,7 +31,7 @@ private:
 
 	int screen_width_ = 1000;
 
-	int screen_height_ = 1000;
+	int screen_height_ = 700;
 
 	void setupWindow();
 

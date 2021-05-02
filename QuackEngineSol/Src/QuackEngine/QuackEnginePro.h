@@ -15,6 +15,7 @@ class BulletQuack;
 class fmod_quack;
 class OgreQuack;
 class SDL_Window;
+class ResourceMng;
 
 class QUACK_ENGINE_PRO_API QuackEnginePro {
 private:
