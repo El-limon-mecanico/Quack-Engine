@@ -55,6 +55,8 @@ void QuackEnginePro::prueba()
 	rb->setRigidbody(0, ColliderType::CT_BOX);
 	
 	SceneMng::Instance()->getCurrentScene()->addEntity(plane);
+	cegui_->loadScheme("AlfiskoSkin.scheme");
+	cegui_->createWidget("AlfiskoSkin/Button", "test");
 }
 
 std::unique_ptr<QuackEnginePro>  QuackEnginePro::instance_;
@@ -104,7 +106,7 @@ void QuackEnginePro::setup()
 
 	addComponentsFactories();
 
-	//cegui_ = new CEGUIQuack(OgreQuack::Instance()->getRoot()->getRenderTarget("ventana to guapa"));
+	cegui_ = new CEGUIQuack(OgreQuack::Instance()->getRoot()->getRenderTarget("ventana to guapa"));
 
 	//CargarLua();
 	SceneMng::Init();
