@@ -89,6 +89,7 @@ void Transform::onEnable()
 {
 	node_->setScale(Vector3D::toOgre(scale));
 	node_->setPosition(position.toOgrePosition());
+	//node_->setOrientation(rotation_.toOgreRotation());
 }
 
 void Transform::Translate(Vector3D t, bool global)

@@ -71,6 +71,8 @@ public:
 
 	void setMass(float mass);
 
+	void resetTransform();
+
 	float getMass();
 
 	void addForce(Vector3D force, ForceMode mode = FORCE, bool local = false);

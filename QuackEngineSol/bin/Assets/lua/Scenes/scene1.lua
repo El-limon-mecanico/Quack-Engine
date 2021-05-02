@@ -33,7 +33,7 @@ entidad2 = {
     Transform = {
         Position = {0,-3,0},
         Scale = {5,5,1},
-        Rotation = {0,-90,0}
+        Rotation = {0,0,0}
     },
 
     MeshRenderer = {
