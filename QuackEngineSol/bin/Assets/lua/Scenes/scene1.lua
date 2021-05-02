@@ -1,5 +1,5 @@
 ﻿scene1 = {
-    entities = {"entidad1"}
+    entities = {"entidad1", "entidad2"}
 }
 
 entidad1 = {
@@ -33,7 +33,7 @@ entidad2 = {
     Transform = {
         Position = {0,-3,0},
         Scale = {5,5,1},
-        Rotation = {0,0,0}
+        Rotation = {-90,0,0}
     },
 
     MeshRenderer = {

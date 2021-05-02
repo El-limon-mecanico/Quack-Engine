@@ -41,19 +41,19 @@ void addComponentsFactories()
 
 void QuackEnginePro::prueba()
 {
-	QuackEntity* plane = new QuackEntity("PlanoToGuapo");
-	MeshRenderer* r = plane->addComponent<MeshRenderer>();
-	r->setMeshByPrefab(PrefabType::PT_PLANE); //:)))
-	Rigidbody* rb = plane->addComponent<Rigidbody>();
-	
-
-	plane->transform()->getNode()->rotate(Ogre::Vector3(1, 0, 0), Ogre::Radian(Ogre::Degree(-90)));
-	plane->transform()->scale = Vector3D(5, 5, 1);
-	plane->transform()->position = Vector3D(0, -300, 0);
-
-	rb->setRigidbody(0, ColliderType::CT_BOX);
-	
-	SceneMng::Instance()->getCurrentScene()->addEntity(plane);
+//	QuackEntity* plane = new QuackEntity("PlanoToGuapo");
+//	MeshRenderer* r = plane->addComponent<MeshRenderer>();
+//	r->setMeshByPrefab(PrefabType::PT_PLANE); //:)))
+//	Rigidbody* rb = plane->addComponent<Rigidbody>();
+//	
+//
+//	plane->transform()->getNode()->rotate(Ogre::Vector3(1, 0, 0), Ogre::Radian(Ogre::Degree(-90)));
+//	plane->transform()->scale = Vector3D(5, 5, 1);
+//	plane->transform()->position = Vector3D(0, -300, 0);
+//
+//	rb->setRigidbody(0, ColliderType::CT_BOX);
+//	
+//	SceneMng::Instance()->getCurrentScene()->addEntity(plane);
 }
 
 std::unique_ptr<QuackEnginePro>  QuackEnginePro::instance_;
