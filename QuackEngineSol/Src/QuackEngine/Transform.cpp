@@ -86,11 +86,28 @@ void Transform::preUpdate()
 	node_->setOrientation(rotation_.toOgreRotation());
 }
 
+void Transform::lateUpdate()
+{
+	position = parent_->position + localPosition;
+}
+
 void Transform::onEnable()
 {
 	node_->setScale(Vector3D::toOgre(scale));
 	node_->setPosition(position.toOgrePosition());
 	node_->setOrientation(rotation_.toOgreRotation());
+}
+
+void Transform::setParent(Transform* parent)
+{
+	parent_ = parent;
+	parent_->children_.push_back(this);
+}
+
+void Transform::eraseParent()
+{
+	parent_->removeChild(this);
+	setParent(trRoot_.get());
 }
 
 void Transform::Translate(Vector3D t, bool global)
@@ -105,12 +122,8 @@ void Transform::Translate(Vector3D t, bool global)
 void Transform::Rotate(Vector3D r, bool global)
 {
 	Ogre::Node::TransformSpace space = global ? Ogre::Node::TS_WORLD : Ogre::Node::TS_LOCAL;
-
-	node_->rotate(Ogre::Vector3(1, 0, 0), Ogre::Radian(Ogre::Degree(r.x())),space);
-	node_->rotate(Ogre::Vector3(0, 1, 0), Ogre::Radian(Ogre::Degree(r.y())),space);
-	node_->rotate(Ogre::Vector3(0, 0, 1), Ogre::Radian(Ogre::Degree(r.z())),space);
-
-	rotation_ = Vector3D::fromOgreRotation(node_->getOrientation());;
+	node_->rotate(Vector3D::toOgre(r), Ogre::Radian(Ogre::Degree(1)), space);
+	rotation_ = Vector3D::fromOgreRotation(node_->getOrientation());
 }
 
 void Transform::Scale(Vector3D s)

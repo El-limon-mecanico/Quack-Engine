@@ -17,7 +17,7 @@ enum PrefabType {
 };
 
 class MeshRenderer : public Component {
-protected:
+private:
 	Ogre::SceneNode* node_;
 	Ogre::SceneManager* mSM_;
 	Ogre::Entity* ogreEnt_;

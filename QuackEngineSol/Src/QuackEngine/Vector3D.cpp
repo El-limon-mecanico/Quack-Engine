@@ -110,12 +110,9 @@ Vector3D Vector3D::fromBulletPosition(btVector3 v)
 	return fromBullet(v / 100);
 }
 
-#include <iostream>
 Vector3D Vector3D::fromOgreRotation(Ogre::Quaternion q)
 {
 	Vector3D angles;
-
-	//std::cout << q.x << " " << q.y << " " << q.z << " " << q.w << "\n";
 
 	// roll (x-axis rotation_)
 	double sinr_cosp = 2 * (q.w * q.x + q.y * q.z);

@@ -15,16 +15,12 @@ private:
 	Transform(Ogre::SceneNode* n);
 	static std::unique_ptr<Transform> trRoot_;
 
-	//Save the position of this transform
-
 	Ogre::SceneNode* node_;
 	std::vector<Transform*> children_;
 	Transform* parent_;
 
-	/*Vector3D localPos;
-	Vector3D localRot;
-	Vector3D localScale;*/
 	Vector3D rotation_;
+	Vector3D localRotation_;
 
 public:
 	Transform(Vector3D pos = Vector3D(), Vector3D rot = Vector3D(), Vector3D scale = Vector3D(1, 1, 1));
@@ -35,6 +31,8 @@ public:
 
 	Vector3D position;
 	Vector3D scale;
+	Vector3D localPosition;
+
 
 	static std::string GetName() { return "Transform"; }
 
@@ -71,7 +69,7 @@ public:
 	Ogre::SceneNode* getNode();
 	virtual void physicsUpdate() override;
 	virtual void preUpdate() override;
-
+	virtual void lateUpdate() override;
 	virtual void onEnable() override;
 	virtual void onDisable()override { enable = true; }
 
@@ -79,16 +77,8 @@ public:
 	inline QuackEntity* getChild(int n) const { return children_[n]->entity_; }
 	inline QuackEntity* getParent() const { return parent_->entity_; }
 
-	void setParent(Transform* parent) {
-		parent_ = parent; 
-		scale *= parent->scale;
-		parent_->children_.push_back(this);
-	}
-	void eraseParent() { 
-		scale /= parent_->scale;
-		parent_->removeChild(this);
-		parent_ = trRoot_.get(); 
-	}
+	void setParent(Transform* parent);
+	void eraseParent();
 
 	inline QuackEntity* getChildByTag(std::string tag) const;
 	inline QuackEntity* getChildByName(std::string name) const;
@@ -99,6 +89,7 @@ public:
 	void Scale(Vector3D s);
 
 	Vector3D rotation() { return rotation_; }
+	Vector3D localRotation() { return localRotation_; }
 
 	void setRotation(Vector3D v);
 
