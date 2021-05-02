@@ -29,19 +29,25 @@ bool Prueba::init(luabridge::LuaRef parameterTable)
 
 void Prueba::fixedUpdate()
 {
-	entity_->getComponent<Rigidbody>()->addTorque(Vector3D(0, 10, 0));
+	//entity_->getComponent<Rigidbody>()->addTorque(Vector3D(0, 10, 0));
 }
 
 void Prueba::update()
 {
-	if (entity_->transform()->position.y() < -10)
-		entity_->transform()->position += Vector3D(0, 10, 0);
+	//transform->Rotate(Vector3D(0, 1, 0), true);
+
+	std::cout << transform->rotation().x() << " " << transform->rotation().y() << " " << transform->rotation().z() << "\n";
+
+	if (transform->position.y() < -10) {
+		transform->Translate(Vector3D(0, 10, 0), true);
+		entity_->getComponent<Rigidbody>()->clearForce();
+	}
 	//std::cout << " Update de Prueba\n";
 }
 
 void Prueba::onCollisionEnter(QuackEntity* other, Vector3D point)
 {
-	entity_->getComponent<Rigidbody>()->addForce(Vector3D(0, 10, 0), IMPULSE);
+	//entity_->getComponent<Rigidbody>()->addForce(Vector3D(0, 10, 0), IMPULSE);
 	std::cout << "Yo " << entity_->name() << " acabo de chocar con " << other->name() << "\n\n";
 }
 

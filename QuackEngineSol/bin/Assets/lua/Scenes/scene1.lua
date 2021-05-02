@@ -31,18 +31,17 @@ entidad2 = {
     Components = {"Transform", "MeshRenderer", "Rigidbody"},
 
     Transform = {
-        Position = {50,500,0},
-        Scale = {1,1,1},
-        Rotation = {0,0,0}
+        Position = {0,-3,0},
+        Scale = {5,5,1},
+        Rotation = {0,-90,0}
     },
 
     MeshRenderer = {
-        Mesh = "Sphere",
-        Position = {50,500,0}
+        Mesh = "Plane",
     },
 
     Rigidbody = {
-        Type = "Sphere",
-        Mass = 1
+        Type = "Cube",
+        Mass = 0
     }   
 }

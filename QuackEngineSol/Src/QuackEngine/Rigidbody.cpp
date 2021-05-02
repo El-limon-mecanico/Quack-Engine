@@ -49,13 +49,13 @@ void Rigidbody::preUpdate()
 	for (CollisionInfo& obj : collisions)
 		obj.time += QuackEnginePro::Instance()->time()->deltaTime();
 
-	btTransform tr = rb_->getCenterOfMassTransform();
+	/*	btTransform tr = rb_->getCenterOfMassTransform();
 
 	tr.setOrigin(transform->position.toBulletPosition());
+	tr.setRotation(transform->rotation_.toBulletRotation());
 
 	rb_->setWorldTransform(tr);
-	rb_->getMotionState()->setWorldTransform(tr);						// TO DO , ROTACION
-
+	rb_->getMotionState()->setWorldTransform(tr);		*/				// TO DO , ROTACION
 }
 
 void Rigidbody::lateUpdate()
@@ -132,6 +132,9 @@ void Rigidbody::addTorque(Vector3D force, ForceMode mode, bool local)
 void Rigidbody::clearForce()
 {
 	rb_->clearForces();
+	btVector3 v(0, 0, 0);
+	rb_->setLinearVelocity(v);
+	rb_->setAngularVelocity(v);
 }
 
 void Rigidbody::setGravity(Vector3D gravity)

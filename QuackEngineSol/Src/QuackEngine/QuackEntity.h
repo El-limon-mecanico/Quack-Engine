@@ -116,7 +116,9 @@ T* QuackEntity::addComponent(Targs&&...mArgs)
 {
 	T* c = new T(std::forward<Targs>(mArgs)...);
 	c->setEntity(this);
+	c->transform = transform();
 	components_.push_back(c);
 	cmpMap_.insert({ T::GetName() , c });
+	c->onEnable();
 	return c;
 }

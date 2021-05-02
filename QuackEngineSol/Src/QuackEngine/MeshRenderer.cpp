@@ -5,7 +5,7 @@
 
 using OgrePrefab = Ogre::SceneManager::PrefabType;
 
-MeshRenderer::MeshRenderer(QuackEntity* e) : Component(e)
+MeshRenderer::MeshRenderer(QuackEntity* e) : Component(e), ogreEnt_(nullptr)
 {
 	mSM_ = OgreQuack::Instance()->getSceneManager();
 }
@@ -21,10 +21,12 @@ void MeshRenderer::onEnable()
 {
 	if (firsEnable_) {
 		node_ = transform->getNode();
-		node_->attachObject(ogreEnt_);
+		if (ogreEnt_)
+			node_->attachObject(ogreEnt_);
 		firsEnable_ = false;
 	}
-	ogreEnt_->setVisible(visible_);
+	if (ogreEnt_)
+		ogreEnt_->setVisible(visible_);
 }
 
 void MeshRenderer::onDisable()
@@ -50,7 +52,7 @@ bool MeshRenderer::init(luabridge::LuaRef parameterTable)
 	catch (std::exception& e) {
 		std::cout << "ERROR: no existe la malla " << mesh << '\n';
 	}
-	
+
 	//visible_ = lo que venga de LUA;								TO DO , PASAR POR LUA SI ES VISIBLE O NO
 
 	return true;

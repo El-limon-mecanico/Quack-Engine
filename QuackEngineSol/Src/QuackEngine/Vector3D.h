@@ -96,6 +96,9 @@ public:
 
 	static Vector3D fromBulletRotation(btQuaternion q);
 
+	static Vector3D up() {
+		return Vector3D(0, 1, 0);
+	}
 
 
 	// various setters
@@ -165,12 +168,12 @@ public:
 
 	void rotate(Vector3D rot);
 
-	Vector3D rotation(Vector3D rot) const;
+	Vector3D rotation_(Vector3D rot) const;
 
 	// Computes the angle between 'this' and 'v'. The result is
 	// between -180 and 180, and is such that the following holds:
 	//
-	//   this->rotation(angle) == v
+	//   this->rotation_(angle) == v
 	//
 	float angle(const Vector3D& v) const;
 
@@ -199,9 +202,37 @@ public:
 		return Vector3D(x_ * d, y_ * d, z_ * d);
 	}
 
+	inline Vector3D operator*=(float d){
+		*this = *this * d;
+		return *this;
+	}
+
+	inline Vector3D operator*(const Vector3D& v) const {
+		return Vector3D(x_ * v.x_, y_ * v.y_, z_ * v.z_);
+	}
+
+	inline Vector3D operator*=(const Vector3D& v) {
+		*this = *this * v;
+		return *this;
+	}
+
 	// division by constant (scaling)
 	inline Vector3D operator/(float d) const {
 		return Vector3D(x_ / d, y_ / d, z_ / d);
+	}
+
+	inline Vector3D operator/=(float d) {
+		*this = *this / d;
+		return *this;
+	}
+
+	inline Vector3D operator/(const Vector3D& v) const {
+		return Vector3D(x_ / v.x_, y_ / v.y_, z_ / v.z_);
+	}
+
+	inline Vector3D operator/=(const Vector3D& v) {
+		*this = *this / v;
+		return *this;
 	}
 
 	// scalar multiplication

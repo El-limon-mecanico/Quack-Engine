@@ -3,12 +3,12 @@
 #include <Ogre.h>
 #include "OgreQuack.h"
 
-Transform::Transform(Vector3D pos, Vector3D rot, Vector3D scale): position(pos), rotation(rot), scale(scale)
+Transform::Transform(Vector3D pos, Vector3D rot, Vector3D scale): position(pos), rotation_(rot), scale(scale)
 {
 	node_ = OgreQuack::Instance()->getSceneManager()->getRootSceneNode()->createChildSceneNode();
 	setParent(trRoot_.get());
 }
-Transform::Transform(Ogre::SceneNode* n) : position(), rotation(), scale(1,1,1) {
+Transform::Transform(Ogre::SceneNode* n) : position(), rotation_(), scale(1,1,1) {
 	node_ = n;
 	setParent(this);
 }
@@ -17,7 +17,7 @@ bool Transform::init(luabridge::LuaRef parameterTable)
 	LuaRef pos = readVariable<LuaRef>(parameterTable, "Position");
 	position = Vector3D(pos[1], pos[2], pos[3]);
 	LuaRef rot = readVariable<LuaRef>(parameterTable, "Rotation");
-	rotation = Vector3D(rot[1], rot[2], rot[3]);
+	rotation_ = Vector3D(rot[1], rot[2], rot[3]);
 	LuaRef scl = readVariable<LuaRef>(parameterTable, "Scale");
 	scale = Vector3D(scl[1], scl[2], scl[3]);
 
@@ -75,26 +75,48 @@ Ogre::SceneNode* Transform::getNode()
 
 void Transform::physicsUpdate()
 {
-	position = Vector3D::fromOgrePosition(node_->getPosition());
-	//rotation = Vector3D::fromOgreRotation(node_->getOrientation());				// ARREGLAR ROTACION
+	position = Vector3D::fromOgrePosition(node_->getPosition());		
+	rotation_ = Vector3D::fromOgreRotation(node_->getOrientation());
 }
 
 void Transform::lateUpdate()
 {
-	node_->setPosition(position.toOgrePosition());
-	node_->setOrientation(rotation.toOgreRotation());
 	node_->setScale(Vector3D::toOgre(scale));
+	node_->setPosition(position.toOgrePosition());
+}
+
+void Transform::onEnable()
+{
+	node_->setScale(Vector3D::toOgre(scale));
+	node_->setPosition(position.toOgrePosition());
 }
 
 void Transform::Translate(Vector3D t, bool global)
 {
-
+	if (global)
+		position += t;
+	else {
+		;
+	}
 }
+
 void Transform::Rotate(Vector3D r, bool global)
 {
-	
-}
-void Transform::Scale(Vector3D s, bool global)
-{
+	if (global)
+		rotation_ += r;
+	else {
 
+	}
+	node_->setOrientation(rotation_.toOgreRotation());
+}
+
+void Transform::Scale(Vector3D s)
+{
+	scale += s;
+}
+
+void Transform::setRotation(Vector3D v)
+{
+	rotation_ = v;
+	node_->setOrientation(rotation_.toOgreRotation());
 }
