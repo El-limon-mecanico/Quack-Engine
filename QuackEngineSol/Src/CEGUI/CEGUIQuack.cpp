@@ -3,11 +3,25 @@
 #include <CEGUI/CEGUI.h>
 #include <CEGUI/RendererModules/Ogre/Renderer.h>
 #include <CEGUI/RenderTarget.h>
+#include <assert.h>
 //#include <Ogre.h>
 //#include <OgreRenderTarget.h>
 //#include <CEGUI\ScriptModules\Lua\CEGUILua.h>
 
-void CEGUIQuack::init(Ogre::RenderTarget* target)
+std::unique_ptr<CEGUIQuack>  CEGUIQuack::instance_;
+
+bool CEGUIQuack::Init() {
+	assert(instance_.get() == nullptr);
+	instance_.reset(new CEGUIQuack());
+	return instance_.get();
+}
+
+CEGUIQuack* CEGUIQuack::Instance() {
+	assert(instance_.get() != nullptr);
+	return instance_.get();
+}
+
+void CEGUIQuack::setUp(Ogre::RenderTarget* target)
 {
 	if (ogreRenderer_ == nullptr)
 	{
@@ -15,9 +29,12 @@ void CEGUIQuack::init(Ogre::RenderTarget* target)
 		setUpResources();
 	}
 
-	context_ = &CEGUI::System::getSingleton().createGUIContext(ogreRenderer_->getDefaultRenderTarget());
-	window_ = CEGUI::WindowManager::getSingleton().createWindow("DefaultWindow", "root");
-	context_->setRootWindow(window_);
+	ceguiSystem_ = &CEGUI::System::getSingleton();
+	context_ = &ceguiSystem_->createGUIContext(ogreRenderer_->getDefaultRenderTarget());
+	windowManager_ = &CEGUI::WindowManager::getSingleton();
+	window_ = windowManager_->createWindow("DefaultWindow", "root");
+	ceguiSystem_->getDefaultGUIContext().setRootWindow(window_);
+	//context_->setRootWindow(window_);
 }
 
 void CEGUIQuack::destroy()
@@ -58,4 +75,12 @@ CEGUI::Window* CEGUIQuack::createWidget(std::string type, std::string name)
 	window_->addChild(newWindow);
 	newWindow->setText("Betis");
 	return newWindow;
+}
+
+bool CEGUIQuack::render(double deltaTime)
+{
+	ceguiSystem_->getDefaultGUIContext().injectTimePulse(deltaTime);
+	ceguiSystem_->renderAllGUIContexts();
+
+	return false;
 }

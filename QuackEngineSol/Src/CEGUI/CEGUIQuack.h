@@ -1,9 +1,8 @@
-#pragma once
-
 #ifndef _CEGUI_QUACK_
 #define _CEGUI_QUACK_
 
 #include <string>
+#include <memory>
 
 namespace Ogre {
 	class RenderWindow;
@@ -17,14 +16,19 @@ namespace CEGUI
 	class System;
 	class Window;
 	class GUIContext;
+	class WindowManager;
 }
 
 class CEGUIQuack
 {
 private:
+
+	static std::unique_ptr<CEGUIQuack> instance_;
+
 	CEGUI::OgreRenderer* ogreRenderer_ = nullptr;
 	CEGUI::System* ceguiSystem_ = nullptr;
 	CEGUI::Window* window_ = nullptr;
+	CEGUI::WindowManager* windowManager_ = nullptr;
 	CEGUI::GUIContext* context_ = nullptr;
 
 	void setUpResources();
@@ -33,12 +37,17 @@ private:
 	//std::map<std::string, FMOD::DSP*> dsp_;
 public:
 	
-	CEGUIQuack(Ogre::RenderTarget* t) { init(t); };
+	static bool Init();
+
+	static CEGUIQuack* Instance();
+
+	CEGUIQuack() {};
 	~CEGUIQuack() {};
 
-	void init(Ogre::RenderTarget* target);
+	void setUp(Ogre::RenderTarget* target);
 	void destroy();
 
+	bool render(double d);
 	void draw();
 	void loadScheme(std::string filename);
 	void setFont(std::string filename);
