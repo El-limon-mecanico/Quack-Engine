@@ -104,9 +104,8 @@ void Rigidbody::setMass(float mass)
 
 void Rigidbody::resetTransform()
 {
-
 	btTransform tr = rb_->getCenterOfMassTransform();
-	tr.setOrigin(transform->position.toBulletPosition());
+	tr.setOrigin(transform->globalPosition().toBulletPosition());
 	tr.setRotation(transform->rotation().toBulletRotation());
 
 	rb_->setWorldTransform(tr);

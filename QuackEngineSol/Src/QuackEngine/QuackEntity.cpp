@@ -140,6 +140,14 @@ void QuackEntity::lateUpdate()
 				c->lateUpdate();
 }
 
+void QuackEntity::lastUpdate()
+{
+	if (active_)
+		for (Component* c : components_)
+			if (c->isEnable())
+				c->lastUpdate();
+}
+
 void QuackEntity::onCollisionEnter(QuackEntity* other, Vector3D point)
 {
 	if (active_)

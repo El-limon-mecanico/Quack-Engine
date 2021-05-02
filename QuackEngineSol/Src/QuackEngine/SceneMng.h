@@ -25,6 +25,7 @@ public:
 	void fixedUpdate();
 	void update();
 	void lateUpdate();
+	void lastUpdate();
 
 	Scene* getCurrentScene();
 };

@@ -104,3 +104,11 @@ void Scene::lateUpdate()
 		entity->lateUpdate();
 	}
 }
+
+void Scene::lastUpdate()
+{
+	for (QuackEntity* entity : entities_)
+	{
+		entity->lastUpdate();
+	}
+}

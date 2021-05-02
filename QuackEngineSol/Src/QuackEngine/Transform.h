@@ -21,6 +21,9 @@ private:
 
 	Vector3D rotation_;
 	Vector3D localRotation_;
+	Vector3D globalPosition_;
+
+	void moveGlobalPosition(Vector3D v);
 
 public:
 	Transform(Vector3D pos = Vector3D(), Vector3D rot = Vector3D(), Vector3D scale = Vector3D(1, 1, 1));
@@ -29,22 +32,21 @@ public:
 	static Transform* InitRoot();
 	Transform* RootTransform();
 
-	Vector3D position;
 	Vector3D scale;
-	Vector3D localPosition;
+	Vector3D position;
 
 
 	static std::string GetName() { return "Transform"; }
 
 	inline Transform& operator=(const Transform& t) {
-		position = t.position;
+		globalPosition_ = t.globalPosition_;
 		scale = t.scale;
 		rotation_ = t.rotation_;
 		entity_ = t.entity_;
 		return *this;
 	}
 	inline Transform& operator=(Transform&& t) noexcept {
-		position = t.position;
+		globalPosition_ = t.globalPosition_;
 		scale = t.scale;
 		rotation_ = t.rotation_;
 		t.entity_ = nullptr;
@@ -69,7 +71,7 @@ public:
 	Ogre::SceneNode* getNode();
 	virtual void physicsUpdate() override;
 	virtual void preUpdate() override;
-	virtual void lateUpdate() override;
+	virtual void lastUpdate() override;
 	virtual void onEnable() override;
 	virtual void onDisable()override { enable = true; }
 
@@ -92,6 +94,8 @@ public:
 	Vector3D localRotation() { return localRotation_; }
 
 	void setRotation(Vector3D v);
+	void setGlobalPosition(Vector3D v);
+	Vector3D globalPosition() { return globalPosition_; };
 
 #pragma endregion
 };

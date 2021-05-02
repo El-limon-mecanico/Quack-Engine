@@ -56,6 +56,11 @@ void SceneMng::lateUpdate()
 	sceneQueue_.front()->lateUpdate();
 }
 
+void SceneMng::lastUpdate()
+{
+	sceneQueue_.front()->lastUpdate();
+}
+
 Scene* SceneMng::getCurrentScene()
 {
 	return sceneQueue_.front();

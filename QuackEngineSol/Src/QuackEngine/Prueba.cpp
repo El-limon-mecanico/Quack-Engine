@@ -2,6 +2,7 @@
 #include "LuaManager.h"
 #include "QuackEntity.h"
 #include "Rigidbody.h"
+#include "QuackEnginePro.h"
 
 Prueba::Prueba(QuackEntity* e) : Component(e)
 {
@@ -36,20 +37,21 @@ void Prueba::start()
 
 void Prueba::fixedUpdate()
 {
-	std::cout << transform->rotation().x() << " " << transform->rotation().y() << " " << transform->rotation().z() << "\n";
+	//std::cout << transform->rotation().x() << " " << transform->rotation().y() << " " << transform->rotation().z() << "\n";
 	//entity_->getComponent<Rigidbody>()->addTorque({ 0,1,0 });
 }
 
 void Prueba::update()
 {
-	transform->Translate(Vector3D(0, -0.1, 0),true);
-	if (transform->position.y() < -10) {
-		transform->Rotate(Vector3D(0, 45, 0));
+	//transform->Translate(Vector3D(0, -10, 0) * QuackEnginePro::Instance()->time()->deltaTime(),true);
+	if (transform->globalPosition().y() < -10) {
+		//transform->Rotate(Vector3D(0, 45, 0));
 		transform->Translate(Vector3D(0, 10, 0), true);
-		//entity_->getComponent<Rigidbody>()->clearForce();
+		if (entity_->getComponent<Rigidbody>())
+			entity_->getComponent<Rigidbody>()->clearForce();
 	}
 	//std::cout << " Update de Prueba\n";
-	
+
 }
 
 void Prueba::onCollisionEnter(QuackEntity* other, Vector3D point)

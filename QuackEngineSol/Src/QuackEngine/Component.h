@@ -61,6 +61,8 @@ public:
 
 	virtual void lateUpdate() {}
 
+	virtual void lastUpdate() {}
+
 	virtual void onCollisionEnter(QuackEntity* other, Vector3D point) {}
 
 	virtual void onCollisionStay(QuackEntity* other, Vector3D point) {}

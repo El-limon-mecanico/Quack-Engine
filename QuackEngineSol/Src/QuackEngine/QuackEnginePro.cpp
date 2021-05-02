@@ -41,19 +41,19 @@ void addComponentsFactories()
 
 void QuackEnginePro::prueba()
 {
-//	QuackEntity* plane = new QuackEntity("PlanoToGuapo");
-//	MeshRenderer* r = plane->addComponent<MeshRenderer>();
-//	r->setMeshByPrefab(PrefabType::PT_PLANE); //:)))
-//	Rigidbody* rb = plane->addComponent<Rigidbody>();
-//	
-//
-//	plane->transform()->getNode()->rotate(Ogre::Vector3(1, 0, 0), Ogre::Radian(Ogre::Degree(-90)));
-//	plane->transform()->scale = Vector3D(5, 5, 1);
-//	plane->transform()->position = Vector3D(0, -300, 0);
-//
-//	rb->setRigidbody(0, ColliderType::CT_BOX);
-//	
-//	SceneMng::Instance()->getCurrentScene()->addEntity(plane);
+	//	QuackEntity* plane = new QuackEntity("PlanoToGuapo");
+	//	MeshRenderer* r = plane->addComponent<MeshRenderer>();
+	//	r->setMeshByPrefab(PrefabType::PT_PLANE); //:)))
+	//	Rigidbody* rb = plane->addComponent<Rigidbody>();
+	//	
+	//
+	//	plane->transform()->getNode()->rotate(Ogre::Vector3(1, 0, 0), Ogre::Radian(Ogre::Degree(-90)));
+	//	plane->transform()->scale = Vector3D(5, 5, 1);
+	//	plane->transform()->globalPosition_ = Vector3D(0, -300, 0);
+	//
+	//	rb->setRigidbody(0, ColliderType::CT_BOX);
+	//	
+	//	SceneMng::Instance()->getCurrentScene()->addEntity(plane);
 }
 
 std::unique_ptr<QuackEnginePro>  QuackEnginePro::instance_;
@@ -85,8 +85,6 @@ QuackEnginePro* QuackEnginePro::Instance()
 
 void QuackEnginePro::setup()
 {
-	quackTime_ = new QuackTime();
-
 	OgreQuack::Init();
 
 	OgreQuack::Instance()->createRoot();
@@ -113,6 +111,7 @@ void QuackEnginePro::start()
 {
 	if (!updateStarted) {
 		prueba();
+		quackTime_ = new QuackTime();
 		update();
 	}
 }
@@ -121,7 +120,17 @@ void QuackEnginePro::start()
 void QuackEnginePro::update()
 {
 	exit = false;
+	int frames = 0;
+	double t = 0;
 	while (!exit) {
+		frames++;
+		t += time()->deltaTime();
+		if (t >= 1) {
+			std::cout << "Last second frames: " << frames << "\n";
+			t = 0;
+			frames = 0;
+		}
+
 		quackTime_->frameStarted();
 
 		fixedTime += time()->deltaTime();
@@ -144,6 +153,8 @@ void QuackEnginePro::update()
 		OgreQuack::Instance()->getRoot()->renderOneFrame();
 
 		SceneMng::Instance()->lateUpdate();
+
+		SceneMng::Instance()->lastUpdate();
 	}
 }
 
