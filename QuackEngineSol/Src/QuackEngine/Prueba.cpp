@@ -27,17 +27,21 @@ bool Prueba::init(luabridge::LuaRef parameterTable)
 	return true;
 }
 
+void Prueba::start()
+{
+	if (entity_->getComponent<Rigidbody>()) {
+		entity_->getComponent<Rigidbody>()->setGravity(Vector3D());
+	}
+}
+
 void Prueba::fixedUpdate()
 {
-	//entity_->getComponent<Rigidbody>()->addTorque(Vector3D(0, 10, 0));
+	std::cout << transform->rotation().x() << " " << transform->rotation().y() << " " << transform->rotation().z() << "\n";
+	entity_->getComponent<Rigidbody>()->addTorque({ 0,1,0 });
 }
 
 void Prueba::update()
 {
-	//transform->Rotate(Vector3D(0, 1, 0), true);
-
-	std::cout << transform->rotation().x() << " " << transform->rotation().y() << " " << transform->rotation().z() << "\n";
-
 	if (transform->position.y() < -10) {
 		transform->Translate(Vector3D(0, 10, 0), true);
 		entity_->getComponent<Rigidbody>()->clearForce();

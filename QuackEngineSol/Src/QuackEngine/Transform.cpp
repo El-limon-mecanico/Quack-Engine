@@ -3,12 +3,12 @@
 #include <Ogre.h>
 #include "OgreQuack.h"
 
-Transform::Transform(Vector3D pos, Vector3D rot, Vector3D scale): position(pos), rotation_(rot), scale(scale)
+Transform::Transform(Vector3D pos, Vector3D rot, Vector3D scale) : position(pos), rotation_(rot), scale(scale)
 {
 	node_ = OgreQuack::Instance()->getSceneManager()->getRootSceneNode()->createChildSceneNode();
 	setParent(trRoot_.get());
 }
-Transform::Transform(Ogre::SceneNode* n) : position(), rotation_(), scale(1,1,1) {
+Transform::Transform(Ogre::SceneNode* n) : position(), rotation_(), scale(1, 1, 1) {
 	node_ = n;
 	setParent(this);
 }
@@ -75,14 +75,15 @@ Ogre::SceneNode* Transform::getNode()
 
 void Transform::physicsUpdate()
 {
-	position = Vector3D::fromOgrePosition(node_->getPosition());		
+	position = Vector3D::fromOgrePosition(node_->getPosition());
 	rotation_ = Vector3D::fromOgreRotation(node_->getOrientation());
 }
 
-void Transform::lateUpdate()
+void Transform::preUpdate()
 {
 	node_->setScale(Vector3D::toOgre(scale));
 	node_->setPosition(position.toOgrePosition());
+	node_->setOrientation(rotation_.toOgreRotation());
 }
 
 void Transform::onEnable()
@@ -90,7 +91,6 @@ void Transform::onEnable()
 	node_->setScale(Vector3D::toOgre(scale));
 	node_->setPosition(position.toOgrePosition());
 	node_->setOrientation(rotation_.toOgreRotation());
-	//node_->rotate(Vector3D::toOgre(rotation_), Ogre::Radian(Ogre::Degree(1)));
 }
 
 void Transform::Translate(Vector3D t, bool global)
@@ -104,12 +104,13 @@ void Transform::Translate(Vector3D t, bool global)
 
 void Transform::Rotate(Vector3D r, bool global)
 {
-	if (global)
-		rotation_ += r;
-	else {
+	Ogre::Node::TransformSpace space = global ? Ogre::Node::TS_WORLD : Ogre::Node::TS_LOCAL;
 
-	}
-	node_->setOrientation(rotation_.toOgreRotation());
+	node_->rotate(Ogre::Vector3(1, 0, 0), Ogre::Radian(Ogre::Degree(r.x())),space);
+	node_->rotate(Ogre::Vector3(0, 1, 0), Ogre::Radian(Ogre::Degree(r.y())),space);
+	node_->rotate(Ogre::Vector3(0, 0, 1), Ogre::Radian(Ogre::Degree(r.z())),space);
+
+	rotation_ = Vector3D::fromOgreRotation(node_->getOrientation());;
 }
 
 void Transform::Scale(Vector3D s)

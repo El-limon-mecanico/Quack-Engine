@@ -46,7 +46,8 @@ void Rigidbody::setRigidbody(int mass, ColliderType type)
 
 void Rigidbody::preUpdate()
 {
-	//resetTransform();
+	resetTransform();
+
 	for (CollisionInfo& obj : collisions)
 		obj.time += QuackEnginePro::Instance()->time()->deltaTime();
 }

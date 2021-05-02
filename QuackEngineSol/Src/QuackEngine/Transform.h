@@ -70,7 +70,7 @@ public:
 
 	Ogre::SceneNode* getNode();
 	virtual void physicsUpdate() override;
-	virtual void lateUpdate() override;
+	virtual void preUpdate() override;
 
 	virtual void onEnable() override;
 	virtual void onDisable()override { enable = true; }

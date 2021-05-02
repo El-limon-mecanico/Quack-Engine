@@ -39,9 +39,9 @@ btVector3 Vector3D::toBulletPosition()
 Ogre::Quaternion Vector3D::toOgreRotation()
 {
 	Ogre::Vector3 v(toOgre(*this * PI / 180));
-	double pitch = v.x;
-	double yaw = v.y;
-	double roll = v.z;
+	double pitch = v.y; 
+	double yaw = v.z;
+	double roll = v.x;
 	// Abbreviations for the various angular functions
 	double cy = cos(yaw * 0.5);
 	double sy = sin(yaw * 0.5);
@@ -60,8 +60,24 @@ Ogre::Quaternion Vector3D::toOgreRotation()
 
 btQuaternion Vector3D::toBulletRotation()
 {
-	btVector3 v(toBullet(*this * PI / 180));
-	return  btQuaternion(v.x(), v.y(), v.z());
+	Ogre::Vector3 v(toOgre(*this * PI / 180));
+	double pitch = v.y;
+	double yaw = v.z;
+	double roll = v.x;
+	// Abbreviations for the various angular functions
+	double cy = cos(yaw * 0.5);
+	double sy = sin(yaw * 0.5);
+	double cp = cos(pitch * 0.5);
+	double sp = sin(pitch * 0.5);
+	double cr = cos(roll * 0.5);
+	double sr = sin(roll * 0.5);
+
+	btQuaternion q;
+	q.setW(cr * cp * cy + sr * sp * sy);
+	q.setX(sr * cp * cy - cr * sp * sy);
+	q.setY(cr * sp * cy + sr * cp * sy);
+	q.setZ(cr * cp * sy - sr * sp * cy);
+	return q;
 }
 
 Ogre::Vector3 Vector3D::toOgre(Vector3D v)
@@ -94,9 +110,12 @@ Vector3D Vector3D::fromBulletPosition(btVector3 v)
 	return fromBullet(v / 100);
 }
 
+#include <iostream>
 Vector3D Vector3D::fromOgreRotation(Ogre::Quaternion q)
 {
 	Vector3D angles;
+
+	//std::cout << q.x << " " << q.y << " " << q.z << " " << q.w << "\n";
 
 	// roll (x-axis rotation_)
 	double sinr_cosp = 2 * (q.w * q.x + q.y * q.z);
@@ -115,12 +134,34 @@ Vector3D Vector3D::fromOgreRotation(Ogre::Quaternion q)
 	double cosy_cosp = 1 - 2 * (q.y * q.y + q.z * q.z);
 	angles.z_ = std::atan2(siny_cosp, cosy_cosp);
 
-	return angles * 180 / PI;
+
+	return angles * 180.0f / PI;
 }
 
 Vector3D Vector3D::fromBulletRotation(btQuaternion q)
 {
-	return fromBullet(q.getAxis());
+	Vector3D angles;
+
+	//std::cout << q.x << " " << q.y << " " << q.z << " " << q.w << "\n";
+
+	// roll (x-axis rotation_)
+	double sinr_cosp = 2 * (q.w() * q.x() + q.y() * q.z());
+	double cosr_cosp = 1 - 2 * (q.x() * q.x() + q.y() * q.y());
+	angles.x_ = std::atan2(sinr_cosp, cosr_cosp);
+
+	// pitch (y-axis rotation_)
+	double sinp = 2 * (q.w() * q.y() - q.z() * q.x());
+	if (std::abs(sinp) >= 1)
+		angles.y_ = std::copysign(PI / 2, sinp); // use 90 degrees if out of range
+	else
+		angles.y_ = std::asin(sinp);
+
+	// yaw (z-axis rotation_)
+	double siny_cosp = 2 * (q.w() * q.z() + q.x() * q.y());
+	double cosy_cosp = 1 - 2 * (q.y() * q.y() + q.z() * q.z());
+	angles.z_ = std::atan2(siny_cosp, cosy_cosp);
+
+	return angles * 180.0f / PI;
 }
 
 void Vector3D::rotate(Vector3D rot)

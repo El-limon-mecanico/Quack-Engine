@@ -16,6 +16,8 @@ public:
 	
 	virtual bool init(luabridge::LuaRef parameterTable = { nullptr }) override;
 
+	virtual void start() override;
+
 	virtual void fixedUpdate() override;
 
 	virtual void update() override;

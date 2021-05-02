@@ -60,7 +60,7 @@ Component* QuackEntity::addComponent(const std::string& componentName, LuaRef pa
 		cmpMap_.insert({ componentName , c });
 		cmpMap_[componentName] = c; //sin esta linea, el map guarda null por alg�n motivo
 
-		//if(componente enbale)																// TO DO GUARDAR SI EL COMPONENTE ESTÁ ENABLE
+		//if(componente enable)																// TODO GUARDAR SI EL COMPONENTE ESTÁ ENABLE
 		c->onEnable();
 
 		return c;

@@ -66,7 +66,7 @@ void OgreQuack::setupRoot()
 	Ogre::SceneNode* mNodeCamera = mSM_->getRootSceneNode()->createChildSceneNode();
 	mNodeCamera->attachObject(mCamera);
 
-	mNodeCamera->setPosition(0, 1000, 1000);
+	mNodeCamera->setPosition(1000, 1000, 1000);
 	mNodeCamera->lookAt(Ogre::Vector3(0, 0, 0), Ogre::Node::TS_WORLD);
 
 	Ogre::Viewport* vp = window_->addViewport(mCamera);
