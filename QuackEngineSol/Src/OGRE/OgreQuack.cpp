@@ -9,7 +9,7 @@
 
 std::unique_ptr<OgreQuack>  OgreQuack::instance_;
 
-// AQUI FALTA MANEJO DE ERRORES Y EXCEPCIONES
+// AQUI FALTA MANEJO DE ERRORES Y EXCEPCIONES (no, no?)
 bool OgreQuack::Init() {
 	assert(instance_.get() == nullptr);
 	instance_.reset(new OgreQuack());

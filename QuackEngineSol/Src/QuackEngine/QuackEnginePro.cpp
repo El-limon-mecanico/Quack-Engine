@@ -37,8 +37,7 @@ void addComponentsFactories()
 
 
 
-// -------------- MOVER A OTRO ARCHIVO -------------- // 
-
+// TODO -------------- MOVER A OTRO ARCHIVO -------------- // 
 void QuackEnginePro::prueba()
 {
 	QuackEntity* plane = new QuackEntity("PlanoToGuapo");
@@ -54,6 +53,10 @@ void QuackEnginePro::prueba()
 	
 	SceneMng::Instance()->getCurrentScene()->addEntity(plane);
 }
+// -------------- MOVER A OTRO ARCHIVO -------------- // 
+
+
+
 
 std::unique_ptr<QuackEnginePro>  QuackEnginePro::instance_;
 
@@ -62,12 +65,12 @@ QuackEnginePro::~QuackEnginePro() {
 	delete quackTime_;	quackTime_ = nullptr;
 };
 
-// AQUI FALTA MANEJO DE ERRORES Y EXCEPCIONES
+// AQUI FALTA MANEJO DE ERRORES Y EXCEPCIONES (you sure¿?)
 bool QuackEnginePro::Init()
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 #if (defined _DEBUG) && (defined _WIN32)
-	int* a = new int();		// dejar comentado para que estemos seguros de que siempre se estan viendo los memory leaks
+	int* a = new int();		// para que estemos seguros de que siempre se estan viendo los memory leaks
 #endif
 
 	assert(instance_.get() == nullptr);
@@ -112,7 +115,6 @@ void QuackEnginePro::start()
 		prueba();
 		update();
 	}
-
 }
 
 
@@ -134,6 +136,10 @@ void QuackEnginePro::update()
 
 		SceneMng::Instance()->lateUpdate();
 	}
+
+#if (defined _DEBUG) || !(defined _WIN32)
+	std::cout << "WARNING: Deberia haber al menos 4 bytes de basura\n";
+#endif
 }
 
 

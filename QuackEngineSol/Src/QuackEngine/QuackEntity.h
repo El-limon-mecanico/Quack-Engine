@@ -5,8 +5,8 @@
 #include <bitset>
 #include <vector>
 #include <iostream>
-#include "Component.h"
 #include <unordered_map>
+#include "Component.h"
 
 namespace luabridge {
 	class LuaRef;

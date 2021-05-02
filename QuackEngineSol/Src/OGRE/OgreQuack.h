@@ -39,6 +39,7 @@ public:
 
 	static bool Init();
 
+	// devuelve puntero al singleton
 	static OgreQuack* Instance();
 
 	OgreQuack() {}
