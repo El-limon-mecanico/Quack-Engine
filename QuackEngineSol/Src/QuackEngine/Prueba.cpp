@@ -37,7 +37,7 @@ void Prueba::start()
 
 void Prueba::fixedUpdate()
 {
-	std::cout << transform->rotation() << "\n";
+	//std::cout << transform->rotation() << "\n";
 	//entity_->getComponent<Rigidbody>()->addTorque({ 0,1,0 });
 }
 

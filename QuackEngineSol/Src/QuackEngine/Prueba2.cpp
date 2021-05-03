@@ -31,5 +31,5 @@ bool Prueba2::init(luabridge::LuaRef parameterTable)
 
 void Prueba2::update()
 {
-	transform->Rotate(Vector3D(45, 0, 90) * QuackEnginePro::Instance()->time()->deltaTime());
+	transform->Rotate(Vector3D(0, 0, 90) * QuackEnginePro::Instance()->time()->deltaTime());
 }

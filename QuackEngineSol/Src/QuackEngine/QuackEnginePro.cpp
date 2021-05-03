@@ -58,11 +58,12 @@ void QuackEnginePro::prueba()
 	mono->setActive(true);
 	SceneMng::Instance()->getCurrentScene()->addEntity(mono);
 
-	mono->transform()->setLocalPosition({ 5,0,0 });
-	cube->transform()->setLocalPosition({ 5,5,0 });
+	mono->transform()->setLocalPosition({ -10,0,-10 });
+	cube->transform()->setLocalPosition({ -10,5,-10 });
 
 	cube->transform()->setParent(mono->transform());
 
+	mono->transform()->Rotate({ -90,0,0 });
 
 }
 
