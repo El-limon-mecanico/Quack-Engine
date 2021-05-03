@@ -27,9 +27,9 @@ void BulletQuack::init() {
 }
 
 
-void BulletQuack::stepPhysics(double deltaTime)
+void BulletQuack::stepPhysics(double deltaTime, float fixedTimeStep)
 {
-	world_->getBtWorld()->stepSimulation(deltaTime);
+	world_->getBtWorld()->stepSimulation(deltaTime, 1, fixedTimeStep);
 	//mBtWorld->stepSimulation(deltaTime);
 }
 
@@ -47,6 +47,15 @@ void BulletQuack::changeMass(float mass, btRigidBody* rb)
 
 btRigidBody* BulletQuack::addRigidBody(float mass, const Ogre::Entity* ent, BtOgre::ColliderType ct, void(*p)(void*, void*, const btManifoldPoint& mnf), void* listener)
 {
-
 	return world_->addRigidBody(mass, ent, ct, p, listener);
+}
+
+void BulletQuack::addRigidBody(btRigidBody* rb)
+{
+	world_->getBtWorld()->removeRigidBody(rb);
+}
+
+void BulletQuack::removeRigidBody(btRigidBody* rb)
+{
+	world_->getBtWorld()->addRigidBody(rb);
 }

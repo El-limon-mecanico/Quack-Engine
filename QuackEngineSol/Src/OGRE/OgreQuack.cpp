@@ -65,7 +65,7 @@ void OgreQuack::setupRoot()
 	Ogre::SceneNode* mNodeCamera = mSM_->getRootSceneNode()->createChildSceneNode();
 	mNodeCamera->attachObject(mCamera);
 
-	mNodeCamera->setPosition(0, 1000, 1000);
+	mNodeCamera->setPosition(1000, 1000, 1000);
 	mNodeCamera->lookAt(Ogre::Vector3(0, 0, 0), Ogre::Node::TS_WORLD);
 
 	Ogre::Viewport* vp = window_->addViewport(mCamera);
@@ -76,7 +76,7 @@ void OgreQuack::setupRoot()
 		Ogre::Real(vp->getActualWidth()) /
 		Ogre::Real(vp->getActualHeight()));
 
-	mSM_->setAmbientLight(Ogre::ColourValue(.5, .5, .5));
+	mSM_->setAmbientLight(Ogre::ColourValue(.2, .2, .2));
 
 	Light* luz = mSM_->createLight("Luz");
 	luz->setType(Ogre::Light::LT_DIRECTIONAL);

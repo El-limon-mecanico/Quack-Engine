@@ -21,8 +21,11 @@ public:
 	void loadScene(std::string file, std::string sceneName);
 
 	void preUpdate();
+	void physicsUpdate();
+	void fixedUpdate();
 	void update();
 	void lateUpdate();
+	void lastUpdate();
 
 	Scene* getCurrentScene();
 };

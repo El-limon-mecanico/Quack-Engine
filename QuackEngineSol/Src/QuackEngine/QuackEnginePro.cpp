@@ -11,6 +11,7 @@
 #include "LuaBridgeTest.h"
 #include "checkML.h"
 #include "Prueba.h"
+#include "Prueba2.h"
 #include "Transform.h"
 #include "LuaManager.h"
 #include "FactoryManager.h"
@@ -33,6 +34,7 @@ void addComponentsFactories()
 	FactoryManager::instance()->add<MeshRenderer>();
 	FactoryManager::instance()->add<Rigidbody>();
 	FactoryManager::instance()->add<Prueba>();
+	FactoryManager::instance()->add<Prueba2>();
 	FactoryManager::instance()->add<Transform>();
 }
 
@@ -41,18 +43,28 @@ void addComponentsFactories()
 // TODO -------------- MOVER A OTRO ARCHIVO -------------- // 
 void QuackEnginePro::prueba()
 {
-	QuackEntity* plane = new QuackEntity("PlanoToGuapo");
-	MeshRenderer* r = plane->addComponent<MeshRenderer>();
-	r->setMeshByPrefab(PrefabType::PT_PLANE); //:)))
-	Rigidbody* rb = plane->addComponent<Rigidbody>();
 
-	r->getNode()->rotate(Ogre::Vector3(1, 0, 0), Ogre::Radian(Ogre::Degree(-90)));
-	r->getNode()->scale(5, 5, 1);
-	r->getNode()->setPosition(0, -300, 0);
+	QuackEntity* cube = new QuackEntity("Cubito");
+	MeshRenderer* r = cube->addComponent<MeshRenderer>();
+	r->setMeshByPrefab(PrefabType::PT_CUBE); //:)))
+	cube->addComponent<Prueba2>();
 
-	rb->setRigidbody(0, ColliderType::CT_BOX);
-	
-	SceneMng::Instance()->getCurrentScene()->addEntity(plane);
+	QuackEntity* mono = new QuackEntity("Mono");
+	r = mono->addComponent<MeshRenderer>();
+	r->setMeshByName("Suzanne.mesh");
+	mono->addComponent<Prueba2>();
+
+	SceneMng::Instance()->getCurrentScene()->addEntity(cube);
+	mono->setActive(true);
+	SceneMng::Instance()->getCurrentScene()->addEntity(mono);
+
+	mono->transform()->setLocalPosition({ -10,0,-10 });
+	cube->transform()->setLocalPosition({ -10,5,-10 });
+
+	cube->transform()->setParent(mono->transform());
+
+	mono->transform()->Rotate({ -90,0,0 });
+
 }
 // -------------- MOVER A OTRO ARCHIVO -------------- // 
 
@@ -87,8 +99,6 @@ QuackEnginePro* QuackEnginePro::Instance()
 
 void QuackEnginePro::setup()
 {
-	quackTime_ = new QuackTime();
-
 	OgreQuack::Init();
 	OgreQuack::Instance()->createRoot();
 	OgreQuack::Instance()->setupRoot();
@@ -97,6 +107,8 @@ void QuackEnginePro::setup()
 	ResourceMng::Instance()->setup(); //Carga de recursos
 
 	sdlWindow_ = OgreQuack::Instance()->getSdlWindow();
+
+	QuackEntity::Init();
 
 	BulletQuack::Init();
 
@@ -112,6 +124,7 @@ void QuackEnginePro::start()
 {
 	if (!updateStarted) {
 		prueba();
+		quackTime_ = new QuackTime();
 		update();
 	}
 }
@@ -120,20 +133,41 @@ void QuackEnginePro::start()
 void QuackEnginePro::update()
 {
 	exit = false;
+	int frames = 0;
+	double t = 0;
 	while (!exit) {
+		frames++;
+		t += time()->deltaTime();
+		if (t >= 1) {
+			std::cout << "Last second frames: " << frames << "\n";
+			t = 0;
+			frames = 0;
+		}
+
 		quackTime_->frameStarted();
+
+		fixedTime += time()->deltaTime();
 
 		SceneMng::Instance()->preUpdate();
 
-		BulletQuack::Instance()->stepPhysics(time()->deltaTime());
+		BulletQuack::Instance()->stepPhysics(time()->deltaTime(), FIXED_TIME_UPDATE);
+
+		SceneMng::Instance()->physicsUpdate();
 
 		pollEvents();
+
+		if (fixedTime > FIXED_TIME_UPDATE) {
+			SceneMng::Instance()->fixedUpdate();
+			fixedTime = 0;
+		}
 
 		SceneMng::Instance()->update(); //actualizamos la escena que actualiza las entidades	
 
 		OgreQuack::Instance()->getRoot()->renderOneFrame();
 
 		SceneMng::Instance()->lateUpdate();
+
+		SceneMng::Instance()->lastUpdate();
 	}
 
 #if (defined _DEBUG) || !(defined _WIN32)

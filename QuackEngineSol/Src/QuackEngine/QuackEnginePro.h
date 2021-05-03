@@ -17,6 +17,9 @@ class OgreQuack;
 class SDL_Window;
 class ResourceMng;
 
+const int NFrames = 50;
+const float FIXED_TIME_UPDATE = 1.0f/NFrames;
+
 class QUACK_ENGINE_PRO_API QuackEnginePro {
 private:
 
@@ -40,6 +43,7 @@ private:
 
 	void prueba();
 
+	float fixedTime = 0;
 
 public:
 

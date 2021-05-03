@@ -39,11 +39,15 @@ public:
 
 	~BulletQuack() {}
 
-	void stepPhysics(double deltaTime);
+	void stepPhysics(double deltaTime, float fixedTimeStep = 0.02);
 
 	void changeMass(float mass, btRigidBody* rb);
 
 	btRigidBody* addRigidBody(float mass, const Ogre::Entity* ent, BtOgre::ColliderType ct, void(*p)(void* , void*, const btManifoldPoint& mnf), void* listener);
+
+	void addRigidBody(btRigidBody* rb);
+
+	void removeRigidBody(btRigidBody* rb);
 };
 
 #endif // !_PHYSICS_MANAGER_
