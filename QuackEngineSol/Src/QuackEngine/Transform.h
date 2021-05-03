@@ -23,6 +23,7 @@ private:
 	Vector3D localRotation_;
 	Vector3D globalPosition_;
 
+
 	void moveGlobalPosition(Vector3D v);
 
 public:
@@ -35,6 +36,9 @@ public:
 	Vector3D scale;
 	Vector3D position;
 
+	Vector3D up;
+	Vector3D forward;
+	Vector3D right;
 
 	static std::string GetName() { return "Transform"; }
 

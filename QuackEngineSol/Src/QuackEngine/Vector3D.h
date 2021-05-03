@@ -96,7 +96,7 @@ public:
 
 	static Vector3D fromBulletRotation(btQuaternion q);
 
-	static Vector3D globalToLocalPosition(Vector3D globalPosition, Vector3D parentLocalPosition, Vector3D parentLocalRotation);
+	static Vector3D globalToLocalPosition(Vector3D globalPosition, Vector3D parentGlobalPosition, Vector3D parentGlobalRotation);
 
 	static Vector3D localToGlobalPosition(Vector3D localPosition, Vector3D parentGlobalPosition, Vector3D parentGlobalRotation);
 
@@ -175,7 +175,7 @@ public:
 	}
 
 	void rotate(Vector3D rot);
-
+	static Ogre::Matrix4 rotationMatrix(Vector3D rotation);
 	Vector3D rotation_(Vector3D rot) const;
 
 	// Computes the angle between 'this' and 'v'. The result is

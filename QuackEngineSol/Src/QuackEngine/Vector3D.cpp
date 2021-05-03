@@ -161,29 +161,53 @@ Vector3D Vector3D::fromBulletRotation(btQuaternion q)
 	return angles * 180.0f / PI;
 }
 
-Vector3D Vector3D::globalToLocalPosition(Vector3D globalPosition, Vector3D parentLocalPosition, Vector3D parentLocalRotation)
+Vector3D Vector3D::globalToLocalPosition(Vector3D globalPosition, Vector3D parentGlobalPosition, Vector3D parentGlobalRotation)
 {
+	Ogre::Matrix4 mat = rotationMatrix(parentGlobalRotation);
 	return Vector3D();						// TODO MATRICES DE TRANSFORMACIÓN PARA LOS EJES LOCALES
 }
 
 Vector3D Vector3D::localToGlobalPosition(Vector3D localPosition, Vector3D parentGlobalPosition, Vector3D parentGlobalRotation)
 {
+
 	return Vector3D();						// TODO MATRICES DE TRANSFORMACIÓN PARA LOS EJES LOCALES
 }
 
 void Vector3D::localToGlobalCoordinates(Vector3D& globalPosition, Vector3D& globalRotation, Vector3D localPosition, Vector3D parentGlobalPosition, Vector3D parentGlobalRotation)
 {
+
 											// TODO MATRICES DE TRANSFORMACIÓN PARA LOS EJES LOCALES
 }
 
 void Vector3D::globalToLocalCoordinates(Vector3D& localPosition, Vector3D& localRotation, Vector3D globalPosition, Vector3D parentLocalPosition, Vector3D parentLocalRotation)
 {
+
 											// TODO MATRICES DE TRANSFORMACIÓN PARA LOS EJES LOCALES
 }
 
 void Vector3D::rotate(Vector3D rot)
 {
 	*this = rotation_(rot);
+}
+
+Ogre::Matrix4 Vector3D::rotationMatrix(Vector3D r)
+{
+	r *= PI / 180;
+	Ogre::Matrix4 x, y, z;
+	x = {1,0,0,0,
+		 0,cos(r.x_), -sin(r.x_), 0,
+		 0, sin(r.x_), cos(r.x_), 0,
+		 0,0,0,1};
+	y = { cos(r.y_), 0,sin(r.y_),0,
+		 0,1,0,0,
+		 -sin(r.y_), 0, cos(r.y_), 0,
+		 0,0,0,1 };
+	z = { cos(r.z_),-sin(r.z_), 0, 0,
+		 sin(r.z_),cos(r.z_), 0, 0,
+		 0, 0, 1, 0,
+		 0, 0, 0, 1 };
+
+	return (x*y*z);
 }
 
 Vector3D Vector3D::rotation_(Vector3D rot) const {
