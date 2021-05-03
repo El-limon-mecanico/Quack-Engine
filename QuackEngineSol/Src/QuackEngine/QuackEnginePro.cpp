@@ -41,7 +41,6 @@ void addComponentsFactories()
 
 void QuackEnginePro::prueba()
 {
-
 	//QuackEntity* cube = new QuackEntity("Cubito");
 	//MeshRenderer* r = cube->addComponent<MeshRenderer>();
 	//r->setMeshByPrefab(PrefabType::PT_CUBE); //:)))

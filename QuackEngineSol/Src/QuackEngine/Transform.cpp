@@ -83,6 +83,7 @@ void Transform::physicsUpdateTr()
 	globalPosition_ = Vector3D::fromOgrePosition(node_->_getDerivedPosition());
 	globalRotation_ = Vector3D::fromOgreRotation(node_->_getDerivedOrientation());
 	localRotation_ = Vector3D::fromOgreRotation(node_->getOrientation());
+	recalculateAxes();
 }
 
 

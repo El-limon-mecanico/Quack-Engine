@@ -42,7 +42,6 @@ void Rigidbody::setRigidbody(int mass, ColliderType type)
 	if (!renderCmp)
 		renderCmp = entity_->addComponent<MeshRenderer>();
 	rb_ = BulletQuack::Instance()->addRigidBody(mass, renderCmp->getOgreEntity(), t, &sendContacts, this);
-	rb_->setCollisionFlags(DISABLE_DEACTIVATION);
 }
 
 void Rigidbody::preUpdate()
