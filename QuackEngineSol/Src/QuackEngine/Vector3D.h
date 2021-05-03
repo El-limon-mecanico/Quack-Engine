@@ -70,9 +70,9 @@ public:
 
 	static Vector3D up() { return { 0,1,0 }; }
 
-	static Vector3D rigth() { return { 0,1,0 }; }
+	static Vector3D rigth() { return { 1,0,0 }; }
 
-	static Vector3D forward() { return { 0,1,0 }; }
+	static Vector3D forward() { return { 0,0,1 }; }
 
 	static Ogre::Vector3 toOgre(Vector3D v);
 
