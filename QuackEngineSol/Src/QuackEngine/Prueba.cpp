@@ -31,7 +31,7 @@ bool Prueba::init(luabridge::LuaRef parameterTable)
 void Prueba::start()
 {
 	if (entity_->getComponent<Rigidbody>()) {
-		entity_->getComponent<Rigidbody>()->setGravity(Vector3D());
+		//entity_->getComponent<Rigidbody>()->setGravity(Vector3D());
 	}
 }
 
@@ -43,8 +43,8 @@ void Prueba::fixedUpdate()
 
 void Prueba::update()
 {
-	//transform->Translate(Vector3D(0, -1, 0) * QuackEnginePro::Instance()->time()->deltaTime());
-	transform->Rotate(Vector3D(45, 0, 0) * QuackEnginePro::Instance()->time()->deltaTime());
+	/*transform->Translate(Vector3D(0, -1, 0) * QuackEnginePro::Instance()->time()->deltaTime());
+	transform->Rotate(Vector3D(45, 0, 90) * QuackEnginePro::Instance()->time()->deltaTime());*/
 	if (transform->globalPosition().y < -10) {
 		//transform->Rotate(Vector3D(0, 45, 0));
 		transform->Translate(Vector3D(0, 10, 0), true);

@@ -10,9 +10,9 @@ Transform::Transform(Vector3D pos, Vector3D rot, Vector3D scale) : globalPositio
 	setParent(trRoot_.get());
 }
 Transform::Transform(Ogre::SceneNode* n) : globalPosition_(), globalRotation_(), scale(1, 1, 1),
-		right(1, 0, 0),
-		forward(0, 0, 1),
-		up(0, 1, 0)
+right(1, 0, 0),
+forward(0, 0, 1),
+up(0, 1, 0)
 {
 	node_ = n;
 	parent_ = this;
@@ -77,31 +77,30 @@ Ogre::SceneNode* Transform::getNode()
 	return node_;
 }
 
-void Transform::preUpdate()
-{
-	node_->setScale(Vector3D::toOgre(scale));
-	node_->setPosition(globalPosition_.toOgrePosition());
-	node_->setOrientation(globalRotation_.toOgreRotation());
-}
-
 void Transform::physicsUpdateTr()
 {
-	setGlobalPosition(Vector3D::fromOgrePosition(node_->getPosition()));
-	setRotation(Vector3D::fromOgreRotation(node_->getOrientation()));
+	localPosition_ = Vector3D::fromOgrePosition(node_->getPosition());
+	globalPosition_ = Vector3D::fromOgrePosition(node_->_getDerivedPosition());
+	globalRotation_ = Vector3D::fromOgreRotation(node_->_getDerivedOrientation());
+	localRotation_ = Vector3D::fromOgreRotation(node_->getOrientation());
 }
 
 
 void Transform::onEnable()
 {
 	node_->setScale(Vector3D::toOgre(scale));
-	node_->setPosition(globalPosition_.toOgrePosition());
-	node_->setOrientation(globalRotation_.toOgreRotation());
+	node_->_setDerivedPosition(globalPosition_.toOgrePosition());
+	node_->_setDerivedOrientation(globalRotation_.toOgreRotation());
 }
 
 void Transform::setParent(Transform* parent)
 {
+	if (parent_)
+		parent_->node_->removeChild(node_);
 	parent_ = parent;
 	parent_->children_.push_back(this);
+	if (parent_ != trRoot_.get() || !node_->getParent())
+		parent_->node_->addChild(node_);
 	recalculateAxes();
 	setGlobalPosition(globalPosition_);
 }
@@ -129,51 +128,54 @@ void Transform::Translate(Vector3D t, bool global)
 
 void Transform::Rotate(Vector3D r, bool global)
 {
-	//node_->rotate(Ogre::Vector3(1, 0, 0), Ogre::Radian(Ogre::Degree(r.x)), Ogre::Node::TS_WORLD);
-	//node_->rotate(Ogre::Vector3(0, 1, 0), Ogre::Radian(Ogre::Degree(r.y)), Ogre::Node::TS_WORLD);
-	//node_->rotate(Ogre::Vector3(0, 0, 1), Ogre::Radian(Ogre::Degree(r.z)), Ogre::Node::TS_WORLD);
-	node_->rotate(Vector3D::toOgre(r), Ogre::Radian(Ogre::Degree(1)), Ogre::Node::TS_WORLD);
-	globalRotation_ = Vector3D::fromOgreRotation(node_->getOrientation());
+	node_->rotate(Vector3D::toOgre(r), Ogre::Radian(Ogre::Degree(1)), global ? Ogre::Node::TS_WORLD : Ogre::Node::TS_LOCAL);
+	globalRotation_ = Vector3D::fromOgreRotation(node_->_getDerivedOrientation());
+	localRotation_ = Vector3D::fromOgreRotation(node_->getOrientation());
 	recalculateAxes();
 	updateChildren();
 }
 
 void Transform::setRotation(Vector3D v)
 {
-	globalRotation_ = v;
-	node_->setOrientation(globalRotation_.toOgreRotation());
+	node_->_setDerivedOrientation(v.toOgreRotation());
+	globalRotation_ = Vector3D::fromOgreRotation(node_->_getDerivedOrientation());
+	localRotation_ = Vector3D::fromOgreRotation(node_->getOrientation());
 	recalculateAxes();
 	updateChildren();
 }
 
 void Transform::setGlobalPosition(Vector3D v)
 {
-	globalPosition_ = v;
-	localPosition_ = Vector3D::globalToLocalPosition(globalPosition_, parent_->globalPosition_, parent_->globalRotation_, parent_->up, parent_->right, parent_->forward);
+	node_->_setDerivedPosition(v.toOgrePosition());
+	localPosition_ = Vector3D::fromOgrePosition(node_->getPosition());
+	globalPosition_ = Vector3D::fromOgrePosition(node_->_getDerivedPosition());
 	updateChildren();
 	//localPosition_ = globalPosition_ - parent_->globalPosition_;
 }
 
 void Transform::setLocalPosition(Vector3D v)
 {
-	localPosition_ = v;
-	globalPosition_ = Vector3D::localToGlobalPosition(localPosition_, parent_->globalPosition_, parent_->globalRotation_);
+	node_->setPosition(v.toOgrePosition());
+	localPosition_ = Vector3D::fromOgrePosition(node_->getPosition());
+	globalPosition_ = Vector3D::fromOgrePosition(node_->_getDerivedPosition());
 	updateChildren();
 }
 
 
 void Transform::moveGlobalPosition(Vector3D v)
 {
-	globalPosition_ += v;
-	localPosition_ = Vector3D::globalToLocalPosition(globalPosition_, parent_->globalPosition_, parent_->globalRotation_, parent_->up, parent_->right, parent_->forward);
+	node_->translate(v.toOgrePosition(), Ogre::Node::TS_WORLD);
+	globalPosition_ = Vector3D::fromOgrePosition(node_->_getDerivedPosition());
+	localPosition_ = Vector3D::fromOgrePosition(node_->getPosition());
 	updateChildren();
 	//localPosition_ = globalPosition_ - parent_->globalPosition_;
 }
 
 void Transform::moveLocalPosition(Vector3D v)
 {
-	localPosition_ += v;
-	globalPosition_ = Vector3D::localToGlobalPosition(localPosition_, parent_->globalPosition_, parent_->globalRotation_);
+	node_->translate(v.toOgrePosition(), Ogre::Node::TS_LOCAL);
+	localPosition_ = Vector3D::fromOgrePosition(node_->getPosition());
+	globalPosition_ = Vector3D::fromOgrePosition(node_->_getDerivedPosition());
 	updateChildren();
 }
 
@@ -200,10 +202,13 @@ void Transform::updateChildren()
 
 void Transform::recalculatePosition()
 {
-	if (entity_ && entity_->name() == "Cubito") {
+	if (entity_ && entity_->name() == "Mono") {
 		std::cout << globalPosition_ << "\n";
+		std::cout << node_->_getDerivedPosition() << "\n";
 	}
-	globalPosition_ = Vector3D::localToGlobalPosition(localPosition_, parent_->globalPosition_, parent_->globalRotation_);
+	//globalPosition_ = Vector3D::localToGlobalPosition(localPosition_, parent_->globalPosition_, parent_->globalRotation_);
+	localPosition_ = Vector3D::fromOgrePosition(node_->getPosition());
+	globalPosition_ = Vector3D::fromOgrePosition(node_->_getDerivedPosition());
 	recalculateAxes();
 	updateChildren();
 }
