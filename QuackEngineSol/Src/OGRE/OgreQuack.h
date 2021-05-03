@@ -25,8 +25,6 @@ private:
 
 	Ogre::RenderWindow* window_;
 
-	Ogre::FileSystemLayer* mFSLayer_;
-
 	SDL_Window* sdlWindow_;
 
 	int screen_width_ = 1000;
@@ -39,6 +37,7 @@ public:
 
 	static bool Init();
 
+	// devuelve puntero al singleton
 	static OgreQuack* Instance();
 
 	OgreQuack() {}
@@ -56,7 +55,5 @@ public:
 	void createRoot();
 
 	void setupRoot();
-
-	void loadResources();
 };
 #endif // !_OGRE_QUACK_

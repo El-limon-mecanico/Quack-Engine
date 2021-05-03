@@ -5,17 +5,36 @@
 
 using OgrePrefab = Ogre::SceneManager::PrefabType;
 
-MeshRenderer::MeshRenderer(QuackEntity* e) : Component(e)
+MeshRenderer::MeshRenderer(QuackEntity* e) : Component(e), ogreEnt_(nullptr)
 {
 	mSM_ = OgreQuack::Instance()->getSceneManager();
-	node_ = mSM_->getRootSceneNode()->createChildSceneNode();
 }
 
 
 MeshRenderer::~MeshRenderer()
 {
-	//borrar basura creada al meter la mesh?¿ como el Ogre::Entity quizas no lo sé
+	//borrar basura creada al meter la mesh?ï¿½ como el Ogre::Entity quizas no lo sï¿½
 }
+
+
+void MeshRenderer::onEnable()
+{
+	if (firsEnable_) {
+		node_ = transform->getNode();
+		if (ogreEnt_)
+			node_->attachObject(ogreEnt_);
+		firsEnable_ = false;
+	}
+	if (ogreEnt_)
+		ogreEnt_->setVisible(visible_);
+}
+
+void MeshRenderer::onDisable()
+{
+	ogreEnt_->setVisible(false);
+}
+
+
 
 bool MeshRenderer::init(luabridge::LuaRef parameterTable)
 {
@@ -34,25 +53,24 @@ bool MeshRenderer::init(luabridge::LuaRef parameterTable)
 		std::cout << "ERROR: no existe la malla " << mesh << '\n';
 	}
 
-	LuaRef pos = readVariable<LuaRef>(parameterTable, "Position");
-	node_->setPosition(pos[1], pos[2], pos[3]);
-	
-	ogreEnt_->setVisible(true);
-	node_->attachObject(ogreEnt_);
+	//visible_ = lo que venga de LUA;								TO DO , PASAR POR LUA SI ES VISIBLE O NO
 
 	return true;
 }
 
 void MeshRenderer::setMeshByPrefab(PrefabType prefab) {
 	OgrePrefab p = (OgrePrefab)prefab;
-	node_->detachAllObjects();
+	entity_->transform()->getNode()->detachAllObjects();
 	ogreEnt_ = mSM_->createEntity(p);
-	ogreEnt_->setVisible(true);
+	ogreEnt_->setVisible(visible_);
 	node_->attachObject(ogreEnt_);
 }
 
 void MeshRenderer::setMeshByName(const std::string& name) {
-
+	entity_->transform()->getNode()->detachAllObjects();
+	ogreEnt_ = mSM_->createEntity(name);
+	ogreEnt_->setVisible(visible_);
+	node_->attachObject(ogreEnt_);
 }
 
 Ogre::Mesh* MeshRenderer::getMesh() const
@@ -62,5 +80,7 @@ Ogre::Mesh* MeshRenderer::getMesh() const
 
 void MeshRenderer::setVisible(bool visible)
 {
-	ogreEnt_->setVisible(visible);
+	visible_ = visible;
+	ogreEnt_->setVisible(visible_);
 }
+

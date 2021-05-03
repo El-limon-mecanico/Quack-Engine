@@ -2,6 +2,7 @@
 #include "LuaManager.h"
 #include "QuackEntity.h"
 #include "Rigidbody.h"
+#include "QuackEnginePro.h"
 
 Prueba::Prueba(QuackEntity* e) : Component(e)
 {
@@ -27,15 +28,36 @@ bool Prueba::init(luabridge::LuaRef parameterTable)
 	return true;
 }
 
+void Prueba::start()
+{
+	if (entity_->getComponent<Rigidbody>()) {
+		//entity_->getComponent<Rigidbody>()->setGravity(Vector3D());
+	}
+}
+
+void Prueba::fixedUpdate()
+{
+	//std::cout << transform->rotation() << "\n";
+	//entity_->getComponent<Rigidbody>()->addTorque({ 0,1,0 });
+}
+
 void Prueba::update()
 {
-	entity_->getComponent<Rigidbody>()->addTorque(Vector3D(0, 10, 0));
+	/*transform->Translate(Vector3D(0, -1, 0) * QuackEnginePro::Instance()->time()->deltaTime());
+	transform->Rotate(Vector3D(45, 0, 90) * QuackEnginePro::Instance()->time()->deltaTime());*/
+	//if (transform->globalPosition().y < -10) {
+	//	//transform->Rotate(Vector3D(0, 45, 0));
+	//	transform->Translate(Vector3D(0, 10, 0), true);
+	//	if (entity_->getComponent<Rigidbody>())
+	//		entity_->getComponent<Rigidbody>()->clearForce();
+	//}
 	//std::cout << " Update de Prueba\n";
+
 }
 
 void Prueba::onCollisionEnter(QuackEntity* other, Vector3D point)
 {
-	entity_->getComponent<Rigidbody>()->addForce(Vector3D(0, 10, 0), IMPULSE);
+	//entity_->getComponent<Rigidbody>()->addForce(Vector3D(0, 10, 0), IMPULSE);
 	std::cout << "Yo " << entity_->name() << " acabo de chocar con " << other->name() << "\n\n";
 }
 

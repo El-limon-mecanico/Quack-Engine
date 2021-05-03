@@ -1,12 +1,11 @@
 #include <iostream>
 #include <fstream>
-#include <crtdbg.h>
 #include "QuackEnginePro.h"
+#include "checkML.h"
 
 #if (defined _DEBUG) || !(defined _WIN32)
 int main() {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-
 #else
 #include <windows.h>
 int WINAPI
@@ -30,10 +29,6 @@ WinMain(HINSTANCE zHInstance, HINSTANCE prevInstance, LPSTR lpCmdLine, int nCmdS
 	if (QuackEnginePro::Init()) {
 		QuackEnginePro::Instance()->start();
 	}
-
-#if (defined _DEBUG) && (defined _WIN32)
-	std::cout << "WARNING: Deberia haber al menos 4 bytes de basura\n";
-#endif
 
 	return 0;
 }

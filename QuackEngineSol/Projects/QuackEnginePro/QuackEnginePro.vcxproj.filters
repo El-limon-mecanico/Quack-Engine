@@ -39,9 +39,6 @@
     <ClCompile Include="..\..\Src\QuackEngine\Scene.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\QuackEngine\Component.cpp">
-      <Filter>Archivos de origen\Ecs\Components</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\QuackEngine\Prueba.cpp">
       <Filter>Archivos de origen\Ecs\Components</Filter>
     </ClCompile>
@@ -64,6 +61,17 @@
       <Filter>Archivos de origen\Ecs\Components</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\QuackEngine\SceneMng.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\QuackEngine\ResourceMng.cpp">
+    </ClCompile>
+    <ClCompile Include="..\..\Src\QuackEngine\Vector3D.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\QuackEngine\Prueba2.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\QuackEngine\InputManager.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
@@ -105,6 +113,12 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\QuackEngine\checkML.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\QuackEngine\ResourceMng.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\QuackEngine\InputManager.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

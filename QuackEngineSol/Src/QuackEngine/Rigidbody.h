@@ -35,11 +35,17 @@ private:
 
 	btRigidBody* rb_ = nullptr;
 
+	float mass_ = 1;
+
+	ColliderType colType_ = CT_BOX;
+
 	std::vector<CollisionInfo> collisions;
 
 	static void sendContacts(void* first, void* other, const btManifoldPoint& manifoldPoint);
 
 	void contact(Rigidbody* other, const btManifoldPoint& manifoldPoint);
+
+	bool firsEnable_ = true;
 
 public:
 
@@ -53,13 +59,21 @@ public:
 
 	virtual void preUpdate() override;
 
+	virtual void physicsUpdate() override;
+
 	virtual void lateUpdate() override;
+
+	virtual void onEnable() override;
+
+	virtual void onDisable() override;
 
 	void setRigidbody(int mass, ColliderType type);
 
 	btRigidBody* getRigidbody() { return rb_; }
 
 	void setMass(float mass);
+
+	void resetTransform();
 
 	float getMass();
 

@@ -11,6 +11,7 @@
 #include "LuaBridgeTest.h"
 #include "checkML.h"
 #include "Prueba.h"
+#include "Prueba2.h"
 #include "Transform.h"
 #include "LuaManager.h"
 #include "FactoryManager.h"
@@ -22,6 +23,10 @@
 
 #include "Scene.h"
 #include "SceneMng.h"
+#include "ResourceMng.h"
+
+#include "InputManager.h"
+#include "SDL_scancode.h"
 
 //para que no salga la consola en el modo release (en las propiedades del proyecto hay que poner que se
 //ejecute como aplicacion window no cmd (en la parte de vinculador))ç
@@ -34,31 +39,44 @@ void addComponentsFactories()
 	FactoryManager::instance()->add<MeshRenderer>();
 	FactoryManager::instance()->add<Rigidbody>();
 	FactoryManager::instance()->add<Prueba>();
+	FactoryManager::instance()->add<Prueba2>();
 	FactoryManager::instance()->add<Transform>();
 }
 
 
 
-// -------------- MOVER A OTRO ARCHIVO -------------- //
-
+// TODO -------------- MOVER A OTRO ARCHIVO -------------- // 
 void QuackEnginePro::prueba()
 {
-	QuackEntity* plane = new QuackEntity("PlanoToGuapo");
-	MeshRenderer* r = plane->addComponent<MeshRenderer>();
-	r->setMeshByPrefab(PrefabType::PT_PLANE); //:)))
-	Rigidbody* rb = plane->addComponent<Rigidbody>();
 
-	r->getNode()->rotate(Ogre::Vector3(1, 0, 0), Ogre::Radian(Ogre::Degree(-90)));
-	r->getNode()->scale(5, 5, 1);
-	r->getNode()->setPosition(0, -300, 0);
+	QuackEntity* cube = new QuackEntity("Cubito");
+	MeshRenderer* r = cube->addComponent<MeshRenderer>();
+	r->setMeshByPrefab(PrefabType::PT_CUBE); //:)))
+	cube->addComponent<Prueba2>();
 
-	rb->setRigidbody(0, ColliderType::CT_BOX);
-	
-	SceneMng::Instance()->getCurrentScene()->addEntity(plane);
+	QuackEntity* mono = new QuackEntity("Mono");
+	r = mono->addComponent<MeshRenderer>();
+	r->setMeshByName("Suzanne.mesh");
+	mono->addComponent<Prueba2>();
+
+	SceneMng::Instance()->getCurrentScene()->addEntity(cube);
+	mono->setActive(true);
+	SceneMng::Instance()->getCurrentScene()->addEntity(mono);
+
+	mono->transform()->setLocalPosition({ -10,0,-10 });
+	cube->transform()->setLocalPosition({ -10,5,-10 });
+
+	cube->transform()->setParent(mono->transform());
+
+	mono->transform()->Rotate({ -90,0,0 });
 
 	CEGUIQuack::Instance()->loadScheme("AlfiskoSkin.scheme");
 	CEGUIQuack::Instance()->createWidget("AlfiskoSkin/Button", "test");
 }
+// -------------- MOVER A OTRO ARCHIVO -------------- // 
+
+
+
 
 std::unique_ptr<QuackEnginePro>  QuackEnginePro::instance_;
 
@@ -67,12 +85,12 @@ QuackEnginePro::~QuackEnginePro() {
 	delete quackTime_;	quackTime_ = nullptr;
 };
 
-// AQUI FALTA MANEJO DE ERRORES Y EXCEPCIONES
+// AQUI FALTA MANEJO DE ERRORES Y EXCEPCIONES (you sure¿?)
 bool QuackEnginePro::Init()
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 #if (defined _DEBUG) && (defined _WIN32)
-	int* a = new int();		// dejar comentado para que estemos seguros de que siempre se estan viendo los memory leaks
+	int* a = new int();		// para que estemos seguros de que siempre se estan viendo los memory leaks
 #endif
 
 	assert(instance_.get() == nullptr);
@@ -86,20 +104,18 @@ QuackEnginePro* QuackEnginePro::Instance()
 	return instance_.get();
 }
 
-
 void QuackEnginePro::setup()
 {
-	quackTime_ = new QuackTime();
-
 	OgreQuack::Init();
-
 	OgreQuack::Instance()->createRoot();
-
 	OgreQuack::Instance()->setupRoot();
 
-	OgreQuack::Instance()->loadResources(); //Ogre resources
+	ResourceMng::Init();
+	ResourceMng::Instance()->setup(); //Carga de recursos
 
 	sdlWindow_ = OgreQuack::Instance()->getSdlWindow();
+
+	QuackEntity::Init();
 
 	BulletQuack::Init();
 
@@ -113,29 +129,50 @@ void QuackEnginePro::setup()
 	//CargarLua();
 	SceneMng::Init();
 	SceneMng::Instance()->loadScene("Scenes/scene1.lua", "scene1");
+
+	InputManager::Init();
 }
 
 void QuackEnginePro::start()
 {
 	if (!updateStarted) {
 		prueba();
+		quackTime_ = new QuackTime();
 		update();
 	}
-
 }
 
 
 void QuackEnginePro::update()
 {
 	exit = false;
+	int frames = 0;
+	double t = 0;
 	while (!exit) {
+		frames++;
+		t += time()->deltaTime();
+		if (t >= 1) {
+			std::cout << "Last second frames: " << frames << "\n";
+			t = 0;
+			frames = 0;
+		}
+
 		quackTime_->frameStarted();
+
+		fixedTime += time()->deltaTime();
 
 		SceneMng::Instance()->preUpdate();
 
-		BulletQuack::Instance()->stepPhysics(time()->deltaTime());
+		BulletQuack::Instance()->stepPhysics(time()->deltaTime(), FIXED_TIME_UPDATE);
+
+		SceneMng::Instance()->physicsUpdate();
 
 		pollEvents();
+
+		if (fixedTime > FIXED_TIME_UPDATE) {
+			SceneMng::Instance()->fixedUpdate();
+			fixedTime = 0;
+		}
 
 		SceneMng::Instance()->update(); //actualizamos la escena que actualiza las entidades	
 
@@ -145,7 +182,12 @@ void QuackEnginePro::update()
 
 		CEGUIQuack::Instance()->draw();
 		//CEGUIQuack::Instance()->render(time()->deltaTime());
+		SceneMng::Instance()->lastUpdate();
 	}
+
+#if (defined _DEBUG) || !(defined _WIN32)
+	std::cout << "WARNING: Deberia haber al menos 4 bytes de basura\n";
+#endif
 }
 
 
@@ -173,7 +215,8 @@ void QuackEnginePro::pollEvents()
 			}
 			break;
 		default:
-			//llamar a InputManager
+			InputManager::Instance()->ManageInput(event);
+			if (InputManager::Instance()->isKeyDown(SDL_SCANCODE_SPACE)) std::cout << "INPUT MANAGER PULSANDO EL ESPACIO";
 			break;
 		}
 	}
