@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\QuackEngine\Component.cpp" />
+    <ClCompile Include="..\..\Src\QuackEngine\InputManager.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\QuackEntity.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\FactoryManager.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\Prueba.cpp" />
@@ -49,6 +50,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\Src\QuackEngine\checkML.h" />
     <ClInclude Include="..\..\Src\QuackEngine\Component.h" />
+    <ClInclude Include="..\..\Src\QuackEngine\InputManager.h" />
     <ClInclude Include="..\..\Src\QuackEngine\QuackEntity.h" />
     <ClInclude Include="..\..\Src\QuackEngine\QuackEnginePro.h" />
     <ClInclude Include="..\..\Src\QuackEngine\FactoryManager.h" />
