@@ -23,6 +23,9 @@
 #include "SceneMng.h"
 #include "ResourceMng.h"
 
+#include "InputManager.h"
+#include "SDL_scancode.h"
+
 //para que no salga la consola en el modo release (en las propiedades del proyecto hay que poner que se
 //ejecute como aplicacion window no cmd (en la parte de vinculador))ç
 
@@ -103,7 +106,7 @@ void QuackEnginePro::setup()
 	OgreQuack::Instance()->createRoot();
 	OgreQuack::Instance()->setupRoot();
 
-	ResourceMng::Init(); 
+	ResourceMng::Init();
 	ResourceMng::Instance()->setup(); //Carga de recursos
 
 	sdlWindow_ = OgreQuack::Instance()->getSdlWindow();
@@ -118,6 +121,8 @@ void QuackEnginePro::setup()
 
 	SceneMng::Init();
 	SceneMng::Instance()->loadScene("Scenes/scene1.lua", "scene1");
+
+	InputManager::Init();
 }
 
 void QuackEnginePro::start()
@@ -200,7 +205,8 @@ void QuackEnginePro::pollEvents()
 			}
 			break;
 		default:
-			//llamar a InputManager
+			InputManager::Instance()->ManageInput(event);
+			if (InputManager::Instance()->isKeyDown(SDL_SCANCODE_SPACE)) std::cout << "INPUT MANAGER PULSANDO EL ESPACIO";
 			break;
 		}
 	}

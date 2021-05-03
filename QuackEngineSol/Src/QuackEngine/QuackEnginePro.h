@@ -16,6 +16,7 @@ class fmod_quack;
 class OgreQuack;
 class SDL_Window;
 class ResourceMng;
+class InputManager;
 
 const int NFrames = 50;
 const float FIXED_TIME_UPDATE = 1.0f/NFrames;
