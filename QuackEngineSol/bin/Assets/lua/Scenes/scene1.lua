@@ -1,5 +1,5 @@
 ﻿scene1 = {
-    entities = {"entidad1"}
+    entities = {}
 }
 
 entidad1 = {

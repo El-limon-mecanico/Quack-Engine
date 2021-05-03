@@ -19,37 +19,37 @@ namespace Ogre {
 	typedef float Real;
 	typedef Vector<3, Real> Vector3;
 	class Quaternion;
+	class Matrix4;
 }
 
 class btVector3;
 class btQuaternion;
 
 class Vector3D {
-private:
-	float x_;  // First coordinate
-	float y_;  // Second coordinate
-	float z_;  // Third coordinate
 public:
+	float x;  // First coordinate
+	float y;  // Second coordinate
+	float z;  // Third coordinate
 
 	// various constructors
 	Vector3D() noexcept :
-		x_(), y_(), z_() {
+		x(), y(), z() {
 	}
 
 	Vector3D(const Vector3D& v) :
-		x_(v.x()), y_(v.y()), z_(v.z()) {
+		x(v.x), y(v.y), z(v.z) {
 	}
 
 	Vector3D(Vector3D&& v) :
-		x_(v.x()), y_(v.y()), z_(v.z()) {
+		x(v.x), y(v.y), z(v.z) {
 	}
 
 	Vector3D(const Vector3D* v) :
-		x_(v->x()), y_(v->y()), z_(v->z()) {
+		x(v->x), y(v->y), z(v->z) {
 	}
 
 	Vector3D(float x, float y, float z) :
-		x_(x), y_(y), z_(z) {
+		x(x), y(y), z(z) {
 	}
 
 	Vector3D(Ogre::Vector3 v);
@@ -59,18 +59,6 @@ public:
 	~Vector3D() {
 	}
 
-	// various getters
-	inline float x() const {
-		return x_;
-	}
-
-	inline float y() const {
-		return y_;
-	}
-
-	inline float z() const {
-		return z_;
-	}
 
 	Ogre::Vector3 toOgrePosition();
 
@@ -96,7 +84,7 @@ public:
 
 	static Vector3D fromBulletRotation(btQuaternion q);
 
-	static Vector3D globalToLocalPosition(Vector3D globalPosition, Vector3D parentGlobalPosition, Vector3D parentGlobalRotation);
+	static Vector3D globalToLocalPosition(Vector3D globalPosition, Vector3D parentGlobalPosition, Vector3D parentGlobalRotation, Vector3D upParent, Vector3D rightParent, Vector3D forwardParent);
 
 	static Vector3D localToGlobalPosition(Vector3D localPosition, Vector3D parentGlobalPosition, Vector3D parentGlobalRotation);
 
@@ -108,57 +96,43 @@ public:
 		return Vector3D(0, 1, 0);
 	}
 
-
-	// various setters
-	inline void setX(float x) {
-		x_ = x;
-	}
-
-	inline void setY(float y) {
-		y_ = y;
-	}
-
-	inline void setZ(float z) {
-		z_ = z;
-	}
-
 	inline void set(float x, float y, float z) {
-		x_ = x;
-		y_ = y;
-		z_ = z;
+		x = x;
+		y = y;
+		z = z;
 	}
 
 	inline void set(const Vector3D& v) {
-		x_ = v.x_;
-		y_ = v.y_;
-		z_ = v.z_;
+		x = v.x;
+		y = v.y;
+		z = v.z;
 	}
 
 	inline void set(const Vector3D&& v) {
-		x_ = v.x_;
-		y_ = v.y_;
-		z_ = v.z_;
+		x = v.x;
+		y = v.y;
+		z = v.z;
 	}
 
 	inline void set(const Vector3D* v) {
-		x_ = v->x_;
-		y_ = v->y_;
-		z_ = v->z_;
+		x = v->x;
+		y = v->y;
+		z = v->z;
 	}
 
 	// copy assignment
 	inline Vector3D& operator=(const Vector3D& v) {
-		x_ = v.x_;
-		y_ = v.y_;
-		z_ = v.z_;
+		x = v.x;
+		y = v.y;
+		z = v.z;
 		return *this;
 	}
 
 	// move assignment - not really needed
 	inline Vector3D& operator=(const Vector3D&& v) {
-		x_ = v.x_;
-		y_ = v.y_;
-		z_ = v.z_;
+		x = v.x;
+		y = v.y;
+		z = v.z;
 		return *this;
 	}
 
@@ -166,7 +140,7 @@ public:
 
 	// length of the vector
 	inline float magnitude() const {
-		return sqrtf(powf(x_, 2) + powf(y_, 2) + powf(z_, 2));
+		return sqrtf(powf(x, 2) + powf(y, 2) + powf(z, 2));
 	}
 
 	// vector in the same direction of length 1
@@ -174,20 +148,23 @@ public:
 		return *this / magnitude();
 	}
 
-	void rotate(Vector3D rot);
+	//void rotate(Vector3D rot);
 	static Ogre::Matrix4 rotationMatrix(Vector3D rotation);
-	Vector3D rotation_(Vector3D rot) const;
+	static Ogre::Matrix4 translationMatrix(Vector3D rotation);
+	//Vector3D globalRotation_(Vector3D rot) const;
+
+	static Vector3D crossProduct(Vector3D a, Vector3D b);
 
 	// Computes the angle between 'this' and 'v'. The result is
 	// between -180 and 180, and is such that the following holds:
 	//
-	//   this->rotation_(angle) == v
+	//   this->globalRotation_(angle) == v
 	//
 	float angle(const Vector3D& v) const;
 
 	// vector subtraction
 	inline Vector3D operator-(const Vector3D& v) const {
-		return Vector3D(x_ - v.x_, y_ - v.y_, z_ + v.z_);
+		return Vector3D(x - v.x, y - v.y, z + v.z);
 	}
 
 	inline Vector3D operator-=(const Vector3D& v) {
@@ -197,7 +174,7 @@ public:
 
 	// vector addition
 	inline Vector3D operator+(const Vector3D& v) const {
-		return Vector3D(x_ + v.x_, y_ + v.y_, z_ + v.z_);
+		return Vector3D(x + v.x, y + v.y, z + v.z);
 	}
 
 	inline Vector3D operator+=(const Vector3D& v) {
@@ -207,7 +184,7 @@ public:
 
 	// multiplication by constant (scaling)
 	inline Vector3D operator*(float d) const {
-		return Vector3D(x_ * d, y_ * d, z_ * d);
+		return Vector3D(x * d, y * d, z * d);
 	}
 
 	inline Vector3D operator*=(float d) {
@@ -216,7 +193,7 @@ public:
 	}
 
 	inline Vector3D operator*(const Vector3D& v) const {
-		return Vector3D(x_ * v.x_, y_ * v.y_, z_ * v.z_);
+		return Vector3D(x * v.x, y * v.y, z * v.z);
 	}
 
 	inline Vector3D operator*=(const Vector3D& v) {
@@ -226,7 +203,7 @@ public:
 
 	// division by constant (scaling)
 	inline Vector3D operator/(float d) const {
-		return Vector3D(x_ / d, y_ / d, z_ / d);
+		return Vector3D(x / d, y / d, z / d);
 	}
 
 	inline Vector3D operator/=(float d) {
@@ -235,7 +212,7 @@ public:
 	}
 
 	inline Vector3D operator/(const Vector3D& v) const {
-		return Vector3D(x_ / v.x_, y_ / v.y_, z_ / v.z_);
+		return Vector3D(x / v.x, y / v.y, z / v.z);
 	}
 
 	inline Vector3D operator/=(const Vector3D& v) {
@@ -245,7 +222,7 @@ public:
 
 	// scalar multiplication
 	// inline float operator *(const Vector3D &d) const {
-	// 	return d.x_ * x_ + d.y_ * y_ + d.z_*z_;
+	// 	return d.x * x + d.y * y + d.z*z;
 	// }
 
 };

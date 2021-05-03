@@ -41,19 +41,24 @@ void addComponentsFactories()
 
 void QuackEnginePro::prueba()
 {
-	//	QuackEntity* plane = new QuackEntity("PlanoToGuapo");
-	//	MeshRenderer* r = plane->addComponent<MeshRenderer>();
-	//	r->setMeshByPrefab(PrefabType::PT_PLANE); //:)))
-	//	Rigidbody* rb = plane->addComponent<Rigidbody>();
-	//	
-	//
-	//	plane->transform()->getNode()->rotate(Ogre::Vector3(1, 0, 0), Ogre::Radian(Ogre::Degree(-90)));
-	//	plane->transform()->scale = Vector3D(5, 5, 1);
-	//	plane->transform()->globalPosition_ = Vector3D(0, -300, 0);
-	//
-	//	rb->setRigidbody(0, ColliderType::CT_BOX);
-	//	
-	//	SceneMng::Instance()->getCurrentScene()->addEntity(plane);
+
+	QuackEntity* cube = new QuackEntity("Cubito");
+	MeshRenderer* r = cube->addComponent<MeshRenderer>();
+	r->setMeshByPrefab(PrefabType::PT_CUBE); //:)))
+
+	QuackEntity* mono = new QuackEntity("Mono");
+	r = mono->addComponent<MeshRenderer>();
+	r->setMeshByName("Suzanne.mesh");
+	mono->addComponent<Prueba>();
+
+	//SceneMng::Instance()->getCurrentScene()->addEntity(cube);
+	mono->setActive(true);
+	SceneMng::Instance()->getCurrentScene()->addEntity(mono);
+
+	mono->transform()->setLocalPosition({ -2,0,0 });
+	mono->transform()->Rotate({ 0,180,0 });
+
+	cube->transform()->setParent(mono->transform());
 }
 
 std::unique_ptr<QuackEnginePro>  QuackEnginePro::instance_;

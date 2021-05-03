@@ -39,7 +39,8 @@ bool Scene::createEntity(const std::string& fileName, LuaRef entInfo)
 		enableExceptions(components[i]);
 		entity->addComponent(components[i], entInfo.rawget(components[i]));
 	}
-	entity->setActive(true);
+
+	entity->setActive(true);						// COMPROBAR SI ESTÁ AC
 
 	addEntity(entity);
 
@@ -58,7 +59,7 @@ void Scene::addEntity(QuackEntity* e)
 {
 	if (e) {
 		entities_.push_back(e);
-		if (e->isActive())
+		if (e->isActive()){}
 			e->start();
 	}
 }

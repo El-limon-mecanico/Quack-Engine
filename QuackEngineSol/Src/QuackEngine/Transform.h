@@ -19,12 +19,24 @@ private:
 	std::vector<Transform*> children_;
 	Transform* parent_;
 
-	Vector3D rotation_;
-	Vector3D localRotation_;
+
+	Vector3D localPosition_;
 	Vector3D globalPosition_;
+
+	Vector3D localRotation_;
+	Vector3D globalRotation_;
+
 
 
 	void moveGlobalPosition(Vector3D v);
+	void moveLocalPosition(Vector3D v);
+	
+	void recalculateAxes();
+
+	Vector3D scale;
+
+	void updateChildren();
+	void recalculatePosition();
 
 public:
 	Transform(Vector3D pos = Vector3D(), Vector3D rot = Vector3D(), Vector3D scale = Vector3D(1, 1, 1));
@@ -33,26 +45,25 @@ public:
 	static Transform* InitRoot();
 	Transform* RootTransform();
 
-	Vector3D scale;
-	Vector3D position;
 
 	Vector3D up;
 	Vector3D forward;
 	Vector3D right;
+
 
 	static std::string GetName() { return "Transform"; }
 
 	inline Transform& operator=(const Transform& t) {
 		globalPosition_ = t.globalPosition_;
 		scale = t.scale;
-		rotation_ = t.rotation_;
+		globalRotation_ = t.globalRotation_;
 		entity_ = t.entity_;
 		return *this;
 	}
 	inline Transform& operator=(Transform&& t) noexcept {
 		globalPosition_ = t.globalPosition_;
 		scale = t.scale;
-		rotation_ = t.rotation_;
+		globalRotation_ = t.globalRotation_;
 		t.entity_ = nullptr;
 		return *this;
 	}
@@ -75,7 +86,6 @@ public:
 	Ogre::SceneNode* getNode();
 	virtual void physicsUpdate() override;
 	virtual void preUpdate() override;
-	virtual void lastUpdate() override;
 	virtual void onEnable() override;
 	virtual void onDisable()override { enable = true; }
 
@@ -94,11 +104,15 @@ public:
 	void Rotate(Vector3D r, bool global = false);
 	void Scale(Vector3D s);
 
-	Vector3D rotation() { return rotation_; }
+	Vector3D position() { return globalPosition_; }
+	Vector3D localPosition() { return localPosition_; }
+
+	Vector3D rotation() { return globalRotation_; }
 	Vector3D localRotation() { return localRotation_; }
 
 	void setRotation(Vector3D v);
 	void setGlobalPosition(Vector3D v);
+	void setLocalPosition(Vector3D v);
 	Vector3D globalPosition() { return globalPosition_; };
 
 #pragma endregion

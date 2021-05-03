@@ -77,7 +77,7 @@ void OgreQuack::setupRoot()
 		Ogre::Real(vp->getActualWidth()) /
 		Ogre::Real(vp->getActualHeight()));
 
-	mSM_->setAmbientLight(Ogre::ColourValue(.5, .5, .5));
+	mSM_->setAmbientLight(Ogre::ColourValue(.2, .2, .2));
 
 	Light* luz = mSM_->createLight("Luz");
 	luz->setType(Ogre::Light::LT_DIRECTIONAL);
