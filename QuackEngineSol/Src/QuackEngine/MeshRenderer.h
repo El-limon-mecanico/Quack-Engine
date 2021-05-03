@@ -21,8 +21,7 @@ protected:
 	Ogre::SceneNode* node_;
 	Ogre::SceneManager* mSM_;
 	Ogre::Entity* ogreEnt_;
-	
-	void setParent(Ogre::SceneNode* parent);
+	std::string materialName_;
 
 public:
 	MeshRenderer(QuackEntity* e = nullptr);
@@ -42,4 +41,5 @@ public:
 	Ogre::Mesh* getMesh() const;
 	
 	void setVisible(bool visible);
+	void setMaterial(std::string materialName);
 };

@@ -1,5 +1,5 @@
 ﻿scene1 = {
-    entities = {"entidad1"}
+    entities = {"entidad1", "entidad2"}
 }
 
 entidad1 = {
@@ -29,21 +29,11 @@ entidad1 = {
 }
 
 entidad2 = {
-    Components = {"MeshRenderer", "Rigidbody"},
-
-    Transform = {
-        Position = {50,500,0},
-        Scale = {1,1,1},
-        Rotation = {0,0,0}
-    },
+    Components = {"MeshRenderer"},
 
     MeshRenderer = {
         Mesh = "Sphere",
-        Position = {50,500,0}
+        Position = {0,50,0},
+        Material = "GameExample/beti"
     },
-
-    Rigidbody = {
-        Type = "Sphere",
-        Mass = 1
-    }   
 }

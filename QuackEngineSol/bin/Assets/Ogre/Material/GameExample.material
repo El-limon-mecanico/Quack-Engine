@@ -1,0 +1,10 @@
+material GameExample/beti {
+    technique{
+        pass{
+            texture_unit {
+                texture betis.PNG
+                colour_op modulate
+            }
+        }
+    }
+}

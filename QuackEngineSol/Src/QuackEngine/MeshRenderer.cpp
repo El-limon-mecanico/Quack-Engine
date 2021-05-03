@@ -9,6 +9,7 @@ MeshRenderer::MeshRenderer(QuackEntity* e) : Component(e)
 {
 	mSM_ = OgreQuack::Instance()->getSceneManager();
 	node_ = mSM_->getRootSceneNode()->createChildSceneNode();
+	ogreEnt_ = nullptr;
 }
 
 
@@ -36,6 +37,10 @@ bool MeshRenderer::init(luabridge::LuaRef parameterTable)
 
 	LuaRef pos = readVariable<LuaRef>(parameterTable, "Position");
 	node_->setPosition(pos[1], pos[2], pos[3]);
+
+	materialName_ = readVariable<std::string>(parameterTable, "Material");
+	if (materialName_ != "")
+		setMaterial(materialName_);
 	
 	ogreEnt_->setVisible(true);
 	node_->attachObject(ogreEnt_);
@@ -63,4 +68,9 @@ Ogre::Mesh* MeshRenderer::getMesh() const
 void MeshRenderer::setVisible(bool visible)
 {
 	ogreEnt_->setVisible(visible);
+}
+
+void MeshRenderer::setMaterial(std::string materialName)
+{
+	ogreEnt_->setMaterialName(materialName);
 }
