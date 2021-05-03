@@ -39,7 +39,7 @@ btVector3 Vector3D::toBulletPosition()
 Ogre::Quaternion Vector3D::toOgreRotation()
 {
 	Ogre::Vector3 v(toOgre(*this * PI / 180));
-	double pitch = v.y; 
+	double pitch = v.y;
 	double yaw = v.z;
 	double roll = v.x;
 	// Abbreviations for the various angular functions
@@ -159,6 +159,26 @@ Vector3D Vector3D::fromBulletRotation(btQuaternion q)
 	angles.z_ = std::atan2(siny_cosp, cosy_cosp);
 
 	return angles * 180.0f / PI;
+}
+
+Vector3D Vector3D::globalToLocalPosition(Vector3D globalPosition, Vector3D parentLocalPosition, Vector3D parentLocalRotation)
+{
+	return Vector3D();						// TODO MATRICES DE TRANSFORMACIÓN PARA LOS EJES LOCALES
+}
+
+Vector3D Vector3D::localToGlobalPosition(Vector3D localPosition, Vector3D parentGlobalPosition, Vector3D parentGlobalRotation)
+{
+	return Vector3D();						// TODO MATRICES DE TRANSFORMACIÓN PARA LOS EJES LOCALES
+}
+
+void Vector3D::localToGlobalCoordinates(Vector3D& globalPosition, Vector3D& globalRotation, Vector3D localPosition, Vector3D parentGlobalPosition, Vector3D parentGlobalRotation)
+{
+											// TODO MATRICES DE TRANSFORMACIÓN PARA LOS EJES LOCALES
+}
+
+void Vector3D::globalToLocalCoordinates(Vector3D& localPosition, Vector3D& localRotation, Vector3D globalPosition, Vector3D parentLocalPosition, Vector3D parentLocalRotation)
+{
+											// TODO MATRICES DE TRANSFORMACIÓN PARA LOS EJES LOCALES
 }
 
 void Vector3D::rotate(Vector3D rot)

@@ -96,6 +96,14 @@ public:
 
 	static Vector3D fromBulletRotation(btQuaternion q);
 
+	static Vector3D globalToLocalPosition(Vector3D globalPosition, Vector3D parentLocalPosition, Vector3D parentLocalRotation);
+
+	static Vector3D localToGlobalPosition(Vector3D localPosition, Vector3D parentGlobalPosition, Vector3D parentGlobalRotation);
+
+	static void localToGlobalCoordinates(Vector3D& globalPosition, Vector3D& globalRotation, Vector3D localPosition, Vector3D parentGlobalPosition, Vector3D parentGlobalRotation);
+
+	static void globalToLocalCoordinates(Vector3D& localPosition, Vector3D& localRotation, Vector3D globalPosition, Vector3D parentLocalPosition, Vector3D parentLocalRotation);
+
 	static Vector3D up() {
 		return Vector3D(0, 1, 0);
 	}
@@ -202,7 +210,7 @@ public:
 		return Vector3D(x_ * d, y_ * d, z_ * d);
 	}
 
-	inline Vector3D operator*=(float d){
+	inline Vector3D operator*=(float d) {
 		*this = *this * d;
 		return *this;
 	}

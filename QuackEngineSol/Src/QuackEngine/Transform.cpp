@@ -82,9 +82,7 @@ void Transform::preUpdate()
 
 void Transform::lastUpdate()
 {
-	globalPosition_ = parent_->globalPosition_ + position;
-	
-	//ROTACION											TODO ROTACION LOCAL
+	//ROTACION											TODO MATRICES DE TRANSFORMACIÓN PARA LOS EJES LOCALES
 }
 
 void Transform::physicsUpdate()
