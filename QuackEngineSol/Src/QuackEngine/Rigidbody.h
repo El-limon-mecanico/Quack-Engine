@@ -59,6 +59,8 @@ public:
 
 	virtual void preUpdate() override;
 
+	virtual void physicsUpdate() override;
+
 	virtual void lateUpdate() override;
 
 	virtual void onEnable() override;

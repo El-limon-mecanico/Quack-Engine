@@ -170,7 +170,8 @@ Vector3D Vector3D::globalToLocalPosition(Vector3D globalPosition, Vector3D paren
 							0, 0, 0, 1
 	};
 
-	Ogre::Matrix4 trans = tra * rot;
+	Ogre::Matrix4 trans = (tra * rot).inverse();
+
 	Ogre::Vector4f localPosition_ = Ogre::Vector4f(toOgre(globalPosition), 1);
 
 	Ogre::Vector4f ret = trans * localPosition_;

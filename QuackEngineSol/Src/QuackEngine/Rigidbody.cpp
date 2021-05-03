@@ -53,6 +53,11 @@ void Rigidbody::preUpdate()
 		obj.time += QuackEnginePro::Instance()->time()->deltaTime();
 }
 
+void Rigidbody::physicsUpdate()
+{
+	transform->physicsUpdateTr();
+}
+
 void Rigidbody::lateUpdate()
 {
 	for (auto it = collisions.begin(); it != collisions.end();) {

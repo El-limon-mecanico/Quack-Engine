@@ -51,14 +51,16 @@ void QuackEnginePro::prueba()
 	r->setMeshByName("Suzanne.mesh");
 	mono->addComponent<Prueba>();
 
-	//SceneMng::Instance()->getCurrentScene()->addEntity(cube);
+	SceneMng::Instance()->getCurrentScene()->addEntity(cube);
 	mono->setActive(true);
 	SceneMng::Instance()->getCurrentScene()->addEntity(mono);
 
-	mono->transform()->setLocalPosition({ -2,0,0 });
-	mono->transform()->Rotate({ 0,180,0 });
+	mono->transform()->setLocalPosition({ 0,-2,0 });
 
 	cube->transform()->setParent(mono->transform());
+
+	mono->transform()->Rotate({ 0,0,0 });
+
 }
 
 std::unique_ptr<QuackEnginePro>  QuackEnginePro::instance_;

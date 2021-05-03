@@ -84,7 +84,7 @@ public:
 	inline bool hasParent() const { return parent_ != nullptr; }
 
 	Ogre::SceneNode* getNode();
-	virtual void physicsUpdate() override;
+	virtual void physicsUpdateTr();
 	virtual void preUpdate() override;
 	virtual void onEnable() override;
 	virtual void onDisable()override { enable = true; }

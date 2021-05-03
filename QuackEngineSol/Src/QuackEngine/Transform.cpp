@@ -84,7 +84,7 @@ void Transform::preUpdate()
 	node_->setOrientation(globalRotation_.toOgreRotation());
 }
 
-void Transform::physicsUpdate()
+void Transform::physicsUpdateTr()
 {
 	setGlobalPosition(Vector3D::fromOgrePosition(node_->getPosition()));
 	setRotation(Vector3D::fromOgreRotation(node_->getOrientation()));
@@ -129,9 +129,10 @@ void Transform::Translate(Vector3D t, bool global)
 
 void Transform::Rotate(Vector3D r, bool global)
 {
-	node_->rotate(Ogre::Vector3(1, 0, 0), Ogre::Radian(Ogre::Degree(r.x)), Ogre::Node::TS_WORLD);
-	node_->rotate(Ogre::Vector3(0, 1, 0), Ogre::Radian(Ogre::Degree(r.y)), Ogre::Node::TS_WORLD);
-	node_->rotate(Ogre::Vector3(0, 0, 1), Ogre::Radian(Ogre::Degree(r.z)), Ogre::Node::TS_WORLD);
+	//node_->rotate(Ogre::Vector3(1, 0, 0), Ogre::Radian(Ogre::Degree(r.x)), Ogre::Node::TS_WORLD);
+	//node_->rotate(Ogre::Vector3(0, 1, 0), Ogre::Radian(Ogre::Degree(r.y)), Ogre::Node::TS_WORLD);
+	//node_->rotate(Ogre::Vector3(0, 0, 1), Ogre::Radian(Ogre::Degree(r.z)), Ogre::Node::TS_WORLD);
+	node_->rotate(Vector3D::toOgre(r), Ogre::Radian(Ogre::Degree(1)), Ogre::Node::TS_WORLD);
 	globalRotation_ = Vector3D::fromOgreRotation(node_->getOrientation());
 	recalculateAxes();
 	updateChildren();
@@ -178,13 +179,14 @@ void Transform::moveLocalPosition(Vector3D v)
 
 void Transform::recalculateAxes()
 {
-	forward.x = cos(globalRotation_.z) * sin(globalRotation_.y);
-	forward.y = -sin(globalRotation_.z);
-	forward.z = cos(globalRotation_.z) * cos(globalRotation_.y);
+	Vector3D rot = globalRotation_ * 3.14159265358979323846264338327950288f / 180;
+	forward.x = cos(rot.x) * sin(rot.y);
+	forward.y = -sin(rot.x);
+	forward.z = cos(rot.x) * cos(rot.y);
 
-	right.x = cos(globalRotation_.y);
+	right.x = cos(rot.y);
 	right.y = 0;
-	right.z = -sin(globalRotation_.y);
+	right.z = -sin(rot.y);
 
 	up = Vector3D::crossProduct(forward, right);
 }
@@ -198,6 +200,9 @@ void Transform::updateChildren()
 
 void Transform::recalculatePosition()
 {
+	if (entity_ && entity_->name() == "Cubito") {
+		std::cout << globalPosition_ << "\n";
+	}
 	globalPosition_ = Vector3D::localToGlobalPosition(localPosition_, parent_->globalPosition_, parent_->globalRotation_);
 	recalculateAxes();
 	updateChildren();
