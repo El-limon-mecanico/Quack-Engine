@@ -11,6 +11,7 @@
 #include "LuaBridgeTest.h"
 #include "checkML.h"
 #include "Prueba.h"
+#include "Prueba2.h"
 #include "Transform.h"
 #include "LuaManager.h"
 #include "FactoryManager.h"
@@ -32,6 +33,7 @@ void addComponentsFactories()
 	FactoryManager::instance()->add<MeshRenderer>();
 	FactoryManager::instance()->add<Rigidbody>();
 	FactoryManager::instance()->add<Prueba>();
+	FactoryManager::instance()->add<Prueba2>();
 	FactoryManager::instance()->add<Transform>();
 }
 
@@ -41,23 +43,25 @@ void addComponentsFactories()
 
 void QuackEnginePro::prueba()
 {
-	//QuackEntity* cube = new QuackEntity("Cubito");
-	//MeshRenderer* r = cube->addComponent<MeshRenderer>();
-	//r->setMeshByPrefab(PrefabType::PT_CUBE); //:)))
 
-	//QuackEntity* mono = new QuackEntity("Mono");
-	//r = mono->addComponent<MeshRenderer>();
-	//r->setMeshByName("Suzanne.mesh");
-	//mono->addComponent<Rigidbody>();
-	//mono->addComponent<Prueba>();
+	QuackEntity* cube = new QuackEntity("Cubito");
+	MeshRenderer* r = cube->addComponent<MeshRenderer>();
+	r->setMeshByPrefab(PrefabType::PT_CUBE); //:)))
+	cube->addComponent<Prueba2>();
 
-	//SceneMng::Instance()->getCurrentScene()->addEntity(cube);
-	//mono->setActive(true);
-	//SceneMng::Instance()->getCurrentScene()->addEntity(mono);
+	QuackEntity* mono = new QuackEntity("Mono");
+	r = mono->addComponent<MeshRenderer>();
+	r->setMeshByName("Suzanne.mesh");
+	mono->addComponent<Prueba2>();
 
-	//mono->transform()->setLocalPosition({ 0,10,0 });
+	SceneMng::Instance()->getCurrentScene()->addEntity(cube);
+	mono->setActive(true);
+	SceneMng::Instance()->getCurrentScene()->addEntity(mono);
 
-	//cube->transform()->setParent(mono->transform());
+	mono->transform()->setLocalPosition({ 5,0,0 });
+	cube->transform()->setLocalPosition({ 5,5,0 });
+
+	cube->transform()->setParent(mono->transform());
 
 
 }
