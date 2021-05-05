@@ -25,18 +25,18 @@ bool Rigidbody::init(luabridge::LuaRef parameterTable)
 	//TODO: control de errores si no carga una variable
 	std::string type = readVariable<std::string>(parameterTable, "Type");
 	mass_ = readVariable<int>(parameterTable, "Mass");
+	trigger_ = readVariable<bool>(parameterTable, "Trigger");
+	static_ = readVariable<bool>(parameterTable, "Static");
 
 	if (type == "Box") colType_ = CT_BOX;
 	else if (type == "Sphere")colType_ = CT_SPHERE;
 	else if (type == "Trimesh")colType_ = CT_TRIMESH;
 	else if (type == "Hull")colType_ = CT_HULL;
 
-														// TODO LEER SI ES TRIGGER DESDE ARCHIVO
-
 	return true;
 }
 
-void Rigidbody::setRigidbody(int mass, ColliderType type, bool trigger)
+void Rigidbody::setRigidbody(int mass, ColliderType type, bool trigger, bool statc)
 {
 	BtOgre::ColliderType t = (BtOgre::ColliderType)type;
 	MeshRenderer* renderCmp = entity_->getComponent<MeshRenderer>();
@@ -47,6 +47,9 @@ void Rigidbody::setRigidbody(int mass, ColliderType type, bool trigger)
 	std::cout << rb_->getCollisionFlags() << std::endl;
 
 	setTrigger(trigger);
+
+	if (statc)
+		setStatic(true);
 }
 
 void Rigidbody::setTrigger(bool trigger)
@@ -87,7 +90,7 @@ void Rigidbody::lateUpdate()
 void Rigidbody::onEnable()
 {
 	if (firstEnable_) {
-		setRigidbody(mass_, colType_);
+		setRigidbody(mass_, colType_, trigger_, static_);
 	}
 	else {
 		BulletQuack::Instance()->addRigidBody(rb_);
@@ -118,7 +121,17 @@ void Rigidbody::contact(Rigidbody* other, const btManifoldPoint& manifoldPoint)
 
 void Rigidbody::setMass(float mass)
 {
+	mass_ = mass_;
 	BulletQuack::Instance()->changeMass(mass, rb_);
+}
+
+void Rigidbody::setStatic(bool statc)
+{
+	if (statc)
+		BulletQuack::Instance()->changeMass(0, rb_);
+	else
+		setMass(mass_);
+
 }
 
 void Rigidbody::resetTransform()

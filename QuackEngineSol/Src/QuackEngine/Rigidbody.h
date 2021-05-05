@@ -49,6 +49,8 @@ private:
 	
 	bool trigger_ = false;
 
+	bool static_ = false;
+
 public:
 
 	Rigidbody(QuackEntity* e = nullptr);
@@ -69,13 +71,15 @@ public:
 
 	virtual void onDisable() override;
 
-	void setRigidbody(int mass, ColliderType type, bool trigger_ = false);
+	void setRigidbody(int mass, ColliderType type, bool trigger_ = false, bool statc = false);
 
 	void setTrigger(bool trigger);
 
 	btRigidBody* getRigidbody() { return rb_; }
 
 	void setMass(float mass);
+
+	void setStatic(bool statc);
 
 	void resetTransform();
 

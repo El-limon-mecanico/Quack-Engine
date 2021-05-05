@@ -17,7 +17,9 @@ entidad1 = {
 
     Rigidbody = {
         Type = "Hull",
-        Mass = 1
+        Mass = 1,
+        Trigger = false,
+        Static = false
     },
 
     Prueba = {
@@ -42,6 +44,8 @@ entidad2 = {
 
     Rigidbody = {
         Type = "Cube",
-        Mass = 0
+        Mass = 1,
+        Trigger = false,
+        Static = true
     }   
 }
