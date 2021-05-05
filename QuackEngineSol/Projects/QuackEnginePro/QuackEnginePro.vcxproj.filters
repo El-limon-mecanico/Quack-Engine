@@ -63,8 +63,6 @@
     <ClCompile Include="..\..\Src\QuackEngine\SceneMng.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\QuackEngine\ResourceMng.cpp">
-    </ClCompile>
     <ClCompile Include="..\..\Src\QuackEngine\Vector3D.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
@@ -72,6 +70,9 @@
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\QuackEngine\InputManager.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\QuackEngine\ResourceMng.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
@@ -120,6 +121,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\QuackEngine\InputManager.h">
       <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\QuackEngine\Prueba2.h">
+      <Filter>Archivos de encabezado\Ecs\Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

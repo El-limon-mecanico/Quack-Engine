@@ -45,7 +45,9 @@ private:
 
 	void contact(Rigidbody* other, const btManifoldPoint& manifoldPoint);
 
-	bool firsEnable_ = true;
+	bool firstEnable_ = true;
+	
+	bool trigger_ = false;
 
 public:
 
@@ -67,7 +69,9 @@ public:
 
 	virtual void onDisable() override;
 
-	void setRigidbody(int mass, ColliderType type);
+	void setRigidbody(int mass, ColliderType type, bool trigger_ = false);
+
+	void setTrigger(bool trigger);
 
 	btRigidBody* getRigidbody() { return rb_; }
 

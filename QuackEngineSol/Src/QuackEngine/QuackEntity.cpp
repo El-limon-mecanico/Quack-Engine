@@ -172,6 +172,30 @@ void QuackEntity::onCollisionExit(QuackEntity* other, Vector3D point)
 				c->onCollisionExit(other, point);
 }
 
+void QuackEntity::onTriggerEnter(QuackEntity* other, Vector3D point)
+{
+	if (active_)
+		for (Component* c : components_)
+			if (c->isEnable())
+				c->onTriggerEnter(other, point);
+}
+
+void QuackEntity::onTriggerStay(QuackEntity* other, Vector3D point)
+{
+	if (active_)
+		for (Component* c : components_)
+			if (c->isEnable())
+				c->onTriggerStay(other, point);
+}
+
+void QuackEntity::onTriggerExit(QuackEntity* other, Vector3D point)
+{
+	if (active_)
+		for (Component* c : components_)
+			if (c->isEnable())
+				c->onTriggerExit(other, point);
+}
+
 void QuackEntity::onEnable()
 {
 	for (Component* c : components_)

@@ -19,11 +19,11 @@ MeshRenderer::~MeshRenderer()
 
 void MeshRenderer::onEnable()
 {
-	if (firsEnable_) {
+	if (firstEnable_) {
 		node_ = transform->getNode();
 		if (ogreEnt_)
 			node_->attachObject(ogreEnt_);
-		firsEnable_ = false;
+		firstEnable_ = false;
 	}
 	if (ogreEnt_)
 		ogreEnt_->setVisible(visible_);

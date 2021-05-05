@@ -31,17 +31,32 @@ bool Rigidbody::init(luabridge::LuaRef parameterTable)
 	else if (type == "Trimesh")colType_ = CT_TRIMESH;
 	else if (type == "Hull")colType_ = CT_HULL;
 
+														// TODO LEER SI ES TRIGGER DESDE ARCHIVO
 
 	return true;
 }
 
-void Rigidbody::setRigidbody(int mass, ColliderType type)
+void Rigidbody::setRigidbody(int mass, ColliderType type, bool trigger)
 {
 	BtOgre::ColliderType t = (BtOgre::ColliderType)type;
 	MeshRenderer* renderCmp = entity_->getComponent<MeshRenderer>();
 	if (!renderCmp)
 		renderCmp = entity_->addComponent<MeshRenderer>();
 	rb_ = BulletQuack::Instance()->addRigidBody(mass, renderCmp->getOgreEntity(), t, &sendContacts, this);
+
+	std::cout << rb_->getCollisionFlags() << std::endl;
+
+	setTrigger(trigger);
+}
+
+void Rigidbody::setTrigger(bool trigger)
+{
+	trigger_ = trigger;
+
+	if (trigger)
+		rb_->setCollisionFlags(DISABLE_DEACTIVATION);
+	else
+		rb_->setCollisionFlags(0);
 }
 
 void Rigidbody::preUpdate()
@@ -61,7 +76,7 @@ void Rigidbody::lateUpdate()
 {
 	for (auto it = collisions.begin(); it != collisions.end();) {
 		if ((*it).time > TIME_TO_EXIT) {
-			entity_->onCollisionExit((*it).rb->entity_, (*it).point);
+			((*it).rb->trigger_ || trigger_) ? entity_->onTriggerExit((*it).rb->entity_, (*it).point) : entity_->onCollisionExit((*it).rb->entity_, (*it).point);
 			it = collisions.erase(it);
 		}
 		else
@@ -71,7 +86,7 @@ void Rigidbody::lateUpdate()
 
 void Rigidbody::onEnable()
 {
-	if (firsEnable_) {
+	if (firstEnable_) {
 		setRigidbody(mass_, colType_);
 	}
 	else {
@@ -92,13 +107,13 @@ void Rigidbody::contact(Rigidbody* other, const btManifoldPoint& manifoldPoint)
 		if (obj.rb == other) {
 			obj.time = 0;
 			obj.point = Vector3D((float)v.x(), (float)v.y(), (float)v.z());
-			entity_->onCollisionStay(other->entity_, obj.point);
+			(other->trigger_ || trigger_) ? entity_->onTriggerStay(other->entity_, obj.point) : entity_->onCollisionStay(other->entity_, obj.point);
 			return;
 		}
 	}
 	Vector3D p = Vector3D((float)v.x(), (float)v.y(), (float)v.z());
 	collisions.push_back({ other,0 , p });
-	entity_->onCollisionEnter(other->entity_, p);
+	(other->trigger_ || trigger_) ? entity_->onTriggerEnter(other->entity_, p) : entity_->onCollisionEnter(other->entity_, p);
 }
 
 void Rigidbody::setMass(float mass)

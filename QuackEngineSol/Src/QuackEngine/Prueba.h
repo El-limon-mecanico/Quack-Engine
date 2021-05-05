@@ -27,4 +27,10 @@ public:
 	virtual void onCollisionStay(QuackEntity* other , Vector3D point) override;
 
 	virtual void onCollisionExit(QuackEntity* other , Vector3D point) override;
+
+	virtual void onTriggerEnter(QuackEntity* other, Vector3D point) override;
+
+	virtual void onTriggerStay(QuackEntity* other, Vector3D point) override;
+
+	virtual void onTriggerExit(QuackEntity* other, Vector3D point) override;
 };

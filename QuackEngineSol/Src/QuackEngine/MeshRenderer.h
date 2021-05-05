@@ -23,7 +23,7 @@ private:
 	Ogre::Entity* ogreEnt_;
 	std::string materialName_;
 
-	bool firsEnable_ = true;
+	bool firstEnable_ = true;
 	bool visible_ = true;
 public:
 	MeshRenderer(QuackEntity* e = nullptr);
