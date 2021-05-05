@@ -72,7 +72,7 @@ void CEGUIQuack::setFont(std::string filename)
 CEGUI::Window* CEGUIQuack::createWidget(std::string type, std::string name)
 {
 	CEGUI::Window* newWindow = CEGUI::WindowManager::getSingleton().createWindow(type, name);
-	window_->addChild(newWindow);
+	//window_->addChild(newWindow);
 	newWindow->setText("Betis");
 	return newWindow;
 }
