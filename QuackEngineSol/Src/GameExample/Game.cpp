@@ -3,7 +3,7 @@
 #include "QuackEnginePro.h"
 #include "checkML.h"
 
-#if (defined _DEBUG) || !(defined _WIN32)
+#if (defined _DEBUG) //|| !(defined _WIN64)
 int main() {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 #else
