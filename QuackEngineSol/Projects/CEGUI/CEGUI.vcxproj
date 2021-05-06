@@ -101,7 +101,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>CEGUIOpenGLRenderer-0_d.lib;CEGUIBase-0_d.lib;CEGUIOgreRenderer-0_d.lib;OgreMain_d.lib;OgreRTShaderSystem_d.lib;SDL2.lib;Codec_STBI_d.lib;Codec_Assimp_d.lib;CEGUISILLYImageCodec_d.lib;CEGUIExpatParser_d.lib</AdditionalDependencies>
+      <AdditionalDependencies>CEGUIOpenGLRenderer-0_d.lib;CEGUIBase-0_d.lib;CEGUIOgreRenderer-0_d.lib;OgreMain_d.lib;OgreRTShaderSystem_d.lib;SDL2.lib;Codec_STBI_d.lib;CEGUISILLYImageCodec_d.lib;CEGUIExpatParser_d.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)dependencies\CEGUI\cegui-0.8.7\build\lib;$(SolutionDir)dependencies\Ogre\build\Dependencies\lib;$(SolutionDir)dependencies\Ogre\build\lib\$(Configuration)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>

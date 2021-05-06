@@ -17,6 +17,8 @@ namespace CEGUI
 	class Window;
 	class GUIContext;
 	class WindowManager;
+	class SchemeManager;
+	class FontManager;
 }
 
 class CEGUIQuack
@@ -26,15 +28,18 @@ private:
 	static std::unique_ptr<CEGUIQuack> instance_;
 
 	CEGUI::OgreRenderer* ogreRenderer_ = nullptr;
+	
 	CEGUI::System* ceguiSystem_ = nullptr;
-	CEGUI::Window* window_ = nullptr;
 	CEGUI::WindowManager* windowManager_ = nullptr;
+	CEGUI::SchemeManager* scheme_manager_ = nullptr;
+	CEGUI::FontManager* fontManager_ = nullptr;
+
+	
+	CEGUI::Window* window_ = nullptr;
 	CEGUI::GUIContext* context_ = nullptr;
 
 	void setUpResources();
-
-	//std::map<std::string, FMOD::Sound*> sounds_;
-	//std::map<std::string, FMOD::DSP*> dsp_;
+	
 public:
 	
 	static bool Init();
@@ -44,7 +49,7 @@ public:
 	CEGUIQuack() {};
 	~CEGUIQuack() {};
 
-	void setUp(Ogre::RenderTarget* target);
+	void setUp(Ogre::RenderWindow* rWindow);
 	void destroy();
 
 	bool render(double d);

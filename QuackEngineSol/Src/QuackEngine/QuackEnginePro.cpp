@@ -124,7 +124,7 @@ void QuackEnginePro::setup()
 	addComponentsFactories();
 
 	CEGUIQuack::Init();
-	CEGUIQuack::Instance()->setUp(OgreQuack::Instance()->getRoot()->getRenderTarget("ventana to guapa"));
+	CEGUIQuack::Instance()->setUp(OgreQuack::Instance()->getWindow());
 
 	//CargarLua();
 	SceneMng::Init();
@@ -181,8 +181,8 @@ void QuackEnginePro::update()
 		SceneMng::Instance()->lateUpdate();
 
 		CEGUIQuack::Instance()->draw();
-		//CEGUIQuack::Instance()->render(time()->deltaTime());
 		SceneMng::Instance()->lastUpdate();
+		CEGUIQuack::Instance()->render(time()->deltaTime());
 	}
 
 #if (defined _DEBUG) || !(defined _WIN32)
