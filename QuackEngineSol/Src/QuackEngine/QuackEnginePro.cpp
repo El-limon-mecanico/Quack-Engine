@@ -44,23 +44,23 @@ void addComponentsFactories()
 void QuackEnginePro::prueba()
 {
 
-	QuackEntity* cube = new QuackEntity("Cubito");
-	MeshRenderer* r = cube->addComponent<MeshRenderer>();
-	r->setMeshByPrefab(PrefabType::PT_CUBE); //:)))
+	//QuackEntity* cube = new QuackEntity("Cubito");
+	//MeshRenderer* r = cube->addComponent<MeshRenderer>();
+	//r->setMeshByPrefab(PrefabType::PT_CUBE); //:)))
 
-	QuackEntity* mono = new QuackEntity("Mono");
-	r = mono->addComponent<MeshRenderer>();
-	r->setMeshByName("Suzanne.mesh");
-	mono->addComponent<Prueba>();
+	//QuackEntity* mono = new QuackEntity("Mono");
+	//r = mono->addComponent<MeshRenderer>();
+	//r->setMeshByName("Suzanne.mesh");
+	//mono->addComponent<Prueba>();
 
-	//SceneMng::Instance()->getCurrentScene()->addEntity(cube);
-	mono->setActive(true);
-	SceneMng::Instance()->getCurrentScene()->addEntity(mono);
+	////SceneMng::Instance()->getCurrentScene()->addEntity(cube);
+	//mono->setActive(true);
+	//SceneMng::Instance()->getCurrentScene()->addEntity(mono);
 
-	mono->transform()->setLocalPosition({ -2,0,0 });
-	mono->transform()->Rotate({ 0,180,0 });
+	//mono->transform()->setLocalPosition({ -2,0,0 });
+	//mono->transform()->Rotate({ 0,180,0 });
 
-	cube->transform()->setParent(mono->transform());
+	//cube->transform()->setParent(mono->transform());
 }
 
 std::unique_ptr<QuackEnginePro>  QuackEnginePro::instance_;

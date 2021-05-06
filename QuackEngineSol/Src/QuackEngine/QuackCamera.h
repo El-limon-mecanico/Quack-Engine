@@ -9,6 +9,11 @@ namespace Ogre {
 	class RenderWindow;
 	class Viewport;
 }
+enum ProjectionType
+{
+	PT_ORTHOGRAPHIC,
+	PT_PERSPECTIVE
+};
 
 class QuackCamera : public Component {
 private:
@@ -19,15 +24,13 @@ private:
 	Ogre::Viewport* vp_;
 	Vector3D target_;
 	bool firstEnable_;
-	void initCamera(std::string name, Vector3D bg);
+	void initCamera(std::string name, Vector3D bg, Vector3D target, int width, int height, float near, float far, std::string );
 public:
 	QuackCamera(QuackEntity* e = nullptr);
 	~QuackCamera();
 	static std::string GetName() { return "Camera"; }
 	virtual bool init(luabridge::LuaRef parameterTable = { nullptr });
 	virtual void start();
-	virtual void onEnable() override;
-	virtual void onDisable() override;
 	Ogre::Camera* camera() { return camera_; }
 	Ogre::Viewport* viewport() { return vp_; }
 };
