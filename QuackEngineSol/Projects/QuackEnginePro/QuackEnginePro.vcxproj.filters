@@ -121,5 +121,8 @@
     <ClInclude Include="..\..\Src\QuackEngine\InputManager.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Src\QuackEngine\Prueba2.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

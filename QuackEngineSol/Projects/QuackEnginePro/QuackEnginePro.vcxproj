@@ -88,13 +88,13 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -134,12 +134,13 @@
     <LinkIncremental>true</LinkIncremental>
     <IntDir>$(SolutionDir)Temp\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)bin\</OutDir>
-    <TargetName>$(ProjectName)_d</TargetName>
+    <TargetName>$(ProjectName)64_d</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <IntDir>$(SolutionDir)Temp\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)bin\</OutDir>
+    <TargetName>$(ProjectName)64</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -154,7 +155,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(SolutionDir)lib\$(Platform)\$(Configuration)\BULLET.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\OGRE.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\LuaBridge.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\FMOD.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)lib\$(Platform)\$(Configuration)\BULLET.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\OGRE.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\LuaBridge.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\FMOD.lib;</AdditionalDependencies>
       <ImportLibrary>$(SolutionDir)lib\$(Platform)\$(Configuration)\$(TargetName).lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
@@ -175,7 +176,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(SolutionDir)lib\$(Platform)\$(Configuration)\BULLET.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\OGRE.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\LuaBridge.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\FMOD.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)lib\$(Platform)\$(Configuration)\BULLET.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\OGRE.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\LuaBridge.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\FMOD.lib;</AdditionalDependencies>
       <ImportLibrary>$(SolutionDir)lib\$(Platform)\$(Configuration)\$(TargetName).lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
@@ -185,13 +186,15 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)dependencies\FMOD\Src;$(SolutionDir)src\FMOD;$(SolutionDir)src\OGRE;$(SolutionDir)src\BULLET;$(SolutionDir)dependencies\Lua\$(Platform);$(SolutionDir)dependencies\LuaBridge\src;$(SolutionDir)src\LuaBridge</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)dependencies\FMOD\Src;$(SolutionDir)src\FMOD;$(SolutionDir)src\OGRE;$(SolutionDir)src\BULLET;$(SolutionDir)dependencies\Lua\$(Platform);$(SolutionDir)dependencies\LuaBridge\src;$(SolutionDir)src\LuaBridge;$(SolutionDir)dependencies\Bullet\Src\src;$(SolutionDir)dependencies\Ogre\Src\OgreMain\include;$(SolutionDir)dependencies\Ogre\build\include;$(SolutionDir)dependencies\Ogre\build\Dependencies\include\SDL2</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>$(SolutionDir)lib\$(Platform)\$(Configuration)\BULLET.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\OGRE.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\LuaBridge.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\FMOD.lib;</AdditionalDependencies>
+      <ImportLibrary>$(SolutionDir)lib\$(Platform)\$(Configuration)\$(TargetName).lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -202,7 +205,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)dependencies\FMOD\Src;$(SolutionDir)src\FMOD;$(SolutionDir)src\OGRE;$(SolutionDir)src\BULLET;$(SolutionDir)dependencies\Lua\$(Platform);$(SolutionDir)dependencies\LuaBridge\src;$(SolutionDir)src\LuaBridge</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)dependencies\FMOD\Src;$(SolutionDir)src\FMOD;$(SolutionDir)src\OGRE;$(SolutionDir)src\BULLET;$(SolutionDir)dependencies\Lua\$(Platform);$(SolutionDir)dependencies\LuaBridge\src;$(SolutionDir)src\LuaBridge;$(SolutionDir)dependencies\Bullet\Src\src;$(SolutionDir)dependencies\Ogre\Src\OgreMain\include;$(SolutionDir)dependencies\Ogre\build\include;$(SolutionDir)dependencies\Ogre\build\Dependencies\include\SDL2</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
@@ -211,6 +214,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>$(SolutionDir)lib\$(Platform)\$(Configuration)\BULLET.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\OGRE.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\LuaBridge.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\FMOD.lib;</AdditionalDependencies>
+      <ImportLibrary>$(SolutionDir)lib\$(Platform)\$(Configuration)\$(TargetName).lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
