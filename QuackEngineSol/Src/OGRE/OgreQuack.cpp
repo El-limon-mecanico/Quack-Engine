@@ -54,28 +54,28 @@ void OgreQuack::setupRoot()
 		shadergen->addSceneManager(mSM_);
 	}
 
-	Ogre::Camera* mCamera;
+	//Ogre::Camera* mCamera;
 
-	mCamera = mSM_->createCamera("MainCam");
+	//mCamera = mSM_->createCamera("MainCam");
 
-	mCamera->setNearClipDistance(1);
-	mCamera->setFarClipDistance(100000);
-	mCamera->setAutoAspectRatio(true);
+	//mCamera->setNearClipDistance(1);
+	//mCamera->setFarClipDistance(100000);
+	//mCamera->setAutoAspectRatio(true);
 
 
-	Ogre::SceneNode* mNodeCamera = mSM_->getRootSceneNode()->createChildSceneNode();
-	mNodeCamera->attachObject(mCamera);
+	//Ogre::SceneNode* mNodeCamera = mSM_->getRootSceneNode()->createChildSceneNode();
+	//mNodeCamera->attachObject(mCamera);
 
-	mNodeCamera->setPosition(1000, 1000, 1000);
-	mNodeCamera->lookAt(Ogre::Vector3(0, 0, 0), Ogre::Node::TS_WORLD);
+	//mNodeCamera->setPosition(1000, 1000, 1000);
+	//mNodeCamera->lookAt(Ogre::Vector3(0, 0, 0), Ogre::Node::TS_WORLD);
 
-	Ogre::Viewport* vp = window_->addViewport(mCamera);
+	//Ogre::Viewport* vp = window_->addViewport(mCamera);
 
-	vp->setBackgroundColour(Ogre::ColourValue(1, 1, 0));
+	//vp->setBackgroundColour(Ogre::ColourValue(1, 1, 0));
 
-	mCamera->setAspectRatio(
-		Ogre::Real(vp->getActualWidth()) /
-		Ogre::Real(vp->getActualHeight()));
+	//mCamera->setAspectRatio(
+	//	Ogre::Real(vp->getActualWidth()) /
+	//	Ogre::Real(vp->getActualHeight()));
 
 	mSM_->setAmbientLight(Ogre::ColourValue(.2, .2, .2));
 

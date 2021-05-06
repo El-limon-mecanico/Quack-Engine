@@ -17,16 +17,14 @@ QuackCamera::~QuackCamera()
 
 bool QuackCamera::init(luabridge::LuaRef parameterTable)
 {
-	//meter por lua:
-		//Nombre para la camara (createCamera()) DONE
-		//lookAt? DONE
-		//background color DONE
-		//aspect Radio
 	std::string name = readVariable<std::string>(parameterTable, "Name");
 	LuaRef color = readVariable<LuaRef>(parameterTable, "Background");
 	Vector3D bg = (color[1], color[2], color[3]);
 	LuaRef look = readVariable<LuaRef>(parameterTable, "LookAt");
 	target_ = Vector3D(look[1], look[2], look[3]);
+	//float width = readVariable<float>(parameterTable, "Width"); 
+	//float height = readVariable<float>(parameterTable, "Height");
+
 	initCamera(name, bg);
 
 	return true;
@@ -52,6 +50,7 @@ void QuackCamera::onDisable()
 }
 
 void QuackCamera::initCamera(std::string name, Vector3D bg) {
+	//TODO HACER QUE PUEDA TENER VIEWPORTS DIFERENTES AL DEL WINDOW?¿
 	camera_ = mSM_->createCamera(name);
 	camera_->setNearClipDistance(1);
 	camera_->setFarClipDistance(100000);
