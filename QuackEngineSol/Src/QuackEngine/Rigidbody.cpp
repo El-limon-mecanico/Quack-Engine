@@ -20,6 +20,7 @@ Rigidbody::~Rigidbody()
 
 }
 
+
 bool Rigidbody::init(luabridge::LuaRef parameterTable)
 {
 	//TODO: control de errores si no carga una variable
