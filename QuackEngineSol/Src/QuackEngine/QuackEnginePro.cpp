@@ -99,6 +99,7 @@ bool QuackEnginePro::Init()
 QuackEnginePro* QuackEnginePro::Instance()
 {
 	assert(instance_.get() != nullptr);
+	
 	return instance_.get();
 }
 
