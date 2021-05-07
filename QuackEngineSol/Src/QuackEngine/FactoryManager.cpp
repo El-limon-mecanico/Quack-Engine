@@ -1,9 +1,17 @@
 #include "FactoryManager.h"
+#include "checkML.h"
 
 std::unique_ptr<FactoryManager> FactoryManager::instance_;
 
 FactoryManager::FactoryManager()
 {
+}
+
+FactoryManager* FactoryManager::init()
+{
+	assert(instance_.get() == nullptr);
+	instance_.reset(new FactoryManager());
+	return instance_.get();
 }
 
 Component* FactoryManager::create(const std::string& name)

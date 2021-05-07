@@ -2,6 +2,7 @@
 #include <memory>
 #include <assert.h>
 #include "Component.h"
+#include "checkML.h"
 
 class FactoryManager {
 
@@ -12,12 +13,7 @@ public:
 
 	virtual ~FactoryManager() {}
 
-	static  FactoryManager* init()
-	{
-		assert(instance_.get() == nullptr);
-		instance_.reset(new FactoryManager());
-		return instance_.get();
-	}
+	static  FactoryManager* init();
 
 	static FactoryManager* instance() {
 		assert(instance_.get() != nullptr);

@@ -1,24 +1,25 @@
 ﻿scene1 = {
-    entities = {"entidad1", "entidad2"}
+    entities = {"defaultCamera","entidad1", "entidad2"}
 }
 
 entidad1 = {
-    Components = {"MeshRenderer", "Transform","Rigidbody", "Prueba"},
-
-    MeshRenderer = {
-        Type = "Sphere",
-        Position = {0,150,0}
-    },
+    Components = {"Transform", "MeshRenderer", "Rigidbody", "Prueba"},
 
     Transform = {
-        Position = {0,300,0},
+        Position = {0,5,0},
         Scale = {1,1,1},
         Rotation = {0,0,0}
     },
 
+    MeshRenderer = {
+        Mesh = "Suzanne.mesh",
+    },
+
     Rigidbody = {
-        Type = "Sphere",
-        Mass = 1
+        Type = "Hull",
+        Mass = 1,
+        Trigger = false,
+        Static = false
     },
 
     Prueba = {
@@ -29,21 +30,49 @@ entidad1 = {
 }
 
 entidad2 = {
-    Components = {"MeshRenderer", "Rigidbody"},
+    Components = {"Transform", "MeshRenderer", "Rigidbody"},
 
     Transform = {
-        Position = {50,500,0},
+        Position = {0,-3,0},
+        Scale = {5,5,1},
+        Rotation = {-90,0,0}
+    },
+
+    MeshRenderer = {
+        Mesh = "Plane",
+    },
+
+    Rigidbody = {
+        Type = "Cube",
+        Mass = 1,
+        Trigger = false,
+        Static = true
+    }   
+}
+
+defaultCamera = {
+    Components = {"Transform", "Camera", "Prueba"},
+
+    Transform = {
+        Position = {10,10,10},
         Scale = {1,1,1},
         Rotation = {0,0,0}
     },
 
-    MeshRenderer = {
-        Type = "Sphere",
-        Position = {50,500,0}
+    Camera = {
+        Name = "MainCam",
+        Background = {1,1,0},
+        LookAt = {0,0,0},
+        Width = 0,
+        Height = 0,
+        NearClipDistance = 1,
+        FarClipDistance = 100000,
+        ProjectionType = "Perspective"
     },
 
-    Rigidbody = {
-        Type = "Sphere",
-        Mass = 1
-    }   
+    Prueba = {
+        valor1 = 1,
+        valor2 = 3,
+        valor3 = "Quack"
+    }
 }

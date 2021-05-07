@@ -19,18 +19,21 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Src\QuackEngine\Bola.cpp" />
-    <ClCompile Include="..\..\Src\QuackEngine\Component.cpp" />
+    <ClCompile Include="..\..\Src\QuackEngine\QuackCamera.cpp" />
+    <ClCompile Include="..\..\Src\QuackEngine\Prueba2.cpp" />
+    <ClCompile Include="..\..\Src\QuackEngine\InputManager.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\QuackEntity.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\FactoryManager.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\Prueba.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\QuackEnginePro.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\QuackTime.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\MeshRenderer.cpp" />
+    <ClCompile Include="..\..\Src\QuackEngine\ResourceMng.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\Rigidbody.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\Scene.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\SceneMng.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\Transform.cpp" />
+    <ClCompile Include="..\..\Src\QuackEngine\Vector3D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BULLET\BULLET.vcxproj">
@@ -47,7 +50,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Src\QuackEngine\Bola.h" />
+    <ClInclude Include="..\..\Src\QuackEngine\Prueba2.h" />
+    <ClInclude Include="..\..\Src\QuackEngine\checkML.h" />
+    <ClInclude Include="..\..\Src\QuackEngine\InputManager.h" />
     <ClInclude Include="..\..\Src\QuackEngine\Component.h" />
     <ClInclude Include="..\..\Src\QuackEngine\QuackEntity.h" />
     <ClInclude Include="..\..\Src\QuackEngine\QuackEnginePro.h" />
@@ -55,12 +60,14 @@
     <ClInclude Include="..\..\Src\QuackEngine\Prueba.h" />
     <ClInclude Include="..\..\Src\QuackEngine\QuackTime.h" />
     <ClInclude Include="..\..\Src\QuackEngine\MeshRenderer.h" />
+    <ClInclude Include="..\..\Src\QuackEngine\ResourceMng.h" />
     <ClInclude Include="..\..\Src\QuackEngine\Rigidbody.h" />
     <ClInclude Include="..\..\Src\QuackEngine\Scene.h" />
     <ClInclude Include="..\..\Src\QuackEngine\SceneMng.h" />
     <ClInclude Include="..\..\Src\QuackEngine\Transform.h" />
     <ClInclude Include="..\..\Src\QuackEngine\Vector3D.h" />
-    <ClInclude Include="checkML.h" />
+    <ClInclude Include="..\..\Src\QuackEngine\QuackCamera.h" />
+    <ClInclude Include="..\..\Src\QuackEngine\Light.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -84,13 +91,13 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -130,12 +137,13 @@
     <LinkIncremental>true</LinkIncremental>
     <IntDir>$(SolutionDir)Temp\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)bin\</OutDir>
-    <TargetName>$(ProjectName)_d</TargetName>
+    <TargetName>$(ProjectName)64_d</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <IntDir>$(SolutionDir)Temp\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)bin\</OutDir>
+    <TargetName>$(ProjectName)64</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -150,7 +158,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(SolutionDir)lib\$(Platform)\$(Configuration)\BULLET.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\OGRE.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\LuaBridge.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\FMOD.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)lib\$(Platform)\$(Configuration)\BULLET.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\OGRE.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\LuaBridge.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\FMOD.lib;</AdditionalDependencies>
       <ImportLibrary>$(SolutionDir)lib\$(Platform)\$(Configuration)\$(TargetName).lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
@@ -171,7 +179,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(SolutionDir)lib\$(Platform)\$(Configuration)\BULLET.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\OGRE.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\LuaBridge.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\FMOD.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)lib\$(Platform)\$(Configuration)\BULLET.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\OGRE.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\LuaBridge.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\FMOD.lib;</AdditionalDependencies>
       <ImportLibrary>$(SolutionDir)lib\$(Platform)\$(Configuration)\$(TargetName).lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
@@ -181,13 +189,15 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)dependencies\FMOD\Src;$(SolutionDir)src\FMOD;$(SolutionDir)src\OGRE;$(SolutionDir)src\BULLET;$(SolutionDir)dependencies\Lua\$(Platform);$(SolutionDir)dependencies\LuaBridge\src;$(SolutionDir)src\LuaBridge</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)dependencies\FMOD\Src;$(SolutionDir)src\FMOD;$(SolutionDir)src\OGRE;$(SolutionDir)src\BULLET;$(SolutionDir)dependencies\Lua\$(Platform);$(SolutionDir)dependencies\LuaBridge\src;$(SolutionDir)src\LuaBridge;$(SolutionDir)dependencies\Bullet\Src\src;$(SolutionDir)dependencies\Ogre\Src\OgreMain\include;$(SolutionDir)dependencies\Ogre\build\include;$(SolutionDir)dependencies\Ogre\build\Dependencies\include\SDL2</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>$(SolutionDir)lib\$(Platform)\$(Configuration)\BULLET.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\OGRE.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\LuaBridge.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\FMOD.lib;</AdditionalDependencies>
+      <ImportLibrary>$(SolutionDir)lib\$(Platform)\$(Configuration)\$(TargetName).lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -198,7 +208,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)dependencies\FMOD\Src;$(SolutionDir)src\FMOD;$(SolutionDir)src\OGRE;$(SolutionDir)src\BULLET;$(SolutionDir)dependencies\Lua\$(Platform);$(SolutionDir)dependencies\LuaBridge\src;$(SolutionDir)src\LuaBridge</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)dependencies\FMOD\Src;$(SolutionDir)src\FMOD;$(SolutionDir)src\OGRE;$(SolutionDir)src\BULLET;$(SolutionDir)dependencies\Lua\$(Platform);$(SolutionDir)dependencies\LuaBridge\src;$(SolutionDir)src\LuaBridge;$(SolutionDir)dependencies\Bullet\Src\src;$(SolutionDir)dependencies\Ogre\Src\OgreMain\include;$(SolutionDir)dependencies\Ogre\build\include;$(SolutionDir)dependencies\Ogre\build\Dependencies\include\SDL2</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
@@ -207,6 +217,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>$(SolutionDir)lib\$(Platform)\$(Configuration)\BULLET.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\OGRE.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\LuaBridge.lib;$(SolutionDir)lib\$(Platform)\$(Configuration)\FMOD.lib;</AdditionalDependencies>
+      <ImportLibrary>$(SolutionDir)lib\$(Platform)\$(Configuration)\$(TargetName).lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

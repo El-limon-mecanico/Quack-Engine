@@ -12,102 +12,129 @@
  * modify the state are the different setters (and operator=).
  *
  */
+
+namespace Ogre {
+	template<int dims, typename T>
+	class Vector;
+	typedef float Real;
+	typedef Vector<3, Real> Vector3;
+	class Quaternion;
+	class Matrix4;
+}
+
+class btVector3;
+class btQuaternion;
+
 class Vector3D {
-private:
-	float x_;  // First coordinate
-	float y_;  // Second coordinate
-	float z_;  // Third coordinate
 public:
+	float x;  // First coordinate
+	float y;  // Second coordinate
+	float z;  // Third coordinate
 
 	// various constructors
 	Vector3D() noexcept :
-			x_(), y_(), z_() {
+		x(), y(), z() {
 	}
 
-	Vector3D(const Vector3D &v) :
-			x_(v.getX()), y_(v.getY()), z_(v.getZ()) {
+	Vector3D(const Vector3D& v) :
+		x(v.x), y(v.y), z(v.z) {
 	}
 
-	Vector3D(Vector3D &&v) :
-			x_(v.getX()), y_(v.getY()), z_(v.getZ()) {
+	Vector3D(Vector3D&& v) :
+		x(v.x), y(v.y), z(v.z) {
 	}
 
-	Vector3D(const Vector3D *v) :
-			x_(v->getX()), y_(v->getY()), z_(v->getZ()) {
+	Vector3D(const Vector3D* v) :
+		x(v->x), y(v->y), z(v->z) {
 	}
 
 	Vector3D(float x, float y, float z) :
-			x_(x), y_(y), z_(z) {
+		x(x), y(y), z(z) {
 	}
+
+	Vector3D(Ogre::Vector3 v);
+
+	Vector3D(btVector3 v);
 
 	~Vector3D() {
 	}
 
-	// various getters
-	inline float getX() const {
-		return x_;
-	}
 
-	inline float getY() const {
-		return y_;
-	}
+	Ogre::Vector3 toOgrePosition();
 
-    inline float getZ() const {
-		return z_;
-	}
-	inline Vector3D getForOgre(){
-		return *this*100;
-	}
-	// various setters
-	inline void setX(float x) {
-		x_ = x;
-	}
+	btVector3 toBulletPosition();
 
-	inline void setY(float y) {
-		y_ = y;
-	}
+	Ogre::Quaternion toOgreRotation();
 
-    inline void setZ(float z) {
-		z_ = z;
-	}
+	btQuaternion toBulletRotation();
+
+	static Vector3D up() { return { 0,1,0 }; }
+
+	static Vector3D rigth() { return { 1,0,0 }; }
+
+	static Vector3D forward() { return { 0,0,1 }; }
+
+	static Ogre::Vector3 toOgre(Vector3D v);
+
+	static btVector3 toBullet(Vector3D v);
+
+	static Vector3D fromOgre(Ogre::Vector3 v);
+
+	static Vector3D fromBullet(btVector3 v);
+
+	static Vector3D fromOgrePosition(Ogre::Vector3 v);
+
+	static Vector3D fromBulletPosition(btVector3 v);
+
+	static Vector3D fromOgreRotation(Ogre::Quaternion q);
+
+	static Vector3D fromBulletRotation(btQuaternion q);
+
+	static Vector3D globalToLocalPosition(Vector3D globalPosition, Vector3D parentGlobalPosition, Vector3D parentGlobalRotation, Vector3D upParent, Vector3D rightParent, Vector3D forwardParent);
+
+	static Vector3D localToGlobalPosition(Vector3D localPosition, Vector3D parentGlobalPosition, Vector3D parentGlobalRotation);
+
+	static void localToGlobalCoordinates(Vector3D& globalPosition, Vector3D& globalRotation, Vector3D localPosition, Vector3D parentGlobalPosition, Vector3D parentGlobalRotation);
+
+	static void globalToLocalCoordinates(Vector3D& localPosition, Vector3D& localRotation, Vector3D globalPosition, Vector3D parentLocalPosition, Vector3D parentLocalRotation);
 
 	inline void set(float x, float y, float z) {
-		x_ = x;
-		y_ = y;
-        z_ = z;
+		x = x;
+		y = y;
+		z = z;
 	}
 
-	inline void set(const Vector3D &v) {
-		x_ = v.x_;
-		y_ = v.y_;
-        z_  =v.z_;
+	inline void set(const Vector3D& v) {
+		x = v.x;
+		y = v.y;
+		z = v.z;
 	}
 
-	inline void set(const Vector3D &&v) {
-		x_ = v.x_;
-		y_ = v.y_;
-        z_ = v.z_;
+	inline void set(const Vector3D&& v) {
+		x = v.x;
+		y = v.y;
+		z = v.z;
 	}
 
-	inline void set(const Vector3D *v) {
-		x_ = v->x_;
-		y_ = v->y_;
-        z_ = v->z_;
+	inline void set(const Vector3D* v) {
+		x = v->x;
+		y = v->y;
+		z = v->z;
 	}
 
 	// copy assignment
-	inline Vector3D& operator=(const Vector3D &v) {
-		x_ = v.x_;
-		y_ = v.y_;
-        z_ = v.z_;
+	inline Vector3D& operator=(const Vector3D& v) {
+		x = v.x;
+		y = v.y;
+		z = v.z;
 		return *this;
 	}
 
 	// move assignment - not really needed
-	inline Vector3D& operator=(const Vector3D &&v) {
-		x_ = v.x_;
-		y_ = v.y_;
-        z_ = v.z_;
+	inline Vector3D& operator=(const Vector3D&& v) {
+		x = v.x;
+		y = v.y;
+		z = v.z;
 		return *this;
 	}
 
@@ -115,7 +142,7 @@ public:
 
 	// length of the vector
 	inline float magnitude() const {
-		return sqrtf(powf(x_, 2) + powf(y_, 2)+powf(z_,2));
+		return sqrtf(powf(x, 2) + powf(y, 2) + powf(z, 2));
 	}
 
 	// vector in the same direction of length 1
@@ -123,47 +150,85 @@ public:
 		return *this / magnitude();
 	}
 
-	// counter clockwise rotation in a normal coordinate system, and
-	// it is clockwise rotation if we work with a coordinate system
-	// in which the vertical axe is flipped (it is like a mirror over
-	// the horizontal axe)-- which the case when working with the SDL.
-	//
-	Vector3D rotate(float degrees) const;
+	//void rotate(Vector3D rot);
+	static Ogre::Matrix4 rotationMatrix(Vector3D rotation);
+	static Ogre::Matrix4 translationMatrix(Vector3D rotation);
+	//Vector3D globalRotation_(Vector3D rot) const;
+
+	static Vector3D crossProduct(Vector3D a, Vector3D b);
 
 	// Computes the angle between 'this' and 'v'. The result is
 	// between -180 and 180, and is such that the following holds:
 	//
-	//   this->rotate(angle) == v
+	//   this->globalRotation_(angle) == v
 	//
-	float angle(const Vector3D &v) const;
+	float angle(const Vector3D& v) const;
 
 	// vector subtraction
-	inline Vector3D operator-(const Vector3D &v) const {
-		return Vector3D(x_ - v.x_, y_ - v.y_, z_ +v.z_);
+	inline Vector3D operator-(const Vector3D& v) const {
+		return Vector3D(x - v.x, y - v.y, z + v.z);
+	}
+
+	inline Vector3D operator-=(const Vector3D& v) {
+		*this = *this - v;
+		return *this;
 	}
 
 	// vector addition
-	inline Vector3D operator+(const Vector3D &v) const {
-		return Vector3D(x_ + v.x_, y_ + v.y_, z_ + v.z_);
+	inline Vector3D operator+(const Vector3D& v) const {
+		return Vector3D(x + v.x, y + v.y, z + v.z);
+	}
+
+	inline Vector3D operator+=(const Vector3D& v) {
+		*this = *this + v;
+		return *this;
 	}
 
 	// multiplication by constant (scaling)
 	inline Vector3D operator*(float d) const {
-		return Vector3D(x_ * d, y_ * d, z_*d);
+		return Vector3D(x * d, y * d, z * d);
+	}
+
+	inline Vector3D operator*=(float d) {
+		*this = *this * d;
+		return *this;
+	}
+
+	inline Vector3D operator*(const Vector3D& v) const {
+		return Vector3D(x * v.x, y * v.y, z * v.z);
+	}
+
+	inline Vector3D operator*=(const Vector3D& v) {
+		*this = *this * v;
+		return *this;
 	}
 
 	// division by constant (scaling)
 	inline Vector3D operator/(float d) const {
-		return Vector3D(x_ / d, y_ / d, z_/d);
+		return Vector3D(x / d, y / d, z / d);
+	}
+
+	inline Vector3D operator/=(float d) {
+		*this = *this / d;
+		return *this;
+	}
+
+	inline Vector3D operator/(const Vector3D& v) const {
+		return Vector3D(x / v.x, y / v.y, z / v.z);
+	}
+
+	inline Vector3D operator/=(const Vector3D& v) {
+		*this = *this / v;
+		return *this;
 	}
 
 	// scalar multiplication
 	// inline float operator *(const Vector3D &d) const {
-	// 	return d.x_ * x_ + d.y_ * y_ + d.z_*z_;
+	// 	return d.x * x + d.y * y + d.z*z;
 	// }
 
 };
 
 // needed for printing a value of tyep Vector3D with std::cout.
 // The definition is in .cpp
-std::ostream& operator<<(std::ostream &os, const Vector3D &v);
+std::ostream& operator<<(std::ostream& os, const Vector3D& v);

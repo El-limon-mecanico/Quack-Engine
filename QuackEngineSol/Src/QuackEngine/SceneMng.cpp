@@ -1,5 +1,5 @@
 #include "SceneMng.h"
-
+#include "checkML.h"
 
 std::unique_ptr<SceneMng> SceneMng::instance_;
 
@@ -36,6 +36,16 @@ void SceneMng::preUpdate()
 	sceneQueue_.front()->preUpdate();
 }
 
+void SceneMng::physicsUpdate()
+{
+	sceneQueue_.front()->physicsUpdate();
+}
+
+void SceneMng::fixedUpdate()
+{
+	sceneQueue_.front()->fixedUpdate();
+}
+
 void SceneMng::update()
 {
 	sceneQueue_.front()->update();
@@ -44,6 +54,11 @@ void SceneMng::update()
 void SceneMng::lateUpdate()
 {
 	sceneQueue_.front()->lateUpdate();
+}
+
+void SceneMng::lastUpdate()
+{
+	sceneQueue_.front()->lastUpdate();
 }
 
 Scene* SceneMng::getCurrentScene()

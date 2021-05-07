@@ -7,7 +7,7 @@ Transform = {
 }
 
 MeshRenderer = {
-    Type = "Sphere",
+    Mesh = "Sphere",
     Position = {50,500,0}
 }
 

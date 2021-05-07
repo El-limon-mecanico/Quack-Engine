@@ -334,7 +334,7 @@ endif()
 # Find sdl2
 if(NOT ANDROID AND NOT EMSCRIPTEN)
   # find script does not work in cross compilation environment
-  find_package(SDL2 QUIET)
+  find_package(SDL2)
   macro_log_feature(SDL2_FOUND "SDL2" "Simple DirectMedia Library needed for input handling in samples" "https://www.libsdl.org/" FALSE "" "")
   if(SDL2_FOUND AND NOT TARGET SDL2::SDL2)
     add_library(SDL2::SDL2 INTERFACE IMPORTED)

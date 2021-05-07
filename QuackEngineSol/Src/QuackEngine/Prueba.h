@@ -1,5 +1,6 @@
 #pragma once
 #include "Component.h"
+#include "checkML.h"
 
 class Prueba : public Component {
 private:
@@ -15,11 +16,21 @@ public:
 	
 	virtual bool init(luabridge::LuaRef parameterTable = { nullptr }) override;
 
+	virtual void start() override;
+
+	virtual void fixedUpdate() override;
+
 	virtual void update() override;
 
-	virtual void onCollisionEnter(QuackEntity* other) override;
+	virtual void onCollisionEnter(QuackEntity* other , Vector3D point) override;
 
-	virtual void onCollisionStay(QuackEntity* other) override;
+	virtual void onCollisionStay(QuackEntity* other , Vector3D point) override;
 
-	virtual void onCollisionExit(QuackEntity* other) override;
+	virtual void onCollisionExit(QuackEntity* other , Vector3D point) override;
+
+	virtual void onTriggerEnter(QuackEntity* other, Vector3D point) override;
+
+	virtual void onTriggerStay(QuackEntity* other, Vector3D point) override;
+
+	virtual void onTriggerExit(QuackEntity* other, Vector3D point) override;
 };

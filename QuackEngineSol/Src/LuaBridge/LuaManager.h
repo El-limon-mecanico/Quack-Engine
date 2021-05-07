@@ -13,7 +13,7 @@ T readVariable(LuaRef& table, const std::string& variableName)
 	{
 		return table.rawget(variableName).cast<T>();
 	}
-	catch (std::exception e)
+	catch (std::exception& e)
 	{
 		std::cout << "ERROR: no se ha cargado correctamente la variable: " << variableName << "\n";
 		std::cout << "El valor escrito es: " << table.rawget(variableName).tostring() << "\n";

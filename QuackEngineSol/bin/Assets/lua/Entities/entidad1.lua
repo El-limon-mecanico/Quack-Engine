@@ -1,7 +1,7 @@
 Components = {"MeshRenderer", "Transform","Rigidbody", "Prueba"}
 
 MeshRenderer = {
-    Type = "Sphere",
+    Mesh = "Sphere",
     Position = {0,150,0}
 }
 
