@@ -22,8 +22,8 @@ bool QuackCamera::init(luabridge::LuaRef parameterTable)
 	Vector3D bg = { bgc[1], bgc[2], bgc[3] };
 	int width = readVariable<float>(parameterTable, "Width");
 	int height = readVariable<float>(parameterTable, "Height");
-	float far = readVariable<float>(parameterTable, "NearClipDistance");
-	float near = readVariable<float>(parameterTable, "FarClipDistance");
+	float near = readVariable<float>(parameterTable, "NearClipDistance");
+	float far = readVariable<float>(parameterTable, "FarClipDistance");
 	std::string proj = readVariable<std::string>(parameterTable, "ProjectionType");
 
 	camera_ = mSM_->createCamera(name);
