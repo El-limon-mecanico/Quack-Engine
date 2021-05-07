@@ -1,23 +1,30 @@
 ::@echo off
 cls
 set DIR=.\QuackEngineSol\dependencies\
-set BAT=cMake.bat
+set BAT=build.bat
 
 set OGRE=.\Ogre\ 
 set BULLET=.\Bullet\
+set CEGUI=.\CEGUI\
 
 cd %DIR%
 
 
 cd %OGRE%
 call %BAT%
-cd ..\..
-pause
+cd ..
+
 
 cd %BULLET%
-
-pause
 call %BAT%
-cd ..\..
+cd ..
 
-pause
+cd %CEGUI%
+call %BAT%
+cd ..
+
+
+cd ..
+msbuild "QuackEngineSol.sln" /p:configuration=Debug
+msbuild "QuackEngineSol.sln" /p:configuration=Release
+pause>nul
