@@ -2,17 +2,19 @@
 #define _OGRE_QUACK_
 
 #include <memory>
+#include <string>
 
 namespace Ogre {
 	class Root;
 	class SceneManager;
+	class SceneNode;
 	class RenderWindow;
 	class FileSystemLayer;
+	class Light;
+	enum LightTypes;
 }
 
 class SDL_Window;
-
-using namespace Ogre;
 
 class OgreQuack {
 private:
@@ -33,6 +35,8 @@ private:
 
 	void setupWindow();
 
+	void setupRoot();
+
 public:
 
 	static bool Init();
@@ -40,7 +44,9 @@ public:
 	// devuelve puntero al singleton
 	static OgreQuack* Instance();
 
-	OgreQuack() {}
+	OgreQuack() {
+		setupRoot();
+	}
 
 	~OgreQuack();
 
@@ -49,11 +55,9 @@ public:
 	Ogre::SceneManager* getSceneManager() { return mSM_; }
 
 	Ogre::Root* getRoot() { return mRoot_; }
-	
+
 	SDL_Window* getSdlWindow() { return sdlWindow_; }
 
-	void createRoot();
-
-	void setupRoot();
+	Ogre::Light* createLigth(Ogre::LightTypes type = (Ogre::LightTypes)0, std::string name = "LuzToGuapa");
 };
 #endif // !_OGRE_QUACK_

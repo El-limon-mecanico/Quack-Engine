@@ -50,6 +50,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Src\QuackEngine\Light.h" />
     <ClInclude Include="..\..\Src\QuackEngine\Prueba2.h" />
     <ClInclude Include="..\..\Src\QuackEngine\checkML.h" />
     <ClInclude Include="..\..\Src\QuackEngine\InputManager.h" />

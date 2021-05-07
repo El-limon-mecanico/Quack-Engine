@@ -20,9 +20,9 @@ bool QuackCamera::init(luabridge::LuaRef parameterTable)
 	LuaRef look = readVariable<LuaRef>(parameterTable, "LookAt");
 	target_ = Vector3D(look[1], look[2], look[3]);
 	Vector3D bg = { bgc[1], bgc[2], bgc[3] };
-	int width = readVariable<float>(parameterTable, "Width"); 
+	int width = readVariable<float>(parameterTable, "Width");
 	int height = readVariable<float>(parameterTable, "Height");
-	float far = readVariable<float>(parameterTable, "NearClipDistance"); 
+	float far = readVariable<float>(parameterTable, "NearClipDistance");
 	float near = readVariable<float>(parameterTable, "FarClipDistance");
 	std::string proj = readVariable<std::string>(parameterTable, "ProjectionType");
 
@@ -46,10 +46,14 @@ bool QuackCamera::init(luabridge::LuaRef parameterTable)
 	return true;
 }
 
-void QuackCamera::start()
+void QuackCamera::onEnable()
 {
-	node_ = entity_->transform()->getNode()->createChildSceneNode();
-	node_->attachObject(camera_);
-	node_->lookAt(Vector3D::toOgre({ 0,0,0 }), Ogre::Node::TS_WORLD);
+	if (firstEnable_)
+	{
+		node_ = entity_->transform()->getNode()->createChildSceneNode();
+		node_->attachObject(camera_);
+		node_->lookAt(Vector3D::toOgre({ 0,0,0 }), Ogre::Node::TS_WORLD);
+		firstEnable_ = false;
+	}
 
 }

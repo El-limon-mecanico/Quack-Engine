@@ -105,8 +105,6 @@ QuackEnginePro* QuackEnginePro::Instance()
 void QuackEnginePro::setup()
 {
 	OgreQuack::Init();
-	OgreQuack::Instance()->createRoot();
-	OgreQuack::Instance()->setupRoot();
 
 	ResourceMng::Init();
 	ResourceMng::Instance()->setup(); //Carga de recursos

@@ -7,6 +7,8 @@
 #include <assert.h>
 #include <iostream>
 
+using namespace Ogre;
+
 std::unique_ptr<OgreQuack>  OgreQuack::instance_;
 
 // AQUI FALTA MANEJO DE ERRORES Y EXCEPCIONES (no, no?)
@@ -24,21 +26,17 @@ OgreQuack* OgreQuack::Instance() {
 
 OgreQuack::~OgreQuack() {
 	delete window_;		window_ = nullptr;
-	delete mSM_;		mSM_	= nullptr;
+	delete mSM_;		mSM_ = nullptr;
 	delete sdlWindow_;	sdlWindow_ = nullptr;
-	delete mRoot_;		mRoot_	= nullptr;
-}
-
-
-void OgreQuack::createRoot()
-{
-	SDL_Init(SDL_INIT_EVERYTHING);
-
-	mRoot_ = new Root();
+	delete mRoot_;		mRoot_ = nullptr;
 }
 
 void OgreQuack::setupRoot()
 {
+	SDL_Init(SDL_INIT_EVERYTHING);
+
+	mRoot_ = new Root();
+
 	mRoot_->showConfigDialog(NULL);
 
 	mRoot_->initialise(false);
@@ -53,17 +51,12 @@ void OgreQuack::setupRoot()
 		shadergen->addSceneManager(mSM_);
 	}
 
+	
+
+
+	createLigth((LightTypes)1);
+
 	mSM_->setAmbientLight(Ogre::ColourValue(.2, .2, .2));
-
-	Light* luz = mSM_->createLight("Luz");
-	luz->setType(Ogre::Light::LT_DIRECTIONAL);
-	luz->setDiffuseColour(1, 1, 1);
-
-	SceneNode* mLightNode = mSM_->getRootSceneNode()->createChildSceneNode("nLuz");
-
-	mLightNode->attachObject(luz);
-
-	mLightNode->setDirection(Ogre::Vector3(1, -1, -1));  //vec3.normalise();
 }
 
 void OgreQuack::setupWindow()
@@ -93,4 +86,19 @@ void OgreQuack::setupWindow()
 
 	SDL_SetWindowGrab(sdlWindow_, SDL_bool(false));
 	SDL_ShowCursor(false);
+}
+
+Light* OgreQuack::createLigth(LightTypes type, std::string name)
+{
+	Light* light = mSM_->createLight(name);
+	light->setType((Light::LightTypes)type);
+	light->setDiffuseColour(1, 1, 1);
+
+	SceneNode* mLightNode = mSM_->getRootSceneNode()->createChildSceneNode("nLuz");
+
+	mLightNode->attachObject(light);
+
+	mLightNode->setDirection(Ogre::Vector3(1, -1, -1));  //vec3.normalise();
+
+	return light;
 }
