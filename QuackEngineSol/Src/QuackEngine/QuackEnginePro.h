@@ -15,6 +15,7 @@ class BulletQuack;
 class fmod_quack;
 class OgreQuack;
 class SDL_Window;
+class CEGUIQuack;
 class ResourceMng;
 class InputManager;
 
@@ -31,6 +32,8 @@ private:
 	QuackTime* quackTime_;
 
 	fmod_quack* fmod_quack_;
+
+	CEGUIQuack* cegui_;
 
 	void pollEvents();
 

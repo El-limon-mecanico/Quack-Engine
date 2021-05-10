@@ -18,6 +18,8 @@
 #include "QuackEntity.h"
 #include "MeshRenderer.h"
 #include "Rigidbody.h"
+#include "QuackTime.h"
+#include "CEGUIQuack.h"
 #include "QuackCamera.h"
 #include "Light.h"
 
@@ -72,6 +74,8 @@ void QuackEnginePro::prueba()
 
 	mono->transform()->Rotate({ -90,0,0 });
 
+	CEGUIQuack::Instance()->loadScheme("AlfiskoSkin.scheme");
+	CEGUIQuack::Instance()->createWidget("AlfiskoSkin/Button", "test");
 }
 // -------------- MOVER A OTRO ARCHIVO -------------- // 
 
@@ -122,6 +126,10 @@ void QuackEnginePro::setup()
 
 	addComponentsFactories();
 
+	CEGUIQuack::Init();
+	CEGUIQuack::Instance()->setUp(OgreQuack::Instance()->getWindow());
+
+	//CargarLua();
 	SceneMng::Init();
 	SceneMng::Instance()->loadScene("Scenes/scene1.lua", "scene1");
 
@@ -175,7 +183,9 @@ void QuackEnginePro::update()
 
 		SceneMng::Instance()->lateUpdate();
 
+		CEGUIQuack::Instance()->draw();
 		SceneMng::Instance()->lastUpdate();
+		CEGUIQuack::Instance()->render(time()->deltaTime());
 	}
 
 #if (defined _DEBUG) || !(defined _WIN32)
