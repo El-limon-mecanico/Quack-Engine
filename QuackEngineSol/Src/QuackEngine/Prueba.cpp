@@ -71,3 +71,18 @@ void Prueba::onCollisionExit(QuackEntity* other, Vector3D point)
 	std::cout << "Yo " << entity_->name() << " he dejado de chocar con " << other->name() << "\n\n";
 }
 
+void Prueba::onTriggerEnter(QuackEntity* other, Vector3D point)
+{
+	std::cout << "Yo " << entity_->name() << " acabo de triggerear con " << other->name() << "\n\n";
+}
+
+void Prueba::onTriggerStay(QuackEntity* other, Vector3D point)
+{
+	std::cout << "Yo " << entity_->name() << " sigo triggereando con " << other->name() << "\n\n";
+}
+
+void Prueba::onTriggerExit(QuackEntity* other, Vector3D point)
+{
+	std::cout << "Yo " << entity_->name() << " he dejado de triggerear con " << other->name() << "\n\n";
+}
+

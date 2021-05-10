@@ -131,7 +131,7 @@
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)dependencies\FMOD\build</AdditionalLibraryDirectories>
-      <AdditionalDependencies>fmodL_vc.lib</AdditionalDependencies>
+      <AdditionalDependencies>fmod_vc.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -169,7 +169,7 @@
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)dependencies\FMOD\build</AdditionalLibraryDirectories>
-      <AdditionalDependencies>fmodL_vc.lib</AdditionalDependencies>
+      <AdditionalDependencies>fmod_vc.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

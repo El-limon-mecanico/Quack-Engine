@@ -68,6 +68,12 @@ public:
 
 	btQuaternion toBulletRotation();
 
+	static Vector3D up() { return { 0,1,0 }; }
+
+	static Vector3D rigth() { return { 1,0,0 }; }
+
+	static Vector3D forward() { return { 0,0,1 }; }
+
 	static Ogre::Vector3 toOgre(Vector3D v);
 
 	static btVector3 toBullet(Vector3D v);
@@ -91,10 +97,6 @@ public:
 	static void localToGlobalCoordinates(Vector3D& globalPosition, Vector3D& globalRotation, Vector3D localPosition, Vector3D parentGlobalPosition, Vector3D parentGlobalRotation);
 
 	static void globalToLocalCoordinates(Vector3D& localPosition, Vector3D& localRotation, Vector3D globalPosition, Vector3D parentLocalPosition, Vector3D parentLocalRotation);
-
-	static Vector3D up() {
-		return Vector3D(0, 1, 0);
-	}
 
 	inline void set(float x, float y, float z) {
 		x = x;

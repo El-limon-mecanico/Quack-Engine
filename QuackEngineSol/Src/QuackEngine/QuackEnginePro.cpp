@@ -20,6 +20,7 @@
 #include "Rigidbody.h"
 #include "QuackTime.h"
 #include "CEGUIQuack.h"
+#include "QuackCamera.h"
 
 #include "Scene.h"
 #include "SceneMng.h"
@@ -41,6 +42,7 @@ void addComponentsFactories()
 	FactoryManager::instance()->add<Prueba>();
 	FactoryManager::instance()->add<Prueba2>();
 	FactoryManager::instance()->add<Transform>();
+	FactoryManager::instance()->add<QuackCamera>();
 }
 
 
@@ -101,14 +103,13 @@ bool QuackEnginePro::Init()
 QuackEnginePro* QuackEnginePro::Instance()
 {
 	assert(instance_.get() != nullptr);
+	
 	return instance_.get();
 }
 
 void QuackEnginePro::setup()
 {
 	OgreQuack::Init();
-	OgreQuack::Instance()->createRoot();
-	OgreQuack::Instance()->setupRoot();
 
 	ResourceMng::Init();
 	ResourceMng::Instance()->setup(); //Carga de recursos

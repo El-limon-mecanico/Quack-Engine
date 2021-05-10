@@ -69,6 +69,12 @@ public:
 
 	virtual void onCollisionExit(QuackEntity* other, Vector3D point) {}
 
+	virtual void onTriggerEnter(QuackEntity* other, Vector3D point) {}
+
+	virtual void onTriggerStay(QuackEntity* other, Vector3D point) {}
+
+	virtual void onTriggerExit(QuackEntity* other, Vector3D point) {}
+
 	virtual void onEnable() {}
 
 	virtual void onDisable() {}

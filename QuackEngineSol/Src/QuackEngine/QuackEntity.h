@@ -94,6 +94,12 @@ public:
 
 	void onCollisionExit(QuackEntity* other , Vector3D point);
 
+	void onTriggerEnter(QuackEntity* other , Vector3D point);
+
+	void onTriggerStay(QuackEntity* other , Vector3D point);
+
+	void onTriggerExit(QuackEntity* other , Vector3D point);
+
 	void onEnable();
 
 	void onDisable();
