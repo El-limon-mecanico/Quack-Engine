@@ -58,6 +58,8 @@ public:
 
 	SDL_Window* getSdlWindow() { return sdlWindow_; }
 
-	Ogre::Light* createLigth(Ogre::LightTypes type = (Ogre::LightTypes)0, std::string name = "LuzToGuapa");
+	Ogre::Light* createLigth(Ogre::LightTypes type = (Ogre::LightTypes)0);
+
+	void setAmbientLight(float x, float y, float z);
 };
 #endif // !_OGRE_QUACK_

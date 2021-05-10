@@ -11,7 +11,7 @@ void Rigidbody::sendContacts(void* first, void* other, const btManifoldPoint& ma
 	static_cast<Rigidbody*>(first)->contact(static_cast<Rigidbody*>(other), manifoldPoint);
 }
 
-Rigidbody::Rigidbody(QuackEntity* e) : collisions(std::vector<CollisionInfo>())
+Rigidbody::Rigidbody() : collisions(std::vector<CollisionInfo>())
 {
 }
 

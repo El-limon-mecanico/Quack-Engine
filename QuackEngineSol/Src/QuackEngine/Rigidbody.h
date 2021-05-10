@@ -53,7 +53,7 @@ private:
 
 public:
 
-	Rigidbody(QuackEntity* e = nullptr);
+	Rigidbody();
 
 	~Rigidbody();
 

@@ -81,6 +81,9 @@
     <ClCompile Include="..\..\Src\QuackEngine\Prueba2.cpp">
       <Filter>Archivos de origen\Ecs\Components</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\QuackEngine\Light.cpp">
+      <Filter>Archivos de origen\Ecs\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\QuackEngine\Scene.h">

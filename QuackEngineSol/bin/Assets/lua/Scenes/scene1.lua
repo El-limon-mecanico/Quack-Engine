@@ -1,5 +1,5 @@
 ﻿scene1 = {
-    entities = {"defaultCamera","entidad1", "entidad2"}
+    entities = {"defaultCamera","entidad1", "entidad2", "sceneLight"}
 }
 
 entidad1 = {
@@ -74,5 +74,26 @@ defaultCamera = {
         valor1 = 1,
         valor2 = 3,
         valor3 = "Quack"
+    }
+}
+
+sceneLight = {
+    Components = {"Transform", "Light"},
+
+    Transform = {
+        Position = {10,10,10},
+        Scale = {1,1,1},
+        Rotation = {0,0,0}
+    },
+
+    Light = {
+        LightType = 1,
+        DiffuseColor = {1,1,1},
+        SpecularColor = {1,1,1},
+        Direction = {0,0,0},
+        PowerLevel = 1,
+        InnerAngle = 30,
+        OuterAngle = 90,
+        isOn = true
     }
 }

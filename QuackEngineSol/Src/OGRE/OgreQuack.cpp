@@ -51,12 +51,7 @@ void OgreQuack::setupRoot()
 		shadergen->addSceneManager(mSM_);
 	}
 
-	
-
-
-	createLigth((LightTypes)1);
-
-	mSM_->setAmbientLight(Ogre::ColourValue(.2, .2, .2));
+	setAmbientLight(.2, .2, .2);
 }
 
 void OgreQuack::setupWindow()
@@ -88,17 +83,15 @@ void OgreQuack::setupWindow()
 	SDL_ShowCursor(false);
 }
 
-Light* OgreQuack::createLigth(LightTypes type, std::string name)
+Light* OgreQuack::createLigth(LightTypes type)
 {
-	Light* light = mSM_->createLight(name);
+	Light* light = mSM_->createLight();
 	light->setType((Light::LightTypes)type);
-	light->setDiffuseColour(1, 1, 1);
-
-	SceneNode* mLightNode = mSM_->getRootSceneNode()->createChildSceneNode("nLuz");
-
-	mLightNode->attachObject(light);
-
-	mLightNode->setDirection(Ogre::Vector3(1, -1, -1));  //vec3.normalise();
 
 	return light;
+}
+
+void OgreQuack::setAmbientLight(float x, float y, float z)
+{
+	mSM_->setAmbientLight(Ogre::ColourValue(x, y, z));
 }

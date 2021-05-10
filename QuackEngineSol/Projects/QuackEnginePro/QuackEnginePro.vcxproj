@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Src\QuackEngine\Light.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\QuackCamera.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\Prueba2.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\InputManager.cpp" />

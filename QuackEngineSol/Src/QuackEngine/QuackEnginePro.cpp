@@ -19,6 +19,7 @@
 #include "MeshRenderer.h"
 #include "Rigidbody.h"
 #include "QuackCamera.h"
+#include "Light.h"
 
 #include "Scene.h"
 #include "SceneMng.h"
@@ -41,6 +42,7 @@ void addComponentsFactories()
 	FactoryManager::instance()->add<Prueba2>();
 	FactoryManager::instance()->add<Transform>();
 	FactoryManager::instance()->add<QuackCamera>();
+	FactoryManager::instance()->add<Light>();
 }
 
 
