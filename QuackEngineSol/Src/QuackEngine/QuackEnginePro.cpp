@@ -74,8 +74,9 @@ void QuackEnginePro::prueba()
 
 	mono->transform()->Rotate({ -90,0,0 });
 
-	CEGUIQuack::Instance()->loadScheme("AlfiskoSkin.scheme");
-	CEGUIQuack::Instance()->createWidget("AlfiskoSkin/Button", "test");
+	CEGUIQuack::Instance()->createButton("Button", "Betis", { 0.5,0.5 }, { 100,100});
+	CEGUIQuack::Instance()->createImage("Cuchao", "cuchao.png", { 0.1,0.6 }, { 300,200 });
+	CEGUIQuack::Instance()->createText("Texto", "Esto no es un boton, es solo texto", { 0.5, 0.05 }, { 270, 50 });
 }
 // -------------- MOVER A OTRO ARCHIVO -------------- // 
 
@@ -89,7 +90,6 @@ QuackEnginePro::~QuackEnginePro() {
 	delete quackTime_;	quackTime_ = nullptr;
 };
 
-// AQUI FALTA MANEJO DE ERRORES Y EXCEPCIONES (you sure¿?)
 bool QuackEnginePro::Init()
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
@@ -182,8 +182,7 @@ void QuackEnginePro::update()
 		OgreQuack::Instance()->getRoot()->renderOneFrame();
 
 		SceneMng::Instance()->lateUpdate();
-
-		CEGUIQuack::Instance()->draw();
+		
 		SceneMng::Instance()->lastUpdate();
 		CEGUIQuack::Instance()->render(time()->deltaTime());
 	}

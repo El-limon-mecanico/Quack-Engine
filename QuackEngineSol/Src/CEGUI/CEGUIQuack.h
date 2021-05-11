@@ -39,6 +39,7 @@ private:
 	CEGUI::GUIContext* context_ = nullptr;
 
 	void setUpResources();
+	CEGUI::Window* createWidget(std::string type, std::string name, std::pair<float, float> pos, std::pair<float, float> size);
 	
 public:
 	
@@ -53,10 +54,14 @@ public:
 	void destroy();
 
 	bool render(double d);
-	void draw();
 	void loadScheme(std::string filename);
 	void setFont(std::string filename);
-	CEGUI::Window* createWidget(std::string type, std::string name = "");
+
+	
+	void createButton(std::string name, std::string text, std::pair<float, float> pos, std::pair<float, float> size);
+	void createText(std::string name, std::string text, std::pair<float, float> pos, std::pair<float, float> size);
+	void createImage(std::string name, std::string image, std::pair<float, float> pos, std::pair<float, float> size);
+	
 };
 
 #endif // !_CEGUI_QUACK_
