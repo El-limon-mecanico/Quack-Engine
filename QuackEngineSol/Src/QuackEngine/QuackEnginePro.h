@@ -10,6 +10,7 @@
 #endif
 
 #include "QuackTime.h"
+#include <memory>
 
 class BulletQuack;
 class fmod_quack;

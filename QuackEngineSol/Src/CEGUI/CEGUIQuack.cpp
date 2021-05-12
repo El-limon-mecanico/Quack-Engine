@@ -65,7 +65,7 @@ void CEGUIQuack::setFont(std::string filename)
 }
 
 CEGUI::Window* CEGUIQuack::createWidget(std::string type, std::string name, std::pair<float, float> pos, std::pair<float, float> size)
-{
+{	
 	CEGUI::Window* myImageWindow = CEGUI::WindowManager::getSingleton().createWindow(type, name);
 	myImageWindow->setPosition(CEGUI::UVector2(CEGUI::UDim(pos.first, 0.0), CEGUI::UDim(pos.second, 0.0)));
 	myImageWindow->setSize(CEGUI::USize(CEGUI::UDim(0.0, size.first), CEGUI::UDim(0.0, size.second)));
@@ -80,14 +80,18 @@ void CEGUIQuack::botonPresionadoPrueba(const CEGUI::EventArgs&)
 	std::cout << "BOTON PRESIONADO\n\n\n\n";	
 }
 
-void CEGUIQuack::createButton(std::string name, std::string text, std::pair<float, float> pos, std::pair<float, float> size)
+void CEGUIQuack::createButton(std::string name, std::string text, std::pair<float, float> pos, std::pair<float, float> size, void (*func)())
 {
 	CEGUI::Window* newWidget = nullptr;
 	try	{ newWidget = createWidget("WindowsLook/Button", name, pos, size);	}
 	catch (std::exception e) { std::cout << "No se ha podido crear el boton: " << name << "\n"; }
 
-	auto aaa = &CEGUIQuack::botonPresionadoPrueba;
-	newWidget->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&CEGUIQuack::botonPresionadoPrueba, this));
+	func();
+	auto lambda = [&](const CEGUI::EventArgs&)->bool {  std::cout << "Aqui deberia llamarse al método del boton\n";
+		//func();
+		return true;};
+	
+	newWidget->subscribeEvent(CEGUI::PushButton::EventClicked, &lambda);
 	newWidget->setText(text);
 }
 
