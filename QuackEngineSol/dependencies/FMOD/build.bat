@@ -7,8 +7,8 @@ mkdir %buildDir%
 cd %buildDir%
 
 ::Movemos las .dll a QuackEngineSol
-MOVE fmod.dll %dllsMoveTo%
-MOVE fmodL.dll %dllsMoveTo%
+XCOPY /y /s fmod.dll %dllsMoveTo%
+XCOPY /y /s fmodL.dll %dllsMoveTo%
 
 echo FMOD "compilado"
 cd..

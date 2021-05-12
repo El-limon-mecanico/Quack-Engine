@@ -13,5 +13,5 @@ msbuild "BULLET_PHYSICS.sln" -p:configuration=Debug /maxcpucount
 msbuild "BULLET_PHYSICS.sln" -p:configuration=Release /maxcpucount
 
 
-echo BULLET compilado
 cd ..
+echo BULLET compilado

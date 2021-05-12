@@ -2,6 +2,14 @@
 
 #pragma once
 
+#ifdef _MSC_VER
+#  ifdef QUACK_ENGINE_PRO_EXPORT
+#    define QUACK_ENGINE_PRO_API __declspec(dllexport)
+#  else
+#    define QUACK_ENGINE_PRO_API __declspec(dllimport)
+#  endif
+#endif
+
 #include <cmath>
 #include <ostream>
 
@@ -25,7 +33,7 @@ namespace Ogre {
 class btVector3;
 class btQuaternion;
 
-class Vector3D {
+class QUACK_ENGINE_PRO_API Vector3D {
 public:
 	float x;  // First coordinate
 	float y;  // Second coordinate

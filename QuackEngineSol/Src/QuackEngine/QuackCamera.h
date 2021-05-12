@@ -1,4 +1,13 @@
 #pragma once
+
+#ifdef _MSC_VER
+#  ifdef QUACK_ENGINE_PRO_EXPORT
+#    define QUACK_ENGINE_PRO_API __declspec(dllexport)
+#  else
+#    define QUACK_ENGINE_PRO_API __declspec(dllimport)
+#  endif
+#endif
+
 #include "Component.h"
 
 namespace Ogre {
@@ -15,7 +24,7 @@ enum ProjectionType
 	PT_PERSPECTIVE
 };
 
-class QuackCamera : public Component {
+class QUACK_ENGINE_PRO_API QuackCamera : public Component {
 private:
 	Ogre::SceneNode* node_;
 	Ogre::SceneManager* mSM_;
