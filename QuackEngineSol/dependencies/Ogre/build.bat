@@ -31,5 +31,5 @@ XCOPY /y /s .\bin\release\RenderSystem_GL.dll %dllsMoveTo%
 XCOPY /y /s .\bin\debug\SDL2.dll %dllsMoveTo%
 XCOPY /y /s .\bin\release\zlib.dll %dllsMoveTo%
 
-echo OGRE compilado
 cd..
+echo OGRE compilado
