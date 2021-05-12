@@ -1,9 +1,17 @@
 #ifndef _QUACK_FRAME_LISTENER_
 #define _QUACK_FRAME_LISTENER_
 
+#ifdef _MSC_VER
+#  ifdef QUACK_ENGINE_PRO_EXPORT
+#    define QUACK_ENGINE_PRO_API __declspec(dllexport)
+#  else
+#    define QUACK_ENGINE_PRO_API __declspec(dllimport)
+#  endif
+#endif
+
 #include <chrono>
 
-class QuackTime {
+class QUACK_ENGINE_PRO_API QuackTime {
 private:
 	double deltaTime_;
 	double time;

@@ -1,5 +1,14 @@
 //Componente encargada de gestionar la posicion, la direccion y la escala de la entidad
 #pragma once
+
+#ifdef _MSC_VER
+#  ifdef QUACK_ENGINE_PRO_EXPORT
+#    define QUACK_ENGINE_PRO_API __declspec(dllexport)
+#  else
+#    define QUACK_ENGINE_PRO_API __declspec(dllimport)
+#  endif
+#endif
+
 #include "Component.h"
 
 namespace Ogre {
@@ -7,7 +16,7 @@ namespace Ogre {
 }
 
 
-class Transform :
+class QUACK_ENGINE_PRO_API Transform :
 	public Component
 {
 private:

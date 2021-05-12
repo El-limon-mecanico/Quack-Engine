@@ -1,4 +1,13 @@
 #pragma once
+
+#ifdef _MSC_VER
+#  ifdef QUACK_ENGINE_PRO_EXPORT
+#    define QUACK_ENGINE_PRO_API __declspec(dllexport)
+#  else
+#    define QUACK_ENGINE_PRO_API __declspec(dllimport)
+#  endif
+#endif
+
 #include "Component.h"
 
 const float TIME_TO_EXIT = 0.1f;
@@ -24,7 +33,7 @@ enum ColliderType {
 class btManifoldPoint;
 class btRigidBody;
 
-class Rigidbody : public Component {
+class QUACK_ENGINE_PRO_API Rigidbody : public Component {
 private:
 
 	struct CollisionInfo {

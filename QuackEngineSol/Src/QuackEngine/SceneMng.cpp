@@ -1,3 +1,4 @@
+#define QUACK_ENGINE_PRO_EXPORT
 #include "SceneMng.h"
 #include "checkML.h"
 

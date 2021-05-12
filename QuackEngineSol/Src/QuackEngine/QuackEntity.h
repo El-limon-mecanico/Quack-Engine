@@ -1,5 +1,13 @@
 ﻿#pragma once
 
+#ifdef _MSC_VER
+#  ifdef QUACK_ENGINE_PRO_EXPORT
+#    define QUACK_ENGINE_PRO_API __declspec(dllexport)
+#  else
+#    define QUACK_ENGINE_PRO_API __declspec(dllimport)
+#  endif
+#endif
+
 #include <algorithm>
 #include <array>
 #include <bitset>
@@ -20,7 +28,7 @@ namespace Ogre {
 	class Entity;
 }
 
-class QuackEntity {
+class QUACK_ENGINE_PRO_API QuackEntity {
 private:
 	//Root
 	QuackEntity(Transform* tr);
