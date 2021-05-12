@@ -11,6 +11,8 @@
 #include <memory>
 #include <assert.h>
 #include <SDL_scancode.h>
+#include "SDL_mouse.h"
+#include <CEGUI/CEGUI.h>
 
 union SDL_Event;
 
@@ -36,7 +38,11 @@ private:
 		int y = 0;
 	}mouseWheel;
 
-	void inputToCegui(SDL_Event event);
+	void injectInputCegui(SDL_Event event);
+
+	CEGUI::MouseButton sdlMouseButtonToCegui(Uint8 buttonSDL);
+
+	CEGUI::Key::Scan sdlKeyToCegui(SDL_Scancode sdlKeycode);
 
 public:
 
