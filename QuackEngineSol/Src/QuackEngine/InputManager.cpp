@@ -11,27 +11,27 @@ std::unique_ptr<InputManager> InputManager::instance_;
 
 void InputManager::injectInputCegui(SDL_Event event)
 {
-	if (event.type == SDL_MOUSEBUTTONDOWN) 
+	if (event.type == SDL_MOUSEBUTTONDOWN)
 	{
 		CEGUI::System::getSingleton().getDefaultGUIContext().injectMouseButtonDown(sdlMouseButtonToCegui(event.button.button));
 	}
-	else if (event.type == SDL_MOUSEBUTTONUP) 
+	else if (event.type == SDL_MOUSEBUTTONUP)
 	{
 		CEGUI::System::getSingleton().getDefaultGUIContext().injectMouseButtonUp(sdlMouseButtonToCegui(event.button.button));
 	}
-	else if (event.type == SDL_MOUSEMOTION) 
+	else if (event.type == SDL_MOUSEMOTION)
 	{
 		CEGUI::System::getSingleton().getDefaultGUIContext().injectMousePosition(mousePosition.x, mousePosition.y);
 	}
-	else if (event.type == SDL_KEYDOWN) 
+	else if (event.type == SDL_KEYDOWN)
 	{
 		CEGUI::System::getSingleton().getDefaultGUIContext().injectKeyDown(sdlKeyToCegui(event.key.keysym.scancode));
 	}
-	else if (event.type == SDL_KEYUP) 
+	else if (event.type == SDL_KEYUP)
 	{
 		CEGUI::System::getSingleton().getDefaultGUIContext().injectKeyUp(sdlKeyToCegui(event.key.keysym.scancode));
 	}
-	else if (event.type == SDL_MOUSEWHEEL) 
+	else if (event.type == SDL_MOUSEWHEEL)
 	{
 		CEGUI::System::getSingleton().getDefaultGUIContext().injectMouseWheelChange(event.wheel.y);
 	}
@@ -100,6 +100,7 @@ InputManager::~InputManager()
 {
 }
 
+
 void InputManager::ManageInput(SDL_Event event)
 {
 	switch (event.type)
@@ -146,6 +147,7 @@ void InputManager::ManageInput(SDL_Event event)
 	injectInputCegui(event);
 }
 
+//toma un SDL_SCANCODE (definidos en SDL_Scancode.h) y devuelve un bool que es true si la tecla esta pulsada y false si no
 bool InputManager::isKeyDown(SDL_Scancode code)
 {
 	const Uint8* state = SDL_GetKeyboardState(NULL);
@@ -161,16 +163,19 @@ void InputManager::MouseWheelChange(int coordinate, int value)
 	else mouseWheel.x = value;
 }
 
-InputManager::MousePosition InputManager::getMousePosition()
+//devuelve un struct con x,y coordenadas del raton, con origen en la esquina superior izquierda
+InputManager::MousePosition InputManager::getMousePosition() 
 {
 	return mousePosition;
 }
 
+//devuelve un struct con booleanos que estan en true cuando se pulsa y pasan a false al soltar
 InputManager::MouseButtons InputManager::getMouseButtons()
 {
 	return mouseButtons;
 }
 
+//devuelve un struct con coordenadas x e y y el cambio en el ultimo bucle (si scrolleas hacia abajo, la componente y sería -1)
 InputManager::MouseWheel InputManager::getMouseWheel()
 {
 	return mouseWheel;
