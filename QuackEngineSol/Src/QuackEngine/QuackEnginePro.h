@@ -49,6 +49,8 @@ private:
 	void prueba();
 
 	float fixedTime = 0;
+	
+	//void atomarporculo();
 
 public:
 

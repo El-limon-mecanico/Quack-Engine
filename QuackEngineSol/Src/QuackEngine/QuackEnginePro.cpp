@@ -47,9 +47,9 @@ void addComponentsFactories()
 	FactoryManager::instance()->add<Light>();
 }
 
-void atomarporculo()
+void pruebaBotonCallback()
 {
-	std::cout << "Metodo2\n";
+	std::cout << "Se ha presionado el boton\n";
 }
 
 // TODO -------------- MOVER A OTRO ARCHIVO -------------- // 
@@ -78,7 +78,7 @@ void QuackEnginePro::prueba()
 	mono->transform()->Rotate({ -90,0,0 });
 
 	CEGUIQuack::Instance()->createButton("Button", "Betis", { 0.5,0.5 }, { 100,100}, 
-		&atomarporculo);
+		pruebaBotonCallback);
 	
 	CEGUIQuack::Instance()->createImage("Cuchao", "cuchao.png", { 0.1,0.6 }, { 300,200 });
 	CEGUIQuack::Instance()->createText("Texto", "Esto no es un boton, es solo texto", { 0.5, 0.05 }, { 270, 50 });

@@ -61,7 +61,6 @@ public:
 	void loadScheme(std::string filename);
 	void setFont(std::string filename);
 	
-	
 	void createButton(std::string name, std::string text, std::pair<float, float> pos, std::pair<float, float> size, void (*func)());
 	void createText(std::string name, std::string text, std::pair<float, float> pos, std::pair<float, float> size);
 	void createImage(std::string name, std::string image, std::pair<float, float> pos, std::pair<float, float> size);
