@@ -10,6 +10,7 @@
 #endif
 
 #include "QuackTime.h"
+#include <memory>
 
 class BulletQuack;
 class fmod_quack;
@@ -48,6 +49,8 @@ private:
 	void prueba();
 
 	float fixedTime = 0;
+	
+	//void atomarporculo();
 
 public:
 

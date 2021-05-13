@@ -174,7 +174,7 @@ public:
 
 	// vector subtraction
 	inline Vector3D operator-(const Vector3D& v) const {
-		return Vector3D(x - v.x, y - v.y, z + v.z);
+		return Vector3D(x - v.x, y - v.y, z - v.z);
 	}
 
 	inline Vector3D operator-=(const Vector3D& v) {
