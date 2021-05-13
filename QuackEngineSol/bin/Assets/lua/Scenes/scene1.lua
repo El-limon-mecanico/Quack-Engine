@@ -12,11 +12,11 @@ entidad1 = {
     },
 
     MeshRenderer = {
-        Mesh = "Suzanne.mesh",
+        Mesh = "Cube",
     },
 
     Rigidbody = {
-        Type = "Hull",
+        Type = "Cube",
         Mass = 1,
         Trigger = false,
         Static = false
@@ -81,7 +81,7 @@ sceneLight = {
     Components = {"Transform", "Light"},
 
     Transform = {
-        Position = {10,10,10},
+        Position = {-5,5,5},
         Scale = {1,1,1},
         Rotation = {0,0,0}
     },
@@ -91,8 +91,8 @@ sceneLight = {
         DiffuseColor = {1,1,1},
         SpecularColor = {1,1,1},
         Direction = {0,0,0},
-        PowerLevel = 1,
-        InnerAngle = 30,
+        Range = 10000,
+        InnerAngle = 10,
         OuterAngle = 90,
         isOn = true
     }

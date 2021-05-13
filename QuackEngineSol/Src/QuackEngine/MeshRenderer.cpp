@@ -87,5 +87,6 @@ void MeshRenderer::setVisible(bool visible)
 void MeshRenderer::setMaterial(std::string materialName)
 {
 	ogreEnt_->setMaterialName(materialName);
+	ogreEnt_->setCastShadows(true);
 }
 

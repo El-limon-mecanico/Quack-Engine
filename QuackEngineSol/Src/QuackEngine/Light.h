@@ -36,7 +36,7 @@ private:
 
 	Vector3D direction_;
 
-	float powerLevel_;
+	float range_;
 
 	float innerAngle_;
 
@@ -70,7 +70,7 @@ public:
 
 	void setType(LightType type);
 
-	void setPowerLevel(float powerLevel);
+	void setRange(float range);
 
 	// FUNCIONA SOLO CON SPOTLIGHT
 	void setInnerAngle(float angle);

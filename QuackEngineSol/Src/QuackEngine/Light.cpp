@@ -27,7 +27,7 @@ bool Light::init(luabridge::LuaRef parameterTable)
 	LuaRef dColor = readVariable<LuaRef>(parameterTable, "DiffuseColor");
 	LuaRef sColor = readVariable<LuaRef>(parameterTable, "SpecularColor");
 	LuaRef dir = readVariable<LuaRef>(parameterTable, "Direction");
-	powerLevel_ = readVariable<float>(parameterTable, "PowerLevel");
+	range_ = readVariable<float>(parameterTable, "Range");
 	innerAngle_ = readVariable<float>(parameterTable, "InnerAngle");
 	outerAngle_ = readVariable<float>(parameterTable, "OuterAngle");
 	isOn = readVariable<bool>(parameterTable, "isOn");
@@ -45,11 +45,12 @@ void Light::onEnable()
 		light_ = OgreQuack::Instance()->createLigth((Ogre::LightTypes)lightType_);
 		node_ = transform->getNode()->createChildSceneNode();
 		node_->attachObject(light_);
-		node_->lookAt(Vector3D::toOgre(direction_), Ogre::Node::TransformSpace::TS_WORLD);
+		node_->lookAt(direction_.toOgrePosition(), Ogre::Node::TransformSpace::TS_WORLD);
 
 		light_->setDiffuseColour(diffuseColor_.x, diffuseColor_.y, diffuseColor_.z);
 		light_->setSpecularColour(specularColor_.x, specularColor_.y, specularColor_.z);
-		light_->setPowerScale(powerLevel_);
+		light_->setCastShadows(true);
+		//setRange(range_);
 		if (lightType_ = SPOTLIGHT) {
 			light_->setSpotlightInnerAngle(Ogre::Radian(Ogre::Degree(innerAngle_)));
 			light_->setSpotlightOuterAngle(Ogre::Radian(Ogre::Degree(innerAngle_)));
@@ -87,16 +88,18 @@ void Light::setDirection(Vector3D orientation, bool global)
 void Light::setType(LightType type)
 {
 	light_->setType((Ogre::Light::LightTypes)type);
-	if(lightType_ = SPOTLIGHT){
+	if (lightType_ = SPOTLIGHT) {
 		light_->setSpotlightInnerAngle(Ogre::Radian(Ogre::Degree(innerAngle_)));
 		light_->setSpotlightOuterAngle(Ogre::Radian(Ogre::Degree(innerAngle_)));
 	}
 }
 
-void Light::setPowerLevel(float powerLevel)
+void Light::setRange(float range)
 {
-	powerLevel_ = powerLevel;
-	light_->setPowerScale(powerLevel);
+	range_ = range * 100;
+	float linear = (0.7 * 7) / range_;
+	float quadratic = ((0.7 * 1.8) / range_) / 2;
+	light_->setAttenuation(range_, 1.0, linear, quadratic);
 }
 
 void Light::setInnerAngle(float angle)
