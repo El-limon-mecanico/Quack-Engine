@@ -1,5 +1,4 @@
-﻿#define QUACK_ENGINE_PRO_EXPORT
-#include <OgreRoot.h>
+﻿#include <OgreRoot.h>
 #include <SDL_video.h>
 #include <SDL_events.h>
 #include <memory>

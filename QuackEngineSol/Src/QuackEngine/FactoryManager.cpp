@@ -1,4 +1,3 @@
-#define QUACK_ENGINE_PRO_EXPORT
 #include "FactoryManager.h"
 #include "checkML.h"
 
