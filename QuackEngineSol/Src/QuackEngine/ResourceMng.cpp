@@ -1,4 +1,3 @@
-#define QUACK_ENGINE_PRO_EXPORT
 #include "ResourceMng.h"
 #include <Ogre.h>
 #include <iostream>

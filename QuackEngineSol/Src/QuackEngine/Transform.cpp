@@ -1,4 +1,3 @@
-#define QUACK_ENGINE_PRO_EXPORT
 #include "Transform.h"
 #include "QuackEntity.h"
 #include <Ogre.h>

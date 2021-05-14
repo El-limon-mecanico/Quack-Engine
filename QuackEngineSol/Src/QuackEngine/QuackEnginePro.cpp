@@ -1,5 +1,4 @@
-﻿#define QUACK_ENGINE_PRO_EXPORT
-#include <OgreRoot.h>
+﻿#include <OgreRoot.h>
 #include <SDL_video.h>
 #include <SDL_events.h>
 #include <memory>
@@ -10,18 +9,11 @@
 #include "BulletQuack.h"
 #include "LuaBridgeTest.h"
 #include "checkML.h"
-#include "Prueba.h"
-#include "Prueba2.h"
-#include "Transform.h"
 #include "LuaManager.h"
 #include "FactoryManager.h"
 #include "QuackEntity.h"
-#include "MeshRenderer.h"
-#include "Rigidbody.h"
 #include "QuackTime.h"
 #include "CEGUIQuack.h"
-#include "QuackCamera.h"
-#include "Light.h"
 
 #include "Scene.h"
 #include "SceneMng.h"
@@ -30,62 +22,20 @@
 #include "InputManager.h"
 #include "SDL_scancode.h"
 
-//para que no salga la consola en el modo release (en las propiedades del proyecto hay que poner que se
-//ejecute como aplicacion window no cmd (en la parte de vinculador))ç
-
-//TODO cambiar esto de sitio
-void addComponentsFactories()
-{
-	FactoryManager::init();
-
-	FactoryManager::instance()->add<MeshRenderer>();
-	FactoryManager::instance()->add<Rigidbody>();
-	FactoryManager::instance()->add<Prueba>();
-	FactoryManager::instance()->add<Prueba2>();
-	FactoryManager::instance()->add<Transform>();
-	FactoryManager::instance()->add<QuackCamera>();
-	FactoryManager::instance()->add<Light>();
-}
 
 void QuackEnginePro::pruebaBotonCallback()
 {
 	std::cout << "Se ha presionado el boton\n";
 }
 
-// TODO -------------- MOVER A OTRO ARCHIVO -------------- // 
 void QuackEnginePro::prueba()
 {
-
-	QuackEntity* cube = new QuackEntity("Cubito");
-	MeshRenderer* r = cube->addComponent<MeshRenderer>();
-	r->setMeshByPrefab(PrefabType::PT_CUBE); //:)))
-	cube->addComponent<Prueba2>();
-
-	QuackEntity* mono = new QuackEntity("Mono");
-	r = mono->addComponent<MeshRenderer>();
-	r->setMeshByName("Suzanne.mesh");
-	mono->addComponent<Prueba2>();
-
-	SceneMng::Instance()->getCurrentScene()->addEntity(cube);
-	mono->setActive(true);
-	SceneMng::Instance()->getCurrentScene()->addEntity(mono);
-
-	mono->transform()->setLocalPosition({ -10,0,-10 });
-	cube->transform()->setLocalPosition({ -10,5,-10 });
-
-	cube->transform()->setParent(mono->transform());
-
-	mono->transform()->Rotate({ -90,0,0 });
-
 	CEGUIQuack::Instance()->createButton("Button", "Betis", { 0.5,0.5 }, { 100,100}, 
 		pruebaBotonCallback);
 	
 	CEGUIQuack::Instance()->createImage("Cuchao", "cuchao.png", { 0.1,0.6 }, { 300,200 });
 	CEGUIQuack::Instance()->createText("Texto", "Esto no es un boton, es solo texto", { 0.5, 0.05 }, { 270, 50 });
 }
-// -------------- MOVER A OTRO ARCHIVO -------------- // 
-
-
 
 
 
@@ -130,7 +80,7 @@ void QuackEnginePro::setup()
 
 	fmod_quack_ = new fmod_quack();
 
-	addComponentsFactories();
+	FactoryManager::Init();
 
 	CEGUIQuack::Init();
 	CEGUIQuack::Instance()->setUp(OgreQuack::Instance()->getWindow());

@@ -1,4 +1,3 @@
-#define QUACK_ENGINE_PRO_EXPORT
 #include "QuackEntity.h"
 #include "OgreQuack.h"
 #include "FactoryManager.h"

@@ -239,4 +239,4 @@ public:
 
 // needed for printing a value of tyep Vector3D with std::cout.
 // The definition is in .cpp
-std::ostream& operator<<(std::ostream& os, const Vector3D& v);
+QUACK_ENGINE_PRO_API std::ostream& operator<<(std::ostream& os, const Vector3D& v);
