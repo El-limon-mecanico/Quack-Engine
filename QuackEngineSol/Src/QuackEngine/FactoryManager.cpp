@@ -1,5 +1,11 @@
 #include "FactoryManager.h"
-#include "checkML.h"
+#include "QuackCamera.h"
+#include "Light.h"
+#include "MeshRenderer.h"
+#include "Rigidbody.h"
+#include "Prueba.h"
+#include "Prueba2.h"
+#include "Transform.h"
 
 std::unique_ptr<FactoryManager> FactoryManager::instance_;
 
@@ -7,11 +13,23 @@ FactoryManager::FactoryManager()
 {
 }
 
-FactoryManager* FactoryManager::init()
+FactoryManager* FactoryManager::Init()
 {
 	assert(instance_.get() == nullptr);
 	instance_.reset(new FactoryManager());
+	instance_.get()->initEngineFactories();
 	return instance_.get();
+}
+
+void FactoryManager::initEngineFactories()
+{
+	FactoryManager::instance()->add<MeshRenderer>();
+	FactoryManager::instance()->add<Rigidbody>();
+	FactoryManager::instance()->add<Prueba>();
+	FactoryManager::instance()->add<Prueba2>();
+	FactoryManager::instance()->add<Transform>();
+	FactoryManager::instance()->add<QuackCamera>();
+	FactoryManager::instance()->add<Light>();
 }
 
 Component* FactoryManager::create(const std::string& name)
