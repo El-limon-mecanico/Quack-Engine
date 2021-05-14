@@ -50,7 +50,7 @@ private:
 
 	float fixedTime = 0;
 	
-	//void atomarporculo();
+	static void pruebaBotonCallback();
 
 public:
 

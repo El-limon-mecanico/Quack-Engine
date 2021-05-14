@@ -42,8 +42,7 @@ private:
 
 	void setUpResources();
 	CEGUI::Window* createWidget(std::string type, std::string name, std::pair<float, float> pos, std::pair<float, float> size);
-
-	void botonPresionadoPrueba(const CEGUI::EventArgs&);
+	
 	
 public:
 	

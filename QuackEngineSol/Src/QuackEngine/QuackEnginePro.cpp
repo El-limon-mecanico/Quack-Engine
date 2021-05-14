@@ -47,7 +47,7 @@ void addComponentsFactories()
 	FactoryManager::instance()->add<Light>();
 }
 
-void pruebaBotonCallback()
+void QuackEnginePro::pruebaBotonCallback()
 {
 	std::cout << "Se ha presionado el boton\n";
 }
