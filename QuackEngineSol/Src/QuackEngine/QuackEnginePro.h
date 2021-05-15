@@ -71,7 +71,7 @@ public:
 
 	fmod_quack* getFmodQuack();
 
-	void start();
+	void start(std::string route, std::string name);
 
 	QuackTime* time();
 

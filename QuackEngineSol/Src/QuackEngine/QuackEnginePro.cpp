@@ -107,13 +107,13 @@ void QuackEnginePro::setup()
 	
 	
 	SceneMng::Init();
-	SceneMng::Instance()->loadScene("Scenes/scene1.lua", "scene1");
 
 	InputManager::Init();
 }
 
-void QuackEnginePro::start()
+void QuackEnginePro::start(std::string route, std::string name)
 {
+	SceneMng::Instance()->loadScene(route, name);
 	if (!updateStarted) {
 		quackTime_ = new QuackTime();
 		update();
