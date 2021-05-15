@@ -11,6 +11,7 @@
 
 #include "QuackTime.h"
 #include <memory>
+#include <string>
 
 class BulletQuack;
 class fmod_quack;
