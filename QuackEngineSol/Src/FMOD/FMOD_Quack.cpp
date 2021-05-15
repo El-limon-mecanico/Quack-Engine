@@ -1,10 +1,11 @@
 #include "FMOD_Quack.h"
 
 
-
-fmod_quack::fmod_quack()
+fmod_quack::fmod_quack(std::string route)
 {
+	assetsRouteFmod = route;
 	FMOD_Init();
+	
 }
 
 fmod_quack::~fmod_quack()
@@ -62,7 +63,7 @@ void fmod_quack::playSound(int channel, std::string id, float volume)
 void fmod_quack::createSound(std::string sound, std::string id)
 {
 	FMOD::Sound* sonido;
-	std::string path = std::string("Assets/Sound/") + sound;
+	std::string path = std::string(assetsRouteFmod + "/Sound/") + sound;
 	FMOD_RESULT resultCreateSound = systemFMOD_->createSound(path.c_str(), FMOD_DEFAULT, 0, &sonido);
 	if (resultCreateSound != FMOD_OK)
 	{

@@ -13,9 +13,12 @@ private:
 	std::map<std::string, FMOD::DSP*> dsp_;
 	FMOD::System* systemFMOD_ = NULL;
 
+	std::string assetsRouteFmod = "";
+
 	FMOD::Channel* getChannel(int channel);
+	
 public:
-	fmod_quack();
+	fmod_quack(std::string route);
 	~fmod_quack();
 	
 	void FMOD_Init();

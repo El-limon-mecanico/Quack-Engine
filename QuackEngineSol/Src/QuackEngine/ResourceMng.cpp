@@ -97,9 +97,9 @@ void ResourceMng::loadResources()
 	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 }
 
-ResourceMng::ResourceMng()
+ResourceMng::ResourceMng(std::string assetsPath)
 {
-	mFSLayer_ = new Ogre::FileSystemLayer("./Assets/"); //subdir temporal porque me obliga a poner uno
+	mFSLayer_ = new Ogre::FileSystemLayer(assetsPath); //subdir temporal porque me obliga a poner uno
 }
 
 ResourceMng::~ResourceMng()
@@ -107,10 +107,10 @@ ResourceMng::~ResourceMng()
 	delete mFSLayer_;	mFSLayer_ = nullptr;
 }
 
-bool ResourceMng::Init()
+bool ResourceMng::Init(std::string assetsPath)
 {
 	assert(instance_.get() == nullptr);
-	instance_.reset(new ResourceMng());
+	instance_.reset(new ResourceMng(assetsPath));
 	return instance_.get();
 }
 

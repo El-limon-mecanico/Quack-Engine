@@ -21,10 +21,10 @@ private:
 	//void wipeRTShaderSystem();
 
 public:
-	ResourceMng();
+	ResourceMng(std::string assetsPath);
 	~ResourceMng();
 
-	static bool Init();
+	static bool Init(std::string assetsPath);
 	static ResourceMng* Instance();
 
 	void setup();
