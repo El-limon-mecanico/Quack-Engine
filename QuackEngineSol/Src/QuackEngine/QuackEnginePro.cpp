@@ -115,7 +115,6 @@ void QuackEnginePro::setup()
 void QuackEnginePro::start()
 {
 	if (!updateStarted) {
-		prueba();
 		quackTime_ = new QuackTime();
 		update();
 	}
