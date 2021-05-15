@@ -2,7 +2,6 @@
 #include <fstream>
 #include "QuackEnginePro.h"
 #include "checkML.h"
-
 #if (defined _DEBUG) //|| !(defined _WIN64)
 int main() {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
@@ -13,7 +12,8 @@ WinMain(HINSTANCE zHInstance, HINSTANCE prevInstance, LPSTR lpCmdLine, int nCmdS
 #endif
 	// AQUI FALTA MANEJO DE ERRORES Y EXCEPCIONES
 	if (QuackEnginePro::Init()) {
-		QuackEnginePro::Instance()->start();
+
+		QuackEnginePro::Instance()->start("Scenes/scene1.lua", "scene1");
 	}
 
 	return 0;
