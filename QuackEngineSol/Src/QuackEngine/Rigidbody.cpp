@@ -47,6 +47,7 @@ void Rigidbody::setRigidbody(int mass, ColliderType type, bool trigger, bool sta
 
 	std::cout << rb_->getCollisionFlags() << std::endl;
 
+
 	setTrigger(trigger);
 
 	if (statc)
@@ -65,8 +66,6 @@ void Rigidbody::setTrigger(bool trigger)
 
 void Rigidbody::preUpdate()
 {
-	resetTransform();
-
 	for (CollisionInfo& obj : collisions)
 		obj.time += QuackEnginePro::Instance()->time()->deltaTime();
 }

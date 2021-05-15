@@ -47,6 +47,8 @@ private:
 	void updateChildren();
 	void recalculatePosition();
 
+	void updateRb();
+
 public:
 	Transform(Vector3D pos = Vector3D(), Vector3D rot = Vector3D(), Vector3D scale = Vector3D(1, 1, 1));
 	virtual ~Transform() {};
