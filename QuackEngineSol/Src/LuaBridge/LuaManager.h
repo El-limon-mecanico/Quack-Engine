@@ -6,6 +6,7 @@ LuaRef readElementFromFile(lua_State* state, std::string tableName);
 
 lua_State* readFileLua(std::string file);
 
+
 template<class T>
 T readVariable(LuaRef& table, const std::string& variableName)
 {

@@ -1,8 +1,10 @@
 ﻿#include <OgreRoot.h>
 #include <SDL_video.h>
 #include <SDL_events.h>
-#include <memory>
 #include <assert.h>
+#include <fstream>
+#include <string>
+
 #include "QuackEnginePro.h"
 #include "FMOD_Quack.h"
 #include "OgreQuack.h"
@@ -26,6 +28,22 @@
 void QuackEnginePro::pruebaBotonCallback()
 {
 	std::cout << "Se ha presionado el boton\n";
+}
+
+
+void QuackEnginePro::readAssetsRoute()
+{
+	std::ifstream file;
+	try
+	{
+		file.open("AssetsRoute.txt");
+		std::getline(file, assets_route);
+		file.close();
+	}
+	catch (std::exception e)
+	{
+		std::cout << "ERROR: no se ha podido abrir el archivo de especificación de la ruta de assets\n";
+	}
 }
 
 void QuackEnginePro::prueba()
@@ -67,9 +85,11 @@ QuackEnginePro* QuackEnginePro::Instance()
 
 void QuackEnginePro::setup()
 {
+	readAssetsRoute();
+	
 	OgreQuack::Init();
 
-	ResourceMng::Init();
+	ResourceMng::Init(assets_route);
 	ResourceMng::Instance()->setup(); //Carga de recursos
 
 	sdlWindow_ = OgreQuack::Instance()->getSdlWindow();
@@ -78,14 +98,14 @@ void QuackEnginePro::setup()
 
 	BulletQuack::Init();
 
-	fmod_quack_ = new fmod_quack();
+	fmod_quack_ = new fmod_quack(assets_route);
 
 	FactoryManager::Init();
 
 	CEGUIQuack::Init();
 	CEGUIQuack::Instance()->setUp(OgreQuack::Instance()->getWindow());
-
-	//CargarLua();
+	
+	
 	SceneMng::Init();
 	SceneMng::Instance()->loadScene("Scenes/scene1.lua", "scene1");
 
