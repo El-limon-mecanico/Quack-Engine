@@ -22,7 +22,7 @@ public:
 
 	virtual ~FactoryManager() {}
 
-	static  FactoryManager* init();
+	static  FactoryManager* Init();
 
 	static FactoryManager* instance() {
 		assert(instance_.get() != nullptr);
@@ -30,9 +30,11 @@ public:
 	}
 
 	template<typename T>
-	void add() {
-		hashTable_[T::GetName()] = &FactoryManager::createComponent<T>;
+	void add(std::string name = "") {
+		hashTable_[(name == "") ? T::GetName() : name] = &FactoryManager::createComponent<T>;
 	}
+
+	void initEngineFactories();
 
 	Component* create(const std::string& name);
 

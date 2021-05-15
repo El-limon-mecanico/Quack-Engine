@@ -1,6 +1,6 @@
-#define QUACK_ENGINE_PRO_EXPORT
 #include "Transform.h"
 #include "QuackEntity.h"
+#include "Rigidbody.h"
 #include <Ogre.h>
 #include "OgreQuack.h"
 
@@ -111,6 +111,7 @@ void Transform::eraseParent()
 {
 	parent_->removeChild(this);
 	setParent(trRoot_.get());
+	updateRb();
 }
 
 
@@ -134,6 +135,7 @@ void Transform::Rotate(Vector3D r, bool global)
 	globalRotation_ = Vector3D::fromOgreRotation(node_->_getDerivedOrientation());
 	localRotation_ = Vector3D::fromOgreRotation(node_->getOrientation());
 	recalculateAxes();
+	updateRb();
 	updateChildren();
 }
 
@@ -143,6 +145,7 @@ void Transform::setRotation(Vector3D v)
 	globalRotation_ = Vector3D::fromOgreRotation(node_->_getDerivedOrientation());
 	localRotation_ = Vector3D::fromOgreRotation(node_->getOrientation());
 	recalculateAxes();
+	updateRb();
 	updateChildren();
 }
 
@@ -151,6 +154,7 @@ void Transform::setGlobalPosition(Vector3D v)
 	node_->_setDerivedPosition(v.toOgrePosition());
 	localPosition_ = Vector3D::fromOgrePosition(node_->getPosition());
 	globalPosition_ = Vector3D::fromOgrePosition(node_->_getDerivedPosition());
+	updateRb();
 	updateChildren();
 	//localPosition_ = globalPosition_ - parent_->globalPosition_;
 }
@@ -160,6 +164,7 @@ void Transform::setLocalPosition(Vector3D v)
 	node_->setPosition(v.toOgrePosition());
 	localPosition_ = Vector3D::fromOgrePosition(node_->getPosition());
 	globalPosition_ = Vector3D::fromOgrePosition(node_->_getDerivedPosition());
+	updateRb();
 	updateChildren();
 }
 
@@ -169,6 +174,7 @@ void Transform::moveGlobalPosition(Vector3D v)
 	node_->translate(v.toOgrePosition(), Ogre::Node::TS_WORLD);
 	globalPosition_ = Vector3D::fromOgrePosition(node_->_getDerivedPosition());
 	localPosition_ = Vector3D::fromOgrePosition(node_->getPosition());
+	updateRb();
 	updateChildren();
 	//localPosition_ = globalPosition_ - parent_->globalPosition_;
 }
@@ -178,6 +184,7 @@ void Transform::moveLocalPosition(Vector3D v)
 	node_->translate(v.toOgrePosition(), Ogre::Node::TS_LOCAL);
 	localPosition_ = Vector3D::fromOgrePosition(node_->getPosition());
 	globalPosition_ = Vector3D::fromOgrePosition(node_->_getDerivedPosition());
+	updateRb();
 	updateChildren();
 }
 
@@ -212,5 +219,16 @@ void Transform::recalculatePosition()
 	localPosition_ = Vector3D::fromOgrePosition(node_->getPosition());
 	globalPosition_ = Vector3D::fromOgrePosition(node_->_getDerivedPosition());
 	recalculateAxes();
+	updateRb();
 	updateChildren();
+}
+
+void Transform::updateRb()
+{
+	if (entity_) {
+		Rigidbody* rb = entity_->getComponent<Rigidbody>();
+		if (rb) {
+			rb->resetTransform();
+		}
+	}
 }

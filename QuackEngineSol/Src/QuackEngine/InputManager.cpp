@@ -1,4 +1,3 @@
-#define QUACK_ENGINE_PRO_EXPORT
 #include "InputManager.h"
 
 #include "SDL_events.h"

@@ -1,27 +1,21 @@
-﻿#define QUACK_ENGINE_PRO_EXPORT
-#include <OgreRoot.h>
+﻿#include <OgreRoot.h>
 #include <SDL_video.h>
 #include <SDL_events.h>
-#include <memory>
 #include <assert.h>
+#include <fstream>
+#include <string>
+
 #include "QuackEnginePro.h"
 #include "FMOD_Quack.h"
 #include "OgreQuack.h"
 #include "BulletQuack.h"
 #include "LuaBridgeTest.h"
 #include "checkML.h"
-#include "Prueba.h"
-#include "Prueba2.h"
-#include "Transform.h"
 #include "LuaManager.h"
 #include "FactoryManager.h"
 #include "QuackEntity.h"
-#include "MeshRenderer.h"
-#include "Rigidbody.h"
 #include "QuackTime.h"
 #include "CEGUIQuack.h"
-#include "QuackCamera.h"
-#include "Light.h"
 
 #include "Scene.h"
 #include "SceneMng.h"
@@ -30,62 +24,36 @@
 #include "InputManager.h"
 #include "SDL_scancode.h"
 
-//para que no salga la consola en el modo release (en las propiedades del proyecto hay que poner que se
-//ejecute como aplicacion window no cmd (en la parte de vinculador))ç
 
-//TODO cambiar esto de sitio
-void addComponentsFactories()
-{
-	FactoryManager::init();
-
-	FactoryManager::instance()->add<MeshRenderer>();
-	FactoryManager::instance()->add<Rigidbody>();
-	FactoryManager::instance()->add<Prueba>();
-	FactoryManager::instance()->add<Prueba2>();
-	FactoryManager::instance()->add<Transform>();
-	FactoryManager::instance()->add<QuackCamera>();
-	FactoryManager::instance()->add<Light>();
-}
-
-void pruebaBotonCallback()
+void QuackEnginePro::pruebaBotonCallback()
 {
 	std::cout << "Se ha presionado el boton\n";
 }
 
-// TODO -------------- MOVER A OTRO ARCHIVO -------------- // 
+
+void QuackEnginePro::readAssetsRoute()
+{
+	std::ifstream file;
+	try
+	{
+		file.open("AssetsRoute.txt");
+		std::getline(file, assets_route);
+		file.close();
+	}
+	catch (std::exception e)
+	{
+		std::cout << "ERROR: no se ha podido abrir el archivo de especificación de la ruta de assets\n";
+	}
+}
+
 void QuackEnginePro::prueba()
 {
-
-	QuackEntity* cube = new QuackEntity("Cubito");
-	MeshRenderer* r = cube->addComponent<MeshRenderer>();
-	r->setMeshByPrefab(PrefabType::PT_CUBE); //:)))
-	cube->addComponent<Prueba2>();
-
-	QuackEntity* mono = new QuackEntity("Mono");
-	r = mono->addComponent<MeshRenderer>();
-	r->setMeshByName("Suzanne.mesh");
-	mono->addComponent<Prueba2>();
-
-	SceneMng::Instance()->getCurrentScene()->addEntity(cube);
-	mono->setActive(true);
-	SceneMng::Instance()->getCurrentScene()->addEntity(mono);
-
-	mono->transform()->setLocalPosition({ -10,0,-10 });
-	cube->transform()->setLocalPosition({ -10,5,-10 });
-
-	cube->transform()->setParent(mono->transform());
-
-	mono->transform()->Rotate({ -90,0,0 });
-
 	CEGUIQuack::Instance()->createButton("Button", "Betis", { 0.5,0.5 }, { 100,100}, 
 		pruebaBotonCallback);
 	
 	CEGUIQuack::Instance()->createImage("Cuchao", "cuchao.png", { 0.1,0.6 }, { 300,200 });
 	CEGUIQuack::Instance()->createText("Texto", "Esto no es un boton, es solo texto", { 0.5, 0.05 }, { 270, 50 });
 }
-// -------------- MOVER A OTRO ARCHIVO -------------- // 
-
-
 
 
 
@@ -117,9 +85,11 @@ QuackEnginePro* QuackEnginePro::Instance()
 
 void QuackEnginePro::setup()
 {
+	readAssetsRoute();
+	
 	OgreQuack::Init();
 
-	ResourceMng::Init();
+	ResourceMng::Init(assets_route);
 	ResourceMng::Instance()->setup(); //Carga de recursos
 
 	sdlWindow_ = OgreQuack::Instance()->getSdlWindow();
@@ -128,24 +98,23 @@ void QuackEnginePro::setup()
 
 	BulletQuack::Init();
 
-	fmod_quack_ = new fmod_quack();
+	fmod_quack_ = new fmod_quack(assets_route);
 
-	addComponentsFactories();
+	FactoryManager::Init();
 
 	CEGUIQuack::Init();
 	CEGUIQuack::Instance()->setUp(OgreQuack::Instance()->getWindow());
-
-	//CargarLua();
+	
+	
 	SceneMng::Init();
-	SceneMng::Instance()->loadScene("Scenes/scene1.lua", "scene1");
 
 	InputManager::Init();
 }
 
-void QuackEnginePro::start()
+void QuackEnginePro::start(std::string route, std::string name)
 {
+	SceneMng::Instance()->loadScene(route, name);
 	if (!updateStarted) {
-		prueba();
 		quackTime_ = new QuackTime();
 		update();
 	}
@@ -155,16 +124,8 @@ void QuackEnginePro::start()
 void QuackEnginePro::update()
 {
 	exit = false;
-	int frames = 0;
-	double t = 0;
+
 	while (!exit) {
-		frames++;
-		t += time()->deltaTime();
-		if (t >= 1) {
-			std::cout << "Last second frames: " << frames << "\n";
-			t = 0;
-			frames = 0;
-		}
 
 		quackTime_->frameStarted();
 

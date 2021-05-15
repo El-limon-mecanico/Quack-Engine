@@ -11,6 +11,7 @@
 
 #include "QuackTime.h"
 #include <memory>
+#include <string>
 
 class BulletQuack;
 class fmod_quack;
@@ -27,6 +28,8 @@ class QUACK_ENGINE_PRO_API QuackEnginePro {
 private:
 
 	static std::unique_ptr<QuackEnginePro> instance_;
+	
+	std::string assets_route = "";
 
 	SDL_Window* sdlWindow_;
 
@@ -50,7 +53,9 @@ private:
 
 	float fixedTime = 0;
 	
-	//void atomarporculo();
+	static void pruebaBotonCallback();
+
+	void readAssetsRoute();
 
 public:
 
@@ -66,7 +71,7 @@ public:
 
 	fmod_quack* getFmodQuack();
 
-	void start();
+	void start(std::string route, std::string name);
 
 	QuackTime* time();
 

@@ -1,13 +1,9 @@
-//#include <iostream>
 #include "CEGUIQuack.h"
 #include <CEGUI/CEGUI.h>
 #include <CEGUI/RendererModules/Ogre/Renderer.h>
 #include <OgreRenderWindow.h>
 #include <assert.h>
 #include <iostream>
-//#include <Ogre.h>
-//#include <OgreRenderTarget.h>
-//#include <CEGUI\ScriptModules\Lua\CEGUILua.h>
 
 std::unique_ptr<CEGUIQuack>  CEGUIQuack::instance_;
 
