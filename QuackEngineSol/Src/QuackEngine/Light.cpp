@@ -4,6 +4,7 @@
 #include <OgreLight.h>
 #include <OgreSceneNode.h>
 
+
 Light::Light() :
 	light_(nullptr),
 	node_(nullptr)
@@ -27,7 +28,8 @@ bool Light::init(luabridge::LuaRef parameterTable)
 	LuaRef dColor = readVariable<LuaRef>(parameterTable, "DiffuseColor");
 	LuaRef sColor = readVariable<LuaRef>(parameterTable, "SpecularColor");
 	LuaRef dir = readVariable<LuaRef>(parameterTable, "Direction");
-	range_ = readVariable<float>(parameterTable, "Range");
+	distance_ = readVariable<float>(parameterTable, "Distance");
+	distance_ *= (distance_ * distance_);
 	innerAngle_ = readVariable<float>(parameterTable, "InnerAngle");
 	outerAngle_ = readVariable<float>(parameterTable, "OuterAngle");
 	isOn = readVariable<bool>(parameterTable, "isOn");
@@ -50,7 +52,7 @@ void Light::onEnable()
 		light_->setDiffuseColour(diffuseColor_.x, diffuseColor_.y, diffuseColor_.z);
 		light_->setSpecularColour(specularColor_.x, specularColor_.y, specularColor_.z);
 		light_->setCastShadows(true);
-		//setRange(range_);
+		setDistance(distance_);
 		if (lightType_ = SPOTLIGHT) {
 			light_->setSpotlightInnerAngle(Ogre::Radian(Ogre::Degree(innerAngle_)));
 			light_->setSpotlightOuterAngle(Ogre::Radian(Ogre::Degree(innerAngle_)));
@@ -94,12 +96,13 @@ void Light::setType(LightType type)
 	}
 }
 
-void Light::setRange(float range)
+void Light::setDistance(float distance)
 {
-	range_ = range * 100;
-	float linear = (0.7 * 7) / range_;
-	float quadratic = ((0.7 * 1.8) / range_) / 2;
-	light_->setAttenuation(range_, 1.0, linear, quadratic);
+	distance_ = distance;
+	float linear = 4.5 / distance;
+	float quadratic = 75.0 / (distance_ * distance_);
+
+	light_->setAttenuation(distance_, 0.8, linear, quadratic);
 }
 
 void Light::setInnerAngle(float angle)
