@@ -125,16 +125,8 @@ void QuackEnginePro::start()
 void QuackEnginePro::update()
 {
 	exit = false;
-	int frames = 0;
-	double t = 0;
+
 	while (!exit) {
-		frames++;
-		t += time()->deltaTime();
-		if (t >= 1) {
-			std::cout << "Last second frames: " << frames << "\n";
-			t = 0;
-			frames = 0;
-		}
 
 		quackTime_->frameStarted();
 
