@@ -1,4 +1,5 @@
 #include "Scene.h"
+#include "CEGUIQuack.h"
 #include "LuaManager.h"
 
 Scene::Scene(const std::string& file, const std::string& name)
@@ -20,7 +21,15 @@ Scene::Scene(const std::string& file, const std::string& name)
 		//crea las entidades con sus compoenntes
 		//con el nombre ent, se busca el .lua y se cree lo que pone alli
 		LuaRef entInfo = readElementFromFile(state, ent);
-		if (!createEntity(ent, entInfo)) std::cout << "ERROR: no se ha podidio cargar la entidad: " << ent;
+
+		if (ent == "UI")
+		{
+			if (!createUI(entInfo)) std::cout << "ERROR: no se ha podidio cargar la UI de la escena:  " << name;
+		}			
+		else
+		{
+			if (!createEntity(ent, entInfo)) std::cout << "ERROR: no se ha podidio cargar la entidad: " << ent;
+		}			
 	}
 }
 
@@ -44,6 +53,48 @@ bool Scene::createEntity(const std::string& fileName, LuaRef entInfo)
 
 	addEntity(entity);
 
+	return true;
+}
+
+bool Scene::createUI(luabridge::LuaRef info)
+{
+	LuaRef components = info.rawget("Components");	
+	if (components.isNil()) { std::cout << "ERROR: No se ha podido leer el Array 'Components' \n"; return false; }
+
+	
+	for (int i = 1; i <= components.length(); i++)
+	{
+		//carga los componentes
+		enableExceptions(components[i]);
+		LuaRef cmpInfo = info.rawget(components[i]);
+		
+		std::string type = readVariable<std::string>(cmpInfo, "Type");
+		LuaRef pos = readVariable<LuaRef>(cmpInfo, "Position");
+		LuaRef size = readVariable<LuaRef>(cmpInfo, "Size");
+		std::string name = readVariable<std::string>(cmpInfo, "Name");
+		
+		if (type == "Text")
+		{
+			CEGUIQuack::Instance()->createText(name,readVariable<std::string>(cmpInfo, "Text"),
+				{ pos[1],pos[2] }, { size[1], size[2] });
+		}
+		else if (type == "Image")
+		{
+			CEGUIQuack::Instance()->createImage(name, readVariable<std::string>(cmpInfo, "Image"),
+				{ pos[1],pos[2] }, { size[1], size[2] });
+		}
+		else if (type == "Button")
+		{
+
+		}
+	}
+
+	
+
+
+	//tan solo tenemos 3 tipos de elementos de ui
+
+	
 	return true;
 }
 

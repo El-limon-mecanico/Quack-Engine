@@ -24,6 +24,8 @@ private:
 
 	bool createEntity(const std::string& fileName, luabridge::LuaRef entInfo);
 
+	bool createUI(luabridge::LuaRef info);
+
 public:
 	Scene(const std::string& file, const std::string& name);
 	~Scene();
