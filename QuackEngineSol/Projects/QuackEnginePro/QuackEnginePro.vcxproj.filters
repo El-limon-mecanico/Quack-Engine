@@ -141,4 +141,9 @@
       <Filter>Archivos de encabezado\Ecs\Components</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\bin\Assets\lua\Scenes\scene1.lua">
+      <Filter>Archivos de recursos</Filter>
+    </None>
+  </ItemGroup>
 </Project>
