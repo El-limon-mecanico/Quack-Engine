@@ -1,12 +1,15 @@
 #include "Scene.h"
 #include "CEGUIQuack.h"
 #include "LuaManager.h"
+#include "CallBacks.h"
 
 Scene::Scene(const std::string& file, const std::string& name)
 {
+	//los call backs de los botones se tienen que crear antes de que se empiecen a cargar las entidades
+	CallBacks::instance()->addMethod("botonPresionado", callBackBoton);
+	
 	lua_State* state = readFileLua(file);
 	LuaRef refScene = readElementFromFile(state, name);
-	int aaa = refScene.length();
 	//sacamos el vector de entidades y las creamos
 	enableExceptions(refScene);
 
@@ -84,7 +87,10 @@ bool Scene::createUI(luabridge::LuaRef info)
 				{ pos[1],pos[2] }, { size[1], size[2] });
 		}
 		else if (type == "Button")
-		{
+		{			
+			CEGUIQuack::Instance()->createButton(name, readVariable<std::string>(cmpInfo, "Text"),
+				{ pos[1],pos[2] }, { size[1], size[2] }, CallBacks::instance()->getMethod(
+				readVariable<std::string>(cmpInfo, "CallBackFunction")));
 
 		}
 	}
@@ -163,4 +169,9 @@ void Scene::lastUpdate()
 	{
 		entity->lastUpdate();
 	}
+}
+
+void Scene::callBackBoton()
+{
+	std::cout << "Se ha presionado el boton\n";
 }

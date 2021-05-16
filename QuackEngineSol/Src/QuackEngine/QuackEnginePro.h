@@ -49,8 +49,6 @@ private:
 
 	bool exit = true;
 
-	void prueba();
-
 	float fixedTime = 0;
 	
 	static void pruebaBotonCallback();

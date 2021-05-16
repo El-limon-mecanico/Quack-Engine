@@ -24,6 +24,8 @@
 #include "InputManager.h"
 #include "SDL_scancode.h"
 
+#include "CallBacks.h"
+
 
 void QuackEnginePro::pruebaBotonCallback()
 {
@@ -44,15 +46,6 @@ void QuackEnginePro::readAssetsRoute()
 	{
 		std::cout << "ERROR: no se ha podido abrir el archivo de especificación de la ruta de assets\n";
 	}
-}
-
-void QuackEnginePro::prueba()
-{
-	CEGUIQuack::Instance()->createButton("Button", "Betis", { 0.5,0.5 }, { 100,100}, 
-		pruebaBotonCallback);
-	
-	//CEGUIQuack::Instance()->createImage("Cuchao", "cuchao.png", { 0.1,0.6 }, { 300,200 });
-	//CEGUIQuack::Instance()->createText("Texto", "Esto no es un boton, es solo texto", { 0.5, 0.05 }, { 270, 50 });
 }
 
 
@@ -104,7 +97,8 @@ void QuackEnginePro::setup()
 
 	CEGUIQuack::Init();
 	CEGUIQuack::Instance()->setUp(OgreQuack::Instance()->getWindow());
-	
+
+	CallBacks::Init();
 	
 	SceneMng::Init();
 

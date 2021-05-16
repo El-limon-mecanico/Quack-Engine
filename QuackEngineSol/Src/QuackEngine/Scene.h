@@ -44,4 +44,6 @@ public:
 
 	void lastUpdate();
 
+	static void callBackBoton();
+
 };
