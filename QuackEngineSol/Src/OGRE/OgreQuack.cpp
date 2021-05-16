@@ -45,6 +45,8 @@ void OgreQuack::setupRoot()
 
 	mSM_ = mRoot_->createSceneManager();
 
+	mSM_->setShadowTechnique(SHADOWTYPE_STENCIL_ADDITIVE);
+
 	if (Ogre::RTShader::ShaderGenerator::initialize())
 	{
 		RTShader::ShaderGenerator* shadergen = RTShader::ShaderGenerator::getSingletonPtr();

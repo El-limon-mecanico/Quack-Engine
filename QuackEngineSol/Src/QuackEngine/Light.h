@@ -22,6 +22,7 @@ enum LightType
 	SPOTLIGHT = 2
 };
 
+
 class QUACK_ENGINE_PRO_API Light : public Component {
 private:
 
@@ -36,7 +37,7 @@ private:
 
 	Vector3D direction_;
 
-	float powerLevel_;
+	float distance_;
 
 	float innerAngle_;
 
@@ -70,7 +71,7 @@ public:
 
 	void setType(LightType type);
 
-	void setPowerLevel(float powerLevel);
+	void setDistance(float power);
 
 	// FUNCIONA SOLO CON SPOTLIGHT
 	void setInnerAngle(float angle);

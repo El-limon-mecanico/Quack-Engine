@@ -53,6 +53,10 @@ bool MeshRenderer::init(luabridge::LuaRef parameterTable)
 		std::cout << "ERROR: no existe la malla " << mesh << '\n';
 	}
 
+	materialName_ = readVariable<std::string>(parameterTable, "Material");
+	if (materialName_ != "")
+		setMaterial(materialName_);
+
 	//visible_ = lo que venga de LUA;								TO DO , PASAR POR LUA SI ES VISIBLE O NO
 
 	return true;
@@ -87,5 +91,6 @@ void MeshRenderer::setVisible(bool visible)
 void MeshRenderer::setMaterial(std::string materialName)
 {
 	ogreEnt_->setMaterialName(materialName);
+	ogreEnt_->setCastShadows(true);
 }
 

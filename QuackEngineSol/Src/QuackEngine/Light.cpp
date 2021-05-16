@@ -4,6 +4,7 @@
 #include <OgreLight.h>
 #include <OgreSceneNode.h>
 
+
 Light::Light() :
 	light_(nullptr),
 	node_(nullptr)
@@ -27,7 +28,8 @@ bool Light::init(luabridge::LuaRef parameterTable)
 	LuaRef dColor = readVariable<LuaRef>(parameterTable, "DiffuseColor");
 	LuaRef sColor = readVariable<LuaRef>(parameterTable, "SpecularColor");
 	LuaRef dir = readVariable<LuaRef>(parameterTable, "Direction");
-	powerLevel_ = readVariable<float>(parameterTable, "PowerLevel");
+	distance_ = readVariable<float>(parameterTable, "Distance");
+	distance_ *= (distance_ * distance_);
 	innerAngle_ = readVariable<float>(parameterTable, "InnerAngle");
 	outerAngle_ = readVariable<float>(parameterTable, "OuterAngle");
 	isOn = readVariable<bool>(parameterTable, "isOn");
@@ -45,11 +47,12 @@ void Light::onEnable()
 		light_ = OgreQuack::Instance()->createLigth((Ogre::LightTypes)lightType_);
 		node_ = transform->getNode()->createChildSceneNode();
 		node_->attachObject(light_);
-		node_->lookAt(Vector3D::toOgre(direction_), Ogre::Node::TransformSpace::TS_WORLD);
+		node_->lookAt(direction_.toOgrePosition(), Ogre::Node::TransformSpace::TS_WORLD);
 
 		light_->setDiffuseColour(diffuseColor_.x, diffuseColor_.y, diffuseColor_.z);
 		light_->setSpecularColour(specularColor_.x, specularColor_.y, specularColor_.z);
-		light_->setPowerScale(powerLevel_);
+		light_->setCastShadows(true);
+		setDistance(distance_);
 		if (lightType_ = SPOTLIGHT) {
 			light_->setSpotlightInnerAngle(Ogre::Radian(Ogre::Degree(innerAngle_)));
 			light_->setSpotlightOuterAngle(Ogre::Radian(Ogre::Degree(innerAngle_)));
@@ -87,16 +90,19 @@ void Light::setDirection(Vector3D orientation, bool global)
 void Light::setType(LightType type)
 {
 	light_->setType((Ogre::Light::LightTypes)type);
-	if(lightType_ = SPOTLIGHT){
+	if (lightType_ = SPOTLIGHT) {
 		light_->setSpotlightInnerAngle(Ogre::Radian(Ogre::Degree(innerAngle_)));
 		light_->setSpotlightOuterAngle(Ogre::Radian(Ogre::Degree(innerAngle_)));
 	}
 }
 
-void Light::setPowerLevel(float powerLevel)
+void Light::setDistance(float distance)
 {
-	powerLevel_ = powerLevel;
-	light_->setPowerScale(powerLevel);
+	distance_ = distance;
+	float linear = 4.5 / distance;
+	float quadratic = 75.0 / (distance_ * distance_);
+
+	light_->setAttenuation(distance_, 0.8, linear, quadratic);
 }
 
 void Light::setInnerAngle(float angle)
