@@ -73,9 +73,6 @@
     <ClInclude Include="..\..\Src\QuackEngine\QuackCamera.h" />
     <ClInclude Include="..\..\Src\QuackEngine\Light.h" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\bin\Assets\lua\Scenes\scene1.lua" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>

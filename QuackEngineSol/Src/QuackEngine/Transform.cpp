@@ -5,12 +5,12 @@
 #include "OgreQuack.h"
 
 
-Transform::Transform(Vector3D pos, Vector3D rot, Vector3D scale) : globalPosition_(pos), globalRotation_(rot), scale(scale)
+Transform::Transform(Vector3D pos, Vector3D rot, Vector3D localScale_) : globalPosition_(pos), globalRotation_(rot), localScale_(localScale_)
 {
 	node_ = OgreQuack::Instance()->getSceneManager()->getRootSceneNode()->createChildSceneNode();
 	setParent(trRoot_.get());
 }
-Transform::Transform(Ogre::SceneNode* n) : globalPosition_(), globalRotation_(), scale(1, 1, 1),
+Transform::Transform(Ogre::SceneNode* n) : globalPosition_(), globalRotation_(), localScale_(1, 1, 1),
 right(1, 0, 0),
 forward(0, 0, 1),
 up(0, 1, 0)
@@ -23,9 +23,9 @@ bool Transform::init(luabridge::LuaRef parameterTable)
 	LuaRef pos = readVariable<LuaRef>(parameterTable, "Position");
 	setGlobalPosition(Vector3D(pos[1], pos[2], pos[3]));
 	LuaRef rot = readVariable<LuaRef>(parameterTable, "Rotation");
-	globalRotation_ = Vector3D(rot[1], rot[2], rot[3]);
+	setGlobalRotation(Vector3D(rot[1], rot[2], rot[3]));
 	LuaRef scl = readVariable<LuaRef>(parameterTable, "Scale");
-	scale = Vector3D(scl[1], scl[2], scl[3]);
+	setScale(Vector3D(scl[1], scl[2], scl[3]));
 
 	//TODO: HAY QUE METER LOS HIJOS POR LUA
 
@@ -90,7 +90,7 @@ void Transform::physicsUpdateTr()
 
 void Transform::onEnable()
 {
-	node_->setScale(Vector3D::toOgre(scale));
+	node_->setScale(Vector3D::toOgre(localScale_));
 	node_->_setDerivedPosition(globalPosition_.toOgrePosition());
 	node_->_setDerivedOrientation(globalRotation_.toOgreRotation());
 }
@@ -114,12 +114,6 @@ void Transform::eraseParent()
 	updateRb();
 }
 
-
-void Transform::Scale(Vector3D s)
-{
-	scale += s;
-}
-
 void Transform::Translate(Vector3D t, bool global)
 {
 	if (global)
@@ -139,7 +133,26 @@ void Transform::Rotate(Vector3D r, bool global)
 	updateChildren();
 }
 
-void Transform::setRotation(Vector3D v)
+void Transform::Scale(Vector3D s)
+{
+	node_->scale(Vector3D::toOgre(s));
+	globalScale_ = node_->_getDerivedScale();
+	localScale_ = node_->getScale();
+	updateRb();
+	updateChildren();
+}
+
+void Transform::setLocalRotation(Vector3D v)
+{
+	node_->setOrientation(v.toOgreRotation());
+	globalRotation_ = Vector3D::fromOgreRotation(node_->_getDerivedOrientation());
+	localRotation_ = Vector3D::fromOgreRotation(node_->getOrientation());
+	recalculateAxes();
+	updateRb();
+	updateChildren();
+}
+
+void Transform::setGlobalRotation(Vector3D v)
 {
 	node_->_setDerivedOrientation(v.toOgreRotation());
 	globalRotation_ = Vector3D::fromOgreRotation(node_->_getDerivedOrientation());
@@ -156,8 +169,8 @@ void Transform::setGlobalPosition(Vector3D v)
 	globalPosition_ = Vector3D::fromOgrePosition(node_->_getDerivedPosition());
 	updateRb();
 	updateChildren();
-	//localPosition_ = globalPosition_ - parent_->globalPosition_;
 }
+
 
 void Transform::setLocalPosition(Vector3D v)
 {
@@ -168,6 +181,15 @@ void Transform::setLocalPosition(Vector3D v)
 	updateChildren();
 }
 
+void Transform::setScale(Vector3D v)
+{
+	node_->setScale(Vector3D::toOgre(v));
+	globalScale_ = node_->_getDerivedScale();
+	localScale_ = node_->getScale();
+	updateRb();
+	updateChildren();
+
+}
 
 void Transform::moveGlobalPosition(Vector3D v)
 {
@@ -176,7 +198,6 @@ void Transform::moveGlobalPosition(Vector3D v)
 	localPosition_ = Vector3D::fromOgrePosition(node_->getPosition());
 	updateRb();
 	updateChildren();
-	//localPosition_ = globalPosition_ - parent_->globalPosition_;
 }
 
 void Transform::moveLocalPosition(Vector3D v)
@@ -190,26 +211,19 @@ void Transform::moveLocalPosition(Vector3D v)
 
 void Transform::recalculateAxes()
 {
-	Vector3D rot = globalRotation_ * 3.14159265358979323846264338327950288f / 180;
-	forward.x = cos(rot.x) * sin(rot.y);
-	forward.y = -sin(rot.x);
-	forward.z = cos(rot.x) * cos(rot.y);
-
-	right.x = cos(rot.y);
-	right.y = 0;
-	right.z = -sin(rot.y);
-
-	up = Vector3D::crossProduct(forward, right);
+	right = node_->_getDerivedOrientation().xAxis();
+	up = node_->_getDerivedOrientation().yAxis();
+	forward = node_->_getDerivedOrientation().zAxis();
 }
 
 
 void Transform::updateChildren()
 {
 	for (Transform* t : children_)
-		t->recalculatePosition();
+		t->recalculateTransform();
 }
 
-void Transform::recalculatePosition()
+void Transform::recalculateTransform()
 {
 	if (entity_ && entity_->name() == "Mono") {
 		std::cout << globalPosition_ << "\n";
@@ -218,6 +232,8 @@ void Transform::recalculatePosition()
 	//globalPosition_ = Vector3D::localToGlobalPosition(localPosition_, parent_->globalPosition_, parent_->globalRotation_);
 	localPosition_ = Vector3D::fromOgrePosition(node_->getPosition());
 	globalPosition_ = Vector3D::fromOgrePosition(node_->_getDerivedPosition());
+	localScale_ = node_->getScale();
+	globalScale_ = node_->_getDerivedScale();
 	recalculateAxes();
 	updateRb();
 	updateChildren();

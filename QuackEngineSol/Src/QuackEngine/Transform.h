@@ -35,6 +35,8 @@ private:
 	Vector3D localRotation_;
 	Vector3D globalRotation_;
 
+	Vector3D localScale_;
+	Vector3D globalScale_;
 
 
 	void moveGlobalPosition(Vector3D v);
@@ -42,15 +44,14 @@ private:
 	
 	void recalculateAxes();
 
-	Vector3D scale;
 
 	void updateChildren();
-	void recalculatePosition();
+	void recalculateTransform();
 
 	void updateRb();
 
 public:
-	Transform(Vector3D pos = Vector3D(), Vector3D rot = Vector3D(), Vector3D scale = Vector3D(1, 1, 1));
+	Transform(Vector3D pos = Vector3D(), Vector3D rot = Vector3D(), Vector3D localScale_ = Vector3D(1, 1, 1));
 	virtual ~Transform() {};
 	
 	static Transform* InitRoot();
@@ -66,14 +67,14 @@ public:
 
 	inline Transform& operator=(const Transform& t) {
 		globalPosition_ = t.globalPosition_;
-		scale = t.scale;
+		localScale_ = t.localScale_;
 		globalRotation_ = t.globalRotation_;
 		entity_ = t.entity_;
 		return *this;
 	}
 	inline Transform& operator=(Transform&& t) noexcept {
 		globalPosition_ = t.globalPosition_;
-		scale = t.scale;
+		localScale_ = t.localScale_;
 		globalRotation_ = t.globalRotation_;
 		t.entity_ = nullptr;
 		return *this;
@@ -120,10 +121,14 @@ public:
 	Vector3D rotation() { return globalRotation_; }
 	Vector3D localRotation() { return localRotation_; }
 
-	void setRotation(Vector3D v);
-	void setGlobalPosition(Vector3D v);
+	Vector3D scale() { return globalScale_; }
+	Vector3D localScale() { return localScale_; }
+
+	void setLocalRotation(Vector3D v);
+	void setGlobalRotation(Vector3D v);
 	void setLocalPosition(Vector3D v);
-	Vector3D globalPosition() { return globalPosition_; };
+	void setGlobalPosition(Vector3D v);
+	void setScale(Vector3D v);
 
 #pragma endregion
 };

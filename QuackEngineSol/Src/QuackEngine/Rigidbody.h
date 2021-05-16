@@ -60,6 +60,9 @@ private:
 
 	bool static_ = false;
 
+	Vector3D positionConstrains_; 
+	Vector3D rotationConstrains_;
+
 public:
 
 	Rigidbody();
@@ -105,4 +108,15 @@ public:
 	void setStatic();
 
 	bool isStatic();
+
+	Vector3D velocity();
+
+	void setVelocity(Vector3D v);
+
+	void setRotationConstrains(bool x , bool y, bool z);
+
+	void setPositionConstrains(bool x, bool y, bool z);
+
+	Vector3D positionConstrains() { return positionConstrains_; }
+	Vector3D rotationConstrains() { return rotationConstrains_; }
 };
