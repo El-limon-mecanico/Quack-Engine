@@ -28,6 +28,10 @@ bool Rigidbody::init(luabridge::LuaRef parameterTable)
 	mass_ = readVariable<int>(parameterTable, "Mass");
 	trigger_ = readVariable<bool>(parameterTable, "Trigger");
 	static_ = readVariable<bool>(parameterTable, "Static");
+	LuaRef posCons = readVariable<LuaRef>(parameterTable, "PositionConstrains");
+	LuaRef rotCons = readVariable<LuaRef>(parameterTable, "RotationConstrains");
+	positionConstrains_ = Vector3D(posCons[1], posCons[2], posCons[3]);
+	rotationConstrains_ = Vector3D(rotCons[1], rotCons[2], rotCons[3]);
 
 	if (type == "Box") colType_ = CT_BOX;
 	else if (type == "Sphere")colType_ = CT_SPHERE;
@@ -46,7 +50,6 @@ void Rigidbody::setRigidbody(int mass, ColliderType type, bool trigger, bool sta
 	rb_ = BulletQuack::Instance()->addRigidBody(mass, renderCmp->getOgreEntity(), t, &sendContacts, this);
 
 	std::cout << rb_->getCollisionFlags() << std::endl;
-
 
 	setTrigger(trigger);
 
@@ -91,6 +94,8 @@ void Rigidbody::onEnable()
 {
 	if (firstEnable_) {
 		setRigidbody(mass_, colType_, trigger_, static_);
+		setPositionConstrains(positionConstrains_.x, positionConstrains_.y, positionConstrains_.z);
+		setRotationConstrains(rotationConstrains_.x, rotationConstrains_.y, rotationConstrains_.z);
 	}
 	else {
 		BulletQuack::Instance()->addRigidBody(rb_);
@@ -137,7 +142,7 @@ void Rigidbody::setStatic(bool statc)
 void Rigidbody::resetTransform()
 {
 	btTransform tr = rb_->getCenterOfMassTransform();
-	tr.setOrigin(transform->globalPosition().toBulletPosition());
+	tr.setOrigin(transform->position().toBulletPosition());
 	tr.setRotation(transform->rotation().toBulletRotation());
 
 	rb_->setWorldTransform(tr);
@@ -190,4 +195,25 @@ bool Rigidbody::isStatic()
 	return getMass() == 0;
 }
 
+Vector3D Rigidbody::velocity()
+{
+	return Vector3D::fromBulletPosition(rb_->getLinearVelocity());
+}
 
+void Rigidbody::setVelocity(Vector3D v)
+{
+	rb_->setLinearVelocity(v.toBulletPosition());
+}
+
+void Rigidbody::setPositionConstrains(bool x, bool y, bool z)
+{
+	positionConstrains_ = Vector3D(x, y, z);
+	rb_->setLinearFactor(btVector3(!(int)x, !(int)y, !(int)z));
+}
+
+
+void Rigidbody::setRotationConstrains(bool x, bool y, bool z)
+{
+	rotationConstrains_ = Vector3D(x, y, z);
+	rb_->setAngularFactor(btVector3(!(int)x, !(int)y, !(int)z));
+}
