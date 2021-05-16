@@ -74,12 +74,14 @@ CEGUI::Window* CEGUIQuack::createWidget(std::string type, std::string name, std:
 }
 
 
-void CEGUIQuack::createButton(std::string name, std::string text, std::pair<float, float> pos, std::pair<float, float> size, void (*func)())
+void CEGUIQuack::createButton(std::string name, std::string text, std::pair<float, float> pos, std::pair<float, float> size, std::function<void()>func)
 {
 	CEGUI::Window* newWidget = nullptr;
 	try	{ newWidget = createWidget("WindowsLook/Button", name, pos, size);	}
 	catch (std::exception e) { std::cout << "No se ha podido crear el boton: " << name << "\n"; }
 
+
+	
 	newWidget->subscribeEvent(CEGUI::PushButton::EventClicked, func);
 	newWidget->setText(text);
 }
