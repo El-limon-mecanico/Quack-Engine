@@ -57,15 +57,12 @@ QuackEnginePro::~QuackEnginePro() {
 	delete quackTime_;	quackTime_ = nullptr;
 };
 
-bool QuackEnginePro::Init()
+bool QuackEnginePro::Init(std::string name)
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-#if (defined _DEBUG) && (defined _WIN32)
-	int* a = new int();		// para que estemos seguros de que siempre se estan viendo los memory leaks
-#endif
 
 	assert(instance_.get() == nullptr);
-	instance_.reset(new QuackEnginePro());
+	instance_.reset(new QuackEnginePro(name));
 	return instance_.get();
 }
 
@@ -80,7 +77,7 @@ void QuackEnginePro::setup()
 {
 	readAssetsRoute();
 	
-	OgreQuack::Init();
+	OgreQuack::Init(windowName);
 
 	ResourceMng::Init(assets_route);
 	ResourceMng::Instance()->setup(); //Carga de recursos
@@ -134,6 +131,7 @@ void QuackEnginePro::update()
 		pollEvents();
 
 		if (fixedTime > FIXED_TIME_UPDATE) {
+			std::cout << "Fixed" << std::endl;
 			SceneMng::Instance()->fixedUpdate();
 			fixedTime = 0;
 		}

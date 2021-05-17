@@ -29,6 +29,8 @@ private:
 
 	SDL_Window* sdlWindow_;
 
+	std::string name_;
+
 	int screen_width_ = 1000;
 
 	int screen_height_ = 700;
@@ -39,12 +41,12 @@ private:
 
 public:
 
-	static bool Init();
+	static bool Init(std::string name);
 
 	// devuelve puntero al singleton
 	static OgreQuack* Instance();
 
-	OgreQuack() {
+	OgreQuack(std::string name): name_(name) {
 		setupRoot();
 	}
 

@@ -45,12 +45,17 @@ void Prueba::start()
 
 void Prueba::fixedUpdate()
 {
+
+
 	//std::cout << transform->rotation() << "\n";
 	//entity_->getComponent<Rigidbody>()->addTorque({ 0,1,0 });
 }
 
 void Prueba::update()
 {
+	scalealgo += QuackEnginePro::Instance()->time()->deltaTime();
+
+	transform->setScale({ abs(sin(scalealgo)),abs(sin(scalealgo)),abs(sin(scalealgo)) });
 	/*transform->Translate(Vector3D(0, -1, 0) * QuackEnginePro::Instance()->time()->deltaTime());
 	transform->Rotate(Vector3D(45, 0, 90) * QuackEnginePro::Instance()->time()->deltaTime());*/
 	//if (transform->globalPosition().y < -10) {

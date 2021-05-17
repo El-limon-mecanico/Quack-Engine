@@ -150,6 +150,7 @@ void Rigidbody::resetTransform()
 	tr.setRotation(transform->rotation().toBulletRotation());
 
 	rb_->setWorldTransform(tr);
+	rb_->getCollisionShape()->setLocalScaling(Vector3D::toBullet(transform->localScale()));
 	rb_->getMotionState()->setWorldTransform(tr);
 }
 

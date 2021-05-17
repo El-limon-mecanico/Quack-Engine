@@ -12,9 +12,9 @@ using namespace Ogre;
 std::unique_ptr<OgreQuack>  OgreQuack::instance_;
 
 // AQUI FALTA MANEJO DE ERRORES Y EXCEPCIONES (no, no?)
-bool OgreQuack::Init() {
+bool OgreQuack::Init(std::string name) {
 	assert(instance_.get() == nullptr);
-	instance_.reset(new OgreQuack());
+	instance_.reset(new OgreQuack(name));
 	return instance_.get();
 }
 
@@ -63,7 +63,7 @@ void OgreQuack::setupWindow()
 
 	Uint32 flags = SDL_WINDOW_ALLOW_HIGHDPI; //SDL_WINDOW_RESIZABLE
 
-	sdlWindow_ = SDL_CreateWindow("ventana to guapa", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, screen_width_, screen_height_, flags);
+	sdlWindow_ = SDL_CreateWindow(name_.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, screen_width_, screen_height_, flags);
 
 	SDL_SysWMinfo wmInfo;
 	SDL_VERSION(&wmInfo.version);
@@ -79,7 +79,7 @@ void OgreQuack::setupWindow()
 
 	params["externalWindowHandle"] = Ogre::StringConverter::toString(size_t(wmInfo.info.win.window));
 
-	window_ = mRoot_->createRenderWindow("ventana to guapa", screen_width_, screen_height_, false, &params);
+	window_ = mRoot_->createRenderWindow(name_.c_str(), screen_width_, screen_height_, false, &params);
 
 	SDL_SetWindowGrab(sdlWindow_, SDL_bool(false));
 	SDL_ShowCursor(false);

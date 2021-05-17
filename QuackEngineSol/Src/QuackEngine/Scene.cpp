@@ -52,7 +52,7 @@ bool Scene::createEntity(const std::string& fileName, LuaRef entInfo)
 		entity->addComponent(components[i], entInfo.rawget(components[i]));
 	}
 
-	entity->setActive(true);						// COMPROBAR SI EST� AC
+	entity->setActive(readVariable<bool>(entInfo, "Active"));
 
 	addEntity(entity);
 
@@ -80,7 +80,7 @@ bool Scene::createUI(luabridge::LuaRef info)
 		}
 		else if (type == "Text")
 		{
-			CEGUIQuack::Instance()->createText(name,readVariable<std::string>(cmpInfo, "Text"),
+			CEGUIQuack::Instance()->createText(name, readVariable<std::string>(cmpInfo, "Text"),
 				{ pos[1],pos[2] }, { size[1], size[2] }, readVariable<std::string>(cmpInfo, "Style"));
 		}
 		else if (type == "Image")
@@ -92,8 +92,7 @@ bool Scene::createUI(luabridge::LuaRef info)
 		{
 			CEGUIQuack::Instance()->createButton(name, readVariable<std::string>(cmpInfo, "Text"),
 				{ pos[1],pos[2] }, { size[1], size[2] }, CallBacks::instance()->getMethod(
-				readVariable<std::string>(cmpInfo, "CallBackFunction")), readVariable<std::string>(cmpInfo, "Style"));
-
+					readVariable<std::string>(cmpInfo, "CallBackFunction")), readVariable<std::string>(cmpInfo, "Style"));
 		}
 	}
 	//tan solo tenemos 3 tipos de elementos de ui
@@ -196,6 +195,27 @@ void Scene::clearEntities()
 		else
 			it++;
 	}
+}
+
+QuackEntity* Scene::getObjectWithName(std::string name)
+{
+	for (QuackEntity* e : entities_) {
+		if (e->name() == name)
+			return e;
+	}
+	return nullptr;
+}
+
+std::vector<QuackEntity*> Scene::getAllObjectsWithName(std::string name)
+{
+	std::vector<QuackEntity*> eS = std::vector<QuackEntity*>();
+
+	for (QuackEntity* e : entities_) {
+		if (e->name() == name)
+			eS.push_back(e);
+	}
+
+	return eS;
 }
 
 void Scene::callBackBoton()

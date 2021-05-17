@@ -31,6 +31,8 @@ private:
 	
 	std::string assets_route = "";
 
+	std::string windowName;
+
 	SDL_Window* sdlWindow_;
 
 	QuackTime* quackTime_;
@@ -57,13 +59,13 @@ private:
 
 public:
 
-	QuackEnginePro() {
+	QuackEnginePro(std::string name): windowName(name) {
 		setup();
 	}
 
 	~QuackEnginePro();
 
-	static bool Init();
+	static bool Init(std::string name = "PONLE UN NOMBRE A LA VENTANA EN EL INIT");
 
 	static QuackEnginePro* Instance();
 
