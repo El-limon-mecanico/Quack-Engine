@@ -21,22 +21,28 @@ class QUACK_ENGINE_PRO_API InputManager
 private:
 	static std::unique_ptr<InputManager> instance_;
 
-	struct MousePosition
+	struct MousePositionAbsolute
 	{
 		int x = 0;
 		int y = 0;
-	} mousePosition;
+	} mousePositionAbsolute_;
+
+	struct MousePositionRelative
+	{
+		float x = 0;
+		float y = 0;
+	} mousePositionRelative_;
 
 	struct MouseButtons {
 		bool leftDown = false;
 		bool middleDown = false;
 		bool rightDown = false;
-	}mouseButtons;
+	}mouseButtons_;
 
 	struct MouseWheel {
 		int x = 0;
 		int y = 0;
-	}mouseWheel;
+	}mouseWheel_;
 
 	void injectInputCegui(SDL_Event event);
 
@@ -56,7 +62,9 @@ public:
 
 	void MouseWheelChange(int coordinate, int value);
 
-	MousePosition getMousePosition();
+	MousePositionAbsolute getMousePositionAbsolute();
+
+	MousePositionRelative getMousePositionRelative();
 
 	MouseButtons getMouseButtons();
 

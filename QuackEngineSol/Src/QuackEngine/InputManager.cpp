@@ -5,6 +5,7 @@
 #include "SDL_keycode.h"
 #include <iostream>
 #include "CEGUIQuack.h"
+#include "OgreQuack.h"
 
 std::unique_ptr<InputManager> InputManager::instance_;
 
@@ -20,7 +21,7 @@ void InputManager::injectInputCegui(SDL_Event event)
 	}
 	else if (event.type == SDL_MOUSEMOTION)
 	{
-		CEGUI::System::getSingleton().getDefaultGUIContext().injectMousePosition(mousePosition.x, mousePosition.y);
+		CEGUI::System::getSingleton().getDefaultGUIContext().injectMousePosition(mousePositionAbsolute_.x, mousePositionAbsolute_.y);
 	}
 	else if (event.type == SDL_KEYDOWN)
 	{
@@ -105,22 +106,22 @@ void InputManager::ManageInput(SDL_Event event)
 	switch (event.type)
 	{
 	case SDL_MOUSEMOTION:
-		mousePosition = { event.motion.x , event.motion.y };
+		mousePositionAbsolute_ = { event.motion.x , event.motion.y };
 		//std::cout << "INPUT MANAGER POS RATON: " << event.motion.x << " , " << event.motion.y << "\n";
 		break;
 	case SDL_MOUSEBUTTONDOWN: case SDL_MOUSEBUTTONUP:
 		switch (event.button.button)
 		{
 		case SDL_BUTTON_LEFT:
-			mouseButtons.leftDown = event.button.state;
+			mouseButtons_.leftDown = event.button.state;
 			//std::cout << "INPUT MANAGER BOTON IZQUIERDO RATON PULSADO: " << event.button.state << "\n";
 			break;
 		case SDL_BUTTON_MIDDLE:
-			mouseButtons.middleDown = event.button.state;
+			mouseButtons_.middleDown = event.button.state;
 			//std::cout << "INPUT MANAGER BOTON RULETA RATON PULSADO: " << event.button.state << "\n";
 			break;
 		case SDL_BUTTON_RIGHT:
-			mouseButtons.rightDown = event.button.state;
+			mouseButtons_.rightDown = event.button.state;
 			//std::cout << "INPUT MANAGER BOTON DERECHO RATON PULSADO: " << event.button.state << "\n";
 			break;
 		default:
@@ -128,12 +129,12 @@ void InputManager::ManageInput(SDL_Event event)
 		}
 		break;
 	case SDL_MOUSEWHEEL:
-		if (mouseWheel.x != event.wheel.x)
+		if (mouseWheel_.x != event.wheel.x)
 		{
 			MouseWheelChange(0, event.wheel.x);
 			//std::cout << "INPUT MANAGER RUEDA X: " << event.wheel.x << "\n";
 		}
-		else if (mouseWheel.y != event.wheel.y)
+		else if (mouseWheel_.y != event.wheel.y)
 		{
 			MouseWheelChange(1, event.wheel.y);
 			//std::cout << "INPUT MANAGER RUEDA Y: " << event.wheel.y << "\n";
@@ -157,25 +158,33 @@ bool InputManager::isKeyDown(SDL_Scancode code)
 void InputManager::MouseWheelChange(int coordinate, int value)
 {
 	if (coordinate) {
-		mouseWheel.y = value;
+		mouseWheel_.y = value;
 	}
-	else mouseWheel.x = value;
+	else mouseWheel_.x = value;
 }
 
-//devuelve un struct con x,y coordenadas del raton, con origen en la esquina superior izquierda
-InputManager::MousePosition InputManager::getMousePosition() 
+//devuelve un struct con (dos int) x,y coordenadas del raton, con origen en la esquina superior izquierda
+InputManager::MousePositionAbsolute InputManager::getMousePositionAbsolute() 
 {
-	return mousePosition;
+	return mousePositionAbsolute_;
+}
+
+//devuelve un struct con (dos double) x,y coordenadas del raton en valor relativo(de 0,0 a 1,1), con origen en la esquina superior izquierda
+InputManager::MousePositionRelative InputManager::getMousePositionRelative()
+{
+	mousePositionRelative_ = {	(float)mousePositionAbsolute_.x / OgreQuack::Instance()->getWindowW(),
+								(float)mousePositionAbsolute_.x / OgreQuack::Instance()->getWindowH() };
+	return mousePositionRelative_;
 }
 
 //devuelve un struct con booleanos que estan en true cuando se pulsa y pasan a false al soltar
 InputManager::MouseButtons InputManager::getMouseButtons()
 {
-	return mouseButtons;
+	return mouseButtons_;
 }
 
 //devuelve un struct con coordenadas x e y y el cambio en el ultimo bucle (si scrolleas hacia abajo, la componente y sería -1)
 InputManager::MouseWheel InputManager::getMouseWheel()
 {
-	return mouseWheel;
+	return mouseWheel_;
 }
