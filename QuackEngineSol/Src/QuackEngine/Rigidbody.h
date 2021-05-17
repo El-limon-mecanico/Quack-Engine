@@ -98,9 +98,9 @@ public:
 
 	float getMass();
 
-	void addForce(Vector3D force, ForceMode mode = FORCE, bool local = false);
+	void addForce(Vector3D force, ForceMode mode = FORCE);
 
-	void addTorque(Vector3D force, ForceMode mode = FORCE, bool local = false);
+	void addTorque(Vector3D force, ForceMode mode = FORCE);
 
 	void clearForce();
 

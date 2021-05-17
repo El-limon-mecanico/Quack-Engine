@@ -69,14 +69,14 @@ bool QuackEnginePro::Init(std::string name)
 QuackEnginePro* QuackEnginePro::Instance()
 {
 	assert(instance_.get() != nullptr);
-	
+
 	return instance_.get();
 }
 
 void QuackEnginePro::setup()
 {
 	readAssetsRoute();
-	
+
 	OgreQuack::Init(windowName);
 
 	ResourceMng::Init(assets_route);
@@ -96,7 +96,7 @@ void QuackEnginePro::setup()
 	CEGUIQuack::Instance()->setUp(OgreQuack::Instance()->getWindow());
 
 	CallBacks::Init();
-	
+
 	SceneMng::Init();
 
 	InputManager::Init();
@@ -131,7 +131,6 @@ void QuackEnginePro::update()
 		pollEvents();
 
 		if (fixedTime > FIXED_TIME_UPDATE) {
-			std::cout << "Fixed" << std::endl;
 			SceneMng::Instance()->fixedUpdate();
 			fixedTime = 0;
 		}
@@ -141,9 +140,11 @@ void QuackEnginePro::update()
 		OgreQuack::Instance()->getRoot()->renderOneFrame();
 
 		SceneMng::Instance()->lateUpdate();
-		
-		SceneMng::Instance()->lastUpdate();
-		CEGUIQuack::Instance()->render(time()->deltaTime());
+
+		//CEGUIQuack::Instance()->render(time()->deltaTime());
+
+		if (!SceneMng::Instance()->lastUpdate())
+			exit = true;
 	}
 
 #if (defined _DEBUG) || !(defined _WIN32)

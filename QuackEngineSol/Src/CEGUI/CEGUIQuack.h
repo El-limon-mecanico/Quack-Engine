@@ -60,9 +60,11 @@ public:
 	void loadScheme(std::string filename);
 	void setFont(std::string filename);
 	
-	void createButton(std::string name, std::string text, std::pair<float, float> pos, std::pair<float, float> size, std::function<void()>func,std::string style);
-	void createText(std::string name, std::string text, std::pair<float, float> pos, std::pair<float, float> size, std::string style);
-	void createImage(std::string name, std::string image, std::pair<float, float> pos, std::pair<float, float> size,std::string style);
+	CEGUI::Window* createButton(std::string name, std::string text, std::pair<float, float> pos, std::pair<float, float> size, std::function<void()>func,std::string style);
+	CEGUI::Window* createText(std::string name, std::string text, std::pair<float, float> pos, std::pair<float, float> size, std::string style);
+	CEGUI::Window* createImage(std::string name, std::string image, std::pair<float, float> pos, std::pair<float, float> size,std::string style);
+
+	void removeWidget(CEGUI::Window* window);
 	
 };
 

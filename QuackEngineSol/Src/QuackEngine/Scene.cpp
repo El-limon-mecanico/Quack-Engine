@@ -80,19 +80,19 @@ bool Scene::createUI(luabridge::LuaRef info)
 		}
 		else if (type == "Text")
 		{
-			CEGUIQuack::Instance()->createText(name, readVariable<std::string>(cmpInfo, "Text"),
-				{ pos[1],pos[2] }, { size[1], size[2] }, readVariable<std::string>(cmpInfo, "Style"));
+			uiEntities_.push_back(CEGUIQuack::Instance()->createText(name, readVariable<std::string>(cmpInfo, "Text"),
+				{ pos[1],pos[2] }, { size[1], size[2] }, readVariable<std::string>(cmpInfo, "Style")));
 		}
 		else if (type == "Image")
 		{
-			CEGUIQuack::Instance()->createImage(name, readVariable<std::string>(cmpInfo, "Image"),
-				{ pos[1],pos[2] }, { size[1], size[2] }, readVariable<std::string>(cmpInfo, "Style"));
+			uiEntities_.push_back(CEGUIQuack::Instance()->createImage(name, readVariable<std::string>(cmpInfo, "Image"),
+				{ pos[1],pos[2] }, { size[1], size[2] }, readVariable<std::string>(cmpInfo, "Style")));
 		}
 		else if (type == "Button")
 		{
-			CEGUIQuack::Instance()->createButton(name, readVariable<std::string>(cmpInfo, "Text"),
+			uiEntities_.push_back(CEGUIQuack::Instance()->createButton(name, readVariable<std::string>(cmpInfo, "Text"),
 				{ pos[1],pos[2] }, { size[1], size[2] }, CallBacks::instance()->getMethod(
-					readVariable<std::string>(cmpInfo, "CallBackFunction")), readVariable<std::string>(cmpInfo, "Style"));
+					readVariable<std::string>(cmpInfo, "CallBackFunction")), readVariable<std::string>(cmpInfo, "Style")));
 		}
 	}
 	//tan solo tenemos 3 tipos de elementos de ui
@@ -106,6 +106,12 @@ Scene::~Scene()
 	for (QuackEntity* qEnt : entities_) {
 		delete qEnt;
 		qEnt = nullptr;
+	}
+
+	for (CEGUI::Window* w : uiEntities_) {
+		CEGUIQuack::Instance()->removeWidget(w);
+		delete w;
+		w = nullptr;
 	}
 }
 

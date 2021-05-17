@@ -55,7 +55,7 @@ void Prueba::update()
 {
 	scalealgo += QuackEnginePro::Instance()->time()->deltaTime();
 
-	transform->setScale({ abs(sin(scalealgo)),abs(sin(scalealgo)),abs(sin(scalealgo)) });
+	//transform->setScale({ abs(sin(scalealgo)),abs(sin(scalealgo)),abs(sin(scalealgo)) });
 	/*transform->Translate(Vector3D(0, -1, 0) * QuackEnginePro::Instance()->time()->deltaTime());
 	transform->Rotate(Vector3D(45, 0, 90) * QuackEnginePro::Instance()->time()->deltaTime());*/
 	//if (transform->globalPosition().y < -10) {
@@ -71,6 +71,9 @@ void Prueba::update()
 void Prueba::onCollisionEnter(QuackEntity* other, Vector3D point)
 {
 	//entity_->getComponent<Rigidbody>()->addForce(Vector3D(0, 10, 0), IMPULSE);
+	
+	std::string carga = "Scenes/" + valor3 + ".lua";
+	SceneMng::Instance()->loadScene(carga, valor3);
 	std::cout << "Yo " << entity_->name() << " acabo de chocar con " << other->name() << "\n\n";
 }
 
