@@ -36,14 +36,14 @@ Scene::Scene(const std::string& file, const std::string& name)
 	}
 }
 
-bool Scene::createEntity(const std::string& fileName, LuaRef entInfo)
+QuackEntity* Scene::createEntity(const std::string& fileName, LuaRef entInfo)
 {
 	QuackEntity* entity = new QuackEntity(fileName);
 
 	//leemos el array de componentes
 	LuaRef components = entInfo.rawget("Components");
 	//comprobacion de errores
-	if (components.isNil()) { std::cout << "ERROR: No se ha podido leer el Array 'Components' \n"; return false; }
+	if (components.isNil()) { std::cout << "ERROR: No se ha podido leer el Array 'Components' \n"; return nullptr; }
 
 	for (int i = 1; i <= components.length(); i++)
 	{
@@ -52,11 +52,22 @@ bool Scene::createEntity(const std::string& fileName, LuaRef entInfo)
 		entity->addComponent(components[i], entInfo.rawget(components[i]));
 	}
 
+	LuaRef children = entInfo.rawget("Children");
+	LuaRef list = children.rawget("entities");
+	
+
+	if (!list.isNil()) {
+		for (int i = 1; i <= list.length(); i++) {
+			enableExceptions(list[i]);
+			createEntity(list[i], children.rawget(list[i]))->transform()->setParent(entity->transform());
+		}
+	}
+
 	entity->setActive(readVariable<bool>(entInfo, "Active"));
 
 	addEntity(entity);
 
-	return true;
+	return entity;
 }
 
 bool Scene::createUI(luabridge::LuaRef info)

@@ -33,14 +33,6 @@ bool Prueba::init(luabridge::LuaRef parameterTable)
 
 void Prueba::start()
 {
-	if (entity_->getComponent<Rigidbody>()) {
-		QuackEntity* e = new QuackEntity();
-		e->transform()->setGlobalPosition({ 2, 10, 0 });
-		e->addComponent<MeshRenderer>()->setMeshByPrefab(PT_CUBE);
-		e->addComponent<Rigidbody>()->setRigidbody(1, CT_BOX);
-		SceneMng::Instance()->getCurrentScene()->addEntity(e);
-		//entity_->getComponent<Rigidbody>()->setGravity(Vector3D());
-	}
 }
 
 void Prueba::fixedUpdate()
@@ -72,8 +64,8 @@ void Prueba::onCollisionEnter(QuackEntity* other, Vector3D point)
 {
 	//entity_->getComponent<Rigidbody>()->addForce(Vector3D(0, 10, 0), IMPULSE);
 	
-	std::string carga = "Scenes/" + valor3 + ".lua";
-	SceneMng::Instance()->loadScene(carga, valor3);
+	/*std::string carga = "Scenes/" + valor3 + ".lua";
+	SceneMng::Instance()->pushNewScene(carga, valor3);*/
 	std::cout << "Yo " << entity_->name() << " acabo de chocar con " << other->name() << "\n\n";
 }
 

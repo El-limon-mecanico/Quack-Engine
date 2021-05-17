@@ -28,7 +28,7 @@ private:
 	std::vector<QuackEntity*> entities_;
 	std::vector<CEGUI::Window*> uiEntities_;
 
-	bool createEntity(const std::string& fileName, luabridge::LuaRef entInfo);
+	QuackEntity* createEntity(const std::string& fileName, luabridge::LuaRef entInfo);
 
 	bool createUI(luabridge::LuaRef info);
 

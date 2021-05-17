@@ -175,8 +175,7 @@ void QuackEnginePro::pollEvents()
 			break;
 		default:
 			InputManager::Instance()->ManageInput(event);
-			if (InputManager::Instance()->isKeyDown(SDL_SCANCODE_SPACE)) std::cout << "Pos raton x: " << InputManager::Instance()->getMousePositionRelative().x << " y " << InputManager::Instance()->getMousePositionRelative().x << "\n";
-			std::cout << "eje x: " << InputManager::Instance()->getAxis(Axis::Horizontal)<< " , " << "eje Y: " << InputManager::Instance()->getAxis(Axis::Vertical) << "\n";
+			//if (InputManager::Instance()->isKeyDown(SDL_SCANCODE_SPACE)) std::cout << "Pos raton x: " << InputManager::Instance()->getMousePositionRelative().x << " y " << InputManager::Instance()->getMousePositionRelative().x << "\n";
 			break;
 		}
 	}
