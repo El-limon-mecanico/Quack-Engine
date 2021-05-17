@@ -63,5 +63,8 @@ public:
 	Ogre::Light* createLigth(Ogre::LightTypes type = (Ogre::LightTypes)0);
 
 	void setAmbientLight(float x, float y, float z);
+
+	int getWindowH() { return screen_height_; };
+	int getWindowW() { return screen_width_; };
 };
 #endif // !_OGRE_QUACK_

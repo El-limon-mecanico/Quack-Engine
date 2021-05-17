@@ -53,7 +53,6 @@ void QuackEnginePro::readAssetsRoute()
 std::unique_ptr<QuackEnginePro>  QuackEnginePro::instance_;
 
 QuackEnginePro::~QuackEnginePro() {
-	delete fmod_quack_; fmod_quack_ = nullptr;
 	delete quackTime_;	quackTime_ = nullptr;
 };
 
@@ -66,10 +65,8 @@ bool QuackEnginePro::Init(std::string name)
 	return instance_.get();
 }
 
-QuackEnginePro* QuackEnginePro::Instance()
-{
+QuackEnginePro* QuackEnginePro::Instance() {
 	assert(instance_.get() != nullptr);
-
 	return instance_.get();
 }
 
@@ -88,7 +85,7 @@ void QuackEnginePro::setup()
 
 	BulletQuack::Init();
 
-	fmod_quack_ = new fmod_quack(assets_route);
+	fmod_quack::Init(assets_route);
 
 	FactoryManager::Init();
 
@@ -147,9 +144,9 @@ void QuackEnginePro::update()
 			exit = true;
 	}
 
-#if (defined _DEBUG) || !(defined _WIN32)
-	std::cout << "WARNING: Deberia haber al menos 4 bytes de basura\n";
-#endif
+//#if (defined _DEBUG) || !(defined _WIN32)
+	//std::cout << "WARNING: Deberia haber al menos 4 bytes de basura\n";
+//#endif
 }
 
 
@@ -178,15 +175,11 @@ void QuackEnginePro::pollEvents()
 			break;
 		default:
 			InputManager::Instance()->ManageInput(event);
-			if (InputManager::Instance()->isKeyDown(SDL_SCANCODE_SPACE)) std::cout << "INPUT MANAGER PULSANDO EL ESPACIO";
+			if (InputManager::Instance()->isKeyDown(SDL_SCANCODE_SPACE)) std::cout << "Pos raton x: " << InputManager::Instance()->getMousePositionRelative().x << " y " << InputManager::Instance()->getMousePositionRelative().x << "\n";
+			std::cout << "eje x: " << InputManager::Instance()->getAxis(Axis::Horizontal)<< " , " << "eje Y: " << InputManager::Instance()->getAxis(Axis::Vertical) << "\n";
 			break;
 		}
 	}
-}
-
-fmod_quack* QuackEnginePro::getFmodQuack()
-{
-	return fmod_quack_;
 }
 
 QuackTime* QuackEnginePro::time()

@@ -12,37 +12,51 @@
 #include <assert.h>
 #include <SDL_scancode.h>
 #include "SDL_mouse.h"
-#include <CEGUI/CEGUI.h>
+
+namespace CEGUI {
+	enum MouseButton;
+}
 
 union SDL_Event;
+
+enum Axis {
+	Horizontal,
+	Vertical
+};
 
 class QUACK_ENGINE_PRO_API InputManager
 {
 private:
 	static std::unique_ptr<InputManager> instance_;
 
-	struct MousePosition
+	struct MousePositionAbsolute
 	{
 		int x = 0;
 		int y = 0;
-	} mousePosition;
+	} mousePositionAbsolute_;
+
+	struct MousePositionRelative
+	{
+		float x = 0;
+		float y = 0;
+	} mousePositionRelative_;
 
 	struct MouseButtons {
 		bool leftDown = false;
 		bool middleDown = false;
 		bool rightDown = false;
-	}mouseButtons;
+	}mouseButtons_;
 
 	struct MouseWheel {
 		int x = 0;
 		int y = 0;
-	}mouseWheel;
+	}mouseWheel_;
 
 	void injectInputCegui(SDL_Event event);
 
 	CEGUI::MouseButton sdlMouseButtonToCegui(Uint8 buttonSDL);
 
-	CEGUI::Key::Scan sdlKeyToCegui(SDL_Scancode sdlKeycode);
+	Uint32 sdlKeyToCegui(SDL_Scancode sdlKeycode);
 
 public:
 
@@ -56,12 +70,16 @@ public:
 
 	void MouseWheelChange(int coordinate, int value);
 
-	MousePosition getMousePosition();
+	MousePositionAbsolute getMousePositionAbsolute();
+
+	MousePositionRelative getMousePositionRelative();
 
 	MouseButtons getMouseButtons();
 
 	MouseWheel getMouseWheel();
 
 	bool isKeyDown(SDL_Scancode code);
+
+	int getAxis(Axis axis);
 };
 
