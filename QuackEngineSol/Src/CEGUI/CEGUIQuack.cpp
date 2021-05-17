@@ -74,10 +74,10 @@ CEGUI::Window* CEGUIQuack::createWidget(std::string type, std::string name, std:
 }
 
 
-void CEGUIQuack::createButton(std::string name, std::string text, std::pair<float, float> pos, std::pair<float, float> size, std::function<void()>func)
+void CEGUIQuack::createButton(std::string name, std::string text, std::pair<float, float> pos, std::pair<float, float> size, std::function<void()>func,std::string style)
 {
 	CEGUI::Window* newWidget = nullptr;
-	try	{ newWidget = createWidget("WindowsLook/Button", name, pos, size);	}
+	try	{ newWidget = createWidget(style, name, pos, size);	}
 	catch (std::exception e) { std::cout << "No se ha podido crear el boton: " << name << "\n"; }
 
 
@@ -86,19 +86,19 @@ void CEGUIQuack::createButton(std::string name, std::string text, std::pair<floa
 	newWidget->setText(text);
 }
 
-void CEGUIQuack::createText(std::string name, std::string text, std::pair<float, float> pos, std::pair<float, float> size)
+void CEGUIQuack::createText(std::string name, std::string text, std::pair<float, float> pos, std::pair<float, float> size,std::string style)
 {
 	CEGUI::Window* newWidget = nullptr;
-	try { newWidget = createWidget("WindowsLook/StaticText", name, pos, size); }
+	try { newWidget = createWidget(style, name, pos, size); }
 	catch (std::exception e) { std::cout << "No se ha podido crear el texto: " << name << "\n"; }
 
 	newWidget->setProperty("Text", text);
 }
 
-void CEGUIQuack::createImage(std::string name, std::string image, std::pair<float, float> pos, std::pair<float, float> size)
+void CEGUIQuack::createImage(std::string name, std::string image, std::pair<float, float> pos, std::pair<float, float> size,std::string style)
 {
 	CEGUI::Window* newWidget = nullptr;
-	try { newWidget = createWidget("WindowsLook/StaticImage", name, pos, size); }
+	try { newWidget = createWidget(style, name, pos, size); }
 	catch (std::exception e) { std::cout << "No se ha podido crear la imagen: " << name << "\n"; }
 
 	CEGUI::ImageManager::getSingleton().addFromImageFile(name, image);
