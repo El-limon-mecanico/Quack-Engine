@@ -40,6 +40,7 @@ private:
 		Rigidbody* rb = nullptr;
 		float time = 0;
 		Vector3D point;
+		bool trigger;
 	};
 
 	btRigidBody* rb_ = nullptr;
@@ -116,6 +117,8 @@ public:
 	void setRotationConstrains(bool x , bool y, bool z);
 
 	void setPositionConstrains(bool x, bool y, bool z);
+
+	void removeCollisionData(Rigidbody* rb);
 
 	Vector3D positionConstrains() { return positionConstrains_; }
 	Vector3D rotationConstrains() { return rotationConstrains_; }

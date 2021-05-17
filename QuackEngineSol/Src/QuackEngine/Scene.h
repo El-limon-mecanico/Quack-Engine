@@ -26,11 +26,17 @@ private:
 
 	bool createUI(luabridge::LuaRef info);
 
+	void clearEntities();
+
+	bool sceneStarted = false;
+
 public:
 	Scene(const std::string& file, const std::string& name);
 	~Scene();
 
 	void addEntity(QuackEntity* e); 
+
+	void start();
 
 	void preUpdate();
 

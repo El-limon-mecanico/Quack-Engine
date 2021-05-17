@@ -10,6 +10,14 @@ Transform::Transform(Vector3D pos, Vector3D rot, Vector3D localScale_) : globalP
 	node_ = OgreQuack::Instance()->getSceneManager()->getRootSceneNode()->createChildSceneNode();
 	setParent(trRoot_.get());
 }
+
+Transform::~Transform()
+{
+	parent_->getNode()->removeChild(node_);
+	OgreQuack::Instance()->getSceneManager()->destroySceneNode(node_);
+	node_ = nullptr;
+}
+
 Transform::Transform(Ogre::SceneNode* n) : globalPosition_(), globalRotation_(), localScale_(1, 1, 1),
 right(1, 0, 0),
 forward(0, 0, 1),

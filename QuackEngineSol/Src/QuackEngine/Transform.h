@@ -52,7 +52,7 @@ private:
 
 public:
 	Transform(Vector3D pos = Vector3D(), Vector3D rot = Vector3D(), Vector3D localScale_ = Vector3D(1, 1, 1));
-	virtual ~Transform() {};
+	virtual ~Transform();
 	
 	static Transform* InitRoot();
 	Transform* RootTransform();

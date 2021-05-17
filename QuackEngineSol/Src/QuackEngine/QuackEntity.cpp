@@ -12,10 +12,12 @@ QuackEntity::QuackEntity(std::string name, bool active, std::string tag) : activ
 }
 
 QuackEntity::~QuackEntity() {
-	for (auto c : components_) {
-		delete c;
-		c = nullptr;
+	for (int i = 1; i < components_.size(); i++) {
+		delete components_[i];
+		components_[i] = nullptr;
 	}
+	delete components_[0];
+	components_.clear();
 }
 
 QuackEntity::QuackEntity(Transform* tr) :
@@ -94,7 +96,7 @@ void QuackEntity::removeComponent(const std::string& componentName)
 
 void QuackEntity::start()
 {
-	if (active_)
+	if (active_ && !destroy_)
 		for (Component* c : components_)
 			if (c->isEnable())
 				c->start();
@@ -102,7 +104,7 @@ void QuackEntity::start()
 
 void QuackEntity::preUpdate()
 {
-	if (active_)
+	if (active_ && !destroy_)
 		for (Component* c : components_)
 			if (c->isEnable())
 				c->preUpdate();
@@ -110,7 +112,7 @@ void QuackEntity::preUpdate()
 
 void QuackEntity::physicsUpdate()
 {
-	if (active_)
+	if (active_ && !destroy_)
 		for (Component* c : components_)
 			if (c->isEnable())
 				c->physicsUpdate();
@@ -118,7 +120,7 @@ void QuackEntity::physicsUpdate()
 
 void QuackEntity::fixedUpdate()
 {
-	if (active_)
+	if (active_ && !destroy_)
 		for (Component* c : components_)
 			if (c->isEnable())
 				c->fixedUpdate();
@@ -142,7 +144,7 @@ void QuackEntity::lateUpdate()
 
 void QuackEntity::lastUpdate()
 {
-	if (active_)
+	if (active_ && !destroy_)
 		for (Component* c : components_)
 			if (c->isEnable())
 				c->lastUpdate();
@@ -150,7 +152,7 @@ void QuackEntity::lastUpdate()
 
 void QuackEntity::onCollisionEnter(QuackEntity* other, Vector3D point)
 {
-	if (active_)
+	if (active_ && !destroy_)
 		for (Component* c : components_)
 			if (c->isEnable())
 				c->onCollisionEnter(other, point);
@@ -158,7 +160,7 @@ void QuackEntity::onCollisionEnter(QuackEntity* other, Vector3D point)
 
 void QuackEntity::onCollisionStay(QuackEntity* other, Vector3D point)
 {
-	if (active_)
+	if (active_ && !destroy_)
 		for (Component* c : components_)
 			if (c->isEnable())
 				c->onCollisionStay(other, point);
@@ -166,7 +168,7 @@ void QuackEntity::onCollisionStay(QuackEntity* other, Vector3D point)
 
 void QuackEntity::onCollisionExit(QuackEntity* other, Vector3D point)
 {
-	if (active_)
+	if (active_ && !destroy_)
 		for (Component* c : components_)
 			if (c->isEnable())
 				c->onCollisionExit(other, point);
@@ -174,7 +176,7 @@ void QuackEntity::onCollisionExit(QuackEntity* other, Vector3D point)
 
 void QuackEntity::onTriggerEnter(QuackEntity* other, Vector3D point)
 {
-	if (active_)
+	if (active_ && !destroy_)
 		for (Component* c : components_)
 			if (c->isEnable())
 				c->onTriggerEnter(other, point);
@@ -182,7 +184,7 @@ void QuackEntity::onTriggerEnter(QuackEntity* other, Vector3D point)
 
 void QuackEntity::onTriggerStay(QuackEntity* other, Vector3D point)
 {
-	if (active_)
+	if (active_ && !destroy_)
 		for (Component* c : components_)
 			if (c->isEnable())
 				c->onTriggerStay(other, point);
@@ -190,7 +192,7 @@ void QuackEntity::onTriggerStay(QuackEntity* other, Vector3D point)
 
 void QuackEntity::onTriggerExit(QuackEntity* other, Vector3D point)
 {
-	if (active_)
+	if (active_ && !destroy_)
 		for (Component* c : components_)
 			if (c->isEnable())
 				c->onTriggerExit(other, point);

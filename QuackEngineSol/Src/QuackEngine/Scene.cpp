@@ -7,7 +7,7 @@ Scene::Scene(const std::string& file, const std::string& name)
 {
 	//los call backs de los botones se tienen que crear antes de que se empiecen a cargar las entidades
 	CallBacks::instance()->addMethod("botonPresionado", callBackBoton);
-	
+
 	lua_State* state = readFileLua(file);
 	LuaRef refScene = readElementFromFile(state, name);
 	//sacamos el vector de entidades y las creamos
@@ -28,11 +28,11 @@ Scene::Scene(const std::string& file, const std::string& name)
 		if (ent == "UI")
 		{
 			if (!createUI(entInfo)) std::cout << "ERROR: no se ha podidio cargar la UI de la escena:  " << name;
-		}			
+		}
 		else
 		{
 			if (!createEntity(ent, entInfo)) std::cout << "ERROR: no se ha podidio cargar la entidad: " << ent;
-		}			
+		}
 	}
 }
 
@@ -52,7 +52,7 @@ bool Scene::createEntity(const std::string& fileName, LuaRef entInfo)
 		entity->addComponent(components[i], entInfo.rawget(components[i]));
 	}
 
-	entity->setActive(true);						// COMPROBAR SI ESTÁ AC
+	entity->setActive(true);						// COMPROBAR SI ESTï¿½ AC
 
 	addEntity(entity);
 
@@ -61,16 +61,16 @@ bool Scene::createEntity(const std::string& fileName, LuaRef entInfo)
 
 bool Scene::createUI(luabridge::LuaRef info)
 {
-	LuaRef components = info.rawget("Components");	
+	LuaRef components = info.rawget("Components");
 	if (components.isNil()) { std::cout << "ERROR: No se ha podido leer el Array 'Components' \n"; return false; }
 
-	
+
 	for (int i = 1; i <= components.length(); i++)
 	{
 		//carga los componentes
 		enableExceptions(components[i]);
 		LuaRef cmpInfo = info.rawget(components[i]);
-		
+
 		std::string type = readVariable<std::string>(cmpInfo, "Type");
 		LuaRef pos = readVariable<LuaRef>(cmpInfo, "Position");
 		LuaRef size = readVariable<LuaRef>(cmpInfo, "Size");
@@ -89,20 +89,16 @@ bool Scene::createUI(luabridge::LuaRef info)
 				{ pos[1],pos[2] }, { size[1], size[2] }, readVariable<std::string>(cmpInfo, "Style"));
 		}
 		else if (type == "Button")
-		{			
+		{
 			CEGUIQuack::Instance()->createButton(name, readVariable<std::string>(cmpInfo, "Text"),
 				{ pos[1],pos[2] }, { size[1], size[2] }, CallBacks::instance()->getMethod(
 				readVariable<std::string>(cmpInfo, "CallBackFunction")), readVariable<std::string>(cmpInfo, "Style"));
 
 		}
 	}
-
-	
-
-
 	//tan solo tenemos 3 tipos de elementos de ui
 
-	
+
 	return true;
 }
 
@@ -118,58 +114,87 @@ void Scene::addEntity(QuackEntity* e)
 {
 	if (e) {
 		entities_.push_back(e);
-		if (e->isActive()){}
-			e->start();
+		if (sceneStarted)
+			if (e->isActive())
+				e->start();
+	}
+}
+
+void Scene::start() {
+	sceneStarted = true;
+	size_t n = entities_.size();
+	for (int i = 0; i < n; i++) {
+		if (!entities_[i]->markedForDestroy())
+			entities_[i]->start();
 	}
 }
 
 void Scene::preUpdate()
 {
-	for (QuackEntity* entity : entities_)
-	{
-		entity->preUpdate();
+	size_t n = entities_.size();
+	for (int i = 0; i < n; i++) {
+		if (!entities_[i]->markedForDestroy())
+			entities_[i]->preUpdate();
 	}
 }
 
 void Scene::physicsUpdate()
 {
-	for (QuackEntity* entity : entities_)
-	{
-		entity->physicsUpdate();
+	size_t n = entities_.size();
+	for (int i = 0; i < n; i++) {
+		if (!entities_[i]->markedForDestroy())
+			entities_[i]->physicsUpdate();
 	}
 }
 
 void Scene::fixedUpdate()
 {
-	//std::cout << "New frame\n";
-	for (QuackEntity* entity : entities_)
-	{
-		entity->fixedUpdate();
+	size_t n = entities_.size();
+	for (int i = 0; i < n; i++) {
+		if (!entities_[i]->markedForDestroy())
+			entities_[i]->fixedUpdate();
 	}
 }
 
 void Scene::update()
 {
-	//std::cout << "New frame\n";
-	for (QuackEntity* entity : entities_)
-	{
-		entity->update();
+	size_t n = entities_.size();
+	for (int i = 0; i < n; i++) {
+		if (!entities_[i]->markedForDestroy())
+			entities_[i]->update();
 	}
 }
 
 void Scene::lateUpdate()
 {
-	for (QuackEntity* entity : entities_)
-	{
-		entity->lateUpdate();
+	size_t n = entities_.size();
+	for (int i = 0; i < n; i++) {
+		if (!entities_[i]->markedForDestroy())
+			entities_[i]->lateUpdate();
 	}
 }
 
 void Scene::lastUpdate()
 {
-	for (QuackEntity* entity : entities_)
-	{
-		entity->lastUpdate();
+	size_t n = entities_.size();
+	for (int i = 0; i < n; i++) {
+		if (!entities_[i]->markedForDestroy())
+			entities_[i]->lastUpdate();
+	}
+	clearEntities();
+}
+
+void Scene::clearEntities()
+{
+	for (auto it = entities_.begin(); it != entities_.end();) {
+		if ((*it)->markedForDestroy()) {
+			QuackEntity* e = (*it);
+			it = entities_.erase(it);
+			delete e;
+			e = nullptr;
+		}
+		else
+			it++;
 	}
 }
 
