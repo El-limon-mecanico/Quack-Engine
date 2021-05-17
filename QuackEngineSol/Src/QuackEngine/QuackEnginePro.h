@@ -35,10 +35,6 @@ private:
 
 	QuackTime* quackTime_;
 
-	fmod_quack* fmod_quack_;
-
-	CEGUIQuack* cegui_;
-
 	void pollEvents();
 
 	void setup();
@@ -66,8 +62,6 @@ public:
 	static bool Init();
 
 	static QuackEnginePro* Instance();
-
-	fmod_quack* getFmodQuack();
 
 	void start(std::string route, std::string name);
 
