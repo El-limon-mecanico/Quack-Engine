@@ -1,3 +1,5 @@
+
+#include <CEGUI/CEGUI.h>
 #include "InputManager.h"
 
 #include "SDL_events.h"
@@ -25,11 +27,11 @@ void InputManager::injectInputCegui(SDL_Event event)
 	}
 	else if (event.type == SDL_KEYDOWN)
 	{
-		CEGUI::System::getSingleton().getDefaultGUIContext().injectKeyDown(sdlKeyToCegui(event.key.keysym.scancode));
+		CEGUI::System::getSingleton().getDefaultGUIContext().injectKeyDown((CEGUI::Key::Scan)sdlKeyToCegui(event.key.keysym.scancode));
 	}
 	else if (event.type == SDL_KEYUP)
 	{
-		CEGUI::System::getSingleton().getDefaultGUIContext().injectKeyUp(sdlKeyToCegui(event.key.keysym.scancode));
+		CEGUI::System::getSingleton().getDefaultGUIContext().injectKeyUp((CEGUI::Key::Scan)sdlKeyToCegui(event.key.keysym.scancode));
 	}
 	else if (event.type == SDL_MOUSEWHEEL)
 	{
@@ -52,7 +54,7 @@ CEGUI::MouseButton InputManager::sdlMouseButtonToCegui(Uint8 buttonSDL)
 	}
 }
 
-CEGUI::Key::Scan InputManager::sdlKeyToCegui(SDL_Scancode sdlKeycode)
+Uint32 InputManager::sdlKeyToCegui(SDL_Scancode sdlKeycode)
 {
 	switch (sdlKeycode)
 	{
@@ -153,6 +155,15 @@ bool InputManager::isKeyDown(SDL_Scancode code)
 	const Uint8* state = SDL_GetKeyboardState(NULL);
 
 	return state[code];
+}
+
+int InputManager::getAxis(Axis axis)
+{
+	const Uint8* state = SDL_GetKeyboardState(NULL);
+
+	if (axis == Vertical)  return (1*(state[SDL_SCANCODE_W] || state[SDL_SCANCODE_UP] ))+(-1 * (state[SDL_SCANCODE_S] || state[SDL_SCANCODE_DOWN]));
+	if (axis == Horizontal)  return (1 * (state[SDL_SCANCODE_D] || state[SDL_SCANCODE_RIGHT])) + (-1 * (state[SDL_SCANCODE_A] || state[SDL_SCANCODE_LEFT]));
+
 }
 
 void InputManager::MouseWheelChange(int coordinate, int value)

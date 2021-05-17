@@ -12,9 +12,17 @@
 #include <assert.h>
 #include <SDL_scancode.h>
 #include "SDL_mouse.h"
-#include <CEGUI/CEGUI.h>
+
+namespace CEGUI {
+	enum MouseButton;
+}
 
 union SDL_Event;
+
+enum Axis {
+	Horizontal,
+	Vertical
+};
 
 class QUACK_ENGINE_PRO_API InputManager
 {
@@ -48,7 +56,7 @@ private:
 
 	CEGUI::MouseButton sdlMouseButtonToCegui(Uint8 buttonSDL);
 
-	CEGUI::Key::Scan sdlKeyToCegui(SDL_Scancode sdlKeycode);
+	Uint32 sdlKeyToCegui(SDL_Scancode sdlKeycode);
 
 public:
 
@@ -71,5 +79,7 @@ public:
 	MouseWheel getMouseWheel();
 
 	bool isKeyDown(SDL_Scancode code);
+
+	int getAxis(Axis axis);
 };
 
