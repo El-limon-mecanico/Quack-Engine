@@ -53,7 +53,6 @@ void QuackEnginePro::readAssetsRoute()
 std::unique_ptr<QuackEnginePro>  QuackEnginePro::instance_;
 
 QuackEnginePro::~QuackEnginePro() {
-	delete fmod_quack_; fmod_quack_ = nullptr;
 	delete quackTime_;	quackTime_ = nullptr;
 };
 
@@ -69,10 +68,8 @@ bool QuackEnginePro::Init()
 	return instance_.get();
 }
 
-QuackEnginePro* QuackEnginePro::Instance()
-{
+QuackEnginePro* QuackEnginePro::Instance() {
 	assert(instance_.get() != nullptr);
-	
 	return instance_.get();
 }
 
@@ -91,7 +88,7 @@ void QuackEnginePro::setup()
 
 	BulletQuack::Init();
 
-	fmod_quack_ = new fmod_quack(assets_route);
+	fmod_quack::Init(assets_route);
 
 	FactoryManager::Init();
 
@@ -148,9 +145,9 @@ void QuackEnginePro::update()
 		CEGUIQuack::Instance()->render(time()->deltaTime());
 	}
 
-#if (defined _DEBUG) || !(defined _WIN32)
-	std::cout << "WARNING: Deberia haber al menos 4 bytes de basura\n";
-#endif
+//#if (defined _DEBUG) || !(defined _WIN32)
+	//std::cout << "WARNING: Deberia haber al menos 4 bytes de basura\n";
+//#endif
 }
 
 
@@ -183,11 +180,6 @@ void QuackEnginePro::pollEvents()
 			break;
 		}
 	}
-}
-
-fmod_quack* QuackEnginePro::getFmodQuack()
-{
-	return fmod_quack_;
 }
 
 QuackTime* QuackEnginePro::time()
