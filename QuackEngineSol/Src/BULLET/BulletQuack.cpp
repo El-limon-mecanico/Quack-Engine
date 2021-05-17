@@ -52,10 +52,10 @@ btRigidBody* BulletQuack::addRigidBody(float mass, const Ogre::Entity* ent, BtOg
 
 void BulletQuack::addRigidBody(btRigidBody* rb)
 {
-	world_->getBtWorld()->removeRigidBody(rb);
+	world_->getBtWorld()->addRigidBody(rb);
 }
 
 void BulletQuack::removeRigidBody(btRigidBody* rb)
 {
-	world_->getBtWorld()->addRigidBody(rb);
+	world_->getBtWorld()->removeRigidBody(rb);
 }

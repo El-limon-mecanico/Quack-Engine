@@ -17,7 +17,10 @@ Rigidbody::Rigidbody() : collisions(std::vector<CollisionInfo>())
 
 Rigidbody::~Rigidbody()
 {
-
+	BulletQuack::Instance()->removeRigidBody(rb_);
+	for (CollisionInfo i : collisions)
+		i.rb->removeCollisionData(this);
+	rb_ = nullptr;
 }
 
 
@@ -82,7 +85,8 @@ void Rigidbody::lateUpdate()
 {
 	for (auto it = collisions.begin(); it != collisions.end();) {
 		if ((*it).time > TIME_TO_EXIT) {
-			((*it).rb->trigger_ || trigger_) ? entity_->onTriggerExit((*it).rb->entity_, (*it).point) : entity_->onCollisionExit((*it).rb->entity_, (*it).point);
+			if ((*it).rb)
+				((*it).trigger) ? entity_->onTriggerExit((*it).rb->entity_, (*it).point) : entity_->onCollisionExit((*it).rb->entity_, (*it).point);
 			it = collisions.erase(it);
 		}
 		else
@@ -120,7 +124,7 @@ void Rigidbody::contact(Rigidbody* other, const btManifoldPoint& manifoldPoint)
 		}
 	}
 	Vector3D p = Vector3D((float)v.x(), (float)v.y(), (float)v.z());
-	collisions.push_back({ other,0 , p });
+	collisions.push_back({ other,0 , p , other->trigger_ || trigger_ });
 	(other->trigger_ || trigger_) ? entity_->onTriggerEnter(other->entity_, p) : entity_->onCollisionEnter(other->entity_, p);
 }
 
@@ -209,6 +213,19 @@ void Rigidbody::setPositionConstrains(bool x, bool y, bool z)
 {
 	positionConstrains_ = Vector3D(x, y, z);
 	rb_->setLinearFactor(btVector3(!(int)x, !(int)y, !(int)z));
+}
+
+void Rigidbody::removeCollisionData(Rigidbody* rb)
+{
+	for (auto it = collisions.begin(); it != collisions.end();) {
+		if ((*it).rb == rb) {
+			((*it).trigger) ? entity_->onTriggerExit((*it).rb->entity_, (*it).point) : entity_->onCollisionExit((*it).rb->entity_, (*it).point);
+			it = collisions.erase(it);
+			return;
+		}
+		else
+			it++;
+	}
 }
 
 

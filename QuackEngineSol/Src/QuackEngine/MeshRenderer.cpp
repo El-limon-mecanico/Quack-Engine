@@ -13,6 +13,11 @@ MeshRenderer::MeshRenderer(QuackEntity* e) : Component(e), ogreEnt_(nullptr)
 
 MeshRenderer::~MeshRenderer()
 {
+	if (node_)
+		node_->detachObject(ogreEnt_);
+	node_ = nullptr;
+	OgreQuack::Instance()->getSceneManager()->destroyEntity(ogreEnt_);
+	ogreEnt_ = nullptr;
 	//borrar basura creada al meter la mesh?� como el Ogre::Entity quizas no lo s�
 }
 

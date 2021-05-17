@@ -32,9 +32,10 @@ class QUACK_ENGINE_PRO_API QuackEntity {
 private:
 	//Root
 	QuackEntity(Transform* tr);
-	static std::unique_ptr<QuackEntity> qeRoot_;					
+	static std::unique_ptr<QuackEntity> qeRoot_;
 
 	bool active_;
+	bool destroy_ = false;
 	std::vector<Component*> components_;
 	std::string tag_;
 	std::string name_;
@@ -49,10 +50,10 @@ public:
 
 	QuackEntity* RootEntity();
 
-	std::string& name() {	return name_;	 }
-	std::string& tag() {		return tag_;	 }
-	inline bool isActive() const {		return active_;		}
-	inline void setActive(bool state) {		
+	std::string& name() { return name_; }
+	std::string& tag() { return tag_; }
+	inline bool isActive() const { return active_; }
+	inline void setActive(bool state) {
 		active_ = state;
 		if (active_)
 			onEnable();
@@ -96,21 +97,25 @@ public:
 
 	void lastUpdate();
 
-	void onCollisionEnter(QuackEntity* other , Vector3D point);
+	void onCollisionEnter(QuackEntity* other, Vector3D point);
 
-	void onCollisionStay(QuackEntity* other , Vector3D point);
+	void onCollisionStay(QuackEntity* other, Vector3D point);
 
-	void onCollisionExit(QuackEntity* other , Vector3D point);
+	void onCollisionExit(QuackEntity* other, Vector3D point);
 
-	void onTriggerEnter(QuackEntity* other , Vector3D point);
+	void onTriggerEnter(QuackEntity* other, Vector3D point);
 
-	void onTriggerStay(QuackEntity* other , Vector3D point);
+	void onTriggerStay(QuackEntity* other, Vector3D point);
 
-	void onTriggerExit(QuackEntity* other , Vector3D point);
+	void onTriggerExit(QuackEntity* other, Vector3D point);
 
 	void onEnable();
 
 	void onDisable();
+
+	void destroy() { destroy_ = true; }
+
+	bool markedForDestroy() { return destroy_; }
 };
 
 template<typename T>

@@ -3,6 +3,7 @@
 #include "QuackEntity.h"
 #include "Rigidbody.h"
 #include "QuackEnginePro.h"
+#include "SceneMng.h"
 
 Prueba::Prueba(QuackEntity* e) : Component(e)
 {
@@ -28,9 +29,16 @@ bool Prueba::init(luabridge::LuaRef parameterTable)
 	return true;
 }
 
+#include "MeshRenderer.h"
+
 void Prueba::start()
 {
 	if (entity_->getComponent<Rigidbody>()) {
+		QuackEntity* e = new QuackEntity();
+		e->transform()->setGlobalPosition({ 2, 10, 0 });
+		e->addComponent<MeshRenderer>()->setMeshByPrefab(PT_CUBE);
+		e->addComponent<Rigidbody>()->setRigidbody(1, CT_BOX);
+		SceneMng::Instance()->getCurrentScene()->addEntity(e);
 		//entity_->getComponent<Rigidbody>()->setGravity(Vector3D());
 	}
 }

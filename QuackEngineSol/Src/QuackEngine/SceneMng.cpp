@@ -28,7 +28,9 @@ SceneMng* SceneMng::Instance()
 
 void SceneMng::loadScene(std::string file, std::string sceneName)
 {
-	sceneQueue_.push(new Scene(file, sceneName));
+	Scene* scene = new Scene(file, sceneName);
+	sceneQueue_.push(scene);
+	scene->start();
 }
 
 void SceneMng::preUpdate()
