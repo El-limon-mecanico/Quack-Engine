@@ -52,7 +52,7 @@ void QuackCamera::onEnable()
 	{
 		node_ = entity_->transform()->getNode()->createChildSceneNode();
 		node_->attachObject(camera_);
-		node_->lookAt(Vector3D::toOgre({ 0,0,0 }), Ogre::Node::TS_WORLD);
+		node_->lookAt(target_.toOgrePosition(), Ogre::Node::TS_WORLD);
 		firstEnable_ = false;
 	}
 
