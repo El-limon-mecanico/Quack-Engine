@@ -63,6 +63,7 @@ public:
 	
 	void removeWidget(CEGUI::Window* window);
 	
+	void setMouseVisibility(bool visible);
 };
 
 #endif // !_CEGUI_QUACK_
