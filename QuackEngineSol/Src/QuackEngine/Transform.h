@@ -15,6 +15,11 @@ namespace Ogre {
 	class SceneNode;
 }
 
+enum TrAxis {
+	X_AXIS,
+	Y_AXIS,
+	Z_AXIS
+};
 
 class QUACK_ENGINE_PRO_API Transform :
 	public Component
@@ -43,6 +48,7 @@ private:
 	void moveLocalPosition(Vector3D v);
 	
 	void recalculateAxes();
+	void recalculatePosition();
 
 
 	void updateChildren();
@@ -129,6 +135,9 @@ public:
 	void setLocalPosition(Vector3D v);
 	void setGlobalPosition(Vector3D v);
 	void setScale(Vector3D v);
+
+	void lookAt(Transform* tr, TrAxis axis = Z_AXIS);
+	void lookAt(Vector3D point, TrAxis axis = Z_AXIS);
 
 #pragma endregion
 };

@@ -88,10 +88,7 @@ Ogre::SceneNode* Transform::getNode()
 
 void Transform::physicsUpdateTr()
 {
-	localPosition_ = Vector3D::fromOgrePosition(node_->getPosition());
-	globalPosition_ = Vector3D::fromOgrePosition(node_->_getDerivedPosition());
-	globalRotation_ = Vector3D::fromOgreRotation(node_->_getDerivedOrientation());
-	localRotation_ = Vector3D::fromOgreRotation(node_->getOrientation());
+	recalculatePosition();
 	recalculateAxes();
 }
 
@@ -134,8 +131,6 @@ void Transform::Translate(Vector3D t, bool global)
 void Transform::Rotate(Vector3D r, bool global)
 {
 	node_->rotate(Vector3D::toOgre(r), Ogre::Radian(Ogre::Degree(1)), global ? Ogre::Node::TS_WORLD : Ogre::Node::TS_LOCAL);
-	globalRotation_ = Vector3D::fromOgreRotation(node_->_getDerivedOrientation());
-	localRotation_ = Vector3D::fromOgreRotation(node_->getOrientation());
 	recalculateAxes();
 	updateRb();
 	updateChildren();
@@ -153,8 +148,6 @@ void Transform::Scale(Vector3D s)
 void Transform::setLocalRotation(Vector3D v)
 {
 	node_->setOrientation(v.toOgreRotation());
-	globalRotation_ = Vector3D::fromOgreRotation(node_->_getDerivedOrientation());
-	localRotation_ = Vector3D::fromOgreRotation(node_->getOrientation());
 	recalculateAxes();
 	updateRb();
 	updateChildren();
@@ -163,8 +156,6 @@ void Transform::setLocalRotation(Vector3D v)
 void Transform::setGlobalRotation(Vector3D v)
 {
 	node_->_setDerivedOrientation(v.toOgreRotation());
-	globalRotation_ = Vector3D::fromOgreRotation(node_->_getDerivedOrientation());
-	localRotation_ = Vector3D::fromOgreRotation(node_->getOrientation());
 	recalculateAxes();
 	updateRb();
 	updateChildren();
@@ -173,8 +164,7 @@ void Transform::setGlobalRotation(Vector3D v)
 void Transform::setGlobalPosition(Vector3D v)
 {
 	node_->_setDerivedPosition(v.toOgrePosition());
-	localPosition_ = Vector3D::fromOgrePosition(node_->getPosition());
-	globalPosition_ = Vector3D::fromOgrePosition(node_->_getDerivedPosition());
+	recalculatePosition();
 	updateRb();
 	updateChildren();
 }
@@ -183,8 +173,7 @@ void Transform::setGlobalPosition(Vector3D v)
 void Transform::setLocalPosition(Vector3D v)
 {
 	node_->setPosition(v.toOgrePosition());
-	localPosition_ = Vector3D::fromOgrePosition(node_->getPosition());
-	globalPosition_ = Vector3D::fromOgrePosition(node_->_getDerivedPosition());
+	recalculatePosition();
 	updateRb();
 	updateChildren();
 }
@@ -196,14 +185,12 @@ void Transform::setScale(Vector3D v)
 	localScale_ = node_->getScale();
 	updateRb();
 	updateChildren();
-
 }
 
 void Transform::moveGlobalPosition(Vector3D v)
 {
 	node_->translate(v.toOgrePosition(), Ogre::Node::TS_WORLD);
-	globalPosition_ = Vector3D::fromOgrePosition(node_->_getDerivedPosition());
-	localPosition_ = Vector3D::fromOgrePosition(node_->getPosition());
+	recalculatePosition();
 	updateRb();
 	updateChildren();
 }
@@ -211,17 +198,24 @@ void Transform::moveGlobalPosition(Vector3D v)
 void Transform::moveLocalPosition(Vector3D v)
 {
 	node_->translate(v.toOgrePosition(), Ogre::Node::TS_LOCAL);
-	localPosition_ = Vector3D::fromOgrePosition(node_->getPosition());
-	globalPosition_ = Vector3D::fromOgrePosition(node_->_getDerivedPosition());
+	recalculatePosition();
 	updateRb();
 	updateChildren();
 }
 
 void Transform::recalculateAxes()
 {
+	globalRotation_ = Vector3D::fromOgreRotation(node_->_getDerivedOrientation());
+	localRotation_ = Vector3D::fromOgreRotation(node_->getOrientation());
 	right = node_->_getDerivedOrientation().xAxis();
 	up = node_->_getDerivedOrientation().yAxis();
 	forward = node_->_getDerivedOrientation().zAxis();
+}
+
+void Transform::recalculatePosition()
+{
+	globalPosition_ = Vector3D::fromOgrePosition(node_->_getDerivedPosition());
+	localPosition_ = Vector3D::fromOgrePosition(node_->getPosition());
 }
 
 
@@ -255,4 +249,35 @@ void Transform::updateRb()
 			rb->resetTransform();
 		}
 	}
+}
+
+void Transform::lookAt(Transform* tr, TrAxis axis)
+{
+	lookAt(tr->globalPosition_);
+}
+
+void Transform::lookAt(Vector3D point, TrAxis axis)
+{
+	Ogre::Vector3 v;
+
+	switch (axis)
+	{
+	case X_AXIS:
+		v = Ogre::VectorBase<3, Ogre::Real>::UNIT_X;
+		break;
+	case Y_AXIS:
+		v = Ogre::VectorBase<3, Ogre::Real>::UNIT_Y;
+		break;
+	case Z_AXIS:
+		v = Ogre::VectorBase<3, Ogre::Real>::UNIT_Z;
+		break;
+	default:
+		v = Ogre::VectorBase<3, Ogre::Real>::NEGATIVE_UNIT_Z;
+		break;
+	}
+
+	node_->lookAt(point.toOgrePosition(), Ogre::Node::TS_WORLD, v);
+	recalculateAxes();
+	updateRb();
+	updateChildren();
 }
