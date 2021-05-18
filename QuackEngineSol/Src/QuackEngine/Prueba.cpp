@@ -4,6 +4,8 @@
 #include "Rigidbody.h"
 #include "QuackEnginePro.h"
 #include "SceneMng.h"
+#include "Button.h"
+#include "CallBacks.h"
 
 Prueba::Prueba(QuackEntity* e) : Component(e)
 {
@@ -29,16 +31,17 @@ bool Prueba::init(luabridge::LuaRef parameterTable)
 	return true;
 }
 
-#include "MeshRenderer.h"
+void PruebaCallBack() {
+	std::cout << "wow una prueba nueva\n";
+}
 
 void Prueba::start()
 {
+	//entity_->getComponent<Button>()->setActive(false);
 }
 
 void Prueba::fixedUpdate()
 {
-
-
 	//std::cout << transform->rotation() << "\n";
 	//entity_->getComponent<Rigidbody>()->addTorque({ 0,1,0 });
 }

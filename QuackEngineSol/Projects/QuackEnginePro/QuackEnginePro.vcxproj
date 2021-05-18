@@ -19,7 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Src\QuackEngine\Button.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\CallBacks.cpp" />
+    <ClCompile Include="..\..\Src\QuackEngine\Image.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\Light.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\QuackCamera.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\Prueba2.cpp" />
@@ -34,6 +36,7 @@
     <ClCompile Include="..\..\Src\QuackEngine\Rigidbody.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\Scene.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\SceneMng.cpp" />
+    <ClCompile Include="..\..\Src\QuackEngine\Text.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\Transform.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\Vector3D.cpp" />
   </ItemGroup>
@@ -55,7 +58,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Src\QuackEngine\Button.h" />
     <ClInclude Include="..\..\Src\QuackEngine\CallBacks.h" />
+    <ClInclude Include="..\..\Src\QuackEngine\Image.h" />
     <ClInclude Include="..\..\Src\QuackEngine\Prueba2.h" />
     <ClInclude Include="..\..\Src\QuackEngine\checkML.h" />
     <ClInclude Include="..\..\Src\QuackEngine\InputManager.h" />
@@ -70,6 +75,7 @@
     <ClInclude Include="..\..\Src\QuackEngine\Rigidbody.h" />
     <ClInclude Include="..\..\Src\QuackEngine\Scene.h" />
     <ClInclude Include="..\..\Src\QuackEngine\SceneMng.h" />
+    <ClInclude Include="..\..\Src\QuackEngine\Text.h" />
     <ClInclude Include="..\..\Src\QuackEngine\Transform.h" />
     <ClInclude Include="..\..\Src\QuackEngine\Vector3D.h" />
     <ClInclude Include="..\..\Src\QuackEngine\QuackCamera.h" />

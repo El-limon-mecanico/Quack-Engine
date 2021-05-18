@@ -86,7 +86,7 @@ bool Scene::createUI(luabridge::LuaRef info)
 		LuaRef pos = readVariable<LuaRef>(cmpInfo, "Position");
 		LuaRef size = readVariable<LuaRef>(cmpInfo, "Size");
 		std::string name = readVariable<std::string>(cmpInfo, "Name");
-		if (type == "Scheme") {
+		/*if (type == "Scheme") {
 			CEGUIQuack::Instance()->loadScheme(readVariable<std::string>(cmpInfo, "Scheme"));
 		}
 		else if (type == "Text")
@@ -104,7 +104,7 @@ bool Scene::createUI(luabridge::LuaRef info)
 			uiEntities_.push_back(CEGUIQuack::Instance()->createButton(name, readVariable<std::string>(cmpInfo, "Text"),
 				{ pos[1],pos[2] }, { size[1], size[2] }, CallBacks::instance()->getMethod(
 					readVariable<std::string>(cmpInfo, "CallBackFunction")), readVariable<std::string>(cmpInfo, "Style")));
-		}
+		}*/
 	}
 	//tan solo tenemos 3 tipos de elementos de ui
 

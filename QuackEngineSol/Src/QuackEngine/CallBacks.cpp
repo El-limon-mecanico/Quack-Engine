@@ -4,7 +4,7 @@ std::unique_ptr<CallBacks> CallBacks::instance_;
 
 CallBacks::CallBacks()
 {
-	
+
 }
 
 CallBacks* CallBacks::Init()
@@ -14,12 +14,19 @@ CallBacks* CallBacks::Init()
 	return instance_.get();
 }
 
-void CallBacks::addMethod(std::string name, void(* func)())
+void CallBacks::addMethod(std::string name, void(*func)())
 {
 	methods_.insert({ name, func });
 }
 
 std::function<void()> CallBacks::getMethod(std::string name)
 {
-	return methods_[name];
+	auto m = methods_.find(name);
+	if (m != methods_.end())
+		return (*m).second;
+	else
+		return []() {
+		printf("La función que ha guardado este botón no existe, comprueba el nombre de la función, o si has guardado el método");
+	};
+
 }

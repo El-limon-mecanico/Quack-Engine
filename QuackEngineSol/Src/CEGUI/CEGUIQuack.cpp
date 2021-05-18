@@ -74,44 +74,44 @@ CEGUI::Window* CEGUIQuack::createWidget(std::string type, std::string name, std:
 }
 
 
-CEGUI::Window* CEGUIQuack::createButton(std::string name, std::string text, std::pair<float, float> pos, std::pair<float, float> size, std::function<void()>func, std::string style)
-{
-	CEGUI::Window* newWidget = nullptr;
-	try { newWidget = createWidget(style, name, pos, size); }
-	catch (std::exception e) { std::cout << "No se ha podido crear el boton: " << name << "\n"; }
-
-
-
-	newWidget->subscribeEvent(CEGUI::PushButton::EventClicked, func);
-	newWidget->setText(text);
-
-	return newWidget;
-}
-
-CEGUI::Window* CEGUIQuack::createText(std::string name, std::string text, std::pair<float, float> pos, std::pair<float, float> size, std::string style)
-{
-	CEGUI::Window* newWidget = nullptr;
-	try { newWidget = createWidget(style, name, pos, size); }
-	catch (std::exception e) { std::cout << "No se ha podido crear el texto: " << name << "\n"; }
-
-	newWidget->setProperty("Text", text);
-
-	return newWidget;
-}
-
-CEGUI::Window* CEGUIQuack::createImage(std::string name, std::string image, std::pair<float, float> pos, std::pair<float, float> size, std::string style)
-{
-	CEGUI::Window* newWidget = nullptr;
-	try { newWidget = createWidget(style, name, pos, size); }
-	catch (std::exception e) { std::cout << "No se ha podido crear la imagen: " << name << "\n"; }
-
-	if (!CEGUI::ImageManager::getSingleton().isDefined(name))
-		CEGUI::ImageManager::getSingleton().addFromImageFile(name, image);
-
-	newWidget->setProperty("Image", name);
-
-	return newWidget;
-}
+//CEGUI::Window* CEGUIQuack::createButton(std::string name, std::string text, std::pair<float, float> pos, std::pair<float, float> size, std::function<void()>func, std::string style)
+//{
+//	CEGUI::Window* newWidget = nullptr;
+//	try { newWidget = createWidget(style, name, pos, size); }
+//	catch (std::exception e) { std::cout << "No se ha podido crear el boton: " << name << "\n"; }
+//
+//
+//
+//	newWidget->subscribeEvent(CEGUI::PushButton::EventClicked, func);
+//	newWidget->setText(text);
+//
+//	return newWidget;
+//}
+//
+//CEGUI::Window* CEGUIQuack::createText(std::string name, std::string text, std::pair<float, float> pos, std::pair<float, float> size, std::string style)
+//{
+//	CEGUI::Window* newWidget = nullptr;
+//	try { newWidget = createWidget(style, name, pos, size); }
+//	catch (std::exception e) { std::cout << "No se ha podido crear el texto: " << name << "\n"; }
+//
+//	newWidget->setProperty("Text", text);
+//
+//	return newWidget;
+//}
+//
+//CEGUI::Window* CEGUIQuack::createImage(std::string name, std::string image, std::pair<float, float> pos, std::pair<float, float> size, std::string style)
+//{
+//	CEGUI::Window* newWidget = nullptr;
+//	try { newWidget = createWidget(style, name, pos, size); }
+//	catch (std::exception e) { std::cout << "No se ha podido crear la imagen: " << name << "\n"; }
+//
+//	if (!CEGUI::ImageManager::getSingleton().isDefined(name))
+//		CEGUI::ImageManager::getSingleton().addFromImageFile(name, image);
+//
+//	newWidget->setProperty("Image", name);
+//
+//	return newWidget;
+//}
 
 void CEGUIQuack::removeWidget(CEGUI::Window* window)
 {
