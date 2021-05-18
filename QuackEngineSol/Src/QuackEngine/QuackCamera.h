@@ -39,7 +39,6 @@ public:
 	~QuackCamera();
 	static std::string GetName() { return "Camera"; }
 	virtual bool init(luabridge::LuaRef parameterTable = { nullptr });
-	virtual void onEnable() override;
 	Ogre::Camera* camera() { return camera_; }
 	Ogre::Viewport* viewport() { return vp_; }
 };
