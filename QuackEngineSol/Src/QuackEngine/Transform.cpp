@@ -253,7 +253,7 @@ void Transform::updateRb()
 
 void Transform::lookAt(Transform* tr, TrAxis axis)
 {
-	lookAt(tr->globalPosition_);
+	lookAt(tr->globalPosition_, axis);
 }
 
 void Transform::lookAt(Vector3D point, TrAxis axis)
