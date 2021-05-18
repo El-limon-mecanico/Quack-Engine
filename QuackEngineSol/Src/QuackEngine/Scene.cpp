@@ -201,6 +201,5 @@ void Scene::clearEntities()
 
 void Scene::callBackBoton()
 {
-	std::cout << "Se ha presionado el boton. Sonara una cancion\n";
-	SoundQuack::Instance()->playSound(-1, "singing", 0.5);
+	std::cout << "Se ha presionado el boton\n";
 }

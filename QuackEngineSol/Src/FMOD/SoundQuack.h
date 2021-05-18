@@ -18,6 +18,8 @@ private:
 
 	static std::unique_ptr<SoundQuack> instance_;
 
+	int currentChannel = 0;
+
 	std::map<std::string, FMOD::Sound*> sounds_;
 	std::map<std::string, FMOD::DSP*> dsp_;
 	FMOD::System* systemFMOD_ = NULL;
@@ -37,12 +39,15 @@ public:
 	
 	static SoundQuack* Init(std::string route);
 	
-	void playSound(int channel, std::string id, float volume);
-	void createSound(std::string sound, std::string id);
+	int createSound(std::string sound, std::string id);
+
+	void playChannel(int channel, std::string id, float volume);
+	void pauseChannel(int channel, bool pause);
+	bool isPlaying(int channel);
+	void setVolume(int channel, float value);
+	float getVolume(int channel);
+	void stopChannel(int channel);
 
 	void createDSP(FMOD_DSP_TYPE type, std::string id);
 	void addDSP(int channel, std::string isDSP);
-
-	void pauseChannel(int channel, bool pause);
-	void stopChannel(int channel);
 };

@@ -1,0 +1,51 @@
+#include "AudioSource.h"
+#include "SoundQuack.h"
+
+AudioSource::AudioSource() :
+	volume(0.5f)
+{
+	mngr_ = SoundQuack::Instance();
+}
+
+AudioSource::~AudioSource()
+{
+	mngr_ = nullptr;		// eliminar la referencia al Singleton
+}
+
+bool AudioSource::init(luabridge::LuaRef parameterTable)
+{
+	audioName = readVariable<std::string>(parameterTable, "AudioName");
+	source = readVariable<std::string>(parameterTable, "AudioSource");
+	volume = readVariable<float>(parameterTable, "Volume");
+
+	channel = mngr_->createSound(source, audioName);
+	return true;
+}
+
+void AudioSource::play() {
+	mngr_->playChannel(channel, audioName, volume);
+}
+
+void AudioSource::stop() {
+	mngr_->stopChannel(channel);
+}
+
+void AudioSource::pause() {
+	mngr_->pauseChannel(channel, true);
+}
+
+void AudioSource::resume() {
+	mngr_->pauseChannel(channel, false);
+}
+
+bool AudioSource::isPlaying() {
+	return mngr_->isPlaying(channel);
+}
+
+void AudioSource::setVolume(float value) {
+	mngr_->setVolume(channel, volume);
+}
+
+float AudioSource::getVolume() {
+	mngr_->getVolume(channel);
+}

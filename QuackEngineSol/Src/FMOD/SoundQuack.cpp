@@ -62,7 +62,7 @@ SoundQuack* SoundQuack::Init(std::string route)
 	std::cout << "Se ha inicializado FMOD\n";
 }
 
-void SoundQuack::playSound(int channel, std::string id, float volume)
+void SoundQuack::playChannel(int channel, std::string id, float volume)
 {
 	auto it = sounds_.find(id);
 	if (it == sounds_.end())
@@ -79,7 +79,7 @@ void SoundQuack::playSound(int channel, std::string id, float volume)
 }
 
 
-void SoundQuack::createSound(std::string sound, std::string id)
+int SoundQuack::createSound(std::string sound, std::string id)
 {
 	FMOD::Sound* sonido;
 	std::string path = std::string(assetsRouteFmod + "/Sound/") + sound;
@@ -91,6 +91,8 @@ void SoundQuack::createSound(std::string sound, std::string id)
 		exit(-1);
 	}
 	sounds_.insert(std::pair<std::string, FMOD::Sound*>(id, sonido));
+	
+	return ++currentChannel;
 }
 
 void SoundQuack::createDSP(FMOD_DSP_TYPE type, std::string id)
@@ -124,9 +126,27 @@ void SoundQuack::pauseChannel(int channel, bool pause)
 	getChannel(channel)->setPaused(pause);
 }
 
+bool SoundQuack::isPlaying(int channel)
+{
+	bool b;
+	if (getChannel(channel)->isPlaying(&b) == FMOD_ERR_INVALID_HANDLE)
+		return false;
+	return b;
+}
+
 void SoundQuack::stopChannel(int channel)
 {
 	getChannel(channel)->stop();
+}
+
+void SoundQuack::setVolume(int channel, float volume)
+{
+	getChannel(channel)->setVolume(volume);
+}
+
+float SoundQuack::getVolume(int channel)
+{
+	getChannel(channel)->getVolume();
 }
 
 
