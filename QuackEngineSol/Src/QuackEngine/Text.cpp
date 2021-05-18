@@ -11,7 +11,19 @@ bool Text::init(luabridge::LuaRef parameterTable)
     std::string bLColor = readVariable<std::string>(parameterTable, "BLColor");
     std::string bRColor = readVariable<std::string>(parameterTable, "BRColor");
     setTextColor(tlColor, tRColor, bLColor, bRColor);
-    element_->setProperty("BackgroundEnabled", "False");
-    element_->setProperty("FrameEnabled", "False");
+
+    setBackground(readVariable<bool>(parameterTable, "Background"));
+    setBorder(readVariable<bool>(parameterTable, "Border"));
+
     return true;
+}
+
+void Text::setBackground(bool set)
+{
+    element_->setProperty("BackgroundEnabled", set ? "True" : "False");
+}
+
+void Text::setBorder(bool set)
+{
+    element_->setProperty("FrameEnabled", set ? "True" : "False");
 }

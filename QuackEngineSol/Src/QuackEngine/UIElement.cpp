@@ -78,4 +78,6 @@ void UIElement::setProperty(std::string prop, std::string value)
 {
 	if (element_->isPropertyPresent(prop))
 		element_->setProperty(prop, value);
+	else
+		std::cout << prop << " no es una propiedad que exista dentro del style cargado\n";
 }

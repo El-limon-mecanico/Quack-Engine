@@ -68,9 +68,9 @@ void Prueba::onCollisionEnter(QuackEntity* other, Vector3D point)
 {
 	//entity_->getComponent<Rigidbody>()->addForce(Vector3D(0, 10, 0), IMPULSE);
 
-	/*std::string carga = "Scenes/" + valor3 + ".lua";
-	SceneMng::Instance()->loadScene(carga, valor3);
-	if (entity_->getComponent<Button>())
+	//std::string carga = "Scenes/" + valor3 + ".lua";
+	//SceneMng::Instance()->loadScene(carga, valor3);
+	/*if (entity_->getComponent<Button>())
 	{
 		entity_->getComponent<Button>()->setText("AAA");
 		entity_->getComponent<Button>()->setButtonEnable(true);
@@ -79,7 +79,7 @@ void Prueba::onCollisionEnter(QuackEntity* other, Vector3D point)
 	if (entity_->getComponent<Text>())
 		entity_->getComponent<Text>()->setText("Me golpie con algo");
 	if (entity_->getComponent<Image>())
-		entity_->getComponent<Image>()->changeImage("virgolini", "fiiiiauuum.jpg");*/
+		entity_->getComponent<Image>()->changeImage("virgolini");*/
 	std::cout << "Yo " << entity_->name() << " acabo de chocar con " << other->name() << "\n\n";
 }
 

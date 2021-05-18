@@ -32,7 +32,7 @@ bool Prueba2::init(luabridge::LuaRef parameterTable)
 
 void Prueba2::update()
 {
-	algo += QuackEnginePro::Instance()->time()->deltaTime();
-	/*if (entity_->getComponent<Text>())
-		entity_->getComponent<Text>()->setText(std::to_string(algo));*/
+	//algo += QuackEnginePro::Instance()->time()->deltaTime();
+	//if (entity_->getComponent<Text>())
+	//	entity_->getComponent<Text>()->setText(std::to_string(algo));
 }
