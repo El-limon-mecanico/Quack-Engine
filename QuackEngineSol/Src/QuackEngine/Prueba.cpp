@@ -4,6 +4,7 @@
 #include "Rigidbody.h"
 #include "QuackEnginePro.h"
 #include "SceneMng.h"
+#include "QuackUI.h"
 
 Prueba::Prueba(QuackEntity* e) : Component(e)
 {
@@ -29,23 +30,25 @@ bool Prueba::init(luabridge::LuaRef parameterTable)
 	return true;
 }
 
-#include "MeshRenderer.h"
+void PruebaCallBack() {
+	std::string carga = "Scenes/scene2.lua";
+	SceneMng::Instance()->loadScene(carga, "scene2");
+}
 
 void Prueba::start()
 {
+	CallBacks::instance()->addMethod("PruebaCallBack", PruebaCallBack);
 }
 
 void Prueba::fixedUpdate()
 {
-
-
 	//std::cout << transform->rotation() << "\n";
 	//entity_->getComponent<Rigidbody>()->addTorque({ 0,1,0 });
 }
 
 void Prueba::update()
 {
-	scalealgo += QuackEnginePro::Instance()->time()->deltaTime();
+	//scalealgo += QuackEnginePro::Instance()->time()->deltaTime();
 
 	//transform->setScale({ abs(sin(scalealgo)),abs(sin(scalealgo)),abs(sin(scalealgo)) });
 	/*transform->Translate(Vector3D(0, -1, 0) * QuackEnginePro::Instance()->time()->deltaTime());
@@ -63,9 +66,19 @@ void Prueba::update()
 void Prueba::onCollisionEnter(QuackEntity* other, Vector3D point)
 {
 	//entity_->getComponent<Rigidbody>()->addForce(Vector3D(0, 10, 0), IMPULSE);
-	
+
 	/*std::string carga = "Scenes/" + valor3 + ".lua";
-	SceneMng::Instance()->pushNewScene(carga, valor3);*/
+	SceneMng::Instance()->loadScene(carga, valor3);*/
+	/*if (entity_->getComponent<Button>())
+	{
+		entity_->getComponent<Button>()->setText("AAA");
+		entity_->getComponent<Button>()->setButtonEnable(true);
+		entity_->getComponent<Button>()->setCallBackFunction("PruebaCallBack");
+	}
+	if (entity_->getComponent<Text>())
+		entity_->getComponent<Text>()->setText("Me golpie con algo");
+	if (entity_->getComponent<Image>())
+		entity_->getComponent<Image>()->changeImage("virgolini");*/
 	std::cout << "Yo " << entity_->name() << " acabo de chocar con " << other->name() << "\n\n";
 }
 

@@ -52,8 +52,6 @@ void Rigidbody::setRigidbody(int mass, ColliderType type, bool trigger, bool sta
 		renderCmp = entity_->addComponent<MeshRenderer>();
 	rb_ = BulletQuack::Instance()->addRigidBody(mass, renderCmp->getOgreEntity(), t, &sendContacts, this);
 
-	std::cout << rb_->getCollisionFlags() << std::endl;
-
 	setTrigger(trigger);
 
 	if (statc)

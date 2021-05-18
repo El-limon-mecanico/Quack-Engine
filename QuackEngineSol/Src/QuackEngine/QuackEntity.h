@@ -34,7 +34,7 @@ private:
 	QuackEntity(Transform* tr);
 	static std::unique_ptr<QuackEntity> qeRoot_;
 
-	bool active_;
+	bool enable_;
 	bool destroy_ = false;
 	std::vector<Component*> components_;
 	std::string tag_;
@@ -52,10 +52,10 @@ public:
 
 	std::string& name() { return name_; }
 	std::string& tag() { return tag_; }
-	inline bool isActive() const { return active_; }
-	inline void setActive(bool state) {
-		active_ = state;
-		if (active_)
+	inline bool isActive() const { return enable_; }
+	inline void setButtonEnable(bool state) {
+		enable_ = state;
+		if (enable_)
 			onEnable();
 		else
 			onDisable();
