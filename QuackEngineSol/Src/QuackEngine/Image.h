@@ -1,5 +1,5 @@
 #pragma once
-#include "Component.h"
+#include "UIElement.h"
 
 namespace CEGUI
 {
@@ -7,21 +7,13 @@ namespace CEGUI
 }
 
 
-class Image : public Component {
-private:
-	CEGUI::Window* image_;
-
+class Image : public UIElement {
 public:
 	Image() {}
-	~Image() {}
 
 	static std::string GetName() { return "Image"; }
 
 	virtual bool init(luabridge::LuaRef parameterTable = { nullptr });
 
-	virtual void start() {}
-
-	virtual void onEnable() {}
-
-	virtual void onDisable() {}
+	void changeImage(std::string name, std::string image = "Missing.jpg");
 };

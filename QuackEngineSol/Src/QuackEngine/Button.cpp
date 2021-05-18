@@ -1,61 +1,30 @@
 #include "Button.h"
-#include <CEGUIQuack.h>
 #include <CEGUI/CEGUI.h>
 #include <CEGUI/RendererModules/Ogre/Renderer.h>
 #include "CallBacks.h"
 
-Button::~Button()
-{
-
-}
 
 bool Button::init(luabridge::LuaRef parameterTable)
 {
-	LuaRef pos = readVariable<LuaRef>(parameterTable, "Position");
-	LuaRef size = readVariable<LuaRef>(parameterTable, "Size");
-
-	button_ = CEGUIQuack::Instance()->createWidget(readVariable<std::string>(parameterTable, "Style"),
-		readVariable<std::string>(parameterTable, "Name"));
-
-	setPosition(pos[1], pos[2]);
-
-	setSize(size[1], size[2]);
-
+	UIElement::init(parameterTable);
 	setText(readVariable<std::string>(parameterTable, "Text"));
+	std::string tlColor = readVariable<std::string>(parameterTable, "TLColor");
+	std::string tRColor = readVariable<std::string>(parameterTable, "TRColor");
+	std::string bLColor = readVariable<std::string>(parameterTable, "BLColor");
+	std::string bRColor = readVariable<std::string>(parameterTable, "BRColor");
+	setTextColor(tlColor, tRColor, bLColor, bRColor);
 
 	setCallBackFunction(CallBacks::instance()->getMethod(readVariable<std::string>(parameterTable, "CallBackFunction")));
 
-	active_ = readVariable<bool>(parameterTable, "Active");
-	visible_ = readVariable<bool>(parameterTable, "Visible");
+	enable_ = readVariable<bool>(parameterTable, "Enable");
 
 	return true;
 }
 
-void Button::onEnable()
+void Button::setButtonEnable(bool enable)
 {
-	button_->setVisible(visible_);
-	button_->setEnabled(active_);
-}
-
-void Button::onDisable()
-{
-	button_->setVisible(false);
-	button_->setEnabled(false);
-}
-
-void Button::setActive(bool active)
-{
-	button_->setEnabled(active);
-}
-
-void Button::setText(std::string text)
-{
-	button_->setText(text);
-}
-
-void Button::setTextFont(std::string font)
-{
-	button_->setFont(font);
+	enable_ = enable;
+	element_->setEnabled(enable);
 }
 
 void Button::setCallBackFunction(std::string callBackName)
@@ -65,23 +34,6 @@ void Button::setCallBackFunction(std::string callBackName)
 
 void Button::setCallBackFunction(std::function<void()> callBack)
 {
-	button_->removeAllEvents();
-	button_->subscribeEvent(CEGUI::PushButton::EventClicked, callBack);
-}
-
-void Button::setSize(float x, float y)
-{
-	size_ = { x,y };
-	CEGUI::UDim x_ = CEGUI::UDim(0, x);
-	CEGUI::UDim y_ = CEGUI::UDim(0, y);
-	button_->setSize({ x_,y_ });
-}
-
-void Button::setPosition(float x, float y)
-{
-	position_ = { x,y };
-	CEGUI::UDim x_ = CEGUI::UDim(x, 0);
-	CEGUI::UDim y_ = CEGUI::UDim(y, 0);
-
-	button_->setPosition({ x_,y_ });
+	element_->removeAllEvents();
+	element_->subscribeEvent(CEGUI::PushButton::EventClicked, callBack);
 }

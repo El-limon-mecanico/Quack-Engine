@@ -26,11 +26,8 @@ class QUACK_ENGINE_PRO_API Scene
 {
 private:
 	std::vector<QuackEntity*> entities_;
-	std::vector<CEGUI::Window*> uiEntities_;
 
 	QuackEntity* createEntity(const std::string& fileName, luabridge::LuaRef entInfo);
-
-	bool createUI(luabridge::LuaRef info);
 
 	void clearEntities();
 

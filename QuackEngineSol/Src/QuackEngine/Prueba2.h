@@ -8,6 +8,8 @@ private:
 	int* valor2;
 	std::string valor3;
 
+	float algo = 0;
+
 public:
 	Prueba2(QuackEntity* e = nullptr);
 	~Prueba2();

@@ -25,14 +25,8 @@ Scene::Scene(const std::string& file, const std::string& name)
 		//con el nombre ent, se busca el .lua y se cree lo que pone alli
 		LuaRef entInfo = readElementFromFile(state, ent);
 
-		if (ent == "UI")
-		{
-			if (!createUI(entInfo)) std::cout << "ERROR: no se ha podidio cargar la UI de la escena:  " << name;
-		}
-		else
-		{
-			if (!createEntity(ent, entInfo)) std::cout << "ERROR: no se ha podidio cargar la entidad: " << ent;
-		}
+		if (!createEntity(ent, entInfo)) std::cout << "ERROR: no se ha podidio cargar la entidad: " << ent;
+
 	}
 }
 
@@ -54,7 +48,7 @@ QuackEntity* Scene::createEntity(const std::string& fileName, LuaRef entInfo)
 
 	LuaRef children = entInfo.rawget("Children");
 	LuaRef list = children.rawget("entities");
-	
+
 
 	if (!list.isNil()) {
 		for (int i = 1; i <= list.length(); i++) {
@@ -63,53 +57,11 @@ QuackEntity* Scene::createEntity(const std::string& fileName, LuaRef entInfo)
 		}
 	}
 
-	entity->setActive(readVariable<bool>(entInfo, "Active"));
+	entity->setButtonEnable(readVariable<bool>(entInfo, "Active"));
 
 	addEntity(entity);
 
 	return entity;
-}
-
-bool Scene::createUI(luabridge::LuaRef info)
-{
-	LuaRef components = info.rawget("Components");
-	if (components.isNil()) { std::cout << "ERROR: No se ha podido leer el Array 'Components' \n"; return false; }
-
-
-	for (int i = 1; i <= components.length(); i++)
-	{
-		//carga los componentes
-		enableExceptions(components[i]);
-		LuaRef cmpInfo = info.rawget(components[i]);
-
-		std::string type = readVariable<std::string>(cmpInfo, "Type");
-		LuaRef pos = readVariable<LuaRef>(cmpInfo, "Position");
-		LuaRef size = readVariable<LuaRef>(cmpInfo, "Size");
-		std::string name = readVariable<std::string>(cmpInfo, "Name");
-		/*if (type == "Scheme") {
-			CEGUIQuack::Instance()->loadScheme(readVariable<std::string>(cmpInfo, "Scheme"));
-		}
-		else if (type == "Text")
-		{
-			uiEntities_.push_back(CEGUIQuack::Instance()->createText(name, readVariable<std::string>(cmpInfo, "Text"),
-				{ pos[1],pos[2] }, { size[1], size[2] }, readVariable<std::string>(cmpInfo, "Style")));
-		}
-		else if (type == "Image")
-		{
-			uiEntities_.push_back(CEGUIQuack::Instance()->createImage(name, readVariable<std::string>(cmpInfo, "Image"),
-				{ pos[1],pos[2] }, { size[1], size[2] }, readVariable<std::string>(cmpInfo, "Style")));
-		}
-		else if (type == "Button")
-		{
-			uiEntities_.push_back(CEGUIQuack::Instance()->createButton(name, readVariable<std::string>(cmpInfo, "Text"),
-				{ pos[1],pos[2] }, { size[1], size[2] }, CallBacks::instance()->getMethod(
-					readVariable<std::string>(cmpInfo, "CallBackFunction")), readVariable<std::string>(cmpInfo, "Style")));
-		}*/
-	}
-	//tan solo tenemos 3 tipos de elementos de ui
-
-
-	return true;
 }
 
 Scene::~Scene()
@@ -117,12 +69,6 @@ Scene::~Scene()
 	for (QuackEntity* qEnt : entities_) {
 		delete qEnt;
 		qEnt = nullptr;
-	}
-
-	for (CEGUI::Window* w : uiEntities_) {
-		CEGUIQuack::Instance()->removeWidget(w);
-		delete w;
-		w = nullptr;
 	}
 }
 

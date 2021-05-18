@@ -60,10 +60,7 @@ public:
 	void setFont(std::string filename);
 	
 	CEGUI::Window* createWidget(std::string type, std::string name, std::pair<float, float> pos = { 0,0 }, std::pair<float, float> size = {100,100});
-	/*CEGUI::Window* createButton(std::string name, std::string text, std::pair<float, float> pos, std::pair<float, float> size, std::function<void()>func,std::string style);
-	CEGUI::Window* createText(std::string name, std::string text, std::pair<float, float> pos, std::pair<float, float> size, std::string style);
-	CEGUI::Window* createImage(std::string name, std::string image, std::pair<float, float> pos, std::pair<float, float> size,std::string style);*/
-
+	
 	void removeWidget(CEGUI::Window* window);
 	
 };

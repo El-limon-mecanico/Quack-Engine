@@ -38,6 +38,7 @@
     <ClCompile Include="..\..\Src\QuackEngine\SceneMng.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\Text.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\Transform.cpp" />
+    <ClCompile Include="..\..\Src\QuackEngine\UIElement.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\Vector3D.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -71,12 +72,14 @@
     <ClInclude Include="..\..\Src\QuackEngine\Prueba.h" />
     <ClInclude Include="..\..\Src\QuackEngine\QuackTime.h" />
     <ClInclude Include="..\..\Src\QuackEngine\MeshRenderer.h" />
+    <ClInclude Include="..\..\Src\QuackEngine\QuackUI.h" />
     <ClInclude Include="..\..\Src\QuackEngine\ResourceMng.h" />
     <ClInclude Include="..\..\Src\QuackEngine\Rigidbody.h" />
     <ClInclude Include="..\..\Src\QuackEngine\Scene.h" />
     <ClInclude Include="..\..\Src\QuackEngine\SceneMng.h" />
     <ClInclude Include="..\..\Src\QuackEngine\Text.h" />
     <ClInclude Include="..\..\Src\QuackEngine\Transform.h" />
+    <ClInclude Include="..\..\Src\QuackEngine\UIElement.h" />
     <ClInclude Include="..\..\Src\QuackEngine\Vector3D.h" />
     <ClInclude Include="..\..\Src\QuackEngine\QuackCamera.h" />
     <ClInclude Include="..\..\Src\QuackEngine\Light.h" />

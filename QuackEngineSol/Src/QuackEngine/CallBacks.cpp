@@ -26,7 +26,7 @@ std::function<void()> CallBacks::getMethod(std::string name)
 		return (*m).second;
 	else
 		return []() {
-		printf("La función que ha guardado este botón no existe, comprueba el nombre de la función, o si has guardado el método");
+		printf("Este CallBack no existe, comprueba el nombre de la funcion, o si has guardado el metodo\n");
 	};
 
 }
