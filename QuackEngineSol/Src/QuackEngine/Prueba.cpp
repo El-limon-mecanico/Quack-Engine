@@ -5,6 +5,7 @@
 #include "QuackEnginePro.h"
 #include "SceneMng.h"
 #include "QuackUI.h"
+#include "InputManager.h"
 
 Prueba::Prueba(QuackEntity* e) : Component(e)
 {
@@ -49,6 +50,12 @@ void Prueba::fixedUpdate()
 
 void Prueba::update()
 {
+	//if (InputManager::Instance()->getKey(SDL_SCANCODE_SPACE))
+	//	std::cout << "Espacio mantenido\n";
+	if (InputManager::Instance()->getKeyDown(SDL_SCANCODE_SPACE))
+		std::cout << "Espacio abajo\n";
+	if (InputManager::Instance()->getKeyUp(SDL_SCANCODE_SPACE))
+		std::cout << "Espacio arriba\n";
 	//scalealgo += QuackEnginePro::Instance()->time()->deltaTime();
 
 	//transform->setScale({ abs(sin(scalealgo)),abs(sin(scalealgo)),abs(sin(scalealgo)) });

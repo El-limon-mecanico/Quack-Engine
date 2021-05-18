@@ -155,6 +155,7 @@ void QuackEnginePro::pollEvents()
 	if (sdlWindow_ == nullptr)
 		return;  // SDL events not initialized
 	SDL_Event event;
+	InputManager::Instance()->flushKeys();
 	while (SDL_PollEvent(&event))
 	{
 		switch (event.type)
@@ -175,8 +176,6 @@ void QuackEnginePro::pollEvents()
 			break;
 		default:
 			InputManager::Instance()->ManageInput(event);
-			//if (InputManager::Instance()->isKeyDown(SDL_SCANCODE_L)) InputManager::Instance()->captureMouse();
-			//else InputManager::Instance()->releaseMouse();
 			break;
 		}
 	}

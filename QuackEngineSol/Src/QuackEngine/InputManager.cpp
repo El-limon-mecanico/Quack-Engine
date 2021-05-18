@@ -98,13 +98,21 @@ InputManager* InputManager::Instance()
 	return instance_.get();
 }
 
+InputManager::InputManager() :
+	keysUps(std::vector<int>())
+{
+	for (int i = 0; i < SDL_NUM_SCANCODES; i++) {
+		keys_[i] = { false,false,false };
+	}
+}
+
 InputManager::~InputManager()
 {
 }
 
-
 void InputManager::ManageInput(SDL_Event event)
 {
+
 	switch (event.type)
 	{
 	case SDL_MOUSEMOTION:
@@ -144,17 +152,42 @@ void InputManager::ManageInput(SDL_Event event)
 		}
 		break;
 	default:
+		manageKeys(event);
 		break;
 	}
+
 
 	injectInputCegui(event);
 }
 
-//toma un SDL_SCANCODE (definidos en SDL_Scancode.h) y devuelve un bool que es true si la tecla esta pulsada y false si no
-bool InputManager::isKeyDown(SDL_Scancode code)
+void InputManager::manageKeys(SDL_Event event)
 {
-	const Uint8* state = SDL_GetKeyboardState(NULL);
-	return state[code];
+	if (event.type == SDL_KEYDOWN) {
+		SDL_Scancode code = event.key.keysym.scancode;
+		if (!keys_[code].pressed_) {
+			keys_[code].down_ = true;
+			keys_[code].pressed_ = true;
+			keysDown.push_back(code);
+		}
+	}
+	else if (event.type == SDL_KEYUP)
+	{
+		SDL_Scancode code = event.key.keysym.scancode;
+		keys_[code].pressed_ = false;
+		keys_[code].down_ = false;
+		keys_[code].up_ = true;
+		keysUps.push_back(code);
+	}
+}
+
+void InputManager::flushKeys()
+{
+	for (int c : keysUps)
+		keys_[c].up_ = false;
+	keysUps.clear();
+	for (int c : keysDown)
+		keys_[c].down_ = false;
+	keysDown.clear();
 }
 
 int InputManager::getAxis(Axis axis)
@@ -174,6 +207,22 @@ void InputManager::captureMouse()
 void InputManager::releaseMouse()
 {
 	captureMouse_ = false;
+}
+
+bool InputManager::getKey(SDL_Scancode code)
+{
+	const Uint8* state = SDL_GetKeyboardState(NULL);
+	return state[code];
+}
+
+bool InputManager::getKeyDown(SDL_Scancode code)
+{
+	return keys_[code].down_;
+}
+
+bool InputManager::getKeyUp(SDL_Scancode code)
+{
+	return keys_[code].up_;
 }
 
 void InputManager::MouseWheelChange(int coordinate, int value)
