@@ -31,14 +31,13 @@ bool Prueba::init(luabridge::LuaRef parameterTable)
 }
 
 void PruebaCallBack() {
-	std::cout << "wow una prueba nueva\n";
+	std::string carga = "Scenes/scene2.lua";
+	SceneMng::Instance()->loadScene(carga, "scene2");
 }
 
 void Prueba::start()
 {
 	CallBacks::instance()->addMethod("PruebaCallBack", PruebaCallBack);
-	if (entity_->getComponent<Button>())
-		entity_->getComponent<Button>()->setButtonEnable(false);
 }
 
 void Prueba::fixedUpdate()
@@ -68,13 +67,13 @@ void Prueba::onCollisionEnter(QuackEntity* other, Vector3D point)
 {
 	//entity_->getComponent<Rigidbody>()->addForce(Vector3D(0, 10, 0), IMPULSE);
 
-	//std::string carga = "Scenes/" + valor3 + ".lua";
-	//SceneMng::Instance()->loadScene(carga, valor3);
+	/*std::string carga = "Scenes/" + valor3 + ".lua";
+	SceneMng::Instance()->loadScene(carga, valor3);*/
 	/*if (entity_->getComponent<Button>())
 	{
 		entity_->getComponent<Button>()->setText("AAA");
 		entity_->getComponent<Button>()->setButtonEnable(true);
-		entity_->getComponent<Button>()->setCallBackFunction("asdffdg");
+		entity_->getComponent<Button>()->setCallBackFunction("PruebaCallBack");
 	}
 	if (entity_->getComponent<Text>())
 		entity_->getComponent<Text>()->setText("Me golpie con algo");

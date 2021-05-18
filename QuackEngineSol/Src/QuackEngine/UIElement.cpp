@@ -6,7 +6,6 @@
 UIElement::~UIElement()
 {
 	CEGUIQuack::Instance()->removeWidget(element_);
-	delete element_;
 	element_ = nullptr;
 }
 

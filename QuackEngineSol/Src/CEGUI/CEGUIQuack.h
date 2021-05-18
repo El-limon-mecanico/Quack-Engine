@@ -37,7 +37,7 @@ private:
 	CEGUI::FontManager* fontManager_ = nullptr;
 
 	
-	CEGUI::Window* window_ = nullptr;
+	CEGUI::Window* myRoot_ = nullptr;
 	CEGUI::GUIContext* context_ = nullptr;
 
 	void setUpResources();
