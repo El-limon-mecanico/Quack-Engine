@@ -22,6 +22,8 @@ public:
 	UIElement() {}
 	virtual ~UIElement();
 
+	static void addScheme(std::string scheme);
+
 	virtual bool init(luabridge::LuaRef parameterTable = { nullptr });
 
 	virtual void onEnable();

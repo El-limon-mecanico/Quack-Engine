@@ -9,6 +9,10 @@ UIElement::~UIElement()
 	element_ = nullptr;
 }
 
+void UIElement::addScheme(std::string scheme)
+{
+	CEGUI::SchemeManager::getSingleton().createFromFile(scheme);
+}
 
 bool UIElement::init(luabridge::LuaRef parameterTable)
 {
