@@ -46,6 +46,7 @@ Component* QuackEntity::addComponent(const std::string& componentName, LuaRef pa
 {
 	if (componentName == "Transform") {
 		transform_->init(param);
+		transform_->transform = transform_;
 		return transform_;
 	}
 	else if (hasComponent(componentName)) //para no repetir componentes
@@ -62,8 +63,8 @@ Component* QuackEntity::addComponent(const std::string& componentName, LuaRef pa
 		cmpMap_.insert({ componentName , c });
 		cmpMap_[componentName] = c; //sin esta linea, el map guarda null por alg�n motivo
 
-		//if(componente enable)																// TODO GUARDAR SI EL COMPONENTE ESTÁ ENABLE
-		c->onEnable();
+		if (c->isEnable() && active_)																// TODO GUARDAR SI EL COMPONENTE ESTÁ ENABLE
+			c->onEnable();
 
 		return c;
 	}

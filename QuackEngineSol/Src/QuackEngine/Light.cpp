@@ -3,6 +3,7 @@
 #include "Transform.h"
 #include <OgreLight.h>
 #include <OgreSceneNode.h>
+#include <OgreSceneManager.h>
 
 
 Light::Light() :
@@ -13,7 +14,7 @@ Light::Light() :
 
 Light::~Light()
 {
-	delete light_;
+	OgreQuack::Instance()->getSceneManager()->destroyLight(light_);
 	light_ = nullptr;
 }
 

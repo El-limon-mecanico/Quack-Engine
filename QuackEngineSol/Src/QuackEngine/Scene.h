@@ -16,13 +16,19 @@ namespace luabridge {
 	class LuaRef;
 }
 
+namespace CEGUI
+{
+	class Window;
+}
+
 
 class QUACK_ENGINE_PRO_API Scene
 {
 private:
 	std::vector<QuackEntity*> entities_;
+	std::vector<CEGUI::Window*> uiEntities_;
 
-	bool createEntity(const std::string& fileName, luabridge::LuaRef entInfo);
+	QuackEntity* createEntity(const std::string& fileName, luabridge::LuaRef entInfo);
 
 	bool createUI(luabridge::LuaRef info);
 
@@ -49,6 +55,20 @@ public:
 	void lateUpdate();
 
 	void lastUpdate();
+
+	/// <summary>
+	/// Busca y devuelve el primer objeto en la escena con ese nombre
+	/// </summary>
+	/// <param name="name">Nombre del objeto a buscar</param>
+	/// <returns>Primer objeto en la escena con ese nombre</returns>
+	QuackEntity* getObjectWithName(std::string name);
+
+	/// <summary>
+	/// Busca y devuelve una lista con los objetos con el nombre indicado
+	/// </summary>
+	/// <param name="name">Nombre de los objetos a buscar</param>
+	/// <returns>Lista de objetos con ese nombre en la escena</returns>
+	std::vector<QuackEntity*> getAllObjectsWithName(std::string name);
 
 	static void callBackBoton();
 

@@ -150,6 +150,7 @@ void Rigidbody::resetTransform()
 	tr.setRotation(transform->rotation().toBulletRotation());
 
 	rb_->setWorldTransform(tr);
+	rb_->getCollisionShape()->setLocalScaling(Vector3D::toBullet(transform->localScale()));
 	rb_->getMotionState()->setWorldTransform(tr);
 }
 
@@ -158,7 +159,7 @@ float Rigidbody::getMass()
 	return rb_->getMass();
 }
 
-void Rigidbody::addForce(Vector3D force, ForceMode mode, bool local)
+void Rigidbody::addForce(Vector3D force, ForceMode mode)
 {
 	if (mode)
 		rb_->applyCentralImpulse(force.toBulletPosition());
@@ -166,7 +167,7 @@ void Rigidbody::addForce(Vector3D force, ForceMode mode, bool local)
 		rb_->applyCentralForce(force.toBulletPosition());
 }
 
-void Rigidbody::addTorque(Vector3D force, ForceMode mode, bool local)
+void Rigidbody::addTorque(Vector3D force, ForceMode mode)
 {
 	if (mode)
 		rb_->applyTorque(force.toBulletPosition());

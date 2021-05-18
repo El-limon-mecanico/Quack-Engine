@@ -11,6 +11,14 @@ QuackCamera::QuackCamera(QuackEntity* e) : Component(e), camera_(nullptr)
 
 QuackCamera::~QuackCamera()
 {
+	mSM_->destroyCamera(camera_);
+	window_->removeViewport(vp_->getZOrder());
+	camera_ = nullptr;
+	node_ = nullptr;
+	mSM_ = nullptr;
+	window_ = nullptr;
+	vp_ = nullptr;
+
 }
 
 bool QuackCamera::init(luabridge::LuaRef parameterTable)

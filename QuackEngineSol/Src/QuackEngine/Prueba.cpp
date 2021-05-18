@@ -33,24 +33,21 @@ bool Prueba::init(luabridge::LuaRef parameterTable)
 
 void Prueba::start()
 {
-	if (entity_->getComponent<Rigidbody>()) {
-		QuackEntity* e = new QuackEntity();
-		e->transform()->setGlobalPosition({ 2, 10, 0 });
-		e->addComponent<MeshRenderer>()->setMeshByPrefab(PT_CUBE);
-		e->addComponent<Rigidbody>()->setRigidbody(1, CT_BOX);
-		SceneMng::Instance()->getCurrentScene()->addEntity(e);
-		//entity_->getComponent<Rigidbody>()->setGravity(Vector3D());
-	}
 }
 
 void Prueba::fixedUpdate()
 {
+
+
 	//std::cout << transform->rotation() << "\n";
 	//entity_->getComponent<Rigidbody>()->addTorque({ 0,1,0 });
 }
 
 void Prueba::update()
 {
+	scalealgo += QuackEnginePro::Instance()->time()->deltaTime();
+
+	//transform->setScale({ abs(sin(scalealgo)),abs(sin(scalealgo)),abs(sin(scalealgo)) });
 	/*transform->Translate(Vector3D(0, -1, 0) * QuackEnginePro::Instance()->time()->deltaTime());
 	transform->Rotate(Vector3D(45, 0, 90) * QuackEnginePro::Instance()->time()->deltaTime());*/
 	//if (transform->globalPosition().y < -10) {
@@ -66,6 +63,9 @@ void Prueba::update()
 void Prueba::onCollisionEnter(QuackEntity* other, Vector3D point)
 {
 	//entity_->getComponent<Rigidbody>()->addForce(Vector3D(0, 10, 0), IMPULSE);
+	
+	/*std::string carga = "Scenes/" + valor3 + ".lua";
+	SceneMng::Instance()->pushNewScene(carga, valor3);*/
 	std::cout << "Yo " << entity_->name() << " acabo de chocar con " << other->name() << "\n\n";
 }
 
