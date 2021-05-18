@@ -43,17 +43,10 @@ bool QuackCamera::init(luabridge::LuaRef parameterTable)
 	if (height == 0) height = vp_->getActualHeight();
 	camera_->setAspectRatio(Ogre::Real(width) / Ogre::Real(height));
 
+	node_ = entity_->transform()->getNode()->createChildSceneNode();
+	node_->attachObject(camera_);
+	node_->lookAt(target_.toOgrePosition(), Ogre::Node::TS_WORLD);
+	firstEnable_ = false;
+
 	return true;
-}
-
-void QuackCamera::onEnable()
-{
-	if (firstEnable_)
-	{
-		node_ = entity_->transform()->getNode()->createChildSceneNode();
-		node_->attachObject(camera_);
-		node_->lookAt(target_.toOgrePosition(), Ogre::Node::TS_WORLD);
-		firstEnable_ = false;
-	}
-
 }
