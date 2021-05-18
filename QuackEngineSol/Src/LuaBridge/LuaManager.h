@@ -10,14 +10,14 @@ lua_State* readFileLua(std::string file);
 template<class T>
 T readVariable(LuaRef& table, const std::string& variableName)
 {
-	try
-	{
+	try {
 		return table.rawget(variableName).cast<T>();
 	}
 	catch (std::exception& e)
 	{
 		std::cout << "ERROR: no se ha cargado correctamente la variable: " << variableName << "\n";
-		std::cout << "El valor escrito es: " << table.rawget(variableName).tostring() << "\n";
+		if (table) 
+			std::cout << "El valor escrito es: " << table.rawget(variableName).tostring() << "\n";
 		return NULL;
 	}
 }

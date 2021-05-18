@@ -2,6 +2,7 @@
 #include "CEGUIQuack.h"
 #include "LuaManager.h"
 #include "CallBacks.h"
+#include "SoundQuack.h"
 
 Scene::Scene(const std::string& file, const std::string& name)
 {
@@ -200,5 +201,6 @@ void Scene::clearEntities()
 
 void Scene::callBackBoton()
 {
-	std::cout << "Se ha presionado el boton\n";
+	std::cout << "Se ha presionado el boton. Sonara una cancion\n";
+	SoundQuack::Instance()->playSound(-1, "singing", 0.5);
 }
