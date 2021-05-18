@@ -110,6 +110,7 @@ void InputManager::ManageInput(SDL_Event event)
 	case SDL_MOUSEMOTION:
 		mousePositionAbsolute_ = { event.motion.x , event.motion.y };
 		//std::cout << "INPUT MANAGER POS RATON: " << event.motion.x << " , " << event.motion.y << "\n";
+		if (captureMouse_) SDL_WarpMouseInWindow(NULL, OgreQuack::Instance()->getWindowW() / 2, OgreQuack::Instance()->getWindowH() / 2);
 		break;
 	case SDL_MOUSEBUTTONDOWN: case SDL_MOUSEBUTTONUP:
 		switch (event.button.button)
@@ -153,7 +154,6 @@ void InputManager::ManageInput(SDL_Event event)
 bool InputManager::isKeyDown(SDL_Scancode code)
 {
 	const Uint8* state = SDL_GetKeyboardState(NULL);
-
 	return state[code];
 }
 
@@ -161,9 +161,19 @@ int InputManager::getAxis(Axis axis)
 {
 	const Uint8* state = SDL_GetKeyboardState(NULL);
 
-	if (axis == Vertical)  return (1*(state[SDL_SCANCODE_W] || state[SDL_SCANCODE_UP] ))+(-1 * (state[SDL_SCANCODE_S] || state[SDL_SCANCODE_DOWN]));
+	if (axis == Vertical)  return (1 * (state[SDL_SCANCODE_W] || state[SDL_SCANCODE_UP])) + (-1 * (state[SDL_SCANCODE_S] || state[SDL_SCANCODE_DOWN]));
 	if (axis == Horizontal)  return (1 * (state[SDL_SCANCODE_D] || state[SDL_SCANCODE_RIGHT])) + (-1 * (state[SDL_SCANCODE_A] || state[SDL_SCANCODE_LEFT]));
 
+}
+
+void InputManager::captureMouse()
+{
+	captureMouse_ = true;
+}
+
+void InputManager::releaseMouse()
+{
+	captureMouse_ = false;
 }
 
 void InputManager::MouseWheelChange(int coordinate, int value)
@@ -175,7 +185,7 @@ void InputManager::MouseWheelChange(int coordinate, int value)
 }
 
 //devuelve un struct con (dos int) x,y coordenadas del raton, con origen en la esquina superior izquierda
-InputManager::MousePositionAbsolute InputManager::getMousePositionAbsolute() 
+InputManager::MousePositionAbsolute InputManager::getMousePositionAbsolute()
 {
 	return mousePositionAbsolute_;
 }
@@ -183,7 +193,7 @@ InputManager::MousePositionAbsolute InputManager::getMousePositionAbsolute()
 //devuelve un struct con (dos double) x,y coordenadas del raton en valor relativo(de 0,0 a 1,1), con origen en la esquina superior izquierda
 InputManager::MousePositionRelative InputManager::getMousePositionRelative()
 {
-	mousePositionRelative_ = {	(float)mousePositionAbsolute_.x / OgreQuack::Instance()->getWindowW(),
+	mousePositionRelative_ = { (float)mousePositionAbsolute_.x / OgreQuack::Instance()->getWindowW(),
 								(float)mousePositionAbsolute_.x / OgreQuack::Instance()->getWindowH() };
 	return mousePositionRelative_;
 }

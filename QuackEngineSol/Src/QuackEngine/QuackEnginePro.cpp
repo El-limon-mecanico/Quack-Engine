@@ -144,9 +144,9 @@ void QuackEnginePro::update()
 			exit = true;
 	}
 
-//#if (defined _DEBUG) || !(defined _WIN32)
-	//std::cout << "WARNING: Deberia haber al menos 4 bytes de basura\n";
-//#endif
+	//#if (defined _DEBUG) || !(defined _WIN32)
+		//std::cout << "WARNING: Deberia haber al menos 4 bytes de basura\n";
+	//#endif
 }
 
 
@@ -175,8 +175,8 @@ void QuackEnginePro::pollEvents()
 			break;
 		default:
 			InputManager::Instance()->ManageInput(event);
-			//if (InputManager::Instance()->isKeyDown(SDL_SCANCODE_SPACE)) std::cout << "Pos raton x: " << InputManager::Instance()->getMousePositionRelative().x << " y " << InputManager::Instance()->getMousePositionRelative().x << "\n";
-			//std::cout << "eje x: " << InputManager::Instance()->getAxis(Axis::Horizontal)<< " , " << "eje Y: " << InputManager::Instance()->getAxis(Axis::Vertical) << "\n";
+			//if (InputManager::Instance()->isKeyDown(SDL_SCANCODE_L)) InputManager::Instance()->captureMouse();
+			//else InputManager::Instance()->releaseMouse();
 			break;
 		}
 	}

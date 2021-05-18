@@ -52,6 +52,8 @@ private:
 		int y = 0;
 	}mouseWheel_;
 
+	bool captureMouse_ = false;
+
 	void injectInputCegui(SDL_Event event);
 
 	CEGUI::MouseButton sdlMouseButtonToCegui(Uint8 buttonSDL);
@@ -81,5 +83,9 @@ public:
 	bool isKeyDown(SDL_Scancode code);
 
 	int getAxis(Axis axis);
+
+	void captureMouse();
+
+	void releaseMouse();
 };
 
