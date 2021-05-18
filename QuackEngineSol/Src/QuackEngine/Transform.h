@@ -18,7 +18,10 @@ namespace Ogre {
 enum TrAxis {
 	X_AXIS,
 	Y_AXIS,
-	Z_AXIS
+	Z_AXIS,
+	NEGATIVE_X_AXIS,
+	NEGATIVE_Y_AXIS,
+	NEGATIVE_Z_AXIS
 };
 
 class QUACK_ENGINE_PRO_API Transform :

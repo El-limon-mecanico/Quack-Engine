@@ -271,8 +271,17 @@ void Transform::lookAt(Vector3D point, TrAxis axis)
 	case Z_AXIS:
 		v = Ogre::VectorBase<3, Ogre::Real>::UNIT_Z;
 		break;
-	default:
+	case NEGATIVE_X_AXIS:
+		v = Ogre::VectorBase<3, Ogre::Real>::NEGATIVE_UNIT_X;
+		break;
+	case NEGATIVE_Y_AXIS:
+		v = Ogre::VectorBase<3, Ogre::Real>::NEGATIVE_UNIT_Y;
+		break;
+	case NEGATIVE_Z_AXIS:
 		v = Ogre::VectorBase<3, Ogre::Real>::NEGATIVE_UNIT_Z;
+		break;
+	default:
+		v = Ogre::VectorBase<3, Ogre::Real>::UNIT_Z;
 		break;
 	}
 
