@@ -1,4 +1,5 @@
 #include "CallBacks.h"
+#include <iostream>
 
 std::unique_ptr<CallBacks> CallBacks::instance_;
 
@@ -26,7 +27,7 @@ std::function<void()> CallBacks::getMethod(std::string name)
 		return (*m).second;
 	else
 		return []() {
-		printf("Este CallBack no existe, comprueba el nombre de la funcion, o si has guardado el metodo\n");
+		std::cout << "Este CallBack no existe, comprueba el nombre de la funcion, o si has guardado el metodo\n";
 	};
 
 }
