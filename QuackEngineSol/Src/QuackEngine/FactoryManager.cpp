@@ -6,6 +6,9 @@
 #include "Prueba.h"
 #include "Prueba2.h"
 #include "Transform.h"
+#include "Button.h"
+#include "Image.h"
+#include "Text.h"
 
 std::unique_ptr<FactoryManager> FactoryManager::instance_;
 
@@ -30,6 +33,9 @@ void FactoryManager::initEngineFactories()
 	FactoryManager::instance()->add<Transform>();
 	FactoryManager::instance()->add<QuackCamera>();
 	FactoryManager::instance()->add<Light>();
+	FactoryManager::instance()->add<Button>();
+	FactoryManager::instance()->add<Text>();
+	FactoryManager::instance()->add<Image>();
 }
 
 Component* FactoryManager::create(const std::string& name)
@@ -38,7 +44,6 @@ Component* FactoryManager::create(const std::string& name)
 	if(it == hashTable_.end())
 	{
 		std::cout << "ERROR: NO SE HA PODIDO LEER EL COMPONENTE: " << name << "\n";
-		std::cout << "ha petado a posta, no me pegueis por favor\n";
 		throw;// "No se ha encontrado un componente";
 	}
 	else return hashTable_[name]();
