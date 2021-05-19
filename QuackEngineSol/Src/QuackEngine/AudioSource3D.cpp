@@ -46,5 +46,5 @@ void AudioSource3D::setVolume(float value) {
 }
 
 float AudioSource3D::getVolume() {
-	mngr_->getVolume(channel);
+	return mngr_->getVolume(channel);
 }

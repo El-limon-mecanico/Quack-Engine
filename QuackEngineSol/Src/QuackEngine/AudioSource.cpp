@@ -46,5 +46,5 @@ void AudioSource::setVolume(float value) {
 }
 
 float AudioSource::getVolume() {
-	mngr_->getVolume(channel);
+	return mngr_->getVolume(channel);
 }

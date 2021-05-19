@@ -163,7 +163,9 @@ void SoundQuack::setVolume(int channel, float volume)
 
 float SoundQuack::getVolume(int channel)
 {
-	getChannel(channel)->getVolume();
+	float volume;
+	getChannel(channel)->getVolume(&volume);
+	return volume;
 }
 
 

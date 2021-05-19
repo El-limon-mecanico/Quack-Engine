@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\QuackEngine\AudioSource.cpp" />
+    <ClCompile Include="..\..\Src\QuackEngine\AudioSource3D.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\Button.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\CallBacks.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\Image.cpp" />
@@ -61,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\QuackEngine\AudioSource.h" />
+    <ClInclude Include="..\..\Src\QuackEngine\AudioSource3D.h" />
     <ClInclude Include="..\..\Src\QuackEngine\Button.h" />
     <ClInclude Include="..\..\Src\QuackEngine\CallBacks.h" />
     <ClInclude Include="..\..\Src\QuackEngine\Image.h" />
