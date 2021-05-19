@@ -79,6 +79,12 @@ void CEGUIQuack::removeWidget(CEGUI::Window* window)
 	CEGUI::WindowManager::getSingleton().destroyWindow(window);
 }
 
+void CEGUIQuack::setMouseVisibility(bool visible)
+{
+	if(visible) CEGUI::System::getSingleton().getDefaultGUIContext().getMouseCursor().show();
+	else CEGUI::System::getSingleton().getDefaultGUIContext().getMouseCursor().hide();
+}
+
 
 bool CEGUIQuack::render(double deltaTime)
 {

@@ -6,6 +6,7 @@
 #include "SceneMng.h"
 #include "QuackUI.h"
 #include "InputManager.h"
+#include "CEGUIQuack.h"
 
 Prueba::Prueba(QuackEntity* e) : Component(e)
 {
@@ -52,10 +53,14 @@ void Prueba::update()
 {
 	//if (InputManager::Instance()->getKey(SDL_SCANCODE_SPACE))
 	//	std::cout << "Espacio mantenido\n";
-	if (InputManager::Instance()->getKeyDown(SDL_SCANCODE_SPACE))
-		std::cout << "Espacio abajo\n";
-	if (InputManager::Instance()->getKeyUp(SDL_SCANCODE_SPACE))
-		std::cout << "Espacio arriba\n";
+	//if (InputManager::Instance()->getKeyDown(SDL_SCANCODE_L)) {
+	//	std::cout << "Espacio abajo\n";
+	//	mouseVisinility_ = !mouseVisinility_;
+	//	CEGUIQuack::Instance()->setMouseVisibility(mouseVisinility_);
+	//}
+	//if (InputManager::Instance()->getKeyUp(SDL_SCANCODE_L)) {
+	//	std::cout << "Espacio arriba\n";
+	//}
 	//scalealgo += QuackEnginePro::Instance()->time()->deltaTime();
 
 	//transform->setScale({ abs(sin(scalealgo)),abs(sin(scalealgo)),abs(sin(scalealgo)) });
