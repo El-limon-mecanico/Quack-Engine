@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Src\QuackEngine\AudioSource.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\CallBacks.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\Light.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\QuackCamera.cpp" />
@@ -55,6 +56,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Src\QuackEngine\AudioSource.h" />
     <ClInclude Include="..\..\Src\QuackEngine\CallBacks.h" />
     <ClInclude Include="..\..\Src\QuackEngine\Prueba2.h" />
     <ClInclude Include="..\..\Src\QuackEngine\checkML.h" />

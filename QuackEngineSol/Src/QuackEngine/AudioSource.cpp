@@ -14,16 +14,15 @@ AudioSource::~AudioSource()
 
 bool AudioSource::init(luabridge::LuaRef parameterTable)
 {
-	audioName = readVariable<std::string>(parameterTable, "AudioName");
 	source = readVariable<std::string>(parameterTable, "AudioSource");
 	volume = readVariable<float>(parameterTable, "Volume");
 
-	channel = mngr_->createSound(source, audioName);
+	channel = mngr_->createSound(source, source);
 	return true;
 }
 
 void AudioSource::play() {
-	mngr_->playChannel(channel, audioName, volume);
+	mngr_->playChannel(channel, source, volume);
 }
 
 void AudioSource::stop() {
