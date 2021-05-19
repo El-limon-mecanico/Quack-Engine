@@ -15,7 +15,7 @@ bool Button::init(luabridge::LuaRef parameterTable)
 	setTextColor(tlColor, tRColor, bLColor, bRColor);
 
 	setCallBackFunction(CallBacks::instance()->getMethod(readVariable<std::string>(parameterTable, "CallBackFunction")));
-
+	
 	enable_ = readVariable<bool>(parameterTable, "Enable");
 
 	return true;

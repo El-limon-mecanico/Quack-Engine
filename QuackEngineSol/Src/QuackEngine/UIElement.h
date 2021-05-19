@@ -43,6 +43,10 @@ public:
 
 	void setProperty(std::string prop, std::string value);
 
+	void setBackground(bool set);
+
+	void setBorder(bool set);
+
 	std::pair<float, float> getPoisition() { return position_; }
 	std::pair<float, float> getSize() { return size_; }
 };
