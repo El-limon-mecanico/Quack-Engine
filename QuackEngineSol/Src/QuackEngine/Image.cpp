@@ -14,6 +14,7 @@ bool Image::init(luabridge::LuaRef parameterTable)
     setBorder(readVariable<bool>(parameterTable, "Border"));
 	
     element_->setProperty("Image", name);
+    element_->setZOrderingEnabled(false); //para que no puedas interactuar con la imagen
     return true;
 }
 
