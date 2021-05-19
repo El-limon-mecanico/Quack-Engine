@@ -1,5 +1,12 @@
 #pragma once
 #include "Component.h"
+#ifdef _MSC_VER
+#  ifdef QUACK_ENGINE_PRO_EXPORT
+#    define QUACK_ENGINE_PRO_API __declspec(dllexport)
+#  else
+#    define QUACK_ENGINE_PRO_API __declspec(dllimport)
+#  endif
+#endif
 
 namespace CEGUI
 {
@@ -7,7 +14,7 @@ namespace CEGUI
 }
 
 
-class UIElement : public Component {
+class QUACK_ENGINE_PRO_API UIElement : public Component {
 protected:
 	CEGUI::Window* element_;
 
