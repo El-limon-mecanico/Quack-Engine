@@ -14,7 +14,7 @@ AudioSource::~AudioSource()
 
 bool AudioSource::init(luabridge::LuaRef parameterTable)
 {
-	source = readVariable<std::string>(parameterTable, "AudioSource");
+	source = readVariable<std::string>(parameterTable, "Source");
 	volume = readVariable<float>(parameterTable, "Volume");
 
 	channel = mngr_->createSound(source, source);

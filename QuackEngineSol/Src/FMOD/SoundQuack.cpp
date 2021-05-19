@@ -79,62 +79,49 @@ void SoundQuack::playChannel(int channel, std::string id, float volume)
 }
 
 
-int SoundQuack::createSound(std::string sound, std::string id)
+int SoundQuack::createSound(std::string sound, std::string id, int flags)
 {
-	FMOD::Sound* sonido;
-	std::string path = std::string(assetsRouteFmod + "/Sound/") + sound;
-	FMOD_RESULT resultCreateSound = systemFMOD_->createSound(path.c_str(), FMOD_DEFAULT, 0, &sonido);
-	if (resultCreateSound != FMOD_OK)
-	{
-		std::cout << "Algo ha petado\n";
-		printf("FMOD error! (%d) %s\n", resultCreateSound, FMOD_ErrorString(resultCreateSound));
-		exit(-1);
+	if (sounds_.find(id) == sounds_.end()) {		// si no está creado ya...
+		FMOD::Sound* sonido;
+		std::string path = std::string(assetsRouteFmod + "/Sound/") + sound;
+		FMOD_RESULT resultCreateSound = systemFMOD_->createSound(path.c_str(), flags, 0, &sonido);
+		if (resultCreateSound != FMOD_OK)
+		{
+			std::cout << "Algo ha petado\n";
+			printf("FMOD error! (%d) %s\n", resultCreateSound, FMOD_ErrorString(resultCreateSound));
+			exit(-1);
+		}
+		sounds_.insert(std::pair<std::string, FMOD::Sound*>(id, sonido));
 	}
-	sounds_.insert(std::pair<std::string, FMOD::Sound*>(id, sonido));
 	
 	return ++currentChannel;
 }
 
-
-int SoundQuack::create3DSound(std::string sound, std::string id, int flags)
-{
-	FMOD::Sound* sonido;
-	std::string path = std::string(assetsRouteFmod + "/Sound/") + sound;
-	FMOD_RESULT resultCreateSound = systemFMOD_->createSound(path.c_str(), FMOD_3D, 0, &sonido);
-	if (resultCreateSound != FMOD_OK)
-	{
-		std::cout << "Algo ha petado\n";
-		printf("FMOD error! (%d) %s\n", resultCreateSound, FMOD_ErrorString(resultCreateSound));
-		exit(-1);
-	}
-	sounds_.insert(std::pair<std::string, FMOD::Sound*>(id, sonido));
-	
-	return ++currentChannel;
-}
+int SoundQuack::create3DSound(std::string sound, std::string id) {		return createSound(sound, id, FMOD_3D);		}
 
 void SoundQuack::createDSP(FMOD_DSP_TYPE type, std::string id)
 {
-	FMOD::DSP* dsp;
-	FMOD_RESULT result = systemFMOD_->createDSPByType(type, &dsp);
-	if (result != FMOD_OK)
-	{
-		std::cout << "Algo ha petado\n";
-		printf("FMOD error! (%d) %s\n", result, FMOD_ErrorString(result));
-		exit(-1);
+	if (dsp_.find(id) == dsp_.end()) {		// si no está creado ya...
+		FMOD::DSP* dsp;
+		FMOD_RESULT result = systemFMOD_->createDSPByType(type, &dsp);
+		if (result != FMOD_OK)
+		{
+			std::cout << "Algo ha petado\n";
+			printf("FMOD error! (%d) %s\n", result, FMOD_ErrorString(result));
+			exit(-1);
+		}
+		dsp_.insert(std::pair<std::string, FMOD::DSP*>(id, dsp));
 	}
-	dsp_.insert(std::pair<std::string, FMOD::DSP*>(id, dsp));
 }
 
-void SoundQuack::addDSP(int channel, std::string isDSP)
+void SoundQuack::addDSP(int channel, std::string idDSP)
 {
-	auto it = dsp_.find(isDSP);
-	if (it == dsp_.end())
-	{
-		std::cout << "No se ha encontrado el sonido: " + isDSP << "\n";
+	auto it = dsp_.find(idDSP);
+	if (it == dsp_.end()) {
+		std::cout << "No se ha encontrado el sonido: " + idDSP << "\n";
 	}
-	else
-	{
-		getChannel(channel)->addDSP(0, dsp_[isDSP]);
+	else {
+		getChannel(channel)->addDSP(0, dsp_[idDSP]);
 	}
 }
 
