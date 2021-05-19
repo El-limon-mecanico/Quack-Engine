@@ -9,6 +9,8 @@
 #include "Button.h"
 #include "Image.h"
 #include "Text.h"
+#include "AudioSource.h"
+#include "AudioSource3D.h"
 
 std::unique_ptr<FactoryManager> FactoryManager::instance_;
 
@@ -35,6 +37,8 @@ void FactoryManager::initEngineFactories()
 	FactoryManager::instance()->add<Light>();
 	FactoryManager::instance()->add<Button>();
 	FactoryManager::instance()->add<Text>();
+	FactoryManager::instance()->add<AudioSource>();
+	FactoryManager::instance()->add<AudioSource3D>();
 	FactoryManager::instance()->add<Image>();
 }
 

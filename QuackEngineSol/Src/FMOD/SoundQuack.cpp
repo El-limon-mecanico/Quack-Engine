@@ -95,6 +95,23 @@ int SoundQuack::createSound(std::string sound, std::string id)
 	return ++currentChannel;
 }
 
+
+int SoundQuack::create3DSound(std::string sound, std::string id, int flags)
+{
+	FMOD::Sound* sonido;
+	std::string path = std::string(assetsRouteFmod + "/Sound/") + sound;
+	FMOD_RESULT resultCreateSound = systemFMOD_->createSound(path.c_str(), FMOD_3D, 0, &sonido);
+	if (resultCreateSound != FMOD_OK)
+	{
+		std::cout << "Algo ha petado\n";
+		printf("FMOD error! (%d) %s\n", resultCreateSound, FMOD_ErrorString(resultCreateSound));
+		exit(-1);
+	}
+	sounds_.insert(std::pair<std::string, FMOD::Sound*>(id, sonido));
+	
+	return ++currentChannel;
+}
+
 void SoundQuack::createDSP(FMOD_DSP_TYPE type, std::string id)
 {
 	FMOD::DSP* dsp;

@@ -40,6 +40,7 @@ public:
 	static SoundQuack* Init(std::string route);
 	
 	int createSound(std::string sound, std::string id);
+	int create3DSound(std::string sound, std::string id, int flags);
 
 	void playChannel(int channel, std::string id, float volume);
 	void pauseChannel(int channel, bool pause);
