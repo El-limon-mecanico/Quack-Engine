@@ -58,7 +58,7 @@ Component* QuackEntity::addComponent(const std::string& componentName, LuaRef pa
 			c = FactoryManager::instance()->create(componentName);
 		}
 		catch (std::string& err) {
-			std::cout << err << componentName << "\n";
+			std::cout << err;
 			return nullptr;
 		}
 		c->setEntity(this);
