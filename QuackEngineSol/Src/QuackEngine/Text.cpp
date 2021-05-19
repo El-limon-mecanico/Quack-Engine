@@ -17,13 +17,3 @@ bool Text::init(luabridge::LuaRef parameterTable)
 
     return true;
 }
-
-void Text::setBackground(bool set)
-{
-    element_->setProperty("BackgroundEnabled", set ? "True" : "False");
-}
-
-void Text::setBorder(bool set)
-{
-    element_->setProperty("FrameEnabled", set ? "True" : "False");
-}

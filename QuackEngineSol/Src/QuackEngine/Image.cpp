@@ -9,6 +9,10 @@ bool Image::init(luabridge::LuaRef parameterTable)
     std::string image = readVariable<std::string>(parameterTable, "Image");
     if (!CEGUI::ImageManager::getSingleton().isDefined(name))
         CEGUI::ImageManager::getSingleton().addFromImageFile(name, image);
+
+    setBackground(readVariable<bool>(parameterTable, "Background"));
+    setBorder(readVariable<bool>(parameterTable, "Border"));
+	
     element_->setProperty("Image", name);
     return true;
 }

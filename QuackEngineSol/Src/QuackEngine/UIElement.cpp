@@ -84,3 +84,13 @@ void UIElement::setProperty(std::string prop, std::string value)
 	else
 		std::cout << prop << " no es una propiedad que exista dentro del style cargado\n";
 }
+
+void UIElement::setBackground(bool set)
+{
+	element_->setProperty("BackgroundEnabled", set ? "True" : "False");
+}
+
+void UIElement::setBorder(bool set)
+{
+	element_->setProperty("FrameEnabled", set ? "True" : "False");
+}

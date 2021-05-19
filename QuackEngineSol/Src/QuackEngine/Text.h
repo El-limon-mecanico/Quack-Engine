@@ -14,8 +14,4 @@ public:
 	static std::string GetName() { return "Text"; }
 
 	virtual bool init(luabridge::LuaRef parameterTable = { nullptr });
-
-	void setBackground(bool set);
-
-	void setBorder(bool set);
 };
