@@ -7,6 +7,8 @@ private:
 	int valor1;
 	int* valor2;
 	std::string valor3;
+	float scalealgo = 0;
+	bool mouseVisinility_ = true;
 
 public:
 	Prueba(QuackEntity* e = nullptr);

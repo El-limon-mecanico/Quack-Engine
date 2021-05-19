@@ -79,4 +79,6 @@ public:
 	// FUNCIONA SOLO CON SPOTLIGHT
 	void setOuterAngle(float angle);
 
+	float getDistance() { return distance_; }
+
 };

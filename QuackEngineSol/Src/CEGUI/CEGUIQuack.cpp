@@ -27,9 +27,9 @@ void CEGUIQuack::setUp(Ogre::RenderWindow* rWindow)
 	//CEGUI::System::getSingleton().getDefaultGUIContext().setDefaultFont("DejaVuSans-10");
 	CEGUI::System::getSingleton().getDefaultGUIContext().getMouseCursor().setDefaultImage("TaharezLook/MouseArrow");
 
-	CEGUI::Window* myRoot = CEGUI::WindowManager::getSingleton().createWindow("DefaultWindow", "_MasterRoot");
-	myRoot->setUsingAutoRenderingSurface(true);	
-	CEGUI::System::getSingleton().getDefaultGUIContext().setRootWindow(myRoot);
+	myRoot_ = CEGUI::WindowManager::getSingleton().createWindow("DefaultWindow", "_MasterRoot");
+	myRoot_->setUsingAutoRenderingSurface(true);
+	CEGUI::System::getSingleton().getDefaultGUIContext().setRootWindow(myRoot_);
 
 	setUpResources();
 }
@@ -63,7 +63,7 @@ void CEGUIQuack::setFont(std::string filename)
 
 
 CEGUI::Window* CEGUIQuack::createWidget(std::string type, std::string name, std::pair<float, float> pos, std::pair<float, float> size)
-{	
+{
 	CEGUI::Window* myImageWindow = CEGUI::WindowManager::getSingleton().createWindow(type, name);
 	myImageWindow->setPosition(CEGUI::UVector2(CEGUI::UDim(pos.first, 0.0), CEGUI::UDim(pos.second, 0.0)));
 	myImageWindow->setSize(CEGUI::USize(CEGUI::UDim(0.0, size.first), CEGUI::UDim(0.0, size.second)));
@@ -73,36 +73,16 @@ CEGUI::Window* CEGUIQuack::createWidget(std::string type, std::string name, std:
 	return myImageWindow;
 }
 
-
-void CEGUIQuack::createButton(std::string name, std::string text, std::pair<float, float> pos, std::pair<float, float> size, std::function<void()>func,std::string style)
+void CEGUIQuack::removeWidget(CEGUI::Window* window)
 {
-	CEGUI::Window* newWidget = nullptr;
-	try	{ newWidget = createWidget(style, name, pos, size);	}
-	catch (std::exception e) { std::cout << "No se ha podido crear el boton: " << name << "\n"; }
-
-
-	
-	newWidget->subscribeEvent(CEGUI::PushButton::EventClicked, func);
-	newWidget->setText(text);
+	myRoot_->removeChild(window);
+	CEGUI::WindowManager::getSingleton().destroyWindow(window);
 }
 
-void CEGUIQuack::createText(std::string name, std::string text, std::pair<float, float> pos, std::pair<float, float> size,std::string style)
+void CEGUIQuack::setMouseVisibility(bool visible)
 {
-	CEGUI::Window* newWidget = nullptr;
-	try { newWidget = createWidget(style, name, pos, size); }
-	catch (std::exception e) { std::cout << "No se ha podido crear el texto: " << name << "\n"; }
-
-	newWidget->setProperty("Text", text);
-}
-
-void CEGUIQuack::createImage(std::string name, std::string image, std::pair<float, float> pos, std::pair<float, float> size,std::string style)
-{
-	CEGUI::Window* newWidget = nullptr;
-	try { newWidget = createWidget(style, name, pos, size); }
-	catch (std::exception e) { std::cout << "No se ha podido crear la imagen: " << name << "\n"; }
-
-	CEGUI::ImageManager::getSingleton().addFromImageFile(name, image);
-	newWidget->setProperty("Image", name);
+	if(visible) CEGUI::System::getSingleton().getDefaultGUIContext().getMouseCursor().show();
+	else CEGUI::System::getSingleton().getDefaultGUIContext().getMouseCursor().hide();
 }
 
 

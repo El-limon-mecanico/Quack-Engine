@@ -11,6 +11,14 @@ QuackCamera::QuackCamera(QuackEntity* e) : Component(e), camera_(nullptr)
 
 QuackCamera::~QuackCamera()
 {
+	mSM_->destroyCamera(camera_);
+	window_->removeViewport(vp_->getZOrder());
+	camera_ = nullptr;
+	node_ = nullptr;
+	mSM_ = nullptr;
+	window_ = nullptr;
+	vp_ = nullptr;
+
 }
 
 bool QuackCamera::init(luabridge::LuaRef parameterTable)
@@ -43,17 +51,10 @@ bool QuackCamera::init(luabridge::LuaRef parameterTable)
 	if (height == 0) height = vp_->getActualHeight();
 	camera_->setAspectRatio(Ogre::Real(width) / Ogre::Real(height));
 
+	node_ = entity_->transform()->getNode()->createChildSceneNode();
+	node_->attachObject(camera_);
+	node_->lookAt(target_.toOgrePosition(), Ogre::Node::TS_WORLD);
+	firstEnable_ = false;
+
 	return true;
-}
-
-void QuackCamera::onEnable()
-{
-	if (firstEnable_)
-	{
-		node_ = entity_->transform()->getNode()->createChildSceneNode();
-		node_->attachObject(camera_);
-		node_->lookAt(target_.toOgrePosition(), Ogre::Node::TS_WORLD);
-		firstEnable_ = false;
-	}
-
 }

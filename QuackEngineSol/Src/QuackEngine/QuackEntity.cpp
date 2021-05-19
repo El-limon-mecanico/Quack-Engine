@@ -6,7 +6,7 @@
 #include "checkML.h"
 
 
-QuackEntity::QuackEntity(std::string name, bool active, std::string tag) : active_(active), name_(name), tag_(tag)
+QuackEntity::QuackEntity(std::string name, bool active, std::string tag) : enable_(active), name_(name), tag_(tag)
 {
 	transform_ = addComponent<Transform>();
 }
@@ -21,7 +21,7 @@ QuackEntity::~QuackEntity() {
 }
 
 QuackEntity::QuackEntity(Transform* tr) :
-	active_(true),
+	enable_(true),
 	name_("EntityRoot"),
 	tag_("Root"),
 	transform_(tr)
@@ -46,6 +46,7 @@ Component* QuackEntity::addComponent(const std::string& componentName, LuaRef pa
 {
 	if (componentName == "Transform") {
 		transform_->init(param);
+		transform_->transform = transform_;
 		return transform_;
 	}
 	else if (hasComponent(componentName)) //para no repetir componentes
@@ -62,8 +63,8 @@ Component* QuackEntity::addComponent(const std::string& componentName, LuaRef pa
 		cmpMap_.insert({ componentName , c });
 		cmpMap_[componentName] = c; //sin esta linea, el map guarda null por alg�n motivo
 
-		//if(componente enable)																// TODO GUARDAR SI EL COMPONENTE ESTÁ ENABLE
-		c->onEnable();
+		if (c->isEnable() && enable_)																// TODO GUARDAR SI EL COMPONENTE ESTÁ ENABLE
+			c->onEnable();
 
 		return c;
 	}
@@ -96,7 +97,7 @@ void QuackEntity::removeComponent(const std::string& componentName)
 
 void QuackEntity::start()
 {
-	if (active_ && !destroy_)
+	if (enable_ && !destroy_)
 		for (Component* c : components_)
 			if (c->isEnable())
 				c->start();
@@ -104,7 +105,7 @@ void QuackEntity::start()
 
 void QuackEntity::preUpdate()
 {
-	if (active_ && !destroy_)
+	if (enable_ && !destroy_)
 		for (Component* c : components_)
 			if (c->isEnable())
 				c->preUpdate();
@@ -112,7 +113,7 @@ void QuackEntity::preUpdate()
 
 void QuackEntity::physicsUpdate()
 {
-	if (active_ && !destroy_)
+	if (enable_ && !destroy_)
 		for (Component* c : components_)
 			if (c->isEnable())
 				c->physicsUpdate();
@@ -120,7 +121,7 @@ void QuackEntity::physicsUpdate()
 
 void QuackEntity::fixedUpdate()
 {
-	if (active_ && !destroy_)
+	if (enable_ && !destroy_)
 		for (Component* c : components_)
 			if (c->isEnable())
 				c->fixedUpdate();
@@ -128,7 +129,7 @@ void QuackEntity::fixedUpdate()
 
 void QuackEntity::update()
 {
-	if (active_)
+	if (enable_)
 		for (Component* c : components_)
 			if (c->isEnable())
 				c->update();
@@ -136,7 +137,7 @@ void QuackEntity::update()
 
 void QuackEntity::lateUpdate()
 {
-	if (active_)
+	if (enable_)
 		for (Component* c : components_)
 			if (c->isEnable())
 				c->lateUpdate();
@@ -144,7 +145,7 @@ void QuackEntity::lateUpdate()
 
 void QuackEntity::lastUpdate()
 {
-	if (active_ && !destroy_)
+	if (enable_ && !destroy_)
 		for (Component* c : components_)
 			if (c->isEnable())
 				c->lastUpdate();
@@ -152,7 +153,7 @@ void QuackEntity::lastUpdate()
 
 void QuackEntity::onCollisionEnter(QuackEntity* other, Vector3D point)
 {
-	if (active_ && !destroy_)
+	if (enable_ && !destroy_)
 		for (Component* c : components_)
 			if (c->isEnable())
 				c->onCollisionEnter(other, point);
@@ -160,7 +161,7 @@ void QuackEntity::onCollisionEnter(QuackEntity* other, Vector3D point)
 
 void QuackEntity::onCollisionStay(QuackEntity* other, Vector3D point)
 {
-	if (active_ && !destroy_)
+	if (enable_ && !destroy_)
 		for (Component* c : components_)
 			if (c->isEnable())
 				c->onCollisionStay(other, point);
@@ -168,7 +169,7 @@ void QuackEntity::onCollisionStay(QuackEntity* other, Vector3D point)
 
 void QuackEntity::onCollisionExit(QuackEntity* other, Vector3D point)
 {
-	if (active_ && !destroy_)
+	if (enable_ && !destroy_)
 		for (Component* c : components_)
 			if (c->isEnable())
 				c->onCollisionExit(other, point);
@@ -176,7 +177,7 @@ void QuackEntity::onCollisionExit(QuackEntity* other, Vector3D point)
 
 void QuackEntity::onTriggerEnter(QuackEntity* other, Vector3D point)
 {
-	if (active_ && !destroy_)
+	if (enable_ && !destroy_)
 		for (Component* c : components_)
 			if (c->isEnable())
 				c->onTriggerEnter(other, point);
@@ -184,7 +185,7 @@ void QuackEntity::onTriggerEnter(QuackEntity* other, Vector3D point)
 
 void QuackEntity::onTriggerStay(QuackEntity* other, Vector3D point)
 {
-	if (active_ && !destroy_)
+	if (enable_ && !destroy_)
 		for (Component* c : components_)
 			if (c->isEnable())
 				c->onTriggerStay(other, point);
@@ -192,7 +193,7 @@ void QuackEntity::onTriggerStay(QuackEntity* other, Vector3D point)
 
 void QuackEntity::onTriggerExit(QuackEntity* other, Vector3D point)
 {
-	if (active_ && !destroy_)
+	if (enable_ && !destroy_)
 		for (Component* c : components_)
 			if (c->isEnable())
 				c->onTriggerExit(other, point);

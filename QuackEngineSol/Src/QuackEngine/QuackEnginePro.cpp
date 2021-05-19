@@ -50,15 +50,12 @@ QuackEnginePro::~QuackEnginePro() {
 	delete quackTime_;	quackTime_ = nullptr;
 };
 
-bool QuackEnginePro::Init()
+bool QuackEnginePro::Init(std::string name)
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-#if (defined _DEBUG) && (defined _WIN32)
-	int* a = new int();		// para que estemos seguros de que siempre se estan viendo los memory leaks
-#endif
 
 	assert(instance_.get() == nullptr);
-	instance_.reset(new QuackEnginePro());
+	instance_.reset(new QuackEnginePro(name));
 	return instance_.get();
 }
 
@@ -70,8 +67,8 @@ QuackEnginePro* QuackEnginePro::Instance() {
 void QuackEnginePro::setup()
 {
 	readAssetsRoute();
-	
-	OgreQuack::Init();
+
+	OgreQuack::Init(windowName);
 
 	ResourceMng::Init(assets_route);
 	ResourceMng::Instance()->setup(); //Carga de recursos
@@ -91,7 +88,7 @@ void QuackEnginePro::setup()
 	CEGUIQuack::Instance()->setUp(OgreQuack::Instance()->getWindow());
 
 	CallBacks::Init();
-	
+
 	SceneMng::Init();
 
 	InputManager::Init();
@@ -135,14 +132,16 @@ void QuackEnginePro::update()
 		OgreQuack::Instance()->getRoot()->renderOneFrame();
 
 		SceneMng::Instance()->lateUpdate();
-		
-		SceneMng::Instance()->lastUpdate();
-		CEGUIQuack::Instance()->render(time()->deltaTime());
+
+		//CEGUIQuack::Instance()->render(time()->deltaTime());
+
+		if (!SceneMng::Instance()->lastUpdate())
+			exit = true;
 	}
 
-//#if (defined _DEBUG) || !(defined _WIN32)
-	//std::cout << "WARNING: Deberia haber al menos 4 bytes de basura\n";
-//#endif
+	//#if (defined _DEBUG) || !(defined _WIN32)
+		//std::cout << "WARNING: Deberia haber al menos 4 bytes de basura\n";
+	//#endif
 }
 
 
@@ -151,6 +150,7 @@ void QuackEnginePro::pollEvents()
 	if (sdlWindow_ == nullptr)
 		return;  // SDL events not initialized
 	SDL_Event event;
+	InputManager::Instance()->flushKeys();
 	while (SDL_PollEvent(&event))
 	{
 		switch (event.type)
@@ -171,8 +171,6 @@ void QuackEnginePro::pollEvents()
 			break;
 		default:
 			InputManager::Instance()->ManageInput(event);
-			if (InputManager::Instance()->isKeyDown(SDL_SCANCODE_SPACE)) std::cout << "Pos raton x: " << InputManager::Instance()->getMousePositionRelative().x << " y " << InputManager::Instance()->getMousePositionRelative().x << "\n";
-			std::cout << "eje x: " << InputManager::Instance()->getAxis(Axis::Horizontal)<< " , " << "eje Y: " << InputManager::Instance()->getAxis(Axis::Vertical) << "\n";
 			break;
 		}
 	}

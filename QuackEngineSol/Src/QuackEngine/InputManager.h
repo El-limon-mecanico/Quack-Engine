@@ -29,6 +29,13 @@ class QUACK_ENGINE_PRO_API InputManager
 private:
 	static std::unique_ptr<InputManager> instance_;
 
+	struct KeyState {
+		bool down_;
+		bool pressed_;
+		bool up_;
+	};
+
+
 	struct MousePositionAbsolute
 	{
 		int x = 0;
@@ -52,21 +59,31 @@ private:
 		int y = 0;
 	}mouseWheel_;
 
+	KeyState keys_[SDL_NUM_SCANCODES];
+
+	std::vector<int> keysUps;
+	std::vector<int> keysDown;
+
+	bool captureMouse_ = false;
+
 	void injectInputCegui(SDL_Event event);
 
 	CEGUI::MouseButton sdlMouseButtonToCegui(Uint8 buttonSDL);
 
 	Uint32 sdlKeyToCegui(SDL_Scancode sdlKeycode);
 
+	void manageKeys(SDL_Event event);
+
 public:
 
 	static bool Init();
 	static InputManager* Instance();
 
-	InputManager() {}
+	InputManager();
 	~InputManager();
 
 	void ManageInput(SDL_Event event);
+	void flushKeys();
 
 	void MouseWheelChange(int coordinate, int value);
 
@@ -78,8 +95,16 @@ public:
 
 	MouseWheel getMouseWheel();
 
-	bool isKeyDown(SDL_Scancode code);
-
 	int getAxis(Axis axis);
+
+	void captureMouse();
+
+	void releaseMouse();
+
+	bool getKey(SDL_Scancode code);
+
+	bool getKeyDown(SDL_Scancode code);
+
+	bool getKeyUp(SDL_Scancode code);
 };
 

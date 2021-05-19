@@ -22,14 +22,16 @@ class ResourceMng;
 class InputManager;
 
 const int NFrames = 50;
-const float FIXED_TIME_UPDATE = 1.0f/NFrames;
+const float FIXED_TIME_UPDATE = 1.0f / NFrames;
 
 class QUACK_ENGINE_PRO_API QuackEnginePro {
 private:
 
 	static std::unique_ptr<QuackEnginePro> instance_;
-	
+
 	std::string assets_route = "";
+
+	std::string windowName;
 
 	SDL_Window* sdlWindow_;
 
@@ -46,26 +48,28 @@ private:
 	bool exit = true;
 
 	float fixedTime = 0;
-	
+
 	static void pruebaBotonCallback();
 
 	void readAssetsRoute();
 
 public:
 
-	QuackEnginePro() {
+	QuackEnginePro(std::string name) : windowName(name) {
 		setup();
 	}
 
 	~QuackEnginePro();
 
-	static bool Init();
+	static bool Init(std::string name = "PONLE UN NOMBRE A LA VENTANA EN EL INIT");
 
 	static QuackEnginePro* Instance();
 
 	void start(std::string route, std::string name);
 
 	QuackTime* time();
+
+	void quit() { exit = true; }
 
 };
 

@@ -3,6 +3,7 @@
 #include "Transform.h"
 #include <OgreLight.h>
 #include <OgreSceneNode.h>
+#include <OgreSceneManager.h>
 
 
 Light::Light() :
@@ -13,7 +14,7 @@ Light::Light() :
 
 Light::~Light()
 {
-	delete light_;
+	OgreQuack::Instance()->getSceneManager()->destroyLight(light_);
 	light_ = nullptr;
 }
 
@@ -29,7 +30,6 @@ bool Light::init(luabridge::LuaRef parameterTable)
 	LuaRef sColor = readVariable<LuaRef>(parameterTable, "SpecularColor");
 	LuaRef dir = readVariable<LuaRef>(parameterTable, "Direction");
 	distance_ = readVariable<float>(parameterTable, "Distance");
-	distance_ *= (distance_ * distance_);
 	innerAngle_ = readVariable<float>(parameterTable, "InnerAngle");
 	outerAngle_ = readVariable<float>(parameterTable, "OuterAngle");
 	isOn = readVariable<bool>(parameterTable, "isOn");
@@ -100,9 +100,9 @@ void Light::setDistance(float distance)
 {
 	distance_ = distance;
 	float linear = 4.5 / distance;
-	float quadratic = 75.0 / (distance_ * distance_);
+	float quadratic = 75.0 / pow(pow(distance_, 3), 2);
 
-	light_->setAttenuation(distance_, 0.8, linear, quadratic);
+	light_->setAttenuation(pow(distance_, 3), 0.8, linear, quadratic);
 }
 
 void Light::setInnerAngle(float angle)

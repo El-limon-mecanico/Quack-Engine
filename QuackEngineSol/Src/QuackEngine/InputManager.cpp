@@ -98,18 +98,27 @@ InputManager* InputManager::Instance()
 	return instance_.get();
 }
 
+InputManager::InputManager() :
+	keysUps(std::vector<int>())
+{
+	for (int i = 0; i < SDL_NUM_SCANCODES; i++) {
+		keys_[i] = { false,false,false };
+	}
+}
+
 InputManager::~InputManager()
 {
 }
 
-
 void InputManager::ManageInput(SDL_Event event)
 {
+
 	switch (event.type)
 	{
 	case SDL_MOUSEMOTION:
 		mousePositionAbsolute_ = { event.motion.x , event.motion.y };
 		//std::cout << "INPUT MANAGER POS RATON: " << event.motion.x << " , " << event.motion.y << "\n";
+		if (captureMouse_) SDL_WarpMouseInWindow(NULL, OgreQuack::Instance()->getWindowW() / 2, OgreQuack::Instance()->getWindowH() / 2);
 		break;
 	case SDL_MOUSEBUTTONDOWN: case SDL_MOUSEBUTTONUP:
 		switch (event.button.button)
@@ -143,27 +152,77 @@ void InputManager::ManageInput(SDL_Event event)
 		}
 		break;
 	default:
+		manageKeys(event);
 		break;
 	}
+
 
 	injectInputCegui(event);
 }
 
-//toma un SDL_SCANCODE (definidos en SDL_Scancode.h) y devuelve un bool que es true si la tecla esta pulsada y false si no
-bool InputManager::isKeyDown(SDL_Scancode code)
+void InputManager::manageKeys(SDL_Event event)
 {
-	const Uint8* state = SDL_GetKeyboardState(NULL);
+	if (event.type == SDL_KEYDOWN) {
+		SDL_Scancode code = event.key.keysym.scancode;
+		if (!keys_[code].pressed_) {
+			keys_[code].down_ = true;
+			keys_[code].pressed_ = true;
+			keysDown.push_back(code);
+		}
+	}
+	else if (event.type == SDL_KEYUP)
+	{
+		SDL_Scancode code = event.key.keysym.scancode;
+		keys_[code].pressed_ = false;
+		keys_[code].down_ = false;
+		keys_[code].up_ = true;
+		keysUps.push_back(code);
+	}
+}
 
-	return state[code];
+void InputManager::flushKeys()
+{
+	for (int c : keysUps)
+		keys_[c].up_ = false;
+	keysUps.clear();
+	for (int c : keysDown)
+		keys_[c].down_ = false;
+	keysDown.clear();
 }
 
 int InputManager::getAxis(Axis axis)
 {
 	const Uint8* state = SDL_GetKeyboardState(NULL);
 
-	if (axis == Vertical)  return (1*(state[SDL_SCANCODE_W] || state[SDL_SCANCODE_UP] ))+(-1 * (state[SDL_SCANCODE_S] || state[SDL_SCANCODE_DOWN]));
+	if (axis == Vertical)  return (1 * (state[SDL_SCANCODE_W] || state[SDL_SCANCODE_UP])) + (-1 * (state[SDL_SCANCODE_S] || state[SDL_SCANCODE_DOWN]));
 	if (axis == Horizontal)  return (1 * (state[SDL_SCANCODE_D] || state[SDL_SCANCODE_RIGHT])) + (-1 * (state[SDL_SCANCODE_A] || state[SDL_SCANCODE_LEFT]));
 
+}
+
+void InputManager::captureMouse()
+{
+	captureMouse_ = true;
+}
+
+void InputManager::releaseMouse()
+{
+	captureMouse_ = false;
+}
+
+bool InputManager::getKey(SDL_Scancode code)
+{
+	const Uint8* state = SDL_GetKeyboardState(NULL);
+	return state[code];
+}
+
+bool InputManager::getKeyDown(SDL_Scancode code)
+{
+	return keys_[code].down_;
+}
+
+bool InputManager::getKeyUp(SDL_Scancode code)
+{
+	return keys_[code].up_;
 }
 
 void InputManager::MouseWheelChange(int coordinate, int value)
@@ -175,7 +234,7 @@ void InputManager::MouseWheelChange(int coordinate, int value)
 }
 
 //devuelve un struct con (dos int) x,y coordenadas del raton, con origen en la esquina superior izquierda
-InputManager::MousePositionAbsolute InputManager::getMousePositionAbsolute() 
+InputManager::MousePositionAbsolute InputManager::getMousePositionAbsolute()
 {
 	return mousePositionAbsolute_;
 }
@@ -183,7 +242,7 @@ InputManager::MousePositionAbsolute InputManager::getMousePositionAbsolute()
 //devuelve un struct con (dos double) x,y coordenadas del raton en valor relativo(de 0,0 a 1,1), con origen en la esquina superior izquierda
 InputManager::MousePositionRelative InputManager::getMousePositionRelative()
 {
-	mousePositionRelative_ = {	(float)mousePositionAbsolute_.x / OgreQuack::Instance()->getWindowW(),
+	mousePositionRelative_ = { (float)mousePositionAbsolute_.x / OgreQuack::Instance()->getWindowW(),
 								(float)mousePositionAbsolute_.x / OgreQuack::Instance()->getWindowH() };
 	return mousePositionRelative_;
 }

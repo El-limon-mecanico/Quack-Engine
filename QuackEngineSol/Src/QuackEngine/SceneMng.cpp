@@ -1,16 +1,23 @@
 #include "SceneMng.h"
 #include "checkML.h"
+#include <OgreQuack.h>
+#include <OgreSceneManager.h>
 
 std::unique_ptr<SceneMng> SceneMng::instance_;
 
 SceneMng::~SceneMng()
 {
-	//eliminamos todas las escenas que podría haber cargadas
-	while(!sceneQueue_.empty())
+	clearScenes();
+}
+
+void SceneMng::clearScenes()
+{
+	while (!sceneStack_.empty())
 	{
-		delete sceneQueue_.front();
-		sceneQueue_.pop();
+		delete sceneStack_.top();
+		sceneStack_.pop();
 	}
+	//OgreQuack::Instance()->getSceneManager()->clearScene();
 }
 
 bool SceneMng::Init()
@@ -28,42 +35,85 @@ SceneMng* SceneMng::Instance()
 
 void SceneMng::loadScene(std::string file, std::string sceneName)
 {
-	Scene* scene = new Scene(file, sceneName);
-	sceneQueue_.push(scene);
-	scene->start();
+	if (sceneStack_.empty()) {
+		Scene* scene = new Scene(file, sceneName);
+		sceneStack_.push(scene);
+		scene->start();
+	}
+	else {
+		loadScene_ = true;
+		sceneName_ = sceneName;
+		sceneToLoad_ = file;
+	}
+}
+
+void SceneMng::pushNewScene(std::string file, std::string sceneName)
+{
+	pushScene_ = true;
+	sceneName_ = sceneName;
+	sceneToLoad_ = file;
+}
+
+void SceneMng::popCurrentScene()
+{
+	popScene_ = true;
 }
 
 void SceneMng::preUpdate()
 {
-	sceneQueue_.front()->preUpdate();
+	if (!sceneStack_.empty())
+		sceneStack_.top()->preUpdate();
 }
 
 void SceneMng::physicsUpdate()
 {
-	sceneQueue_.front()->physicsUpdate();
+	if (!sceneStack_.empty())
+		sceneStack_.top()->physicsUpdate();
 }
 
 void SceneMng::fixedUpdate()
 {
-	sceneQueue_.front()->fixedUpdate();
+	if (!sceneStack_.empty())
+		sceneStack_.top()->fixedUpdate();
 }
 
 void SceneMng::update()
 {
-	sceneQueue_.front()->update();
+	if (!sceneStack_.empty())
+		sceneStack_.top()->update();
 }
 
 void SceneMng::lateUpdate()
 {
-	sceneQueue_.front()->lateUpdate();
+	if (!sceneStack_.empty())
+		sceneStack_.top()->lateUpdate();
 }
 
-void SceneMng::lastUpdate()
+bool SceneMng::lastUpdate()
 {
-	sceneQueue_.front()->lastUpdate();
+	if (!sceneStack_.empty()) {
+		sceneStack_.top()->lastUpdate();
+		if (popScene_) {
+			delete sceneStack_.top();
+			sceneStack_.pop();
+			popScene_ = false;
+		}
+		else if (loadScene_ || pushScene_) {
+			if (loadScene_)
+				clearScenes();
+			Scene* scene = new Scene(sceneToLoad_, sceneName_);
+			sceneStack_.push(scene);
+			scene->start();
+			loadScene_ = false;
+			pushScene_ = false;
+		}
+		return true;
+	}
+	else
+		return false;
 }
 
 Scene* SceneMng::getCurrentScene()
 {
-	return sceneQueue_.front();
+	return sceneStack_.top();
 }

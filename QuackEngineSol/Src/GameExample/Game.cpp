@@ -11,7 +11,7 @@ int WINAPI
 WinMain(HINSTANCE zHInstance, HINSTANCE prevInstance, LPSTR lpCmdLine, int nCmdShow) {
 #endif
 	// AQUI FALTA MANEJO DE ERRORES Y EXCEPCIONES
-	if (QuackEnginePro::Init()) {
+	if (QuackEnginePro::Init("Juego de Prueba to Guapo")) {
 
 		QuackEnginePro::Instance()->start("Scenes/scene1.lua", "scene1");
 	}

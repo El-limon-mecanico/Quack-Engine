@@ -4,6 +4,9 @@
 #include "Rigidbody.h"
 #include "QuackEnginePro.h"
 #include "SceneMng.h"
+#include "QuackUI.h"
+#include "InputManager.h"
+#include "CEGUIQuack.h"
 
 Prueba::Prueba(QuackEntity* e) : Component(e)
 {
@@ -29,18 +32,15 @@ bool Prueba::init(luabridge::LuaRef parameterTable)
 	return true;
 }
 
-#include "MeshRenderer.h"
+void PruebaCallBack() {
+	std::string carga = "Scenes/scene2.lua";
+	SceneMng::Instance()->loadScene(carga, "scene2");
+}
 
 void Prueba::start()
 {
-	if (entity_->getComponent<Rigidbody>()) {
-		QuackEntity* e = new QuackEntity();
-		e->transform()->setGlobalPosition({ 2, 10, 0 });
-		e->addComponent<MeshRenderer>()->setMeshByPrefab(PT_CUBE);
-		e->addComponent<Rigidbody>()->setRigidbody(1, CT_BOX);
-		SceneMng::Instance()->getCurrentScene()->addEntity(e);
-		//entity_->getComponent<Rigidbody>()->setGravity(Vector3D());
-	}
+	CallBacks::instance()->addMethod("PruebaCallBack", PruebaCallBack);
+	transform->lookAt({ 0,0,0 });
 }
 
 void Prueba::fixedUpdate()
@@ -51,6 +51,19 @@ void Prueba::fixedUpdate()
 
 void Prueba::update()
 {
+	//if (InputManager::Instance()->getKey(SDL_SCANCODE_SPACE))
+	//	std::cout << "Espacio mantenido\n";
+	//if (InputManager::Instance()->getKeyDown(SDL_SCANCODE_L)) {
+	//	std::cout << "Espacio abajo\n";
+	//	mouseVisinility_ = !mouseVisinility_;
+	//	CEGUIQuack::Instance()->setMouseVisibility(mouseVisinility_);
+	//}
+	//if (InputManager::Instance()->getKeyUp(SDL_SCANCODE_L)) {
+	//	std::cout << "Espacio arriba\n";
+	//}
+	//scalealgo += QuackEnginePro::Instance()->time()->deltaTime();
+
+	//transform->setScale({ abs(sin(scalealgo)),abs(sin(scalealgo)),abs(sin(scalealgo)) });
 	/*transform->Translate(Vector3D(0, -1, 0) * QuackEnginePro::Instance()->time()->deltaTime());
 	transform->Rotate(Vector3D(45, 0, 90) * QuackEnginePro::Instance()->time()->deltaTime());*/
 	//if (transform->globalPosition().y < -10) {
@@ -66,6 +79,19 @@ void Prueba::update()
 void Prueba::onCollisionEnter(QuackEntity* other, Vector3D point)
 {
 	//entity_->getComponent<Rigidbody>()->addForce(Vector3D(0, 10, 0), IMPULSE);
+
+	/*std::string carga = "Scenes/" + valor3 + ".lua";
+	SceneMng::Instance()->loadScene(carga, valor3);*/
+	/*if (entity_->getComponent<Button>())
+	{
+		entity_->getComponent<Button>()->setText("AAA");
+		entity_->getComponent<Button>()->setButtonEnable(true);
+		entity_->getComponent<Button>()->setCallBackFunction("PruebaCallBack");
+	}
+	if (entity_->getComponent<Text>())
+		entity_->getComponent<Text>()->setText("Me golpie con algo");
+	if (entity_->getComponent<Image>())
+		entity_->getComponent<Image>()->changeImage("virgolini");*/
 	std::cout << "Yo " << entity_->name() << " acabo de chocar con " << other->name() << "\n\n";
 }
 
