@@ -32,6 +32,7 @@ public:
 	static void addScheme(std::string scheme);
 
 	virtual bool init(luabridge::LuaRef parameterTable = { nullptr });
+	bool init(std::pair<float, float> pos, std::pair<float, float> size, bool active, std::string name, std::string style);
 
 	virtual void onEnable();
 

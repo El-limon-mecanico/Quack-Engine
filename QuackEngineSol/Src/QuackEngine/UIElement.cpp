@@ -31,6 +31,19 @@ bool UIElement::init(luabridge::LuaRef parameterTable)
 	return true;
 }
 
+bool UIElement::init(std::pair<float, float> pos, std::pair<float, float> size, bool active, std::string name, std::string style) {
+
+	element_ = CEGUIQuack::Instance()->createWidget(style,name);
+
+	setPosition(pos.first, pos.second);
+
+	setSize(size.first, size.second);
+
+	setEnable(active);
+
+	return true;
+}
+
 void UIElement::onEnable()
 {
 	element_->setVisible(true);
