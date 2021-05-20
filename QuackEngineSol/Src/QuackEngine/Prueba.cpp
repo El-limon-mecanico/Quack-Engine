@@ -51,6 +51,8 @@ void Prueba::fixedUpdate()
 
 void Prueba::update()
 {
+	if (entity_->getComponent<Rigidbody>())
+		entity_->getComponent<Rigidbody>()->setAngularVelocity({ 0,1,0 });
 	//if (InputManager::Instance()->getKey(SDL_SCANCODE_SPACE))
 	//	std::cout << "Espacio mantenido\n";
 	//if (InputManager::Instance()->getKeyDown(SDL_SCANCODE_L)) {

@@ -210,12 +210,12 @@ void Rigidbody::setVelocity(Vector3D v)
 
 Vector3D Rigidbody::angularVelocity()
 {
-	return Vector3D::fromBulletPosition(rb_->getAngularVelocity());
+	return Vector3D::fromBullet(rb_->getAngularVelocity());
 }
 
 void Rigidbody::setAngularVelocity(Vector3D v)
 {
-	rb_->setAngularVelocity(v.toBulletPosition());
+	rb_->setAngularVelocity(v.toBullet());
 }
 
 void Rigidbody::setPositionConstrains(bool x, bool y, bool z)
