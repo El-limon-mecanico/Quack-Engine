@@ -64,7 +64,7 @@ public:
 
 	void setAmbientLight(float x, float y, float z);
 
-	int getWindowH() { return screen_height_; };
-	int getWindowW() { return screen_width_; };
+	int getWindowH();
+	int getWindowW();
 };
 #endif // !_OGRE_QUACK_

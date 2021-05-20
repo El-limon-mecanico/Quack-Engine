@@ -243,7 +243,7 @@ InputManager::MousePositionAbsolute InputManager::getMousePositionAbsolute()
 InputManager::MousePositionRelative InputManager::getMousePositionRelative()
 {
 	mousePositionRelative_ = { (float)mousePositionAbsolute_.x / OgreQuack::Instance()->getWindowW(),
-								(float)mousePositionAbsolute_.x / OgreQuack::Instance()->getWindowH() };
+								(float)mousePositionAbsolute_.y / OgreQuack::Instance()->getWindowH() };
 	return mousePositionRelative_;
 }
 
