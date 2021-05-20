@@ -48,6 +48,8 @@ public:
 	void setVolume(int channel, float value);
 	float getVolume(int channel);
 	void stopChannel(int channel);
+	void loop(int channel, int times);
+	void setFlags(int channel, int flags);
 
 	void createDSP(FMOD_DSP_TYPE type, std::string id);
 	void addDSP(int channel, std::string isDSP);

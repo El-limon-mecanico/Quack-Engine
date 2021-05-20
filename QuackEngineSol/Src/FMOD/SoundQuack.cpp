@@ -73,11 +73,14 @@ void SoundQuack::playChannel(int channel, std::string id, float volume)
 	{
 		FMOD::Channel* channelAux;
 		systemFMOD_->getChannel(channel, &channelAux);
-		systemFMOD_->playSound(sounds_[id], 0, false, &channelAux);
+		systemFMOD_->playSound(sounds_[id], NULL, false, &channelAux);
 		channelAux->setVolume(volume);
 	}
 }
 
+void SoundQuack::setFlags(int channel, int flags) {
+	getChannel(channel)->setMode(flags);
+}
 
 int SoundQuack::createSound(std::string sound, std::string id, int flags)
 {
@@ -87,14 +90,14 @@ int SoundQuack::createSound(std::string sound, std::string id, int flags)
 		FMOD_RESULT resultCreateSound = systemFMOD_->createSound(path.c_str(), flags, 0, &sonido);
 		if (resultCreateSound != FMOD_OK)
 		{
-			std::cout << "Algo ha petado\n";
-			printf("FMOD error! (%d) %s\n", resultCreateSound, FMOD_ErrorString(resultCreateSound));
-			exit(-1);
+			//std::cout << "Algo ha petado\n";
+			printf("ERROR: FMOD error! (%d) %s\n", resultCreateSound, FMOD_ErrorString(resultCreateSound));
+			return -1;
 		}
-		sounds_.insert(std::pair<std::string, FMOD::Sound*>(id, sonido));
+		else sounds_.insert(std::pair<std::string, FMOD::Sound*>(id, sonido));
 	}
 	
-	return ++currentChannel;
+	return currentChannel++;
 }
 
 int SoundQuack::create3DSound(std::string sound, std::string id) {		return createSound(sound, id, FMOD_3D);		}
@@ -143,6 +146,11 @@ void SoundQuack::stopChannel(int channel)
 	getChannel(channel)->stop();
 }
 
+void SoundQuack::loop(int channel, int times)
+{
+	getChannel(channel)->setLoopCount(times);
+}
+
 void SoundQuack::setVolume(int channel, float volume)
 {
 	getChannel(channel)->setVolume(volume);
@@ -156,11 +164,11 @@ float SoundQuack::getVolume(int channel)
 }
 
 
-FMOD::Channel* SoundQuack::getChannel(int channel)
+FMOD::Channel* SoundQuack::getChannel(int index)
 {
 	FMOD::Channel* channelAux;
 	FMOD::ChannelGroup* channel_group;
 	systemFMOD_->getMasterChannelGroup(&channel_group);
-	channel_group->getChannel(channel, &channelAux);
+	channel_group->getChannel(index, &channelAux);
 	return channelAux;
 }

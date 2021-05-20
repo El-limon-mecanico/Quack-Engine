@@ -15,7 +15,7 @@ T readVariable(LuaRef& table, const std::string& variableName)
 		r = table.rawget(variableName);
 	}
 	catch (...) {
-		std::cout << "ERROR: no se ha leído correctamente la variable: " << variableName << "\n";
+		std::cout << "ERROR: no se ha leido correctamente la variable: " << variableName << "\n";
 		return NULL;
 	}
 	if (r != NULL) {

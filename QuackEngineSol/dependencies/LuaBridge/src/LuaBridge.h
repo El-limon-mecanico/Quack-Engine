@@ -4603,6 +4603,8 @@ public:
         return LuaRef(m_L, FromStack());
     }
 
+    bool isRefNil() const { return m_ref == LUA_REFNIL; }
+
 private:
     void swap(LuaRef& other)
     {

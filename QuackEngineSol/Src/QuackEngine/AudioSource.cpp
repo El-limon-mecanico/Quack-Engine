@@ -1,8 +1,9 @@
 #include "AudioSource.h"
 #include "SoundQuack.h"
+#include <fmod_common.h>
 
 AudioSource::AudioSource() :
-	volume(0.5f)
+	volume_(0.5f)
 {
 	mngr_ = SoundQuack::Instance();
 }
@@ -14,37 +15,53 @@ AudioSource::~AudioSource()
 
 bool AudioSource::init(luabridge::LuaRef parameterTable)
 {
-	source = readVariable<std::string>(parameterTable, "Source");
-	volume = readVariable<float>(parameterTable, "Volume");
+	source_ = readVariable<std::string>(parameterTable, "Source");
+	volume_ = readVariable<float>(parameterTable, "Volume");
+	loop_ = readVariable<int>(parameterTable, "Loops");
 
-	channel = mngr_->createSound(source, source);
+	channel_ = mngr_->createSound(source_, source_, FMOD_DEFAULT);
+	if (channel_ == -1) {
+		std::cout << "ERROR: Couldn't create sound\n";
+		return false;
+	}
+	loop(loop_);
+	play();
+	setVolume(volume_);
 	return true;
 }
 
 void AudioSource::play() {
-	mngr_->playChannel(channel, source, volume);
+	mngr_->playChannel(channel_, source_, volume_);
 }
 
 void AudioSource::stop() {
-	mngr_->stopChannel(channel);
+	mngr_->stopChannel(channel_);
 }
 
 void AudioSource::pause() {
-	mngr_->pauseChannel(channel, true);
+	mngr_->pauseChannel(channel_, true);
 }
 
 void AudioSource::resume() {
-	mngr_->pauseChannel(channel, false);
+	mngr_->pauseChannel(channel_, false);
 }
 
 bool AudioSource::isPlaying() {
-	return mngr_->isPlaying(channel);
+	return mngr_->isPlaying(channel_);
+}
+
+void AudioSource::loop(int times)
+{
+	if (times != 0) mngr_->setFlags(channel_, FMOD_LOOP_NORMAL);
+	else mngr_->setFlags(channel_, FMOD_LOOP_OFF);
+
+	mngr_->loop(channel_, times);
 }
 
 void AudioSource::setVolume(float value) {
-	mngr_->setVolume(channel, volume);
+	mngr_->setVolume(channel_, value);
 }
 
 float AudioSource::getVolume() {
-	return mngr_->getVolume(channel);
+	return mngr_->getVolume(channel_);
 }

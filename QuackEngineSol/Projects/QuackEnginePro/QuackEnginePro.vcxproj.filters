@@ -185,5 +185,8 @@
     <ClInclude Include="..\..\Src\QuackEngine\AudioSource3D.h">
       <Filter>Archivos de encabezado\Ecs\Components</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Src\QuackEngine\HasGetName.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

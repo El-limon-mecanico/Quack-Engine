@@ -19,10 +19,12 @@ class QUACK_ENGINE_PRO_API AudioSource :
 private:
 
 	SoundQuack* mngr_ = nullptr;
-	int channel = -1;		// almacena el canal en el que se esta reproduciendo el sonido
-	
-	float volume;
-	std::string source;
+	int channel_ = -1;		// almacena el canal en el que se esta reproduciendo el sonido
+
+	// Lua parameters
+	float volume_;
+	std::string source_;
+	int loop_ = 0;
 
 public:
 	AudioSource();
@@ -37,6 +39,7 @@ public:
 	void pause();
 	void resume();
 	bool isPlaying();
+	void loop(int times = -1);
 	void setVolume(float value);
 	float getVolume();
 };

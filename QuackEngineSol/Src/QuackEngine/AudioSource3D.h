@@ -19,10 +19,10 @@ class QUACK_ENGINE_PRO_API AudioSource3D :
 private:
 
 	SoundQuack* mngr_ = nullptr;
-	int channel = -1;		// almacena el canal en el que se esta reproduciendo el sonido
+	int channel_ = -1;		// almacena el canal en el que se esta reproduciendo el sonido
 	
-	float volume;
-	std::string source;
+	float volume_;
+	std::string source_;
 
 public:
 	AudioSource3D();
