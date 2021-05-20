@@ -32,6 +32,8 @@ bool Transform::init(luabridge::LuaRef parameterTable)
 	setGlobalPosition(Vector3D(pos[1], pos[2], pos[3]));
 	LuaRef rot = readVariable<LuaRef>(parameterTable, "Rotation");
 	setGlobalRotation(Vector3D(rot[1], rot[2], rot[3]));
+	std::cout << "INIT\n";
+	//globalRotation_ = Vector3D(rot[1], rot[2], rot[3]);
 	LuaRef scl = readVariable<LuaRef>(parameterTable, "Scale");
 	setScale(Vector3D(scl[1], scl[2], scl[3]));
 
@@ -156,6 +158,7 @@ void Transform::setLocalRotation(Vector3D v)
 void Transform::setGlobalRotation(Vector3D v)
 {
 	node_->_setDerivedOrientation(v.toOgreRotation());
+	auto b = Vector3D::fromOgreRotation(node_->_getDerivedOrientation());
 	recalculateAxes();
 	updateRb();
 	updateChildren();
@@ -168,7 +171,6 @@ void Transform::setGlobalPosition(Vector3D v)
 	updateRb();
 	updateChildren();
 }
-
 
 void Transform::setLocalPosition(Vector3D v)
 {

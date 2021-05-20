@@ -39,9 +39,15 @@ btVector3 Vector3D::toBulletPosition()
 Ogre::Quaternion Vector3D::toOgreRotation()
 {
 	Ogre::Vector3 v(toOgre(*this * PI / 180));
+
+	//Ogre::Quaternion qa;
+	//const Ogre::Vector3* vec = new Ogre::Vector3(v.x, v.y, v.z);
+	//qa.FromAxes(vec);
+	//return qa;
+	
 	double yaw = v.y;
 	double pitch = v.z;
-	double roll = v.x;
+	double roll = v.x; -3.14;
 	// Abbreviations for the various angular functions
 	double cy = cos(pitch * 0.5);
 	double sy = sin(pitch * 0.5);
@@ -51,10 +57,14 @@ Ogre::Quaternion Vector3D::toOgreRotation()
 	double sr = sin(roll * 0.5);
 
 	Ogre::Quaternion q;
+	const Ogre::Vector3* vector = new Ogre::Vector3(0,0,0);
+	q.FromAxes(vector);
 	q.w = cr * cp * cy + sr * sp * sy;
 	q.x = sr * cp * cy - cr * sp * sy;
 	q.y = cr * sp * cy + sr * cp * sy;
 	q.z = cr * cp * sy - sr * sp * cy;
+
+	
 	return q;
 }
 
@@ -113,6 +123,23 @@ Vector3D Vector3D::fromBulletPosition(btVector3 v)
 Vector3D Vector3D::fromOgreRotation(Ogre::Quaternion q)
 {
 	Vector3D angles;
+	//Vector3D angles2;
+
+	//Ogre::Vector3* aux = new Ogre::Vector3();
+	//
+	//q.ToAxes(aux);
+
+	//angles2.x = aux->x;
+	//angles2.y = aux->y;
+	//angles2.z = aux->z;
+	//
+	//return angles2 * 180.0f / PI;
+
+	//delete aux;
+	//Ogre::Vector3 aaa(0,0,0);
+	//q.ToAxes(&aaa);
+	////return Vector3D(aaa.x, aaa.y, aaa.z);
+	////return aaa * 180.0f / PI;
 
 	// roll (x-axis globalRotation_)
 	double sinr_cosp = 2 * (q.w * q.x + q.y * q.z);
