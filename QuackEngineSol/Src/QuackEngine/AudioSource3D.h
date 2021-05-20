@@ -28,7 +28,7 @@ public:
 	AudioSource3D();
 	virtual ~AudioSource3D();
 	
-	static std::string GetName() { return "AudioSource"; }
+	static std::string GetName() { return "AudioSource3D"; }
 
 	virtual bool init(luabridge::LuaRef parameterTable = { nullptr }) override;
 
