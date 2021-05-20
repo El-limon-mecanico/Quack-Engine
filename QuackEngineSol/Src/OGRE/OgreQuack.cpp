@@ -97,3 +97,12 @@ void OgreQuack::setAmbientLight(float x, float y, float z)
 {
 	mSM_->setAmbientLight(Ogre::ColourValue(x, y, z));
 }
+
+int OgreQuack::getWindowH() {
+	return window_->getHeight();
+}
+
+int OgreQuack::getWindowW() {
+
+	return window_->getWidth();
+}

@@ -55,11 +55,9 @@ void Prueba::update()
 		entity_->getComponent<Rigidbody>()->setAngularVelocity({ 0,1,0 });
 	//if (InputManager::Instance()->getKey(SDL_SCANCODE_SPACE))
 	//	std::cout << "Espacio mantenido\n";
-	//if (InputManager::Instance()->getKeyDown(SDL_SCANCODE_L)) {
-	//	std::cout << "Espacio abajo\n";
-	//	mouseVisinility_ = !mouseVisinility_;
-	//	CEGUIQuack::Instance()->setMouseVisibility(mouseVisinility_);
-	//}
+	if (InputManager::Instance()->getKeyDown(SDL_SCANCODE_L)) {
+		std::cout << InputManager::Instance()->getMousePositionRelative().x << " , " << InputManager::Instance()->getMousePositionRelative().y << "\n";
+	}
 	//if (InputManager::Instance()->getKeyUp(SDL_SCANCODE_L)) {
 	//	std::cout << "Espacio arriba\n";
 	//}
