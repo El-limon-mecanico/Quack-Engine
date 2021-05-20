@@ -208,6 +208,16 @@ void Rigidbody::setVelocity(Vector3D v)
 	rb_->setLinearVelocity(v.toBulletPosition());
 }
 
+Vector3D Rigidbody::angularVelocity()
+{
+	return Vector3D::fromBullet(rb_->getAngularVelocity());
+}
+
+void Rigidbody::setAngularVelocity(Vector3D v)
+{
+	rb_->setAngularVelocity(v.toBullet());
+}
+
 void Rigidbody::setPositionConstrains(bool x, bool y, bool z)
 {
 	positionConstrains_ = Vector3D(x, y, z);
@@ -226,7 +236,6 @@ void Rigidbody::removeCollisionData(Rigidbody* rb)
 			it++;
 	}
 }
-
 
 void Rigidbody::setRotationConstrains(bool x, bool y, bool z)
 {
