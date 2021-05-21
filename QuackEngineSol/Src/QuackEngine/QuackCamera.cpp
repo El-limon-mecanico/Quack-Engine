@@ -23,26 +23,33 @@ QuackCamera::~QuackCamera()
 
 bool QuackCamera::init(luabridge::LuaRef parameterTable)
 {
-	std::string name = readVariable<std::string>(parameterTable, "Name");
-	LuaRef bgc = readVariable<LuaRef>(parameterTable, "Background");
-	LuaRef look = readVariable<LuaRef>(parameterTable, "LookAt");
+	std::string name, proj;
+	LuaRef bgc = NULL, look = NULL;
+	Vector3D bg;
+	int width, height;
+	float near, far;
+	bool correct = true;
+	
+	correct &= readVariable<std::string>(parameterTable, "Name", &name);
+	correct &= readVariable<LuaRef>(parameterTable, "Background", &bgc);
+	correct &= readVariable<LuaRef>(parameterTable, "LookAt", &look);
+	correct &= readVariable<int>(parameterTable, "Width", &width);
+	correct &= readVariable<int>(parameterTable, "Height", &height);
+	correct &= readVariable<float>(parameterTable, "NearClipDistance", &near);
+	correct &= readVariable<float>(parameterTable, "FarClipDistance", &far);
+	correct &= readVariable<std::string>(parameterTable, "ProjectionType", &proj);
+
+	if (!correct) return false;
+
 	target_ = Vector3D(look[1], look[2], look[3]);
-	Vector3D bg = { bgc[1], bgc[2], bgc[3] };
-	int width = readVariable<float>(parameterTable, "Width");
-	int height = readVariable<float>(parameterTable, "Height");
-	float near = readVariable<float>(parameterTable, "NearClipDistance");
-	float far = readVariable<float>(parameterTable, "FarClipDistance");
-	std::string proj = readVariable<std::string>(parameterTable, "ProjectionType");
+	bg = { bgc[1], bgc[2], bgc[3] };
 
 	camera_ = mSM_->createCamera(name);
 	camera_->setNearClipDistance(near);
 	camera_->setFarClipDistance(far);
 	camera_->setAutoAspectRatio(true);
 
-	if (proj == "Orthographic")
-		camera_->setProjectionType(Ogre::ProjectionType::PT_ORTHOGRAPHIC);
-	else
-		camera_->setProjectionType(Ogre::ProjectionType::PT_PERSPECTIVE);
+	camera_->setProjectionType((proj == "Orthographic") ? Ogre::ProjectionType::PT_ORTHOGRAPHIC : Ogre::ProjectionType::PT_PERSPECTIVE);
 
 	vp_ = window_->addViewport(camera_);
 	vp_->setBackgroundColour(Ogre::ColourValue(bg.x, bg.y, bg.z));

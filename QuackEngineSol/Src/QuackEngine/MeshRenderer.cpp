@@ -43,7 +43,10 @@ void MeshRenderer::onDisable()
 
 bool MeshRenderer::init(luabridge::LuaRef parameterTable)
 {
-	std::string mesh = readVariable<std::string>(parameterTable, "Mesh");
+
+	std::string mesh;
+	if (!readVariable<std::string>(parameterTable, "Mesh", &mesh))
+		return false;
 
 	if (mesh == "Sphere")
 		ogreEnt_ = mSM_->createEntity(Ogre::SceneManager::PrefabType::PT_SPHERE);
@@ -56,13 +59,16 @@ bool MeshRenderer::init(luabridge::LuaRef parameterTable)
 	}
 	catch (std::exception& e) {
 		std::cout << "ERROR: no existe la malla " << mesh << '\n';
+		return false;
 	}
 
-	materialName_ = readVariable<std::string>(parameterTable, "Material");
+	if (!readVariable<std::string>(parameterTable, "Material", &materialName_))
+		return false;
+
 	if (materialName_ != "")
 		setMaterial(materialName_);
 
-	//visible_ = lo que venga de LUA;								TO DO , PASAR POR LUA SI ES VISIBLE O NO
+	//visible_ = lo que venga de LUA;								TODO , PASAR POR LUA SI ES VISIBLE O NO
 
 	return true;
 }

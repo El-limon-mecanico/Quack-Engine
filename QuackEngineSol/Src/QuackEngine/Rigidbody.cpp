@@ -26,20 +26,27 @@ Rigidbody::~Rigidbody()
 
 bool Rigidbody::init(luabridge::LuaRef parameterTable)
 {
-	//TODO: control de errores si no carga una variable
-	std::string type = readVariable<std::string>(parameterTable, "Type");
-	mass_ = readVariable<int>(parameterTable, "Mass");
-	trigger_ = readVariable<bool>(parameterTable, "Trigger");
-	static_ = readVariable<bool>(parameterTable, "Static");
-	LuaRef posCons = readVariable<LuaRef>(parameterTable, "PositionConstrains");
-	LuaRef rotCons = readVariable<LuaRef>(parameterTable, "RotationConstrains");
+	std::string type;
+	LuaRef posCons = NULL, rotCons = NULL;
+	bool correct = true;
+
+	correct &= readVariable<std::string>(parameterTable, "Type", &type);
+	correct &= readVariable<float>(parameterTable, "Mass", &mass_);
+	correct &= readVariable<bool>(parameterTable, "Trigger", &trigger_);
+	correct &= readVariable<bool>(parameterTable, "Static", &static_);
+	correct &= readVariable<LuaRef>(parameterTable, "PositionConstrains", &posCons);
+	correct &= readVariable<LuaRef>(parameterTable, "RotationConstrains", &rotCons);
+
+	if (!correct) return false;
+
 	positionConstrains_ = Vector3D(posCons[1], posCons[2], posCons[3]);
 	rotationConstrains_ = Vector3D(rotCons[1], rotCons[2], rotCons[3]);
 
 	if (type == "Box") colType_ = CT_BOX;
-	else if (type == "Sphere")colType_ = CT_SPHERE;
-	else if (type == "Trimesh")colType_ = CT_TRIMESH;
-	else if (type == "Hull")colType_ = CT_HULL;
+	else if (type == "Sphere") colType_ = CT_SPHERE;
+	else if (type == "Trimesh") colType_ = CT_TRIMESH;
+	else if (type == "Hull") colType_ = CT_HULL;
+	else return false;
 
 	return true;
 }
