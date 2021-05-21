@@ -71,6 +71,9 @@ public:
 
 	void quit() { exit = true; }
 
+	void setFullScreen(bool set);
+
+	void setWindowSize(int width, int height);
 };
 
 #endif // !_QUACK_ENGINE_PRO_

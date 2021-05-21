@@ -6,6 +6,7 @@
 #include <SDL_syswm.h>
 #include <assert.h>
 #include <iostream>
+#include <Windows.h>
 
 using namespace Ogre;
 
@@ -58,6 +59,12 @@ void OgreQuack::setupRoot()
 
 void OgreQuack::setupWindow()
 {
+	RECT rect;
+	HWND hd = GetDesktopWindow();
+	GetClientRect(hd, &rect);
+	screen_width_ = (rect.right - rect.left) * 0.75;
+	screen_height_ = (rect.bottom - rect.top) * 0.75;
+
 	if (!SDL_WasInit(SDL_INIT_VIDEO))
 		SDL_InitSubSystem(SDL_INIT_VIDEO);
 
@@ -105,4 +112,32 @@ int OgreQuack::getWindowH() {
 int OgreQuack::getWindowW() {
 
 	return window_->getWidth();
+}
+
+void OgreQuack::setFullScreen(bool set)
+{
+	float newWidth, newHeight;
+	if (set) {
+		RECT rect;
+		HWND hd = GetDesktopWindow();
+		GetClientRect(hd, &rect);
+		newWidth = (rect.right - rect.left);
+		newHeight = (rect.bottom - rect.top);
+	}
+	else {
+		newWidth = screen_width_;
+		newHeight = screen_height_;
+	}
+
+	SDL_SetWindowSize(sdlWindow_, newWidth, newHeight);
+	SDL_SetWindowFullscreen(sdlWindow_, set ? SDL_WINDOW_FULLSCREEN : SDL_WINDOW_RESIZABLE);
+	window_->windowMovedOrResized();
+}
+
+void OgreQuack::setResolution(int width, int height)
+{
+	screen_width_ = width;
+	screen_height_ = height;
+	SDL_SetWindowSize(sdlWindow_, width, height);
+	window_->windowMovedOrResized();
 }
