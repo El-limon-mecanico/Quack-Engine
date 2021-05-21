@@ -185,3 +185,13 @@ void QuackEnginePro::setWindowSize(int width, int height)
 	OgreQuack::Instance()->setResolution(width, height);
 	CEGUIQuack::Instance()->resizeWindow(width, height);
 }
+
+int QuackEnginePro::getWindoWidth()
+{
+	return OgreQuack::Instance()->getWindowW();
+}
+
+int QuackEnginePro::getWindoHeight()
+{
+	return OgreQuack::Instance()->getWindowH();
+}
