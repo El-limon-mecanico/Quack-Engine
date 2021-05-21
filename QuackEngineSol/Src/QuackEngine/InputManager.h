@@ -83,7 +83,7 @@ public:
 	~InputManager();
 
 	void ManageInput(SDL_Event event);
-	void flushKeys();
+	void flushInput();
 
 	void MouseWheelChange(int coordinate, int value);
 
@@ -97,6 +97,8 @@ public:
 
 	int getAxis(Axis axis);
 
+	float getMouseAxis(Axis axis);
+
 	void captureMouse();
 
 	void releaseMouse();
@@ -106,5 +108,7 @@ public:
 	bool getKeyDown(SDL_Scancode code);
 
 	bool getKeyUp(SDL_Scancode code);
+
+	void setMouseVisibility(bool set);
 };
 
