@@ -95,6 +95,11 @@ void Prueba::onCollisionEnter(QuackEntity* other, Vector3D point)
 	std::cout << "Yo " << entity_->name() << " acabo de chocar con " << other->name() << "\n\n";
 }
 
+void Prueba::onCollisionEnter(QuackEntity* other, Vector3D point, Vector3D normal)
+{
+	std::cout <<entity_->name() << " con " << other->name() << " normal "<< normal << " en el punto " << point <<"\n";
+}
+
 void Prueba::onCollisionStay(QuackEntity* other, Vector3D point)
 {
 	//std::cout << "Yo " << entity_->name() << " sigo chocando con " << other->name() << "\n\n";

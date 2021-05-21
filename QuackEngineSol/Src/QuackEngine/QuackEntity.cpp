@@ -151,12 +151,12 @@ void QuackEntity::lastUpdate()
 				c->lastUpdate();
 }
 
-void QuackEntity::onCollisionEnter(QuackEntity* other, Vector3D point)
+void QuackEntity::onCollisionEnter(QuackEntity* other, Vector3D point, Vector3D normal)
 {
 	if (enable_ && !destroy_)
 		for (Component* c : components_)
 			if (c->isEnable())
-				c->onCollisionEnter(other, point);
+				c->onCollisionEnter(other, point, normal);
 }
 
 void QuackEntity::onCollisionStay(QuackEntity* other, Vector3D point)
