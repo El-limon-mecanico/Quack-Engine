@@ -121,14 +121,37 @@ void OgreQuack::setFullScreen(bool set)
 		RECT rect;
 		HWND hd = GetDesktopWindow();
 		GetClientRect(hd, &rect);
-		newWidth = (rect.right - rect.left);
-		newHeight = (rect.bottom - rect.top);
+		int zoom = GetDpiForWindow(hd);
+		double dpi = 0;
+		switch (zoom) {
+		case 96:
+			dpi = 1;
+			std::cout << "100%" << std::endl;
+			break;
+		case 120:
+			dpi = 1.25;
+			std::cout << "125%" << std::endl;
+			break;
+		case 144:
+			dpi = 1.5;
+			std::cout << "150%" << std::endl;
+			break;
+		case 192:
+			dpi = 2;
+			std::cout << "200%" << std::endl;
+			break;
+		default:
+			std::cout << "error" << std::endl;
+			break;
+		}
+		newWidth = (rect.right - rect.left) * dpi;
+		newHeight = (rect.bottom - rect.top) * dpi;
 	}
 	else {
 		newWidth = screen_width_;
 		newHeight = screen_height_;
 	}
-
+	std::cout << newWidth << " " << newHeight << std::endl;
 	SDL_SetWindowSize(sdlWindow_, newWidth, newHeight);
 	SDL_SetWindowFullscreen(sdlWindow_, set ? SDL_WINDOW_FULLSCREEN : SDL_WINDOW_RESIZABLE);
 	window_->windowMovedOrResized();
