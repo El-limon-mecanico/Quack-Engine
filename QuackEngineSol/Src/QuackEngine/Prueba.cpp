@@ -39,6 +39,8 @@ void PruebaCallBack() {
 
 void Prueba::start()
 {
+	InputManager::Instance()->captureMouse();
+	InputManager::Instance()->setMouseVisibility(false);
 	CallBacks::instance()->addMethod("PruebaCallBack", PruebaCallBack);
 	transform->lookAt({ 0,0,0 });
 }
@@ -55,9 +57,18 @@ void Prueba::update()
 	//	entity_->getComponent<Rigidbody>()->setAngularVelocity({ 0,1,0 });
 	//if (InputManager::Instance()->getKey(SDL_SCANCODE_SPACE))
 	//	std::cout << "Espacio mantenido\n";
-	if (InputManager::Instance()->getKeyDown(SDL_SCANCODE_L)) {
-		std::cout << InputManager::Instance()->getMousePositionRelative().x << " , " << InputManager::Instance()->getMousePositionRelative().y << "\n";
-	}
+	//if (InputManager::Instance()->getKeyDown(SDL_SCANCODE_L)) {
+	//	std::cout << InputManager::Instance()->getMousePositionRelative().x << " , " << InputManager::Instance()->getMousePositionRelative().y << "\n";
+	//}
+
+	//Vector3D rot = { 0,InputManager::Instance()->getMouseAxis(Horizontal) ,InputManager::Instance()->getMouseAxis(Vertical) };
+
+	//std::cout << "Horizontal: " << InputManager::Instance()->getMouseAxis(Horizontal) << " Vertical: " << InputManager::Instance()->getMouseAxis(Vertical) << "\n";
+
+	//transform->Rotate(rot, true);
+
+	//std::cout << "Horizontal: " << InputManager::Instance()->getMousePositionAbsolute().x << " Vertical: " << InputManager::Instance()->getMousePositionAbsolute().y <<"\n";
+
 	//if (InputManager::Instance()->getKeyUp(SDL_SCANCODE_L)) {
 	//	std::cout << "Espacio arriba\n";
 	//}

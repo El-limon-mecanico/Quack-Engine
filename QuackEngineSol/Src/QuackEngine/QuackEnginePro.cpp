@@ -153,7 +153,7 @@ void QuackEnginePro::pollEvents()
 	if (sdlWindow_ == nullptr)
 		return;  // SDL events not initialized
 	SDL_Event event;
-	InputManager::Instance()->flushKeys();
+	InputManager::Instance()->flushInput();
 	while (SDL_PollEvent(&event))
 	{
 		switch (event.type)
