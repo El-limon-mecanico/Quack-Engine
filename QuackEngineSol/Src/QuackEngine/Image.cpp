@@ -5,10 +5,16 @@
 bool Image::init(luabridge::LuaRef parameterTable)
 {
     UIElement::init(parameterTable);
-    std::string name = readVariable<std::string>(parameterTable, "Name");
-    std::string image = readVariable<std::string>(parameterTable, "Image");
-    bool background = readVariable<bool>(parameterTable, "Background");
-    bool border = readVariable<bool>(parameterTable, "Border");
+
+    std::string name, image;
+    bool background, border;
+    bool correct = true;
+    correct &= readVariable<std::string>(parameterTable, "Name", &name);
+    correct &= readVariable<std::string>(parameterTable, "Image", &image);
+    correct &= readVariable<bool>(parameterTable, "Background", &background);
+    correct &= readVariable<bool>(parameterTable, "Border", &border);
+
+    if (!correct) return false;
 
     initImage(name, image, background, border);
     return true;

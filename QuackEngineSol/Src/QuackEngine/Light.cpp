@@ -25,15 +25,25 @@ void Light::setAmbientLight(Vector3D light)
 
 bool Light::init(luabridge::LuaRef parameterTable)
 {
-	lightType_ = (LightType)readVariable<int>(parameterTable, "LightType");
-	LuaRef dColor = readVariable<LuaRef>(parameterTable, "DiffuseColor");
-	LuaRef sColor = readVariable<LuaRef>(parameterTable, "SpecularColor");
-	LuaRef dir = readVariable<LuaRef>(parameterTable, "Direction");
-	distance_ = readVariable<float>(parameterTable, "Distance");
-	innerAngle_ = readVariable<float>(parameterTable, "InnerAngle");
-	outerAngle_ = readVariable<float>(parameterTable, "OuterAngle");
-	isOn = readVariable<bool>(parameterTable, "isOn");
+	LuaRef dColor = NULL, sColor = NULL, dir = NULL;
+	bool correct = true;
+	
+	const int* a;
+	int b;
+	a = &b;
+	*a++;
 
+	correct &= readVariable<int>(parameterTable, "LightType", (int*)(&lightType_));
+	correct &= readVariable<LuaRef>(parameterTable, "DiffuseColor", &dColor);
+	correct &= readVariable<LuaRef>(parameterTable, "SpecularColor", &sColor);
+	correct &= readVariable<LuaRef>(parameterTable, "Direction", &dir);
+	correct &= readVariable<float>(parameterTable, "Distance", &distance_);
+	correct &= readVariable<float>(parameterTable, "InnerAngle", &innerAngle_);
+	correct &= readVariable<float>(parameterTable, "OuterAngle", &outerAngle_);
+	correct &= readVariable<bool>(parameterTable, "isOn", &isOn);
+
+	if (!correct) return false;
+	
 	diffuseColor_ = Vector3D(dColor[1], dColor[2], dColor[3]);
 	specularColor_ = Vector3D(sColor[1], sColor[2], sColor[3]);
 	direction_ = Vector3D(dir[1], dir[2], dir[3]);

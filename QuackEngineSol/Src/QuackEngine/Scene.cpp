@@ -58,7 +58,7 @@ Scene::Scene(const std::string& file, const std::string& name)
 		if (!createEntity(ent, entInfo)) std::cout << "ERROR: no se ha podido cargar la entidad: " << ent;
 		std::cout << "\n";
 	}
-	std::cout << "Listo.\n";
+	std::cout << "Listo.\n\n-------------------------\n\n";
 }
 
 QuackEntity* Scene::createEntity(const std::string& entityName, LuaRef entInfo)
@@ -90,7 +90,9 @@ QuackEntity* Scene::createEntity(const std::string& entityName, LuaRef entInfo)
 		}
 	}
 
-	entity->setButtonEnable(readVariable<bool>(entInfo, "Active"));
+	bool active = true;
+	bool correct = readVariable<bool>(entInfo, "Active", &active);
+	if(correct) entity->setButtonEnable(active);
 
 	addEntity(entity);
 

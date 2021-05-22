@@ -34,7 +34,7 @@ bool Transform::init(luabridge::LuaRef parameterTable)
 	correct &= readVariable<LuaRef>(parameterTable, "Position", &pos);
 	correct &= readVariable<LuaRef>(parameterTable, "Rotation", &rot);
 	correct &= readVariable<LuaRef>(parameterTable, "Scale", &scl);
-
+	
 	if (!correct) return false;
 
 	setGlobalPosition(Vector3D(pos[1], pos[2], pos[3]));
