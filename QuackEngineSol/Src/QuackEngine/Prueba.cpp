@@ -103,6 +103,7 @@ void Prueba::onCollisionEnter(QuackEntity* other, Vector3D point)
 		entity_->getComponent<Text>()->setText("Me golpie con algo");
 	if (entity_->getComponent<Image>())
 		entity_->getComponent<Image>()->changeImage("virgolini");*/
+	QuackEnginePro::Instance()->setFullScreen(true);
 	std::cout << "Yo " << entity_->name() << " acabo de chocar con " << other->name() << "\n\n";
 }
 
