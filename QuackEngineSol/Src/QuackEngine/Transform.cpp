@@ -142,10 +142,8 @@ void Transform::Scale(Vector3D s)
 
 void Transform::setLocalRotation(Vector3D v)
 {
-	node_->setOrientation(v.toOgreRotation());
-	recalculateAxes();
-	updateRb();
-	updateChildren();
+	node_->resetOrientation();
+	Rotate(v);
 }
 
 void Transform::setGlobalRotation(Vector3D v)

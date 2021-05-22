@@ -40,7 +40,7 @@ Ogre::Quaternion Vector3D::toOgreRotation()
 {
 	Ogre::Vector3 v(toOgre(*this * PI / 180.0f));
 
-	Ogre::Quaternion qa;	
+	Ogre::Quaternion qa;
 	Ogre::Vector3 vec = Ogre::Vector3(v.x, v.y, v.z);
 	qa.FromRotationMatrix(fromEulerAngleToRotationMatrix(vec));
 	return qa;
@@ -50,7 +50,7 @@ Ogre::Matrix3 Vector3D::fromEulerAngleToRotationMatrix(Vector3D vec)
 {
 	Ogre::Matrix3 r_x = { 1,0,0,
 					  0,cos(vec.x),-sin(vec.x),
-					  0,sin(vec.x),cos(vec.x)};
+					  0,sin(vec.x),cos(vec.x) };
 	Ogre::Matrix3 r_y = { cos(vec.y),0,sin(vec.y),
 					  0,1,0,
 					  -sin(vec.y), 0, cos(vec.y) };
@@ -61,13 +61,13 @@ Ogre::Matrix3 Vector3D::fromEulerAngleToRotationMatrix(Vector3D vec)
 }
 
 btQuaternion Vector3D::toBulletRotation()
-{	
+{
 	Ogre::Vector3 v(toOgre(*this * PI / 180.0f));
 
 	Ogre::Quaternion qa;
 	Ogre::Vector3 vec = Ogre::Vector3(v.x, v.y, v.z);
 	qa.FromRotationMatrix(fromEulerAngleToRotationMatrix(vec));
-	
+
 	return BtOgre::Convert::toBullet(qa);
 }
 
@@ -112,7 +112,7 @@ Vector3D Vector3D::fromBulletPosition(btVector3 v)
 }
 
 Vector3D Vector3D::fromOgreRotation(Ogre::Quaternion q)
-{	
+{
 	//Vector3D resp;
 
 	//Ogre::Matrix3 mat;
@@ -126,27 +126,53 @@ Vector3D Vector3D::fromOgreRotation(Ogre::Quaternion q)
 
 	//return resp;
 
-	Vector3D angles;
+	//Vector3D angles;
 
-	// roll (x-axis globalRotation_)
-	double sinr_cosp = 2 * (q.w * q.x + q.y * q.z);
-	double cosr_cosp = 1 - 2 * (q.x * q.x + q.y * q.y);
-	angles.x = std::atan2(sinr_cosp, cosr_cosp);
+	//// roll (x-axis globalRotation_)
+	//double sinr_cosp = 2 * (q.w * q.x + q.y * q.z);
+	//double cosr_cosp = 1 - 2 * (q.x * q.x + q.y * q.y);
+	//angles.x = std::atan2(sinr_cosp, cosr_cosp);
 
-	// yaw (y-axis globalRotation)
-	double sinp = 2 * (q.w * q.y - q.z * q.x);
-	if (std::abs(sinp) >= 1)
-		angles.y = std::copysign(PI / 2, sinp); // use 90 degrees if out of range
-	else
-		angles.y = std::asin(sinp);
+	//// yaw (y-axis globalRotation)
+	//double sinp = 2 * (q.w * q.y - q.z * q.x);
+	//if (std::abs(sinp) >= 1)
+	//	angles.y = std::copysign(PI / 2, sinp); // use 90 degrees if out of range
+	//else
+	//	angles.y = std::asin(sinp);
 
-	// pitch (z-axis globalRotation_)
-	double siny_cosp = 2 * (q.w * q.z + q.x * q.y);
-	double cosy_cosp = 1 - 2 * (q.y * q.y + q.z * q.z);
-	angles.z = std::atan2(siny_cosp, cosy_cosp);
+	//// pitch (z-axis globalRotation_)
+	//double siny_cosp = 2 * (q.w * q.z + q.x * q.y);
+	//double cosy_cosp = 1 - 2 * (q.y * q.y + q.z * q.z);
+	//angles.z = std::atan2(siny_cosp, cosy_cosp);
 
 
-	return angles * 180.0f / PI;
+	//return angles * 180.0f / PI;
+
+	Vector3D resp;
+
+	double sqw = q.w * q.w;
+	double sqx = q.x * q.x;
+	double sqy = q.y * q.y;
+	double sqz = q.z * q.z;
+	double unit = sqx + sqy + sqz + sqw; // if normalised is one, otherwise is correction factor
+	double test = q.x * q.y + q.z * q.w;
+	if (test > 0.499 * unit) { // singularity at north pole
+		resp.y = 2 * atan2(q.x, q.w);
+		resp.z = PI / 2;
+		resp.x = 0;
+	}
+	else if (test < -0.499 * unit) { // singularity at south pole
+		resp.y = -2 * atan2(q.x, q.w);
+		resp.z = -PI / 2;
+		resp.x = 0;
+	}
+	else {
+		resp.y = atan2(2 * q.y * q.w - 2 * q.x * q.z, sqx - sqy - sqz + sqw);
+		resp.z = asin(2 * test / unit);
+		resp.x = atan2(2 * q.x * q.w - 2 * q.y * q.z, -sqx + sqy - sqz + sqw);
+	}
+
+	return resp * 180.0f / PI;
 }
 
 Vector3D Vector3D::fromBulletRotation(btQuaternion q)
