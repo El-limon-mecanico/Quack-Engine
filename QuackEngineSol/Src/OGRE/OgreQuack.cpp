@@ -6,6 +6,7 @@
 #include <SDL_syswm.h>
 #include <assert.h>
 #include <iostream>
+#include <Windows.h>
 
 using namespace Ogre;
 
@@ -58,6 +59,12 @@ void OgreQuack::setupRoot()
 
 void OgreQuack::setupWindow()
 {
+	RECT rect;
+	HWND hd = GetDesktopWindow();
+	GetClientRect(hd, &rect);
+	screen_width_ = (rect.right - rect.left) * 0.75;
+	screen_height_ = (rect.bottom - rect.top) * 0.75;
+
 	if (!SDL_WasInit(SDL_INIT_VIDEO))
 		SDL_InitSubSystem(SDL_INIT_VIDEO);
 
@@ -105,4 +112,59 @@ int OgreQuack::getWindowH() {
 int OgreQuack::getWindowW() {
 
 	return window_->getWidth();
+}
+
+void OgreQuack::setFullScreen(bool set)
+{
+	float newWidth, newHeight;
+	if (set) {
+		RECT rect;
+		HWND hd = GetDesktopWindow();
+		GetClientRect(hd, &rect);
+		int nMonitors = GetSystemMetrics(SM_CMONITORS);
+		double dpi = 1;
+		std::cout << nMonitors << "\n";
+		if (nMonitors > 1) {
+			int zoom = GetDpiForWindow(hd);
+			switch (zoom) {
+			case 96:
+				dpi = 1;
+				std::cout << "100%" << std::endl;
+				break;
+			case 120:
+				dpi = 1.25;
+				std::cout << "125%" << std::endl;
+				break;
+			case 144:
+				dpi = 1.5;
+				std::cout << "150%" << std::endl;
+				break;
+			case 192:
+				dpi = 2;
+				std::cout << "200%" << std::endl;
+				break;
+			default:
+				std::cout << "error" << std::endl;
+				break;
+			}
+		}
+		newWidth = (rect.right - rect.left) * dpi;
+		newHeight = (rect.bottom - rect.top) * dpi;
+	}
+	else {
+		newWidth = screen_width_;
+		newHeight = screen_height_;
+	}
+	std::cout << newWidth << " " << newHeight << std::endl;
+	SDL_SetWindowSize(sdlWindow_, newWidth, newHeight);
+	SDL_SetWindowFullscreen(sdlWindow_, set ? SDL_WINDOW_FULLSCREEN : SDL_WINDOW_RESIZABLE);
+	window_->windowMovedOrResized();
+}
+
+void OgreQuack::setResolution(int width, int height)
+{
+	screen_width_ = width;
+	screen_height_ = height;
+	SDL_SetWindowSize(sdlWindow_, width, height);
+	window_->windowMovedOrResized();
 }
