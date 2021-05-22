@@ -123,7 +123,9 @@ void Transform::Translate(Vector3D t, bool global)
 
 void Transform::Rotate(Vector3D r, bool global)
 {
-	node_->rotate(Vector3D::toOgre(r), Ogre::Radian(Ogre::Degree(1)), global ? Ogre::Node::TS_WORLD : Ogre::Node::TS_LOCAL);
+	node_->rotate({ 1,0,0 }, Ogre::Radian(Ogre::Degree(r.x)), global ? Ogre::Node::TS_WORLD : Ogre::Node::TS_LOCAL);
+	node_->rotate({ 0,1,0 }, Ogre::Radian(Ogre::Degree(r.y)), global ? Ogre::Node::TS_WORLD : Ogre::Node::TS_LOCAL);
+	node_->rotate({ 0,0,1 }, Ogre::Radian(Ogre::Degree(r.z)), global ? Ogre::Node::TS_WORLD : Ogre::Node::TS_LOCAL);
 	recalculateAxes();
 	updateRb();
 	updateChildren();
@@ -148,12 +150,8 @@ void Transform::setLocalRotation(Vector3D v)
 
 void Transform::setGlobalRotation(Vector3D v)
 {
-	//globalRotation_ = v;
-	node_->_setDerivedOrientation(v.toOgreRotation());
-	auto b = Vector3D::fromOgreRotation(node_->_getDerivedOrientation());
-	recalculateAxes();
-	updateRb();
-	updateChildren();
+	node_->resetOrientation();
+	Rotate(v, true);
 }
 
 void Transform::setGlobalPosition(Vector3D v)

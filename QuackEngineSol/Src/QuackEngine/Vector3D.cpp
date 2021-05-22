@@ -39,7 +39,7 @@ btVector3 Vector3D::toBulletPosition()
 Ogre::Quaternion Vector3D::toOgreRotation()
 {
 	Ogre::Vector3 v(toOgre(*this * PI / 180.0f));
-		
+
 	Ogre::Quaternion qa;	
 	Ogre::Vector3 vec = Ogre::Vector3(v.x, v.y, v.z);
 	qa.FromRotationMatrix(fromEulerAngleToRotationMatrix(vec));
@@ -61,25 +61,14 @@ Ogre::Matrix3 Vector3D::fromEulerAngleToRotationMatrix(Vector3D vec)
 }
 
 btQuaternion Vector3D::toBulletRotation()
-{
-	Ogre::Vector3 v(toOgre(*this * PI / 180));
-	double pitch = v.y;
-	double yaw = v.z;
-	double roll = v.x;
-	// Abbreviations for the various angular functions
-	double cy = cos(yaw * 0.5);
-	double sy = sin(yaw * 0.5);
-	double cp = cos(pitch * 0.5);
-	double sp = sin(pitch * 0.5);
-	double cr = cos(roll * 0.5);
-	double sr = sin(roll * 0.5);
+{	
+	Ogre::Vector3 v(toOgre(*this * PI / 180.0f));
 
-	btQuaternion q;
-	q.setW(cr * cp * cy + sr * sp * sy);
-	q.setX(sr * cp * cy - cr * sp * sy);
-	q.setY(cr * sp * cy + sr * cp * sy);
-	q.setZ(cr * cp * sy - sr * sp * cy);
-	return q;
+	Ogre::Quaternion qa;
+	Ogre::Vector3 vec = Ogre::Vector3(v.x, v.y, v.z);
+	qa.FromRotationMatrix(fromEulerAngleToRotationMatrix(vec));
+	
+	return BtOgre::Convert::toBullet(qa);
 }
 
 btVector3 Vector3D::toBullet()
@@ -124,47 +113,40 @@ Vector3D Vector3D::fromBulletPosition(btVector3 v)
 
 Vector3D Vector3D::fromOgreRotation(Ogre::Quaternion q)
 {	
-	Vector3D resp;
-	//resp.x = atan2(2 * (q.x * q.y + q.z * q.w), 1 - 2 * (q.y * q.y + q.z * q.z));
-	//resp.y = asin(2 * (q.x * q.z - q.w * q.y));
-	//resp.z = -atan2(2 * (q.x * q.w + q.y * q.z), 1 - 2 * (q.z * q.z + q.w * q.w));
+	//Vector3D resp;
 
-	Ogre::Matrix3 mat;
-	q.ToRotationMatrix(mat);
-	
-	resp.x = atan2(mat[2][1], mat[2][2]);
-	resp.y = asin(mat[2][0]);
-	resp.z = -atan2(mat[1][0], mat[0][0]);
-
-	resp = resp * (180.0 / PI);
-
-	return resp;
-
-
-
-
-	
 	//Ogre::Matrix3 mat;
 	//q.ToRotationMatrix(mat);
-
-	//float sy = sqrt(mat[0][0] * mat[0][0] + mat[1][0] * mat[1][0]);
-
-	//Vector3D resp;
-	///*if(sy < 1e-6)
-	//{*/
-	//	resp.x = atan2(mat[2][1], mat[2][2]);
-	//	resp.y = atan2(-mat[2][0], sy);
-	//	resp.z = atan2(mat[1][0], mat[0][0]);
-	///*}
-	//else
-	//{
-	//	resp.x = atan2(-mat[1][2], mat[1][1]);
-	//	resp.y = atan2(-mat[2][0], sy);
-	//	resp.z = 0;
-	//}*/
-	//resp = resp * (180.0 / PI);
 	//
+	//resp.x = atan2(mat[2][1], mat[2][2]);
+	//resp.y = asin(mat[2][0]);
+	//resp.z = -atan2(mat[1][0], mat[0][0]);
+
+	//resp = resp * (180.0 / PI);
+
 	//return resp;
+
+	Vector3D angles;
+
+	// roll (x-axis globalRotation_)
+	double sinr_cosp = 2 * (q.w * q.x + q.y * q.z);
+	double cosr_cosp = 1 - 2 * (q.x * q.x + q.y * q.y);
+	angles.x = std::atan2(sinr_cosp, cosr_cosp);
+
+	// yaw (y-axis globalRotation)
+	double sinp = 2 * (q.w * q.y - q.z * q.x);
+	if (std::abs(sinp) >= 1)
+		angles.y = std::copysign(PI / 2, sinp); // use 90 degrees if out of range
+	else
+		angles.y = std::asin(sinp);
+
+	// pitch (z-axis globalRotation_)
+	double siny_cosp = 2 * (q.w * q.z + q.x * q.y);
+	double cosy_cosp = 1 - 2 * (q.y * q.y + q.z * q.z);
+	angles.z = std::atan2(siny_cosp, cosy_cosp);
+
+
+	return angles * 180.0f / PI;
 }
 
 Vector3D Vector3D::fromBulletRotation(btQuaternion q)
