@@ -5,7 +5,7 @@
 class Prueba2 : public Component {
 private:
 	int valor1;
-	int* valor2;
+	int* valor2 = nullptr;
 	std::string valor3;
 
 	float algo = 0;

@@ -102,9 +102,6 @@
     <ClCompile Include="..\..\Src\QuackEngine\AudioSource.cpp">
       <Filter>Archivos de origen\Ecs\Components</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\QuackEngine\AudioSource3D.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\QuackEngine\Scene.h">
@@ -180,9 +177,6 @@
       <Filter>Archivos de encabezado\Ecs\Components</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\QuackEngine\AudioSource.h">
-      <Filter>Archivos de encabezado\Ecs\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\QuackEngine\AudioSource3D.h">
       <Filter>Archivos de encabezado\Ecs\Components</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\QuackEngine\HasGetName.h">
