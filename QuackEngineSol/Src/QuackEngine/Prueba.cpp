@@ -42,7 +42,7 @@ void Prueba::start()
 	InputManager::Instance()->captureMouse();
 	InputManager::Instance()->setMouseVisibility(false);
 	CallBacks::instance()->addMethod("PruebaCallBack", PruebaCallBack);
-	transform->lookAt({ 0,0,0 });
+	//transform->lookAt({ 0,0,0 });
 }
 
 void Prueba::fixedUpdate()
