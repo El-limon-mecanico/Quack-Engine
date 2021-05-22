@@ -118,7 +118,8 @@ void InputManager::ManageInput(SDL_Event event)
 	case SDL_MOUSEMOTION:
 		mousePositionAbsolute_ = { event.motion.x , event.motion.y };
 		//std::cout << "INPUT MANAGER POS RATON: " << event.motion.x << " , " << event.motion.y << "\n";
-		if (captureMouse_) SDL_WarpMouseInWindow(NULL, OgreQuack::Instance()->getWindowW() / 2, OgreQuack::Instance()->getWindowH() / 2);
+		mousePositionRelative_.x =  event.motion.xrel;
+		mousePositionRelative_.y = event.motion.yrel;
 		break;
 	case SDL_MOUSEBUTTONDOWN: case SDL_MOUSEBUTTONUP:
 		switch (event.button.button)
@@ -180,7 +181,7 @@ void InputManager::manageKeys(SDL_Event event)
 	}
 }
 
-void InputManager::flushKeys()
+void InputManager::flushInput()
 {
 	for (int c : keysUps)
 		keys_[c].up_ = false;
@@ -188,6 +189,7 @@ void InputManager::flushKeys()
 	for (int c : keysDown)
 		keys_[c].down_ = false;
 	keysDown.clear();
+	mousePositionRelative_ = { 0,0 };
 }
 
 int InputManager::getAxis(Axis axis)
@@ -199,14 +201,20 @@ int InputManager::getAxis(Axis axis)
 
 }
 
+float InputManager::getMouseAxis(Axis axis)
+{
+
+	return axis? mousePositionRelative_.y : mousePositionRelative_.x;
+}
+
 void InputManager::captureMouse()
 {
-	captureMouse_ = true;
+	SDL_SetRelativeMouseMode(SDL_TRUE);
 }
 
 void InputManager::releaseMouse()
 {
-	captureMouse_ = false;
+	SDL_SetRelativeMouseMode(SDL_FALSE);
 }
 
 bool InputManager::getKey(SDL_Scancode code)
@@ -223,6 +231,11 @@ bool InputManager::getKeyDown(SDL_Scancode code)
 bool InputManager::getKeyUp(SDL_Scancode code)
 {
 	return keys_[code].up_;
+}
+
+void InputManager::setMouseVisibility(bool set)
+{
+	CEGUIQuack::Instance()->setMouseVisibility(set);
 }
 
 void InputManager::MouseWheelChange(int coordinate, int value)
@@ -243,7 +256,7 @@ InputManager::MousePositionAbsolute InputManager::getMousePositionAbsolute()
 InputManager::MousePositionRelative InputManager::getMousePositionRelative()
 {
 	mousePositionRelative_ = { (float)mousePositionAbsolute_.x / OgreQuack::Instance()->getWindowW(),
-								(float)mousePositionAbsolute_.x / OgreQuack::Instance()->getWindowH() };
+								(float)mousePositionAbsolute_.y / OgreQuack::Instance()->getWindowH() };
 	return mousePositionRelative_;
 }
 

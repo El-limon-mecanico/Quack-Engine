@@ -76,6 +76,10 @@ public:
 
 	btQuaternion toBulletRotation();
 
+	btVector3 toBullet();
+
+	Ogre::Vector3 toOgre();
+
 	static Vector3D up() { return { 0,1,0 }; }
 
 	static Vector3D rigth() { return { 1,0,0 }; }

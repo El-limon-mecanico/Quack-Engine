@@ -90,6 +90,16 @@ btQuaternion Vector3D::toBulletRotation()
 	return q;
 }
 
+btVector3 Vector3D::toBullet()
+{
+	return btVector3(this->x, this->y, this->z);
+}
+
+Ogre::Vector3 Vector3D::toOgre()
+{
+	return Ogre::Vector3(this->x, this->y, this->z);
+}
+
 Ogre::Vector3 Vector3D::toOgre(Vector3D v)
 {
 	return Ogre::Vector3(v.x, v.y, v.z);

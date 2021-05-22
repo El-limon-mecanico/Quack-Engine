@@ -114,6 +114,10 @@ public:
 
 	void setVelocity(Vector3D v);
 
+	Vector3D angularVelocity();
+
+	void setAngularVelocity(Vector3D v);
+
 	void setRotationConstrains(bool x , bool y, bool z);
 
 	void setPositionConstrains(bool x, bool y, bool z);
