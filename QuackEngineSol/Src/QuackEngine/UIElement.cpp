@@ -16,17 +16,23 @@ void UIElement::addScheme(std::string scheme)
 
 bool UIElement::init(luabridge::LuaRef parameterTable)
 {
-	LuaRef pos = readVariable<LuaRef>(parameterTable, "Position");
-	LuaRef size = readVariable<LuaRef>(parameterTable, "Size");
+	bool correct = true;
+	LuaRef pos = NULL, size = NULL;
+	std::string style, name;
+	bool active = true;
+	correct &= readVariable<LuaRef>(parameterTable, "Position", &pos);
+	correct &= readVariable<LuaRef>(parameterTable, "Size", &size);
+	correct &= readVariable<std::string>(parameterTable, "Style", &style);
+	correct &= readVariable<std::string>(parameterTable, "Name", &name);
+	correct &= readVariable<bool>(parameterTable, "Active", &active);
+	
+	if (!correct) return false;
 
-	element_ = CEGUIQuack::Instance()->createWidget(readVariable<std::string>(parameterTable, "Style"),
-		readVariable<std::string>(parameterTable, "Name"));
+	element_ = CEGUIQuack::Instance()->createWidget(style, name);
 
 	setPosition(pos[1], pos[2]);
-
 	setSize(size[1], size[2]);
-
-	setEnable(readVariable<bool>(parameterTable, "Active"));
+	setEnable(active);
 
 	return true;
 }

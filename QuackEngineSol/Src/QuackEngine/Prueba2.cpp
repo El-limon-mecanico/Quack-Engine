@@ -18,9 +18,12 @@ Prueba2::~Prueba2()
 
 bool Prueba2::init(luabridge::LuaRef parameterTable)
 {
-	valor1 = readVariable<int>(parameterTable, "valor1");
-	valor2 = new int(readVariable<int>(parameterTable, "valor2"));
-	valor3 = readVariable<std::string>(parameterTable, "valor3");
+	bool correct = true;
+	correct &= readVariable<int>(parameterTable, "valor1", &valor1);
+	correct &= readVariable<int>(parameterTable, "valor2", valor2);
+	correct &= readVariable<std::string>(parameterTable, "valor3", &valor3);
+
+	if (!correct) return false;
 
 	std::cout << "\nEstas son las variables que has puesto desde lua: \n";
 	std::cout << valor1 << "\n";

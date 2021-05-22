@@ -9,6 +9,8 @@
 #include "Button.h"
 #include "Image.h"
 #include "Text.h"
+#include "AudioSource.h"
+#include "AudioSource3D.h"
 
 std::unique_ptr<FactoryManager> FactoryManager::instance_;
 
@@ -35,16 +37,16 @@ void FactoryManager::initEngineFactories()
 	FactoryManager::instance()->add<Light>();
 	FactoryManager::instance()->add<Button>();
 	FactoryManager::instance()->add<Text>();
+	FactoryManager::instance()->add<AudioSource>();
+	FactoryManager::instance()->add<AudioSource3D>();
 	FactoryManager::instance()->add<Image>();
 }
 
 Component* FactoryManager::create(const std::string& name)
 {
 	auto it = hashTable_.find(name);
-	if(it == hashTable_.end())
-	{
-		std::cout << "ERROR: NO SE HA PODIDO LEER EL COMPONENTE: " << name << "\n";
-		throw;// "No se ha encontrado un componente";
+	if(it == hashTable_.end()) {
+		throw "ERROR: NO SE HA PODIDO LEER EL COMPONENTE: " + name + "\n";;
 	}
 	else return hashTable_[name]();
 }

@@ -16,6 +16,7 @@
 #include "Transform.h"
 #include <unordered_map>
 #include "Component.h"
+//#include "HasGetName.h"
 
 namespace luabridge {
 	class LuaRef;
@@ -120,22 +121,40 @@ public:
 
 template<typename T>
 T* QuackEntity::getComponent() {
-	return (T*)getComponent(T::GetName());
+	//if (HasGetName<T>::value)
+		return (T*)getComponent(T::GetName());
+
+	//PRINT_ERROR_GETNAME;
+	//return nullptr;
 }
 
 template <typename T>
 inline bool QuackEntity::hasComponent() {
-	return hasComponent(T::GetName());
+	//if ((HasGetName<T>::value))
+		return hasComponent(T::GetName());
+
+	//PRINT_ERROR_GETNAME;
+	//return nullptr;
 }
 
 template<typename T>
 void QuackEntity::removeComponent() {
-	return removeComponent(T::GetName());
+	//if ((HasGetName<T>::value));
+		return removeComponent(T::GetName());
+
+	//PRINT_ERROR_GETNAME;
+	//return nullptr;
+
 }
 
 template<typename T, typename ... Targs>
 T* QuackEntity::addComponent(Targs&&...mArgs)
 {
+	//if ((HasGetName<T>::value)) {
+		//PRINT_ERROR_GETNAME;
+		//return nullptr;
+	//}
+
 	T* c = new T(std::forward<Targs>(mArgs)...);
 	c->setEntity(this);
 	c->transform = transform();

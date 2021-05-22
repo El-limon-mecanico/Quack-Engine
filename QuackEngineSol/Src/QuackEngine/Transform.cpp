@@ -26,13 +26,19 @@ up(0, 1, 0)
 	node_ = n;
 	parent_ = this;
 }
+
 bool Transform::init(luabridge::LuaRef parameterTable)
 {
-	LuaRef pos = readVariable<LuaRef>(parameterTable, "Position");
+	LuaRef pos = NULL, rot = NULL, scl = NULL;
+	bool correct = true;
+	correct &= readVariable<LuaRef>(parameterTable, "Position", &pos);
+	correct &= readVariable<LuaRef>(parameterTable, "Rotation", &rot);
+	correct &= readVariable<LuaRef>(parameterTable, "Scale", &scl);
+
+	if (!correct) return false;
+
 	setGlobalPosition(Vector3D(pos[1], pos[2], pos[3]));
-	LuaRef rot = readVariable<LuaRef>(parameterTable, "Rotation");
 	setGlobalRotation(Vector3D(rot[1], rot[2], rot[3]));
-	LuaRef scl = readVariable<LuaRef>(parameterTable, "Scale");
 	setScale(Vector3D(scl[1], scl[2], scl[3]));
 
 	//TODO: HAY QUE METER LOS HIJOS POR LUA

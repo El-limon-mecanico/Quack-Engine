@@ -2,19 +2,49 @@
 #include "CEGUIQuack.h"
 #include "LuaManager.h"
 #include "CallBacks.h"
+#include "SoundQuack.h"
 
 Scene::Scene(const std::string& file, const std::string& name)
 {
+	std::cout << "Cargando escena " << name << "\n";
+
 	//los call backs de los botones se tienen que crear antes de que se empiecen a cargar las entidades
 	CallBacks::instance()->addMethod("botonPresionado", callBackBoton);
+	lua_State* state = nullptr;
+	try {
+		state = readFileLua(file);
+		std::cout << "Archivo " << file << " abierto correctamente\n";
+	}
+	catch (...) {
+		std::cout << "ERROR: no se pudo leer el archivo " << file << "\n";
+		return;
+	}
+	if (state == nullptr) {
+		std::cout << "ERROR: no se pudo leer el archivo " << file << "\n";
+		return;
+	}
 
-	lua_State* state = readFileLua(file);
-	LuaRef refScene = readElementFromFile(state, name);
+	LuaRef refScene = NULL;
+	try {
+		refScene = readElementFromFile(state, name);
+	}
+	catch (...) {
+		std::cout << "ERROR: no se pudo cargar la escena del archivo " << file << "\n";
+		return;
+	}
+
 	//sacamos el vector de entidades y las creamos
 	enableExceptions(refScene);
 
-	//leemos el vector que contiene las entidades
-	LuaRef entidades = refScene.rawget("entities");
+	LuaRef entidades = NULL;
+	try {
+		//leemos el vector que contiene las entidades
+		 entidades = refScene.rawget("entities");
+	}
+	catch (...) {
+		std::cout << "ERROR: no se pudo cargar la lista de entidades de la escena " << file << "\n";
+		return;
+	}
 
 	for (int i = 1; i <= entidades.length(); i++)
 	{
@@ -25,14 +55,17 @@ Scene::Scene(const std::string& file, const std::string& name)
 		//con el nombre ent, se busca el .lua y se cree lo que pone alli
 		LuaRef entInfo = readElementFromFile(state, ent);
 
-		if (!createEntity(ent, entInfo)) std::cout << "ERROR: no se ha podidio cargar la entidad: " << ent;
-
+		if (!createEntity(ent, entInfo)) std::cout << "ERROR: no se ha podido cargar la entidad: " << ent;
+		std::cout << "\n";
 	}
+	std::cout << "Listo.\n";
 }
 
-QuackEntity* Scene::createEntity(const std::string& fileName, LuaRef entInfo)
+QuackEntity* Scene::createEntity(const std::string& entityName, LuaRef entInfo)
 {
-	QuackEntity* entity = new QuackEntity(fileName);
+	QuackEntity* entity = new QuackEntity(entityName);
+
+	std::cout << "Creando entidad " << entityName << "\n";
 
 	//leemos el array de componentes
 	LuaRef components = entInfo.rawget("Components");

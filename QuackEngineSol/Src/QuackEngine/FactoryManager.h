@@ -12,6 +12,7 @@
 #include <assert.h>
 #include "Component.h"
 #include "checkML.h"
+//#include "HasGetName.h"
 
 class QUACK_ENGINE_PRO_API FactoryManager {
 
@@ -31,7 +32,10 @@ public:
 
 	template<typename T>
 	void add(std::string name = "") {
-		hashTable_[(name == "") ? T::GetName() : name] = &FactoryManager::createComponent<T>;
+		//if(HasGetName<T>::value)
+			hashTable_[(name == "") ? T::GetName() : name] = &FactoryManager::createComponent<T>;
+		//else
+			//PRINT_ERROR_GETNAME;
 	}
 
 	void initEngineFactories();

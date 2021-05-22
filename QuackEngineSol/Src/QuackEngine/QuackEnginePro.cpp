@@ -6,7 +6,7 @@
 #include <string>
 
 #include "QuackEnginePro.h"
-#include "FMOD_Quack.h"
+#include "SoundQuack.h"
 #include "OgreQuack.h"
 #include "BulletQuack.h"
 #include "LuaBridgeTest.h"
@@ -26,12 +26,6 @@
 #include "SDL_video.h"
 
 #include "CallBacks.h"
-
-
-void QuackEnginePro::pruebaBotonCallback()
-{
-	std::cout << "Se ha presionado el boton\n";
-}
 
 
 void QuackEnginePro::readAssetsRoute()
@@ -86,7 +80,8 @@ void QuackEnginePro::setup()
 
 	BulletQuack::Init();
 
-	fmod_quack::Init(assets_route);
+	SoundQuack::Init(assets_route);
+	//SoundQuack::Instance()->createSound("singing.wav", "singing");	sound test
 
 	FactoryManager::Init();
 

@@ -33,7 +33,8 @@ private:
 	Ogre::Viewport* vp_;
 	Vector3D target_;
 	bool firstEnable_;
-	void initCamera(std::string name, Vector3D bg, Vector3D target, int width, int height, float near, float far, std::string );
+	//void initCamera(std::string name, Vector3D bg, Vector3D target, int width, int height, float near, float far, std::string );
+
 public:
 	QuackCamera(QuackEntity* e = nullptr);
 	~QuackCamera();
