@@ -42,8 +42,10 @@ void PruebaCallBack() {
 
 void Prueba::start()
 {
+	InputManager::Instance()->captureMouse();
+	InputManager::Instance()->setMouseVisibility(false);
 	CallBacks::instance()->addMethod("PruebaCallBack", PruebaCallBack);
-	transform->lookAt({ 0,0,0 });
+	//transform->lookAt({ 0,0,0 });
 }
 
 void Prueba::fixedUpdate()
@@ -54,13 +56,22 @@ void Prueba::fixedUpdate()
 
 void Prueba::update()
 {
-	if (entity_->getComponent<Rigidbody>())
-		entity_->getComponent<Rigidbody>()->setAngularVelocity({ 0,1,0 });
+	//if (entity_->getComponent<Rigidbody>())
+	//	entity_->getComponent<Rigidbody>()->setAngularVelocity({ 0,1,0 });
 	//if (InputManager::Instance()->getKey(SDL_SCANCODE_SPACE))
 	//	std::cout << "Espacio mantenido\n";
-	if (InputManager::Instance()->getKeyDown(SDL_SCANCODE_L)) {
-		std::cout << InputManager::Instance()->getMousePositionRelative().x << " , " << InputManager::Instance()->getMousePositionRelative().y << "\n";
-	}
+	//if (InputManager::Instance()->getKeyDown(SDL_SCANCODE_L)) {
+	//	std::cout << InputManager::Instance()->getMousePositionRelative().x << " , " << InputManager::Instance()->getMousePositionRelative().y << "\n";
+	//}
+
+	//Vector3D rot = { 0,InputManager::Instance()->getMouseAxis(Horizontal) ,InputManager::Instance()->getMouseAxis(Vertical) };
+
+	//std::cout << "Horizontal: " << InputManager::Instance()->getMouseAxis(Horizontal) << " Vertical: " << InputManager::Instance()->getMouseAxis(Vertical) << "\n";
+
+	//transform->Rotate(rot, true);
+
+	//std::cout << "Horizontal: " << InputManager::Instance()->getMousePositionAbsolute().x << " Vertical: " << InputManager::Instance()->getMousePositionAbsolute().y <<"\n";
+
 	//if (InputManager::Instance()->getKeyUp(SDL_SCANCODE_L)) {
 	//	std::cout << "Espacio arriba\n";
 	//}
@@ -95,7 +106,13 @@ void Prueba::onCollisionEnter(QuackEntity* other, Vector3D point)
 		entity_->getComponent<Text>()->setText("Me golpie con algo");
 	if (entity_->getComponent<Image>())
 		entity_->getComponent<Image>()->changeImage("virgolini");*/
+	QuackEnginePro::Instance()->setFullScreen(true);
 	std::cout << "Yo " << entity_->name() << " acabo de chocar con " << other->name() << "\n\n";
+}
+
+void Prueba::onCollisionEnter(QuackEntity* other, Vector3D point, Vector3D normal)
+{
+	std::cout <<entity_->name() << " con " << other->name() << " normal "<< normal << " en el punto " << point <<"\n";
 }
 
 void Prueba::onCollisionStay(QuackEntity* other, Vector3D point)

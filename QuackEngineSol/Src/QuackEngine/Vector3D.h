@@ -28,6 +28,7 @@ namespace Ogre {
 	typedef Vector<3, Real> Vector3;
 	class Quaternion;
 	class Matrix4;
+	class Matrix3;
 }
 
 class btVector3;
@@ -109,7 +110,9 @@ public:
 	static void localToGlobalCoordinates(Vector3D& globalPosition, Vector3D& globalRotation, Vector3D localPosition, Vector3D parentGlobalPosition, Vector3D parentGlobalRotation);
 
 	static void globalToLocalCoordinates(Vector3D& localPosition, Vector3D& localRotation, Vector3D globalPosition, Vector3D parentLocalPosition, Vector3D parentLocalRotation);
-
+	
+	static Ogre::Matrix3 fromEulerAngleToRotationMatrix(Vector3D vec);
+	
 	inline void set(float x, float y, float z) {
 		x = x;
 		y = y;

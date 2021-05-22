@@ -106,8 +106,7 @@ public:
 
 	Ogre::SceneNode* getNode();
 	virtual void physicsUpdateTr();
-	virtual void onEnable() override;
-	virtual void onDisable()override { enable = true; }
+	virtual void onDisable() override { enable = true; }
 
 	inline std::vector<Transform*> getChildren() const { return children_; }
 	inline QuackEntity* getChild(int n) const { return children_[n]->entity_; }

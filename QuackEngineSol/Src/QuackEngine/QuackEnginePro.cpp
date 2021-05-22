@@ -23,6 +23,7 @@
 
 #include "InputManager.h"
 #include "SDL_scancode.h"
+#include "SDL_video.h"
 
 #include "CallBacks.h"
 
@@ -97,6 +98,7 @@ void QuackEnginePro::setup()
 void QuackEnginePro::start(std::string route, std::string name)
 {
 	SceneMng::Instance()->loadScene(route, name);
+	//setFullScreen(true);
 	if (!updateStarted) {
 		quackTime_ = new QuackTime();
 		update();
@@ -138,10 +140,6 @@ void QuackEnginePro::update()
 		if (!SceneMng::Instance()->lastUpdate())
 			exit = true;
 	}
-
-	//#if (defined _DEBUG) || !(defined _WIN32)
-		//std::cout << "WARNING: Deberia haber al menos 4 bytes de basura\n";
-	//#endif
 }
 
 
@@ -150,7 +148,7 @@ void QuackEnginePro::pollEvents()
 	if (sdlWindow_ == nullptr)
 		return;  // SDL events not initialized
 	SDL_Event event;
-	InputManager::Instance()->flushKeys();
+	InputManager::Instance()->flushInput();
 	while (SDL_PollEvent(&event))
 	{
 		switch (event.type)
@@ -158,16 +156,6 @@ void QuackEnginePro::pollEvents()
 		case SDL_QUIT:
 			OgreQuack::Instance()->getRoot()->queueEndRendering();
 			exit = true;
-			break;
-		case SDL_WINDOWEVENT:
-			if (event.window.windowID == SDL_GetWindowID(sdlWindow_)) {
-				/*if (event.window.event == SDL_WINDOWEVENT_RESIZED)
-				{
-					Ogre::RenderWindow* win = window;
-					win->windowMovedOrResized();
-					frameListener_->windowResized(win);
-				}*/
-			}
 			break;
 		default:
 			InputManager::Instance()->ManageInput(event);
@@ -179,4 +167,26 @@ void QuackEnginePro::pollEvents()
 QuackTime* QuackEnginePro::time()
 {
 	return quackTime_;
+}
+
+void QuackEnginePro::setFullScreen(bool set)
+{
+	OgreQuack::Instance()->setFullScreen(set);
+	CEGUIQuack::Instance()->resizeWindow(OgreQuack::Instance()->getWindowW(), OgreQuack::Instance()->getWindowH());
+}
+
+void QuackEnginePro::setWindowSize(int width, int height)
+{
+	OgreQuack::Instance()->setResolution(width, height);
+	CEGUIQuack::Instance()->resizeWindow(width, height);
+}
+
+int QuackEnginePro::getWindoWidth()
+{
+	return OgreQuack::Instance()->getWindowW();
+}
+
+int QuackEnginePro::getWindoHeight()
+{
+	return OgreQuack::Instance()->getWindowH();
 }

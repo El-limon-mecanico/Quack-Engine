@@ -31,9 +31,9 @@ private:
 
 	std::string name_;
 
-	int screen_width_ = 1000;
+	int screen_width_ = 1920;
 
-	int screen_height_ = 700;
+	int screen_height_ = 1080;
 
 	void setupWindow();
 
@@ -46,7 +46,7 @@ public:
 	// devuelve puntero al singleton
 	static OgreQuack* Instance();
 
-	OgreQuack(std::string name): name_(name) {
+	OgreQuack(std::string name) : name_(name) {
 		setupRoot();
 	}
 
@@ -66,5 +66,9 @@ public:
 
 	int getWindowH();
 	int getWindowW();
+
+	void setFullScreen(bool set);
+
+	void setResolution(int width, int height);
 };
 #endif // !_OGRE_QUACK_

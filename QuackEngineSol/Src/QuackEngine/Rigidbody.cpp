@@ -58,6 +58,7 @@ void Rigidbody::setRigidbody(int mass, ColliderType type, bool trigger, bool sta
 	if (!renderCmp)
 		renderCmp = entity_->addComponent<MeshRenderer>();
 	rb_ = BulletQuack::Instance()->addRigidBody(mass, renderCmp->getOgreEntity(), t, &sendContacts, this);
+	rb_->setActivationState(DISABLE_DEACTIVATION);
 
 	setTrigger(trigger);
 
@@ -70,7 +71,7 @@ void Rigidbody::setTrigger(bool trigger)
 	trigger_ = trigger;
 
 	if (trigger)
-		rb_->setCollisionFlags(DISABLE_DEACTIVATION);
+		rb_->setCollisionFlags(btCollisionObject::CollisionFlags::CF_NO_CONTACT_RESPONSE);
 	else
 		rb_->setCollisionFlags(0);
 }
@@ -130,7 +131,7 @@ void Rigidbody::contact(Rigidbody* other, const btManifoldPoint& manifoldPoint)
 	}
 	Vector3D p = Vector3D((float)v.x(), (float)v.y(), (float)v.z());
 	collisions.push_back({ other,0 , p , other->trigger_ || trigger_ });
-	(other->trigger_ || trigger_) ? entity_->onTriggerEnter(other->entity_, p) : entity_->onCollisionEnter(other->entity_, p);
+	(other->trigger_ || trigger_) ? entity_->onTriggerEnter(other->entity_, p) : entity_->onCollisionEnter(other->entity_, p, manifoldPoint.m_normalWorldOnB);
 }
 
 void Rigidbody::setMass(float mass)
@@ -141,8 +142,9 @@ void Rigidbody::setMass(float mass)
 
 void Rigidbody::setStatic(bool statc)
 {
-	if (statc)
+	if (statc) {
 		BulletQuack::Instance()->changeMass(0, rb_);
+	}
 	else
 		setMass(mass_);
 

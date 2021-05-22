@@ -34,7 +34,7 @@ bool Transform::init(luabridge::LuaRef parameterTable)
 	correct &= readVariable<LuaRef>(parameterTable, "Position", &pos);
 	correct &= readVariable<LuaRef>(parameterTable, "Rotation", &rot);
 	correct &= readVariable<LuaRef>(parameterTable, "Scale", &scl);
-	
+
 	if (!correct) return false;
 
 	setGlobalPosition(Vector3D(pos[1], pos[2], pos[3]));
@@ -99,13 +99,6 @@ void Transform::physicsUpdateTr()
 }
 
 
-void Transform::onEnable()
-{
-	node_->setScale(Vector3D::toOgre(localScale_));
-	node_->_setDerivedPosition(globalPosition_.toOgrePosition());
-	node_->_setDerivedOrientation(globalRotation_.toOgreRotation());
-}
-
 void Transform::setParent(Transform* parent)
 {
 	if (parent_)
@@ -136,7 +129,9 @@ void Transform::Translate(Vector3D t, bool global)
 
 void Transform::Rotate(Vector3D r, bool global)
 {
-	node_->rotate(Vector3D::toOgre(r), Ogre::Radian(Ogre::Degree(1)), global ? Ogre::Node::TS_WORLD : Ogre::Node::TS_LOCAL);
+	node_->rotate({ 1,0,0 }, Ogre::Radian(Ogre::Degree(r.x)), global ? Ogre::Node::TS_WORLD : Ogre::Node::TS_LOCAL);
+	node_->rotate({ 0,1,0 }, Ogre::Radian(Ogre::Degree(r.y)), global ? Ogre::Node::TS_WORLD : Ogre::Node::TS_LOCAL);
+	node_->rotate({ 0,0,1 }, Ogre::Radian(Ogre::Degree(r.z)), global ? Ogre::Node::TS_WORLD : Ogre::Node::TS_LOCAL);
 	recalculateAxes();
 	updateRb();
 	updateChildren();
@@ -153,18 +148,14 @@ void Transform::Scale(Vector3D s)
 
 void Transform::setLocalRotation(Vector3D v)
 {
-	node_->setOrientation(v.toOgreRotation());
-	recalculateAxes();
-	updateRb();
-	updateChildren();
+	node_->resetOrientation();
+	Rotate(v);
 }
 
 void Transform::setGlobalRotation(Vector3D v)
 {
-	node_->_setDerivedOrientation(v.toOgreRotation());
-	recalculateAxes();
-	updateRb();
-	updateChildren();
+	node_->resetOrientation();
+	Rotate(v, true);
 }
 
 void Transform::setGlobalPosition(Vector3D v)
@@ -174,7 +165,6 @@ void Transform::setGlobalPosition(Vector3D v)
 	updateRb();
 	updateChildren();
 }
-
 
 void Transform::setLocalPosition(Vector3D v)
 {

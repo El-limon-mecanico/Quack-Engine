@@ -85,6 +85,12 @@ void CEGUIQuack::setMouseVisibility(bool visible)
 	else CEGUI::System::getSingleton().getDefaultGUIContext().getMouseCursor().hide();
 }
 
+void CEGUIQuack::resizeWindow(int width, int height)
+{
+	CEGUI::Sizef size = CEGUI::Sizef(width, height);
+	CEGUI::System::getSingleton().notifyDisplaySizeChanged(size);
+}
+
 
 bool CEGUIQuack::render(double deltaTime)
 {

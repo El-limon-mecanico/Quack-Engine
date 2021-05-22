@@ -98,7 +98,7 @@ public:
 
 	void lastUpdate();
 
-	void onCollisionEnter(QuackEntity* other, Vector3D point);
+	void onCollisionEnter(QuackEntity* other, Vector3D point, Vector3D normal);
 
 	void onCollisionStay(QuackEntity* other, Vector3D point);
 
