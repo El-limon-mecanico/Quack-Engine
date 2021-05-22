@@ -124,7 +124,7 @@ void Rigidbody::contact(Rigidbody* other, const btManifoldPoint& manifoldPoint)
 	}
 	Vector3D p = Vector3D((float)v.x(), (float)v.y(), (float)v.z());
 	collisions.push_back({ other,0 , p , other->trigger_ || trigger_ });
-	(other->trigger_ || trigger_) ? entity_->onTriggerEnter(other->entity_, p) : entity_->onCollisionEnter(other->entity_, p);
+	(other->trigger_ || trigger_) ? entity_->onTriggerEnter(other->entity_, p) : entity_->onCollisionEnter(other->entity_, p, manifoldPoint.m_normalWorldOnB);
 }
 
 void Rigidbody::setMass(float mass)

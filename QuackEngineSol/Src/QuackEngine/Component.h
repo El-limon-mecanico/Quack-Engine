@@ -65,6 +65,10 @@ public:
 
 	virtual void onCollisionEnter(QuackEntity* other, Vector3D point) {}
 
+	virtual void onCollisionEnter(QuackEntity* other, Vector3D point, Vector3D normal) {
+		onCollisionEnter(other, point);
+	}
+
 	virtual void onCollisionStay(QuackEntity* other, Vector3D point) {}
 
 	virtual void onCollisionExit(QuackEntity* other, Vector3D point) {}
