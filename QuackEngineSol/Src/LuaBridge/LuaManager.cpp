@@ -14,6 +14,12 @@ lua_State* readFileLua(std::string file)
 	lua_State* state = luaL_newstate();
 	std::string path = assets_path + "/lua/" + file;
 	
-	luaL_dofile(state, path.c_str());
+	int aux = luaL_dofile(state, path.c_str());
+	if (aux != 0) {
+		std::string msg = "ERROR: Calling luaL_dofile resulted in failure. Error: ";
+		std::string error = lua_tostring(state, -1);
+		throw(msg + error);
+	}
+
 	return state;
 }
