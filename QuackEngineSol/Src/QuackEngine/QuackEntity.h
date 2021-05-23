@@ -54,7 +54,7 @@ public:
 	std::string& name() { return name_; }
 	std::string& tag() { return tag_; }
 	inline bool isActive() const { return enable_; }
-	inline void setButtonEnable(bool state) {
+	inline void setActive(bool state) {
 		enable_ = state;
 		if (enable_)
 			onEnable();

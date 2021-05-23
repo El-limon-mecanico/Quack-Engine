@@ -41,8 +41,6 @@ bool Transform::init(luabridge::LuaRef parameterTable)
 	setGlobalRotation(Vector3D(rot[1], rot[2], rot[3]));
 	setScale(Vector3D(scl[1], scl[2], scl[3]));
 
-	//TODO: HAY QUE METER LOS HIJOS POR LUA
-
 	return true;
 }
 

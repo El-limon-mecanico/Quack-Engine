@@ -25,9 +25,9 @@ bool QuackCamera::init(luabridge::LuaRef parameterTable)
 {
 	std::string name, proj;
 	LuaRef bgc = NULL, look = NULL;
-	Vector3D bg;
-	int width, height;
-	float near, far;
+	Vector3D bg(0.0);
+	int width = 0, height = 0;
+	float near = 0, far = 0;
 	bool correct = true;
 	
 	correct &= readVariable<std::string>(parameterTable, "Name", &name);
@@ -61,7 +61,6 @@ bool QuackCamera::init(luabridge::LuaRef parameterTable)
 	node_ = entity_->transform()->getNode()->createChildSceneNode();
 	node_->attachObject(camera_);
 	node_->lookAt(target_.toOgrePosition(), Ogre::Node::TS_WORLD);
-	firstEnable_ = false;
 
 	return true;
 }

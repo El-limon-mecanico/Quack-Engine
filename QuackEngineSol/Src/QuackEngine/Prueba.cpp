@@ -45,6 +45,7 @@ void Prueba::start()
 	InputManager::Instance()->captureMouse();
 	InputManager::Instance()->setMouseVisibility(false);
 	CallBacks::instance()->addMethod("PruebaCallBack", PruebaCallBack);
+	std::cout << "\n\nPruebaPruebaPruebaPrueba\n\n";
 	//transform->lookAt({ 0,0,0 });
 }
 

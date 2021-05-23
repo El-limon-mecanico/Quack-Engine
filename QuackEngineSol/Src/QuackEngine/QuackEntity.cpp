@@ -64,14 +64,14 @@ Component* QuackEntity::addComponent(const std::string& componentName, LuaRef pa
 		c->setEntity(this);
 		c->transform = transform();
 		if (param.isNil()) std::cout << "ERROR: no se ha podido cargar los valores del componente " << componentName << "\n";
-		else c->init(param);
+		else {
+			c->init(param);
+			if(!readVariable<bool>(param, "Enabled", &(c->enable))) std::cout << "ERROR: no se ha podido activar/desactivar la entidad\n";
+		}
 		components_.push_back(c);
 
 		cmpMap_.insert({ componentName , c });
-		cmpMap_[componentName] = c; //sin esta linea, el map guarda null por alg�n motivo
-
-		if (c->isEnable() && enable_)																// TODO GUARDAR SI EL COMPONENTE ESTÁ ENABLE
-			c->onEnable();
+		cmpMap_[componentName] = c; //sin esta linea, el map guarda null por algun motivo
 
 		return c;
 	}
