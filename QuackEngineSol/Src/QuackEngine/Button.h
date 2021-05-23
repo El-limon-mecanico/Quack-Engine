@@ -22,8 +22,6 @@ public:
 
 	virtual bool init(luabridge::LuaRef parameterTable = { nullptr });
 
-	void setButtonEnable(bool active);
-
 	void setCallBackFunction(std::string callBackName);
 	void setCallBackFunction(std::function<void()> callBack);
 };

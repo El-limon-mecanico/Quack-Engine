@@ -19,12 +19,10 @@ bool UIElement::init(luabridge::LuaRef parameterTable)
 	bool correct = true;
 	LuaRef pos = NULL, size = NULL;
 	std::string style, name;
-	bool active = true;
 	correct &= readVariable<LuaRef>(parameterTable, "Position", &pos);
 	correct &= readVariable<LuaRef>(parameterTable, "Size", &size);
 	correct &= readVariable<std::string>(parameterTable, "Style", &style);
 	correct &= readVariable<std::string>(parameterTable, "Name", &name);
-	correct &= readVariable<bool>(parameterTable, "Active", &active);
 	
 	if (!correct) return false;
 
@@ -32,7 +30,6 @@ bool UIElement::init(luabridge::LuaRef parameterTable)
 
 	setPosition(pos[1], pos[2]);
 	setSize(size[1], size[2]);
-	setEnable(active);
 
 	return true;
 }
@@ -53,7 +50,7 @@ bool UIElement::init(std::pair<float, float> pos, std::pair<float, float> size, 
 void UIElement::onEnable()
 {
 	element_->setVisible(true);
-	element_->setEnabled(enable_);
+	element_->setEnabled(enable);
 }
 
 void UIElement::onDisable()

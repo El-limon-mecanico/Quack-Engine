@@ -94,7 +94,7 @@ void QuackEnginePro::setup()
 
 	InputManager::Init();
 
-	setFullScreen(true);
+	//setFullScreen(true);
 }
 
 void QuackEnginePro::start(std::string route, std::string name)

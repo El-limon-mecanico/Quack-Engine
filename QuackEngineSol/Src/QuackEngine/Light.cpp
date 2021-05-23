@@ -27,11 +27,6 @@ bool Light::init(luabridge::LuaRef parameterTable)
 {
 	LuaRef dColor = NULL, sColor = NULL, dir = NULL;
 	bool correct = true;
-	
-	const int* a;
-	int b;
-	a = &b;
-	*a++;
 
 	correct &= readVariable<int>(parameterTable, "LightType", (int*)(&lightType_));
 	correct &= readVariable<LuaRef>(parameterTable, "DiffuseColor", &dColor);

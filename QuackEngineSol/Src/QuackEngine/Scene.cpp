@@ -90,6 +90,7 @@ QuackEntity* Scene::createEntity(const std::string& entityName, LuaRef entInfo)
 		}
 	}
 
+	std::cout << "\n	Fin de la lectura de componentes.\n";
 	bool active = true;
 	bool correct = readVariable<bool>(entInfo, "Active", &active);
 	if(correct) entity->setActive(active);
