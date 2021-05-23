@@ -10,15 +10,17 @@ AudioSource::AudioSource() :
 
 AudioSource::~AudioSource()
 {
+	stop();
 	mngr_ = nullptr;		// eliminar la referencia al Singleton
 }
 
 bool AudioSource::init(luabridge::LuaRef parameterTable)
 {
+	int loops = 0;
 	bool correct = true;
 	correct &= readVariable<std::string>(parameterTable, "Source", &source_);
 	correct &= readVariable<float>(parameterTable, "Volume", &volume_);
-	correct &= readVariable<int>(parameterTable, "Loops", &loop_);
+	correct &= readVariable<int>(parameterTable, "Loops", &loops);
 
 	if (!correct) return false;
 
@@ -27,9 +29,11 @@ bool AudioSource::init(luabridge::LuaRef parameterTable)
 		std::cout << "ERROR: Couldn't create sound\n";
 		return false;
 	}
-	loop(loop_);
-	play();
 	setVolume(volume_);
+	if (loops >= -1)	loop(loops);
+	else std::cout << "	WARNING: loop count must be >= -1\n";
+
+	play();
 
 	return correct;
 }
@@ -56,10 +60,12 @@ bool AudioSource::isPlaying() {
 
 void AudioSource::loop(int times)
 {
-	if (times != 0) mngr_->setFlags(channel_, FMOD_LOOP_NORMAL);
-	else mngr_->setFlags(channel_, FMOD_LOOP_OFF);
+	mngr_->setMode(channel_, mngr_->getMode(channel_) | FMOD_LOOP_NORMAL, source_);
+	mngr_->loop(channel_, times, source_);
+}
 
-	mngr_->loop(channel_, times);
+int AudioSource::getCurrentLoop() {
+	return mngr_->getCurrentLoop(channel_);
 }
 
 void AudioSource::setVolume(float value) {
