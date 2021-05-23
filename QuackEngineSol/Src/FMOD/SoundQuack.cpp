@@ -88,7 +88,7 @@ void SoundQuack::setMode(int channel, int flags, std::string& id) {
 }
 
 FMOD::FMOD_MODE SoundQuack::getMode(int channel) {
-	FMOD::FMOD_MODE mode;
+	FMOD::FMOD_MODE mode=NULL;
 	getChannel(channel)->getMode(&mode);
 	return mode;
 }
