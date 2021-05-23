@@ -100,9 +100,6 @@ void QuackEnginePro::start(std::string route, std::string name)
 
 	if (!updateStarted) {
 		quackTime_ = new QuackTime();
-
-		//SceneMng::Instance()->getCurrentScene()->createEntityByPrefab("Entities/entidad1.lua", "Mono2"); // TODO quitar esta prueba
-
 		update();
 	}
 }
