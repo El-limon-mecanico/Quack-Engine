@@ -22,9 +22,8 @@ private:
 	int channel_ = -1;		// almacena el canal en el que se esta reproduciendo el sonido
 
 	// Lua parameters
-	float volume_;
-	std::string source_;
-	int loop_ = 0;
+	float volume_=0;
+	std::string source_="";
 
 public:
 	AudioSource();
@@ -40,6 +39,7 @@ public:
 	void resume();
 	bool isPlaying();
 	void loop(int times = -1);
+	int getCurrentLoop();
 	void setVolume(float value);
 	float getVolume();
 };

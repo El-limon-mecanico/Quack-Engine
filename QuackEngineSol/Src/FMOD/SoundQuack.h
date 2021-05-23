@@ -10,6 +10,7 @@ namespace FMOD {					// evitar incluir .h de FMOD
 	class System;
 	class DSP;
 	class Channel;
+	typedef unsigned int FMOD_MODE;
 }
 
 class SoundQuack
@@ -48,9 +49,13 @@ public:
 	void setVolume(int channel, float value);
 	float getVolume(int channel);
 	void stopChannel(int channel);
-	void loop(int channel, int times);
-	void setFlags(int channel, int flags);
+	void loop(int channel, int times, std::string& id);
+	int getCurrentLoop(int channel);
+	void setMode(int channel, int flags, std::string& id);
+	FMOD::FMOD_MODE getMode(int channel);
 
-	void createDSP(FMOD_DSP_TYPE type, std::string id);
+	int createDSP(FMOD_DSP_TYPE type, std::string id);
 	void addDSP(int channel, std::string isDSP);
+
+	void soundLoop(std::string& id);
 };
