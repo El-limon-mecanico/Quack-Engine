@@ -26,15 +26,13 @@ enum ProjectionType
 
 class QUACK_ENGINE_PRO_API QuackCamera : public Component {
 private:
-	Ogre::SceneNode* node_;
-	Ogre::SceneManager* mSM_;
-	Ogre::RenderWindow* window_;
-	Ogre::Camera* camera_;
-	Ogre::Viewport* vp_;
+	Ogre::SceneNode* node_ = nullptr;
+	Ogre::SceneManager* mSM_ = nullptr;
+	Ogre::RenderWindow* window_ = nullptr;
+	Ogre::Camera* camera_ = nullptr;
+	Ogre::Viewport* vp_ = nullptr;
 	Vector3D target_;
-	bool firstEnable_;
-	//void initCamera(std::string name, Vector3D bg, Vector3D target, int width, int height, float near, float far, std::string );
-
+	
 public:
 	QuackCamera(QuackEntity* e = nullptr);
 	~QuackCamera();

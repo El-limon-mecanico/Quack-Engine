@@ -45,6 +45,11 @@ public:
 		x(), y(), z() {
 	}
 
+	Vector3D(float value) :
+		x(value), y(value), z(value) {
+	}
+	
+
 	Vector3D(const Vector3D& v) :
 		x(v.x), y(v.y), z(v.z) {
 	}
@@ -103,14 +108,6 @@ public:
 
 	static Vector3D fromBulletRotation(btQuaternion q);
 
-	static Vector3D globalToLocalPosition(Vector3D globalPosition, Vector3D parentGlobalPosition, Vector3D parentGlobalRotation, Vector3D upParent, Vector3D rightParent, Vector3D forwardParent);
-
-	static Vector3D localToGlobalPosition(Vector3D localPosition, Vector3D parentGlobalPosition, Vector3D parentGlobalRotation);
-
-	static void localToGlobalCoordinates(Vector3D& globalPosition, Vector3D& globalRotation, Vector3D localPosition, Vector3D parentGlobalPosition, Vector3D parentGlobalRotation);
-
-	static void globalToLocalCoordinates(Vector3D& localPosition, Vector3D& localRotation, Vector3D globalPosition, Vector3D parentLocalPosition, Vector3D parentLocalRotation);
-	
 	static Ogre::Matrix3 fromEulerAngleToRotationMatrix(Vector3D vec);
 	
 	inline void set(float x, float y, float z) {

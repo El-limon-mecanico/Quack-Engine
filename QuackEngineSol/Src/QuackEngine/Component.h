@@ -15,6 +15,10 @@ class Component {
 protected:
 	QuackEntity* entity_;
 	bool enable = true;
+
+private:
+	friend class QuackEntity;
+
 public:
 
 	Component(QuackEntity* e = nullptr) :

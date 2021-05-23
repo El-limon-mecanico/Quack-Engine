@@ -43,7 +43,6 @@ void MeshRenderer::onDisable()
 
 bool MeshRenderer::init(luabridge::LuaRef parameterTable)
 {
-
 	std::string mesh;
 	if (!readVariable<std::string>(parameterTable, "Mesh", &mesh))
 		return false;
@@ -62,13 +61,12 @@ bool MeshRenderer::init(luabridge::LuaRef parameterTable)
 		return false;
 	}
 
-	if (!readVariable<std::string>(parameterTable, "Material", &materialName_))
-		return false;
+	if (!readVariable<std::string>(parameterTable, "Material", &materialName_)) return false;
+
+	if (!readVariable<bool>(parameterTable, "Visible", &visible_)) return false;
 
 	if (materialName_ != "")
 		setMaterial(materialName_);
-
-	//visible_ = lo que venga de LUA;								TODO , PASAR POR LUA SI ES VISIBLE O NO
 
 	return true;
 }

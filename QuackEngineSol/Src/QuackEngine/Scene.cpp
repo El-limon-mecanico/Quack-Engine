@@ -92,7 +92,7 @@ QuackEntity* Scene::createEntity(const std::string& entityName, LuaRef entInfo)
 
 	bool active = true;
 	bool correct = readVariable<bool>(entInfo, "Active", &active);
-	if(correct) entity->setButtonEnable(active);
+	if(correct) entity->setActive(active);
 
 	addEntity(entity);
 

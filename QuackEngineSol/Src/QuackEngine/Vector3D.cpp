@@ -201,58 +201,6 @@ Vector3D Vector3D::fromBulletRotation(btQuaternion q)
 	return angles * 180.0f / PI;
 }
 
-Vector3D Vector3D::globalToLocalPosition(Vector3D globalPosition, Vector3D parentGlobalPosition, Vector3D parentGlobalRotation, Vector3D upParent, Vector3D rightParent, Vector3D forwardParent)
-{
-	Ogre::Matrix4 rot = rotationMatrix(parentGlobalRotation);
-	Ogre::Matrix4 tra = { rightParent.x, upParent.x , forwardParent.x , parentGlobalPosition.x,
-							rightParent.y, upParent.y, forwardParent.y , parentGlobalPosition.y,
-							rightParent.z, upParent.z, forwardParent.z, parentGlobalPosition.z,
-							0, 0, 0, 1
-	};
-
-	Ogre::Matrix4 trans = (tra * rot).inverse();
-
-	Ogre::Vector4f localPosition_ = Ogre::Vector4f(toOgre(globalPosition), 1);
-
-	Ogre::Vector4f ret = trans * localPosition_;
-
-	return  Vector3D(ret.x, ret.y, ret.z);							// TODO MATRICES DE TRANSFORMACIÓN PARA LOS EJES LOCALES
-}
-
-Vector3D Vector3D::localToGlobalPosition(Vector3D localPosition, Vector3D parentGlobalPosition, Vector3D parentGlobalRotation)
-{
-	Ogre::Matrix4 rot = rotationMatrix(parentGlobalRotation);
-	Ogre::Matrix4 tra = { 1, 0 , 0 , parentGlobalPosition.x,
-							0, 1, 0 , parentGlobalPosition.y,
-							0, 0, 1, parentGlobalPosition.z,
-							0, 0, 0, 1
-	};
-
-	Ogre::Matrix4 trans = tra * rot;
-	Ogre::Vector4f localPosition_ = Ogre::Vector4f(toOgre(localPosition), 1);
-
-	Ogre::Vector4f ret = trans * localPosition_;
-
-	return  Vector3D(ret.x, ret.y, ret.z);						// TODO MATRICES DE TRANSFORMACIÓN PARA LOS EJES LOCALES
-}
-
-void Vector3D::localToGlobalCoordinates(Vector3D& globalPosition, Vector3D& globalRotation, Vector3D localPosition, Vector3D parentGlobalPosition, Vector3D parentGlobalRotation)
-{
-
-	// TODO MATRICES DE TRANSFORMACIÓN PARA LOS EJES LOCALES
-}
-
-void Vector3D::globalToLocalCoordinates(Vector3D& localPosition, Vector3D& localRotation, Vector3D globalPosition, Vector3D parentLocalPosition, Vector3D parentLocalRotation)
-{
-
-	// TODO MATRICES DE TRANSFORMACIÓN PARA LOS EJES LOCALES
-}
-
-//void Vector3D::rotate(Vector3D rot)
-//{
-//	*this = globalRotation_(rot);
-//}
-
 Ogre::Matrix4 Vector3D::rotationMatrix(Vector3D r)
 {
 	r *= PI / 180;

@@ -33,14 +33,14 @@ inline bool readVariable(LuaRef& table, const std::string& variableName, T* vari
 {
 	std::cout << "	Variable " << variableName << "\n";
 	if (!variable || variable == nullptr) {
-		std::cout << "	ERROR: No se ha reservado espacio en memoria para la variable. La variable debe estar inicializada en memoria para poder llamar a readVariable sin errores.\n";
+		std::cout << "ERROR: No se ha reservado espacio en memoria para la variable. La variable debe estar inicializada en memoria para poder llamar a readVariable sin errores.\n";
 		return false;
 	}
 
 	LuaRef r = NULL;
 	try {
 		r = table.rawget(variableName);
-		if (r != NULL && !r.isRefNil()) {
+		if (!r.isRefNil()) {
 			try {
 				__readVariable_asig__(r, variable);
 				return true;				// lectura correcta
@@ -54,7 +54,7 @@ inline bool readVariable(LuaRef& table, const std::string& variableName, T* vari
 			}
 		}
 		else {
-			std::cout << "WARNING: no se ha indicado el valor de la variable: " << variableName << ". Se usara el valor por defecto.\n";
+			std::cout << "	WARNING: no se ha indicado el valor de la variable: " << variableName << ". Se usara el valor por defecto.\n";
 			return __readVariable_checkforLuaRefNull__<T>();
 		}
 	}
