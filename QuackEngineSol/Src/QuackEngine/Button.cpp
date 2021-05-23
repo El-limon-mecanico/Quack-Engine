@@ -16,15 +16,14 @@ bool Button::init(luabridge::LuaRef parameterTable)
 	correct &= readVariable<std::string>(parameterTable, "BLColor", &bLColor);
 	correct &= readVariable<std::string>(parameterTable, "BRColor", &bRColor);
 	correct &= readVariable<std::string>(parameterTable, "CallBackFunction", &callback);
-	correct &= readVariable<bool>(parameterTable, "Enable", &enable_);
 
-	return correct;
-}
+	if (!correct) return false;
 
-void Button::setButtonEnable(bool enable)
-{
-	enable_ = enable;
-	element_->setEnabled(enable);
+	setCallBackFunction(callback);
+	setText(text);
+	setTextColor(tLColor, tRColor, bLColor, bRColor);
+
+	return true;
 }
 
 void Button::setCallBackFunction(std::string callBackName)

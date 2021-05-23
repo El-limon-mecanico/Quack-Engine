@@ -18,8 +18,6 @@ class QUACK_ENGINE_PRO_API UIElement : public Component {
 protected:
 	CEGUI::Window* element_;
 
-	bool enable_ = true;
-
 	std::string text_ = "";
 
 	std::pair<float, float> position_;
