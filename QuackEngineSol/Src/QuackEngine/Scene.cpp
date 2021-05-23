@@ -15,8 +15,9 @@ Scene::Scene(const std::string& file, const std::string& name)
 		state = readFileLua(file);
 		std::cout << "Archivo " << file << " abierto correctamente\n";
 	}
-	catch (...) {
+	catch (std::string& error) {
 		std::cout << "ERROR: no se pudo leer el archivo " << file << "\n";
+		std::cout << error << '\n';
 		return;
 	}
 	if (state == nullptr) {
@@ -67,6 +68,11 @@ QuackEntity* Scene::createEntity(const std::string& entityName, LuaRef entInfo)
 
 	std::cout << "Creando entidad " << entityName << "\n";
 
+	if (entInfo == NULL || entInfo.isNil() || entInfo.isRefNil()) {
+		std::cout << "ERROR: No se encontro la informacion de la entidad\n";
+		return nullptr;
+	}
+
 	//leemos el array de componentes
 	LuaRef components = entInfo.rawget("Components");
 	//comprobacion de errores
@@ -116,6 +122,46 @@ void Scene::addEntity(QuackEntity* e)
 			if (e->isActive())
 				e->start();
 	}
+}
+
+QuackEntity* Scene::createEntityByPrefab(const std::string& file, const std::string& name)
+{
+	QuackEntity* entity = new QuackEntity(name);
+
+	std::cout << "\n\n";
+
+	lua_State* state = nullptr;
+	try {
+		state = readFileLua(file);
+		std::cout << "Archivo " << file << " abierto correctamente\n";
+	}
+	catch (std::string& error) {
+		std::cout << "ERROR: no se pudo leer el archivo " << file << "\n";
+		std::cout << error << '\n';
+		return nullptr;
+	}
+	if (state == nullptr) {
+		std::cout << "ERROR: no se pudo leer el archivo " << file << "\n";
+		return nullptr;
+	}
+
+	LuaRef refEntity = NULL;
+	try {
+		refEntity = readElementFromFile(state, name);
+	}
+	catch (...) {
+		std::cout << "ERROR: no se pudo cargar la entidad del archivo " << file << "\n";
+		return nullptr;
+	}
+	std::cout << "Cargando " << name << "\n";
+
+	enableExceptions(refEntity);
+	if (!createEntity(name, refEntity))
+		std::cout << "ERROR: no se ha podido cargar la entidad: " << name;
+
+	std::cout << "\n\n";
+
+	return entity;
 }
 
 void Scene::start() {

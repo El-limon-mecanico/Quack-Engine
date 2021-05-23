@@ -39,6 +39,8 @@ public:
 
 	void addEntity(QuackEntity* e); 
 
+	QuackEntity* createEntityByPrefab(const std::string& file, const std::string& name);
+
 	void start();
 
 	void preUpdate();

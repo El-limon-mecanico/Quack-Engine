@@ -81,7 +81,6 @@ void QuackEnginePro::setup()
 	BulletQuack::Init();
 
 	SoundQuack::Init(assets_route);
-	//SoundQuack::Instance()->createSound("singing.wav", "singing");	sound test
 
 	FactoryManager::Init();
 
@@ -93,16 +92,17 @@ void QuackEnginePro::setup()
 	SceneMng::Init();
 
 	InputManager::Init();
-
-	//setFullScreen(true);
 }
 
 void QuackEnginePro::start(std::string route, std::string name)
 {
 	SceneMng::Instance()->loadScene(route, name);
-	//setFullScreen(true);
+
 	if (!updateStarted) {
 		quackTime_ = new QuackTime();
+
+		//SceneMng::Instance()->getCurrentScene()->createEntityByPrefab("Entities/entidad1.lua", "Mono2"); // TODO quitar esta prueba
+
 		update();
 	}
 }
