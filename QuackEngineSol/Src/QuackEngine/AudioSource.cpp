@@ -21,7 +21,8 @@ bool AudioSource::init(luabridge::LuaRef parameterTable)
 	correct &= readVariable<std::string>(parameterTable, "Source", &source_);
 	correct &= readVariable<float>(parameterTable, "Volume", &volume_);
 	correct &= readVariable<int>(parameterTable, "Loops", &loops);
-
+	bool sinceInit;
+	correct &= readVariable<bool>(parameterTable, "Init", &sinceInit);
 	if (!correct) return false;
 
 	channel_ = mngr_->createSound(source_, source_, FMOD_DEFAULT);
@@ -32,8 +33,8 @@ bool AudioSource::init(luabridge::LuaRef parameterTable)
 	setVolume(volume_);
 	if (loops >= -1)	loop(loops);
 	else std::cout << "	WARNING: loop count must be >= -1\n";
-
-	play();
+	if(sinceInit)
+		play();
 
 	return correct;
 }
