@@ -20,6 +20,7 @@ private:
 
 	SoundQuack* mngr_ = nullptr;
 	int channel_ = -1;		// almacena el canal en el que se esta reproduciendo el sonido
+	bool play_ = false;
 
 	// Lua parameters
 	float volume_=0;

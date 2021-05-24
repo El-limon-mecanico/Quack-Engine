@@ -9,6 +9,7 @@
 #include "Button.h"
 #include "Image.h"
 #include "Text.h"
+#include "ProgressBar.h"
 #include "AudioSource.h"
 
 std::unique_ptr<FactoryManager> FactoryManager::instance_;
@@ -35,9 +36,10 @@ void FactoryManager::initEngineFactories()
 	FactoryManager::instance()->add<QuackCamera>();
 	FactoryManager::instance()->add<Light>();
 	FactoryManager::instance()->add<Button>();
-	FactoryManager::instance()->add<Text>();
-	FactoryManager::instance()->add<AudioSource>();
 	FactoryManager::instance()->add<Image>();
+	FactoryManager::instance()->add<Text>();
+	FactoryManager::instance()->add<ProgressBar>();
+	FactoryManager::instance()->add<AudioSource>();
 }
 
 Component* FactoryManager::create(const std::string& name)
