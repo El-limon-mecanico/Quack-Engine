@@ -109,24 +109,22 @@ void QuackEnginePro::update()
 {
 	exit = false;
 
+	bool fixedUpdate = false;
+
 	while (!exit) {
 
-		quackTime_->frameStarted();
-
-		fixedTime += time()->deltaTime();
+		fixedUpdate =  quackTime_->frameStarted();
 
 		SceneMng::Instance()->preUpdate();
 
-		BulletQuack::Instance()->stepPhysics(time()->deltaTime(), FIXED_TIME_UPDATE);
+		BulletQuack::Instance()->stepPhysics(time()->deltaTime(), time()->fixedDeltaTime());
 
 		SceneMng::Instance()->physicsUpdate();
 
 		pollEvents();
 
-		if (fixedTime > FIXED_TIME_UPDATE) {
+		if (fixedUpdate)
 			SceneMng::Instance()->fixedUpdate();
-			fixedTime = 0;
-		}
 
 		SceneMng::Instance()->update(); //actualizamos la escena que actualiza las entidades	
 
@@ -134,7 +132,7 @@ void QuackEnginePro::update()
 
 		SceneMng::Instance()->lateUpdate();
 
-		//CEGUIQuack::Instance()->render(time()->deltaTime());
+		//CEGUIQuack::Instance()->render(time_()->deltaTime());
 
 		if (!SceneMng::Instance()->lastUpdate())
 			exit = true;

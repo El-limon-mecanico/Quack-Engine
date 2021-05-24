@@ -73,9 +73,19 @@ CEGUI::Window* CEGUIQuack::createWidget(std::string type, std::string name, std:
 	return myImageWindow;
 }
 
+void CEGUIQuack::addWidget(CEGUI::Window* window)
+{
+	CEGUI::System::getSingleton().getDefaultGUIContext().getRootWindow()->addChild(window);
+}
+
 void CEGUIQuack::removeWidget(CEGUI::Window* window)
 {
 	myRoot_->removeChild(window);
+}
+
+void CEGUIQuack::destroyWidget(CEGUI::Window* window)
+{
+	removeWidget(window);
 	CEGUI::WindowManager::getSingleton().destroyWindow(window);
 }
 
