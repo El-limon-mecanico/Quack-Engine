@@ -96,11 +96,14 @@ bool SceneMng::lastUpdate()
 		if (popScene_) {
 			delete sceneStack_.top();
 			sceneStack_.pop();
+			getCurrentScene()->setSceneActive(true);
 			popScene_ = false;
 		}
 		else if (loadScene_ || pushScene_) {
 			if (loadScene_)
 				clearScenes();
+			else if (pushScene_)
+				getCurrentScene()->setSceneActive(false);
 			Scene* scene = new Scene(sceneToLoad_, sceneName_);
 			sceneStack_.push(scene);
 			scene->start();

@@ -24,7 +24,6 @@ public:
 
 	virtual void update() override;
 
-	virtual void onCollisionEnter(QuackEntity* other , Vector3D point) override;
 	virtual void onCollisionEnter(QuackEntity* other, Vector3D point, Vector3D normal) override;
 
 	virtual void onCollisionStay(QuackEntity* other , Vector3D point) override;

@@ -60,8 +60,12 @@ public:
 	void setFont(std::string filename);
 	
 	CEGUI::Window* createWidget(std::string type, std::string name, std::pair<float, float> pos = { 0,0 }, std::pair<float, float> size = {100,100});
+
+	void addWidget(CEGUI::Window* window);
 	
 	void removeWidget(CEGUI::Window* window);
+
+	void destroyWidget(CEGUI::Window* window);
 	
 	void setMouseVisibility(bool visible);
 

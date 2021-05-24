@@ -11,10 +11,14 @@
 
 #include <chrono>
 
+const int NFrames = 50;
+
 class QUACK_ENGINE_PRO_API QuackTime {
 private:
 	double deltaTime_;
-	double time;
+	double fixedDeltaTime_;
+	double time_;
+	double nextFixedTime_;
 	std::chrono::time_point<std::chrono::high_resolution_clock> lastFrameTime_;
 
 
@@ -23,12 +27,13 @@ public:
 	QuackTime();
 	~QuackTime();
 
-	void frameStarted();
+	bool frameStarted();
 
 	double deltaTime();
 
-	double Time();
+	double fixedDeltaTime();
 
+	double Time();
 };
 
 #endif

@@ -21,7 +21,6 @@ namespace CEGUI
 	class Window;
 }
 
-
 class QUACK_ENGINE_PRO_API Scene
 {
 private:
@@ -68,6 +67,9 @@ public:
 	/// <param name="name">Nombre de los objetos a buscar</param>
 	/// <returns>Lista de objetos con ese nombre en la escena</returns>
 	std::vector<QuackEntity*> getAllObjectsWithName(std::string name);
+
+
+	void setSceneActive(bool set);
 
 	static void callBackBoton();
 

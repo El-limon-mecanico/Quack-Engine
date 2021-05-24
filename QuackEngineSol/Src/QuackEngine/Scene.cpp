@@ -4,8 +4,7 @@
 #include "CallBacks.h"
 #include "SoundQuack.h"
 
-Scene::Scene(const std::string& file, const std::string& name)
-{
+Scene::Scene(const std::string& file, const std::string& name) {
 	std::cout << "Cargando escena " << name << "\n";
 
 	//los call backs de los botones se tienen que crear antes de que se empiecen a cargar las entidades
@@ -40,7 +39,7 @@ Scene::Scene(const std::string& file, const std::string& name)
 	LuaRef entidades = NULL;
 	try {
 		//leemos el vector que contiene las entidades
-		 entidades = refScene.rawget("entities");
+		entidades = refScene.rawget("entities");
 	}
 	catch (...) {
 		std::cout << "ERROR: no se pudo cargar la lista de entidades de la escena " << file << "\n";
@@ -99,11 +98,11 @@ QuackEntity* Scene::createEntity(const std::string& entityName, LuaRef entInfo)
 	std::cout << "\n	Fin de la lectura de componentes\n";
 	bool active = true;
 	bool correct = readVariable<bool>(entInfo, "Active", &active);
-	if(correct) entity->setActive(active);
-	
+	if (correct) entity->setActive(active);
+
 	std::string tag = "Default";
 	correct = readVariable<std::string>(entInfo, "Tag", &tag);
-	if(correct) 
+	if (correct)
 		entity->setTag(tag);
 
 	addEntity(entity);
@@ -267,6 +266,12 @@ std::vector<QuackEntity*> Scene::getAllObjectsWithName(std::string name)
 	}
 
 	return eS;
+}
+
+void Scene::setSceneActive(bool set)
+{
+	for (QuackEntity* qEnt : entities_)
+		qEnt->setActive(set);
 }
 
 void Scene::callBackBoton()
