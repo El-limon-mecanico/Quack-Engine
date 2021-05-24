@@ -129,7 +129,7 @@ void Scene::addEntity(QuackEntity* e)
 	}
 }
 
-void Scene::createEntityByPrefab(const std::string& file, const std::string& nameInFile, const std::string& nameInGame)
+QuackEntity* Scene::createEntityByPrefab(const std::string& file, const std::string& nameInFile, const std::string& nameInGame)
 {
 	std::cout << "\n\n";
 
@@ -141,11 +141,11 @@ void Scene::createEntityByPrefab(const std::string& file, const std::string& nam
 	catch (std::string& error) {
 		std::cout << "ERROR: no se pudo leer el archivo " << file << "\n";
 		std::cout << error << '\n';
-		return;
+		return nullptr;
 	}
 	if (state == nullptr) {
 		std::cout << "ERROR: no se pudo leer el archivo " << file << "\n";
-		return;
+		return nullptr;
 	}
 
 	LuaRef refEntity = NULL;
@@ -154,16 +154,19 @@ void Scene::createEntityByPrefab(const std::string& file, const std::string& nam
 	}
 	catch (...) {
 		std::cout << "ERROR: no se pudo cargar la entidad del archivo " << file << "\n";
-		return;
+		return nullptr;
 	}
 	std::cout << "Cargando " << nameInFile << "\n";
 
+	QuackEntity* entity;
 	enableExceptions(refEntity);
-	if (!createEntity(nameInGame, refEntity))
+
+	entity = createEntity(nameInGame, refEntity);
+	if (!entity)
 		std::cout << "ERROR: no se ha podido cargar la entidad: " << nameInFile;
 
 	std::cout << "\n\n";
-	return;
+	return entity;
 }
 
 void Scene::start() {
