@@ -53,6 +53,7 @@ public:
 
 	std::string& name() { return name_; }
 	std::string& tag() { return tag_; }
+	void setTag(std::string t) { tag_ = t; }
 	inline bool isActive() const { return enable_; }
 	inline void setActive(bool state) {
 		enable_ = state;
