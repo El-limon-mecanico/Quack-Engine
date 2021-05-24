@@ -21,9 +21,6 @@ class CEGUIQuack;
 class ResourceMng;
 class InputManager;
 
-const int NFrames = 50;
-const float FIXED_TIME_UPDATE = 1.0f / NFrames;
-
 class QUACK_ENGINE_PRO_API QuackEnginePro {
 private:
 
@@ -46,10 +43,6 @@ private:
 	bool updateStarted = false;
 
 	bool exit = true;
-
-	float fixedTime = 0;
-
-	static void pruebaBotonCallback();
 
 	void readAssetsRoute();
 

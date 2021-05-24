@@ -5,7 +5,7 @@
 
 UIElement::~UIElement()
 {
-	CEGUIQuack::Instance()->removeWidget(element_);
+	CEGUIQuack::Instance()->destroyWidget(element_);
 	element_ = nullptr;
 }
 
@@ -49,12 +49,14 @@ bool UIElement::init(std::pair<float, float> pos, std::pair<float, float> size, 
 
 void UIElement::onEnable()
 {
+	CEGUIQuack::Instance()->addWidget(element_);
 	element_->setVisible(true);
 	element_->setEnabled(enable);
 }
 
 void UIElement::onDisable()
 {
+	CEGUIQuack::Instance()->removeWidget(element_);
 	element_->setVisible(false);
 }
 

@@ -6,6 +6,7 @@
 #include "SceneMng.h"
 #include "QuackUI.h"
 #include "InputManager.h"
+#include "MeshRenderer.h"
 #include "CEGUIQuack.h"
 
 Prueba::Prueba(QuackEntity* e) : Component(e)
@@ -36,16 +37,18 @@ bool Prueba::init(luabridge::LuaRef parameterTable)
 }
 
 void PruebaCallBack() {
-	std::string carga = "Scenes/scene2.lua";
-	SceneMng::Instance()->loadScene(carga, "scene2");
+	std::string carga = "Scenes/menu.lua";
+	SceneMng::Instance()->pushNewScene(carga, "menu");
 }
 
 void Prueba::start()
 {
 	InputManager::Instance()->captureMouse();
-	InputManager::Instance()->setMouseVisibility(false);
+	//InputManager::Instance()->setMouseVisibility(false);
 	CallBacks::instance()->addMethod("PruebaCallBack", PruebaCallBack);
 	std::cout << "\n\nPruebaPruebaPruebaPrueba\n\n";
+	if (entity_->getComponent<Button>())
+		entity_->getComponent<Button>()->setCallBackFunction(PruebaCallBack);
 	//transform->lookAt({ 0,0,0 });
 }
 
@@ -76,11 +79,11 @@ void Prueba::update()
 	//if (InputManager::Instance()->getKeyUp(SDL_SCANCODE_L)) {
 	//	std::cout << "Espacio arriba\n";
 	//}
-	//scalealgo += QuackEnginePro::Instance()->time()->deltaTime();
+	//scalealgo += QuackEnginePro::Instance()->time_()->deltaTime();
 
 	//transform->setScale({ abs(sin(scalealgo)),abs(sin(scalealgo)),abs(sin(scalealgo)) });
-	/*transform->Translate(Vector3D(0, -1, 0) * QuackEnginePro::Instance()->time()->deltaTime());
-	transform->Rotate(Vector3D(45, 0, 90) * QuackEnginePro::Instance()->time()->deltaTime());*/
+	/*transform->Translate(Vector3D(0, -1, 0) * QuackEnginePro::Instance()->time_()->deltaTime());
+	transform->Rotate(Vector3D(45, 0, 90) * QuackEnginePro::Instance()->time_()->deltaTime());*/
 	//if (transform->globalPosition().y < -10) {
 	//	//transform->Rotate(Vector3D(0, 45, 0));
 	//	transform->Translate(Vector3D(0, 10, 0), true);
@@ -91,7 +94,8 @@ void Prueba::update()
 
 }
 
-void Prueba::onCollisionEnter(QuackEntity* other, Vector3D point)
+
+void Prueba::onCollisionEnter(QuackEntity* other, Vector3D point, Vector3D normal)
 {
 	//entity_->getComponent<Rigidbody>()->addForce(Vector3D(0, 10, 0), IMPULSE);
 
@@ -107,12 +111,7 @@ void Prueba::onCollisionEnter(QuackEntity* other, Vector3D point)
 		entity_->getComponent<Text>()->setText("Me golpie con algo");
 	if (entity_->getComponent<Image>())
 		entity_->getComponent<Image>()->changeImage("virgolini");*/
-	//QuackEnginePro::Instance()->setFullScreen(true);
-	std::cout << "Yo " << entity_->name() << " acabo de chocar con " << other->name() << "\n\n";
-}
-
-void Prueba::onCollisionEnter(QuackEntity* other, Vector3D point, Vector3D normal)
-{
+		//QuackEnginePro::Instance()->setFullScreen(true);
 	std::cout <<entity_->name() << " con " << other->name() << " normal "<< normal << " en el punto " << point <<"\n";
 }
 
