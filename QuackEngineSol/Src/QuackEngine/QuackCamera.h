@@ -39,7 +39,7 @@ private:
 	float width_ = 1;
 	float height_ = 1;
 	float near_ = 0;
-	float far_ = 0;
+	float far_ = 10000000;
 	float top_ = 0;
 	float left_ = 0;
 	float xProp_ = 16;
