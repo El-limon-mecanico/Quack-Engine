@@ -7,6 +7,7 @@
 
 Transform::Transform(Vector3D pos, Vector3D rot, Vector3D localScale_) : globalPosition_(pos), globalRotation_(rot), localScale_(localScale_)
 {
+	entity_->transform = this;
 	node_ = OgreQuack::Instance()->getSceneManager()->getRootSceneNode()->createChildSceneNode();
 	setParent(trRoot_.get());
 }
@@ -23,6 +24,7 @@ right(1, 0, 0),
 forward(0, 0, 1),
 up(0, 1, 0)
 {
+	entity_->transform = this;
 	node_ = n;
 	parent_ = this;
 }
