@@ -20,7 +20,7 @@ private:
 
 	SoundQuack* mngr_ = nullptr;
 	int channel_ = -1;		// almacena el canal en el que se esta reproduciendo el sonido
-	bool play_ = false;
+	bool playing_ = false;
 
 	// Lua parameters
 	float volume_=0;
@@ -33,6 +33,10 @@ public:
 	static std::string GetName() { return "AudioSource"; }
 
 	virtual bool init(luabridge::LuaRef parameterTable = { nullptr }) override;
+
+	virtual void onEnable();
+
+	virtual void onDisable();
 
 	void play();
 	void stop();
