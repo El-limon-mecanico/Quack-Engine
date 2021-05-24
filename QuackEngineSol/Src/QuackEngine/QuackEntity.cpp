@@ -47,7 +47,6 @@ Component* QuackEntity::addComponent(const std::string& componentName, LuaRef pa
 	std::cout << "\n	Cargando el componente: " << componentName << "\n";
 	if (componentName == "Transform") {
 		if (transform_->init(param)) {
-			transform_->transform = transform_;
 			return transform_;
 		}
 	}

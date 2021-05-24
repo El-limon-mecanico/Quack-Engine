@@ -21,8 +21,8 @@ bool AudioSource::init(luabridge::LuaRef parameterTable)
 	correct &= readVariable<std::string>(parameterTable, "Source", &source_);
 	correct &= readVariable<float>(parameterTable, "Volume", &volume_);
 	correct &= readVariable<int>(parameterTable, "Loops", &loops);
-	bool enabled=false;
-	correct &= readVariable<bool>(parameterTable, "Enabled", &enabled);
+	bool playOnStart=false;
+	correct &= readVariable<bool>(parameterTable, "Play", &playOnStart);
 	if (!correct) return false;
 
 	channel_ = mngr_->createSound(source_, source_, FMOD_DEFAULT);
@@ -33,30 +33,48 @@ bool AudioSource::init(luabridge::LuaRef parameterTable)
 	setVolume(volume_);
 	if (loops >= -1)	loop(loops);
 	else std::cout << "	WARNING: loop count must be >= -1\n";
-	if(enabled)
+	if (playOnStart)
 		play();
 
 	return correct;
 }
 
+void AudioSource::onEnable()
+{
+	if (playing_)
+		resume();
+}
+
+void AudioSource::onDisable()
+{
+	if (playing_) {
+		pause();
+		playing_ = true;
+	}
+}
+
 void AudioSource::play() {
+	playing_ = true;
 	mngr_->playChannel(channel_, source_, volume_);
 }
 
 void AudioSource::stop() {
+	playing_ = false;
 	mngr_->stopChannel(channel_);
 }
 
 void AudioSource::pause() {
+	playing_ = false;
 	mngr_->pauseChannel(channel_, true);
 }
 
 void AudioSource::resume() {
+	playing_ = true;
 	mngr_->pauseChannel(channel_, false);
 }
 
 bool AudioSource::isPlaying() {
-	return mngr_->isPlaying(channel_);
+	return playing_;
 }
 
 void AudioSource::loop(int times)

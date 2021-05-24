@@ -24,6 +24,7 @@
     <ClCompile Include="..\..\Src\QuackEngine\CallBacks.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\Image.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\Light.cpp" />
+    <ClCompile Include="..\..\Src\QuackEngine\ProgressBar.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\QuackCamera.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\Prueba2.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\InputManager.cpp" />
@@ -65,6 +66,7 @@
     <ClInclude Include="..\..\Src\QuackEngine\CallBacks.h" />
     <ClInclude Include="..\..\Src\QuackEngine\HasGetName.h" />
     <ClInclude Include="..\..\Src\QuackEngine\Image.h" />
+    <ClInclude Include="..\..\Src\QuackEngine\ProgressBar.h" />
     <ClInclude Include="..\..\Src\QuackEngine\Prueba2.h" />
     <ClInclude Include="..\..\Src\QuackEngine\checkML.h" />
     <ClInclude Include="..\..\Src\QuackEngine\InputManager.h" />
