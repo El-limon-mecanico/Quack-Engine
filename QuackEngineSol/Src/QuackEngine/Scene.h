@@ -39,7 +39,7 @@ public:
 
 	void addEntity(QuackEntity* e); 
 
-	void createEntityByPrefab(const std::string& file, const std::string& nameInFile, const std::string& nameInGame);
+	QuackEntity* createEntityByPrefab(const std::string& file, const std::string& nameInFile, const std::string& nameInGame);
 
 	void start();
 
