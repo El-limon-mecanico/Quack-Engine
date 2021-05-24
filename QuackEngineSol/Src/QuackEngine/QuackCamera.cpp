@@ -36,6 +36,8 @@ bool QuackCamera::init(luabridge::LuaRef parameterTable)
 	correct &= readVariable<float>(parameterTable, "Height", &height_);
 	correct &= readVariable<float>(parameterTable, "NearClipDistance", &near_);
 	correct &= readVariable<float>(parameterTable, "FarClipDistance", &far_);
+	correct &= readVariable<float>(parameterTable, "Top", &top_);
+	correct &= readVariable<float>(parameterTable, "Left", &left_);
 	correct &= readVariable<float>(parameterTable, "xProp", &xProp_);
 	correct &= readVariable<float>(parameterTable, "yProp", &yProp_);
 	correct &= readVariable<std::string>(parameterTable, "ProjectionType", &proj_);
