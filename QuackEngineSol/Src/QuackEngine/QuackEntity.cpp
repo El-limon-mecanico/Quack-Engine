@@ -44,11 +44,12 @@ QuackEntity* QuackEntity::RootEntity()
 
 Component* QuackEntity::addComponent(const std::string& componentName, LuaRef param)
 {
-	std::cout << "Cargando el componente: " << componentName << "\n";
+	std::cout << "\n	Cargando el componente: " << componentName << "\n";
 	if (componentName == "Transform") {
-		transform_->init(param);
-		transform_->transform = transform_;
-		return transform_;
+		if (transform_->init(param)) {
+			transform_->transform = transform_;
+			return transform_;
+		}
 	}
 	else if (hasComponent(componentName)) //para no repetir componentes
 		return cmpMap_[componentName];
@@ -63,18 +64,26 @@ Component* QuackEntity::addComponent(const std::string& componentName, LuaRef pa
 		}
 		c->setEntity(this);
 		c->transform = transform();
-		if (param.isNil()) std::cout << "ERROR: no se ha podido cargar los valores del componente " << componentName << "\n";
+
+		if (param.isNil())
+		{
+			std::cout << "ERROR: no se ha podido cargar los valores del componente " << componentName << "\n";
+			return nullptr;
+		}
 		else {
 			c->init(param);
 			if(!readVariable<bool>(param, "Enabled", &(c->enable))) std::cout << "ERROR: no se ha podido activar/desactivar la entidad\n";
+			else {
+				components_.push_back(c);
+
+				cmpMap_.insert({ componentName , c });
+				cmpMap_[componentName] = c; //sin esta linea, el map guarda null por algun motivo
+
+				return c;
+			}
 		}
-		components_.push_back(c);
-
-		cmpMap_.insert({ componentName , c });
-		cmpMap_[componentName] = c; //sin esta linea, el map guarda null por algun motivo
-
-		return c;
 	}
+	return nullptr;
 }
 
 Component* QuackEntity::getComponent(const std::string& componentName)

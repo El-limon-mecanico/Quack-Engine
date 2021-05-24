@@ -66,7 +66,7 @@ QuackEntity* Scene::createEntity(const std::string& entityName, LuaRef entInfo)
 {
 	QuackEntity* entity = new QuackEntity(entityName);
 
-	std::cout << "Creando entidad " << entityName << "\n";
+	std::cout << "-------------------------------- Creando entidad " << entityName << " --------------------------------\n";
 
 	if (entInfo == NULL || entInfo.isNil() || entInfo.isRefNil()) {
 		std::cout << "ERROR: No se encontro la informacion de la entidad\n";
@@ -96,7 +96,7 @@ QuackEntity* Scene::createEntity(const std::string& entityName, LuaRef entInfo)
 		}
 	}
 
-	std::cout << "\n	Fin de la lectura de componentes.\n";
+	std::cout << "\n	Fin de la lectura de componentes\n";
 	bool active = true;
 	bool correct = readVariable<bool>(entInfo, "Active", &active);
 	if(correct) entity->setActive(active);
@@ -108,6 +108,7 @@ QuackEntity* Scene::createEntity(const std::string& entityName, LuaRef entInfo)
 
 	addEntity(entity);
 
+	std::cout << "\n-------------------------------- Fin de la lectura de la entidad " << entityName << " --------------------------------\n";
 	return entity;
 }
 
