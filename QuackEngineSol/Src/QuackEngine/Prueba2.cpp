@@ -36,9 +36,9 @@ bool Prueba2::init(luabridge::LuaRef parameterTable)
 }
 
 void pruebaPop() {
-	SceneMng::Instance()->popCurrentScene();
+	//SceneMng::Instance()->popCurrentScene();
 	//SceneMng::Instance()->pushNewScene("Scenes/scene1.lua", "scene1");
-	//SceneMng::Instance()->loadScene("Scenes/scene1.lua", "scene1");
+	SceneMng::Instance()->loadScene("Scenes/scene1.lua", "scene1");
 }
 
 void Prueba2::start()

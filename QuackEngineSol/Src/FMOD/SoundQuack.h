@@ -20,12 +20,7 @@ private:
 
 	static std::unique_ptr<SoundQuack> instance_;
 
-	int currentChannel = 0;
-
 	std::map<FMOD::Sound*, FMOD::Channel*> channels_;
-	std::list <FMOD::Sound*> sounds_;
-	//std::map<std::string, FMOD::Sound*> sounds_;
-	std::map<std::string, FMOD::DSP*> dsp_;
 	FMOD::System* systemFMOD_ = NULL;
 
 	std::string assetsRouteFmod = "";
@@ -58,9 +53,4 @@ public:
 	int getCurrentLoop(FMOD::Sound* sound);
 	void setMode(FMOD::Sound* sound, int flags);
 	FMOD::FMOD_MODE getMode(FMOD::Sound* sound);
-
-	int createDSP(FMOD_DSP_TYPE type, std::string id);
-	void addDSP(FMOD::Sound* sound, std::string isDSP);
-
-	void soundLoop(std::string& id);
 };
