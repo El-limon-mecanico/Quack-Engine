@@ -78,6 +78,12 @@ FMOD::FMOD_MODE SoundQuack::getMode(FMOD::Sound* sound) {
 	return mode;
 }
 
+void SoundQuack::update(FMOD_VECTOR listenerPos, FMOD_VECTOR listenerVel, FMOD_VECTOR listenerFW, FMOD_VECTOR listenerUP)
+{
+	systemFMOD_->set3DListenerAttributes(0, &listenerPos, &listenerVel, &listenerFW, &listenerUP);     // update 'ears'
+	systemFMOD_->update();   // needed to update 3d engine, once per frame.
+}
+
 FMOD::Sound* SoundQuack::createSound(std::string sound, int flags)
 {
 	FMOD::Sound* sonido;

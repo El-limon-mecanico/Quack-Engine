@@ -6,6 +6,9 @@
 #include <list>
 #include <fmod_dsp_effects.h>		// INEVITABLE: gcc no admite forward declaration de typedef enum (FMOD_DSP_TYPE)
 
+
+
+typedef struct FMOD_VECTOR;
 namespace FMOD {					// evitar incluir .h de FMOD
 	class Sound;
 	class System;
@@ -53,4 +56,5 @@ public:
 	int getCurrentLoop(FMOD::Sound* sound);
 	void setMode(FMOD::Sound* sound, int flags);
 	FMOD::FMOD_MODE getMode(FMOD::Sound* sound);
+	void update(FMOD_VECTOR listenerPos, FMOD_VECTOR listenerVel, FMOD_VECTOR listenerFW, FMOD_VECTOR listenerUP);
 };
