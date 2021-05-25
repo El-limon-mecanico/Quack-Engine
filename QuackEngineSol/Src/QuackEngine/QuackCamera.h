@@ -35,7 +35,7 @@ private:
 	Vector3D bg_ = Vector3D();
 	std::string name_ = "DefaultCamera";
 	std::string proj_ = "Perspective";
-	int zOrder_ = 0;
+	int zOrder_ = -1;
 	float width_ = 1;
 	float height_ = 1;
 	float near_ = 0;

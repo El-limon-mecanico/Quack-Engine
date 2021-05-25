@@ -19,10 +19,7 @@ private:
 	CEGUI::ProgressBar* bar_;
 public:
 	ProgressBar() {}
-	ProgressBar(std::string name, std::string image, bool background, bool border, bool active,
-		std::pair<float, float> pos, std::pair<float, float> size, std::string style) {
-		UIElement::init(pos, size, active, name, style);
-	};
+	ProgressBar(std::string name, bool active, std::pair<float, float> pos, std::pair<float, float> size, std::string style);
 
 	static std::string GetName() { return "ProgressBar"; }
 
