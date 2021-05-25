@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Src\QuackEngine\AudioListener.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\AudioSource.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\Button.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\CallBacks.cpp" />
@@ -61,6 +62,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Src\QuackEngine\AudioListener.h" />
     <ClInclude Include="..\..\Src\QuackEngine\AudioSource.h" />
     <ClInclude Include="..\..\Src\QuackEngine\Button.h" />
     <ClInclude Include="..\..\Src\QuackEngine\CallBacks.h" />

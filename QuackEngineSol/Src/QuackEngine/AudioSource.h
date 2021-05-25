@@ -25,6 +25,7 @@ private:
 	SoundQuack* mngr_ = nullptr;
 	FMOD::Sound* sound_;
 	bool playing_ = false;
+	bool D3_ = false;
 
 	// Lua parameters
 	float volume_=0;
@@ -37,6 +38,8 @@ public:
 	static std::string GetName() { return "AudioSource"; }
 
 	virtual bool init(luabridge::LuaRef parameterTable = { nullptr }) override;
+
+	virtual void preUpdate();
 
 	virtual void onEnable();
 
