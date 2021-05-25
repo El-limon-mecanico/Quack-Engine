@@ -22,6 +22,7 @@ private:
 
 	int currentChannel = 0;
 
+	std::map<FMOD::Sound*, FMOD::Channel*> channels_;
 	std::list <FMOD::Sound*> sounds_;
 	//std::map<std::string, FMOD::Sound*> sounds_;
 	std::map<std::string, FMOD::DSP*> dsp_;

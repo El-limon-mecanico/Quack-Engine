@@ -54,8 +54,10 @@ void AudioSource::onDisable()
 }
 
 void AudioSource::play() {
-	playing_ = true;
-	mngr_->playSound(sound_, volume_);
+	if (!playing_) {
+		playing_ = true;
+		mngr_->playSound(sound_, volume_);
+	}
 }
 
 void AudioSource::stop() {

@@ -38,7 +38,7 @@ bool Prueba::init(luabridge::LuaRef parameterTable)
 
 void PruebaCallBack() {
 	std::string carga = "Scenes/menu.lua";
-	SceneMng::Instance()->loadScene(carga, "menu");
+	SceneMng::Instance()->pushNewScene(carga, "menu");
 }
 
 void Prueba::start()

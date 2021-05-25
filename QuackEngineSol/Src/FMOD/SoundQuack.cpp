@@ -66,6 +66,7 @@ void SoundQuack::playSound(FMOD::Sound* sound, float volume)
 		FMOD::Channel* channelAux = getChannel(sound);
 		systemFMOD_->playSound(sound, NULL, false, &channelAux);
 		channelAux->setVolume(volume);
+		channels_[sound] = channelAux;
 	}
 }
 
@@ -99,6 +100,7 @@ void SoundQuack::create3DSound(std::string sound) { createSound(sound, FMOD_3D);
 void SoundQuack::removeSound(FMOD::Sound* sound)
 {
 	stopSound(sound);
+	channels_.erase(sound);
 	auto it = std::find(sounds_.begin(), sounds_.end(), sound);
 	if (it != sounds_.end())
 		sounds_.erase(it);
@@ -175,15 +177,5 @@ float SoundQuack::getVolume(FMOD::Sound* sound)
 
 FMOD::Channel* SoundQuack::getChannel(FMOD::Sound* sound)
 {
-	int i = 0;
-	for (auto it = sounds_.begin(); it != sounds_.end(); it++) {
-		if ((*it) == sound)
-			break;
-		i++;
-	}
-	FMOD::Channel* channelAux;
-	FMOD::ChannelGroup* channel_group;
-	systemFMOD_->getMasterChannelGroup(&channel_group);
-	channel_group->getChannel(i, &channelAux);
-	return channelAux;
+	return channels_[sound];
 }
