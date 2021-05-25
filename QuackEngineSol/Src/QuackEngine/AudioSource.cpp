@@ -21,7 +21,7 @@ bool AudioSource::init(luabridge::LuaRef parameterTable)
 	correct &= readVariable<std::string>(parameterTable, "Source", &source_);
 	correct &= readVariable<float>(parameterTable, "Volume", &volume_);
 	correct &= readVariable<int>(parameterTable, "Loops", &loops);
-	bool playOnStart = false;
+	bool playOnStart=false;
 	correct &= readVariable<bool>(parameterTable, "Play", &playOnStart);
 	if (!correct) return false;
 
@@ -58,6 +58,7 @@ void AudioSource::play() {
 		playing_ = true;
 		mngr_->playSound(sound_, volume_);
 	}
+
 }
 
 void AudioSource::stop() {

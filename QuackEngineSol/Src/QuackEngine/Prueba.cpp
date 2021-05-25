@@ -38,7 +38,7 @@ bool Prueba::init(luabridge::LuaRef parameterTable)
 
 void PruebaCallBack() {
 	std::string carga = "Scenes/menu.lua";
-	SceneMng::Instance()->loadScene(carga, "menu");
+	SceneMng::Instance()->pushNewScene(carga, "menu");
 }
 
 void Prueba::start()
@@ -64,13 +64,13 @@ void Prueba::fixedUpdate()
 
 void Prueba::update()
 {
-	/*if (InputManager::Instance()->getKey(SDL_SCANCODE_SPACE))
+	if (InputManager::Instance()->getKey(SDL_SCANCODE_SPACE))
 		entity_->getComponent<ProgressBar>()->addProgress(0.01);
 	else
 		entity_->getComponent<ProgressBar>()->addProgress(-0.01);
 
 	if (entity_->getComponent<ProgressBar>()->getProgress() == 1)
-		entity_->getComponent<ProgressBar>()->setEnable(false);*/
+		entity_->getComponent<ProgressBar>()->setEnable(false);
 
 	//if (entity_->getComponent<Rigidbody>())
 	//	entity_->getComponent<Rigidbody>()->setAngularVelocity({ 0,1,0 });
