@@ -5,11 +5,11 @@
 #include <memory.h>
 #include <list>
 #include <fmod_dsp_effects.h>		// INEVITABLE: gcc no admite forward declaration de typedef enum (FMOD_DSP_TYPE)
+#include <fmod_common.h>
 #include <vector>
 
 
 
-typedef struct FMOD_VECTOR;
 namespace FMOD {					// evitar incluir .h de FMOD
 	class Sound;
 	class System;
@@ -17,13 +17,14 @@ namespace FMOD {					// evitar incluir .h de FMOD
 	class Channel;
 	typedef unsigned int FMOD_MODE;
 }
+struct FMOD_VECTOR;
 
 class SoundQuack
 {
 private:
 
 	static std::unique_ptr<SoundQuack> instance_;
-	
+
 	std::vector<bool> listeners_;
 
 	std::map<FMOD::Sound*, FMOD::Channel*> channels_;
@@ -33,7 +34,7 @@ private:
 	std::string assetsRouteFmod = "";
 
 	FMOD::Channel* getChannel(FMOD::Sound* sound);
-	
+
 	SoundQuack(std::string route);
 
 public:
@@ -42,12 +43,12 @@ public:
 	static SoundQuack* Instance();
 
 	~SoundQuack();
-	
+
 	static SoundQuack* Init(std::string route);
-	
+
 	FMOD::Sound* createSound(std::string sound, int flags = 0);
 
-	void removeSound(FMOD::Sound* sound );
+	void removeSound(FMOD::Sound* sound);
 
 	void playSound(FMOD::Sound* sound, float volume);
 
@@ -69,7 +70,7 @@ public:
 
 	FMOD::FMOD_MODE getMode(FMOD::Sound* sound);
 
-	void set3DTransform(FMOD::Sound* sound, FMOD_VECTOR soundPos, FMOD_VECTOR soundVel = {0,0,0});
+	void set3DTransform(FMOD::Sound* sound, FMOD_VECTOR soundPos, FMOD_VECTOR soundVel = { 0,0,0 });
 
 	void update();
 

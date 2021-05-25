@@ -1,7 +1,7 @@
 #include "AudioSource.h"
 #include "SoundQuack.h"
 #include "Transform.h"
-#include <fmod_common.h>
+
 
 AudioSource::AudioSource() :
 	volume_(0.5f)
@@ -24,7 +24,7 @@ bool AudioSource::init(luabridge::LuaRef parameterTable)
 	correct &= readVariable<float>(parameterTable, "Volume", &volume_);
 	correct &= readVariable<int>(parameterTable, "Loops", &loops);
 	correct &= readVariable<bool>(parameterTable, "Play", &playOnStart);
-	correct &= readVariable<bool>(parameterTable, "3D", &D3_);
+	correct &= readVariable<bool>(parameterTable, "D3", &D3_);
 	if (!correct) return false;
 
 	sound_ = mngr_->createSound(source_, D3_ ? FMOD_3D : FMOD_DEFAULT);
@@ -43,7 +43,7 @@ bool AudioSource::init(luabridge::LuaRef parameterTable)
 
 void AudioSource::preUpdate()
 {
-	if(D3_){
+	if (D3_) {
 		Vector3D pos = transform->position();
 		mngr_->set3DTransform(sound_, { pos.x,pos.y,pos.z });
 	}

@@ -26,7 +26,7 @@ SoundQuack::SoundQuack(std::string route) :
 		exit(-1);
 	}
 
-	result = systemFMOD_->init(512, FMOD_INIT_NORMAL, 0);    // Initialize FMOD.
+	result = systemFMOD_->init(512, FMOD_INIT_NORMAL | FMOD_INIT_3D_RIGHTHANDED, 0);    // Initialize FMOD.
 	if (result != FMOD_OK)
 	{
 		std::cout << "Error fmod_quack 2\n";
