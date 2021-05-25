@@ -96,6 +96,8 @@ bool SceneMng::lastUpdate()
 		if (popScene_) {
 			delete sceneStack_.top();
 			sceneStack_.pop();
+			if (sceneStack_.empty())
+				return false;
 			getCurrentScene()->setSceneActive(true);
 			popScene_ = false;
 		}

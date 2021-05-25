@@ -7,7 +7,7 @@
 #include "QuackUI.h"
 #include "InputManager.h"
 #include "MeshRenderer.h"
-#include "CEGUIQuack.h"
+#include "AudioSource.h"
 
 Prueba::Prueba(QuackEntity* e) : Component(e)
 {
@@ -51,6 +51,8 @@ void Prueba::start()
 		entity_->getComponent<Button>()->setCallBackFunction(PruebaCallBack);
 	if (entity_->getComponent<ProgressBar>())
 		entity_->getComponent<ProgressBar>()->setProgress(0);
+	if (entity_->getComponent<AudioSource>())
+		entity_->getComponent<AudioSource>()->play();
 	//transform->lookAt({ 0,0,0 });
 }
 

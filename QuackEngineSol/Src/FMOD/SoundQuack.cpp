@@ -14,7 +14,7 @@ SoundQuack* SoundQuack::Instance()
 SoundQuack::SoundQuack(std::string route)
 {
 	assetsRouteFmod = route;
-	
+
 	FMOD_RESULT result;
 	result = FMOD::System_Create(&systemFMOD_);      // Create the main system object.
 	if (result != FMOD_OK)
@@ -35,18 +35,7 @@ SoundQuack::SoundQuack(std::string route)
 
 SoundQuack::~SoundQuack()
 {
-	for (auto soundPair : sounds_) {
-		//soundPair.second->release();
-		soundPair.second = nullptr;
-	}
-	sounds_.clear();
-	for (auto dspPair : dsp_) {
-		//dspPair.second->release();		
-		dspPair.second = nullptr;
-	}
-	dsp_.clear();
-
-	//systemFMOD_->release();				
+	channels_.clear();				
 	systemFMOD_ = nullptr;
 }
 
@@ -62,38 +51,34 @@ SoundQuack* SoundQuack::Init(std::string route)
 	std::cout << "Se ha inicializado FMOD\n";
 }
 
-void SoundQuack::playChannel(int channel, std::string id, float volume)
+void SoundQuack::playSound(FMOD::Sound* sound, float volume)
 {
-	auto it = sounds_.find(id);
-	if (it == sounds_.end())
+	auto it = channels_.find(sound);
+	if (it == channels_.end())
 	{
-		std::cout << "No se ha encontrado el sonido: " + id << "\n";
+		std::cout << "No se ha encontrado el sonido" << "\n";
 	}
 	else
 	{
 		FMOD::Channel* channelAux;
-		systemFMOD_->getChannel(channel, &channelAux);
-		systemFMOD_->playSound(sounds_[id], NULL, false, &channelAux);
+		systemFMOD_->playSound(sound, NULL, false, &channelAux);
 		channelAux->setVolume(volume);
+		channels_[sound] = channelAux;
 	}
 }
 
-void SoundQuack::setMode(int channel, int flags, std::string& id) {
-	getChannel(channel)->setMode(flags);
-	auto soundit = sounds_.find(id);
-	if (soundit != sounds_.end()) {
-		FMOD::Sound* sound = (*soundit).second;
-		sound->setMode(flags);
-	}
+void SoundQuack::setMode(FMOD::Sound* sound, int flags) {
+	getChannel(sound)->setMode(flags);
+	sound->setMode(flags);
 }
 
-FMOD::FMOD_MODE SoundQuack::getMode(int channel) {
-	FMOD::FMOD_MODE mode=NULL;
-	getChannel(channel)->getMode(&mode);
+FMOD::FMOD_MODE SoundQuack::getMode(FMOD::Sound* sound) {
+	FMOD::FMOD_MODE mode = NULL;
+	getChannel(sound)->getMode(&mode);
 	return mode;
 }
 
-int SoundQuack::createSound(std::string sound, std::string id, int flags)
+FMOD::Sound* SoundQuack::createSound(std::string sound, int flags)
 {
 	FMOD::Sound* sonido;
 	std::string path = std::string(assetsRouteFmod + "/Sound/") + sound;
@@ -101,93 +86,65 @@ int SoundQuack::createSound(std::string sound, std::string id, int flags)
 	if (resultCreateSound != FMOD_OK)
 	{
 		printf("ERROR: FMOD error! (%d) %s\n", resultCreateSound, FMOD_ErrorString(resultCreateSound));
-		return -1;
+		return nullptr;
 	}
-	else sounds_.insert(std::pair<std::string, FMOD::Sound*>(id, sonido));
-	
-	return currentChannel++;
+	else channels_[sonido] = nullptr;
+	return sonido;
 }
 
-int SoundQuack::create3DSound(std::string sound, std::string id) {		return createSound(sound, id, FMOD_3D);		}
+void SoundQuack::create3DSound(std::string sound) { createSound(sound, FMOD_3D); }
 
-int SoundQuack::createDSP(FMOD_DSP_TYPE type, std::string id)
+void SoundQuack::removeSound(FMOD::Sound* sound)
 {
-	FMOD::DSP* dsp;
-	FMOD_RESULT result = systemFMOD_->createDSPByType(type, &dsp);
-	if (result != FMOD_OK)
-	{
-		printf("ERROR: FMOD error! (%d) %s\n", result, FMOD_ErrorString(result));
-		return -1;
-	}
-	else dsp_.insert(std::pair<std::string, FMOD::DSP*>(id, dsp));
-
-	return currentChannel++;
+	stopSound(sound);
+	channels_.erase(sound);
 }
 
-void SoundQuack::addDSP(int channel, std::string idDSP)
+void SoundQuack::pauseSound(FMOD::Sound* sound, bool pause)
 {
-	auto it = dsp_.find(idDSP);
-	if (it == dsp_.end()) {
-		std::cout << "No se ha encontrado el sonido: " + idDSP << "\n";
-	}
-	else {
-		getChannel(channel)->addDSP(0, dsp_[idDSP]);
-	}
+	getChannel(sound)->setPaused(pause);
 }
 
-void SoundQuack::pauseChannel(int channel, bool pause)
-{
-	getChannel(channel)->setPaused(pause);
-}
-
-bool SoundQuack::isPlaying(int channel)
+bool SoundQuack::isPlaying(FMOD::Sound* sound)
 {
 	bool b;
-	if (getChannel(channel)->isPlaying(&b) == FMOD_ERR_INVALID_HANDLE)
+	if (getChannel(sound)->isPlaying(&b) == FMOD_ERR_INVALID_HANDLE)
 		return false;
 	return b;
 }
 
-void SoundQuack::stopChannel(int channel)
+void SoundQuack::stopSound(FMOD::Sound* sound)
 {
-	getChannel(channel)->stop();
+	getChannel(sound)->stop();
 }
 
-void SoundQuack::loop(int channel, int times, std::string& id)
+void SoundQuack::loop(FMOD::Sound* sound, int times)
 {
-	getChannel(channel)->setLoopCount(times);
-	auto soundit = sounds_.find(id);
-	if (soundit != sounds_.end()) {
-		FMOD::Sound* sound = (*soundit).second;
-		sound->setLoopCount(times);
-	}
+	getChannel(sound)->setLoopCount(times);
+	sound->setLoopCount(times);
 }
 
-int SoundQuack::getCurrentLoop(int channel)
+int SoundQuack::getCurrentLoop(FMOD::Sound* sound)
 {
 	int current;
-	getChannel(channel)->getLoopCount(&current);
+	getChannel(sound)->getLoopCount(&current);
 	return current;
 }
 
-void SoundQuack::setVolume(int channel, float volume)
+void SoundQuack::setVolume(FMOD::Sound* sound, float volume)
 {
-	getChannel(channel)->setVolume(volume);
+	getChannel(sound)->setVolume(volume);
 }
 
-float SoundQuack::getVolume(int channel)
+float SoundQuack::getVolume(FMOD::Sound* sound)
 {
 	float volume;
-	getChannel(channel)->getVolume(&volume);
+	getChannel(sound)->getVolume(&volume);
 	return volume;
 }
 
 
-FMOD::Channel* SoundQuack::getChannel(int index)
+FMOD::Channel* SoundQuack::getChannel(FMOD::Sound* sound)
 {
-	FMOD::Channel* channelAux;
-	FMOD::ChannelGroup* channel_group;
-	systemFMOD_->getMasterChannelGroup(&channel_group);
-	channel_group->getChannel(index, &channelAux);
-	return channelAux;
+	return channels_[sound];
 }

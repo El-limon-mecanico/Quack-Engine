@@ -10,7 +10,7 @@ AudioSource::AudioSource() :
 
 AudioSource::~AudioSource()
 {
-	stop();
+	mngr_->removeSound(sound_);
 	mngr_ = nullptr;		// eliminar la referencia al Singleton
 }
 
@@ -25,8 +25,8 @@ bool AudioSource::init(luabridge::LuaRef parameterTable)
 	correct &= readVariable<bool>(parameterTable, "Play", &playOnStart);
 	if (!correct) return false;
 
-	channel_ = mngr_->createSound(source_, source_, FMOD_DEFAULT);
-	if (channel_ == -1) {
+	sound_ = mngr_->createSound(source_, FMOD_DEFAULT);
+	if (!sound_) {
 		std::cout << "ERROR: Couldn't create sound\n";
 		return false;
 	}
@@ -54,23 +54,26 @@ void AudioSource::onDisable()
 }
 
 void AudioSource::play() {
-	playing_ = true;
-	mngr_->playChannel(channel_, source_, volume_);
+	if (!playing_) {
+		playing_ = true;
+		mngr_->playSound(sound_, volume_);
+	}
+
 }
 
 void AudioSource::stop() {
 	playing_ = false;
-	mngr_->stopChannel(channel_);
+	mngr_->stopSound(sound_);
 }
 
 void AudioSource::pause() {
 	playing_ = false;
-	mngr_->pauseChannel(channel_, true);
+	mngr_->pauseSound(sound_, true);
 }
 
 void AudioSource::resume() {
 	playing_ = true;
-	mngr_->pauseChannel(channel_, false);
+	mngr_->pauseSound(sound_, false);
 }
 
 bool AudioSource::isPlaying() {
@@ -79,18 +82,18 @@ bool AudioSource::isPlaying() {
 
 void AudioSource::loop(int times)
 {
-	mngr_->setMode(channel_, mngr_->getMode(channel_) | FMOD_LOOP_NORMAL, source_);
-	mngr_->loop(channel_, times, source_);
+	mngr_->setMode(sound_, mngr_->getMode(sound_) | FMOD_LOOP_NORMAL);
+	mngr_->loop(sound_, times);
 }
 
 int AudioSource::getCurrentLoop() {
-	return mngr_->getCurrentLoop(channel_);
+	return mngr_->getCurrentLoop(sound_);
 }
 
 void AudioSource::setVolume(float value) {
-	mngr_->setVolume(channel_, value);
+	mngr_->setVolume(sound_, value);
 }
 
 float AudioSource::getVolume() {
-	return mngr_->getVolume(channel_);
+	return mngr_->getVolume(sound_);
 }

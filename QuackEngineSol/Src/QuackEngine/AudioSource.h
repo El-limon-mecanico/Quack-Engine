@@ -13,13 +13,17 @@
 
 class SoundQuack;
 
+namespace FMOD {
+	class Sound;
+}
+
 class QUACK_ENGINE_PRO_API AudioSource :
 	public Component
 {
 private:
 
 	SoundQuack* mngr_ = nullptr;
-	int channel_ = -1;		// almacena el canal en el que se esta reproduciendo el sonido
+	FMOD::Sound* sound_;
 	bool playing_ = false;
 
 	// Lua parameters
