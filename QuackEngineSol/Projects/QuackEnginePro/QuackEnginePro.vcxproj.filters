@@ -103,7 +103,7 @@
       <Filter>Archivos de origen\Ecs\Components</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\QuackEngine\ProgressBar.cpp">
-      <Filter>Archivos de origen</Filter>
+      <Filter>Archivos de origen\Ecs\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

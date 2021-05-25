@@ -3,6 +3,7 @@
 #include <iostream>
 #include <map>
 #include <memory.h>
+#include <list>
 #include <fmod_dsp_effects.h>		// INEVITABLE: gcc no admite forward declaration de typedef enum (FMOD_DSP_TYPE)
 
 namespace FMOD {					// evitar incluir .h de FMOD
@@ -21,13 +22,14 @@ private:
 
 	int currentChannel = 0;
 
-	std::map<std::string, FMOD::Sound*> sounds_;
+	std::list <FMOD::Sound*> sounds_;
+	//std::map<std::string, FMOD::Sound*> sounds_;
 	std::map<std::string, FMOD::DSP*> dsp_;
 	FMOD::System* systemFMOD_ = NULL;
 
 	std::string assetsRouteFmod = "";
 
-	FMOD::Channel* getChannel(int channel);
+	FMOD::Channel* getChannel(FMOD::Sound* sound);
 	
 	SoundQuack(std::string route);
 
@@ -40,22 +42,24 @@ public:
 	
 	static SoundQuack* Init(std::string route);
 	
-	int createSound(std::string sound, std::string id, int flags = 0);
-	int create3DSound(std::string sound, std::string id);
+	FMOD::Sound* createSound(std::string sound, int flags = 0);
+	void create3DSound(std::string sound);
 
-	void playChannel(int channel, std::string id, float volume);
-	void pauseChannel(int channel, bool pause);
-	bool isPlaying(int channel);
-	void setVolume(int channel, float value);
-	float getVolume(int channel);
-	void stopChannel(int channel);
-	void loop(int channel, int times, std::string& id);
-	int getCurrentLoop(int channel);
-	void setMode(int channel, int flags, std::string& id);
-	FMOD::FMOD_MODE getMode(int channel);
+	void removeSound(FMOD::Sound* sound );
+
+	void playSound(FMOD::Sound* sound, float volume);
+	void pauseSound(FMOD::Sound* sound, bool pause);
+	bool isPlaying(FMOD::Sound* sound);
+	void setVolume(FMOD::Sound* sound, float value);
+	float getVolume(FMOD::Sound* sound);
+	void stopSound(FMOD::Sound* sound);
+	void loop(FMOD::Sound* sound, int times);
+	int getCurrentLoop(FMOD::Sound* sound);
+	void setMode(FMOD::Sound* sound, int flags);
+	FMOD::FMOD_MODE getMode(FMOD::Sound* sound);
 
 	int createDSP(FMOD_DSP_TYPE type, std::string id);
-	void addDSP(int channel, std::string isDSP);
+	void addDSP(FMOD::Sound* sound, std::string isDSP);
 
 	void soundLoop(std::string& id);
 };

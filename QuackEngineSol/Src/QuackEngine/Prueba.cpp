@@ -7,7 +7,7 @@
 #include "QuackUI.h"
 #include "InputManager.h"
 #include "MeshRenderer.h"
-#include "CEGUIQuack.h"
+#include "AudioSource.h"
 
 Prueba::Prueba(QuackEntity* e) : Component(e)
 {
@@ -38,7 +38,7 @@ bool Prueba::init(luabridge::LuaRef parameterTable)
 
 void PruebaCallBack() {
 	std::string carga = "Scenes/menu.lua";
-	SceneMng::Instance()->pushNewScene(carga, "menu");
+	SceneMng::Instance()->loadScene(carga, "menu");
 }
 
 void Prueba::start()
@@ -51,6 +51,8 @@ void Prueba::start()
 		entity_->getComponent<Button>()->setCallBackFunction(PruebaCallBack);
 	if (entity_->getComponent<ProgressBar>())
 		entity_->getComponent<ProgressBar>()->setProgress(0);
+	if (entity_->getComponent<AudioSource>())
+		entity_->getComponent<AudioSource>()->play();
 	//transform->lookAt({ 0,0,0 });
 }
 
@@ -62,13 +64,13 @@ void Prueba::fixedUpdate()
 
 void Prueba::update()
 {
-	if (InputManager::Instance()->getKey(SDL_SCANCODE_SPACE))
+	/*if (InputManager::Instance()->getKey(SDL_SCANCODE_SPACE))
 		entity_->getComponent<ProgressBar>()->addProgress(0.01);
 	else
 		entity_->getComponent<ProgressBar>()->addProgress(-0.01);
 
 	if (entity_->getComponent<ProgressBar>()->getProgress() == 1)
-		entity_->getComponent<ProgressBar>()->setEnable(false);
+		entity_->getComponent<ProgressBar>()->setEnable(false);*/
 
 	//if (entity_->getComponent<Rigidbody>())
 	//	entity_->getComponent<Rigidbody>()->setAngularVelocity({ 0,1,0 });

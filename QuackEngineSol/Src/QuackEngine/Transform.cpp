@@ -96,6 +96,7 @@ void Transform::physicsUpdateTr()
 {
 	recalculatePosition();
 	recalculateAxes();
+	updateChildren();
 }
 
 

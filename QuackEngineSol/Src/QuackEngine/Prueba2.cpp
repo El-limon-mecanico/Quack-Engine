@@ -6,6 +6,7 @@
 #include "QuackUI.h"
 #include "SceneMng.h"
 #include "InputManager.h"
+#include "AudioSource.h"
 
 Prueba2::Prueba2(QuackEntity* e) : Component(e)
 {
@@ -35,13 +36,17 @@ bool Prueba2::init(luabridge::LuaRef parameterTable)
 }
 
 void pruebaPop() {
-	SceneMng::Instance()->popCurrentScene();
+	//SceneMng::Instance()->popCurrentScene();
+	//SceneMng::Instance()->pushNewScene("Scenes/scene1.lua", "scene1");
+	SceneMng::Instance()->loadScene("Scenes/scene1.lua", "scene1");
 }
 
 void Prueba2::start()
 {
 	if (entity_->getComponent<Button>())
 		entity_->getComponent<Button>()->setCallBackFunction(pruebaPop);
+	if (entity_->getComponent<AudioSource>())
+		entity_->getComponent<AudioSource>()->play();
 }
 
 
