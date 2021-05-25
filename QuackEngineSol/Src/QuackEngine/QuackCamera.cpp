@@ -28,6 +28,7 @@ bool QuackCamera::init(luabridge::LuaRef parameterTable)
 	std::string name, proj;
 	LuaRef bgc = NULL, look = NULL;
 	bool correct = true;
+	int zOrder = 0;
 
 	correct &= readVariable<std::string>(parameterTable, "Name", &name_);
 	correct &= readVariable<LuaRef>(parameterTable, "Background", &bgc);
@@ -41,7 +42,7 @@ bool QuackCamera::init(luabridge::LuaRef parameterTable)
 	correct &= readVariable<float>(parameterTable, "xProp", &xProp_);
 	correct &= readVariable<float>(parameterTable, "yProp", &yProp_);
 	correct &= readVariable<std::string>(parameterTable, "ProjectionType", &proj_);
-	correct &= readVariable<int>(parameterTable, "zOrder", &zOrder_);
+	correct &= readVariable<int>(parameterTable, "zOrder", &zOrder);
 
 	if (!correct) return false;
 
@@ -57,6 +58,8 @@ bool QuackCamera::init(luabridge::LuaRef parameterTable)
 
 	node_ = entity_->transform()->getNode()->createChildSceneNode();
 	node_->lookAt(target_.toOgrePosition(), Ogre::Node::TS_WORLD);
+
+	setzOrder(zOrder);
 
 	return true;
 }
@@ -92,6 +95,8 @@ void QuackCamera::onDisable()
 
 void QuackCamera::setzOrder(int zOrder)
 {
+	if (window_->hasViewportWithZOrder(zOrder_) && vp_)
+		window_->removeViewport(zOrder_);
 	while (true) {
 		if (!window_->hasViewportWithZOrder(zOrder))
 			break;
