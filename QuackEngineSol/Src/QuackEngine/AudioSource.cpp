@@ -87,6 +87,7 @@ void AudioSource::resume() {
 }
 
 bool AudioSource::isPlaying() {
+	playing_ = mngr_->isPlaying(sound_);
 	return playing_;
 }
 
