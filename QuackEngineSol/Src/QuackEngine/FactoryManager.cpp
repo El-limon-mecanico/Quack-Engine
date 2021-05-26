@@ -11,6 +11,7 @@
 #include "Text.h"
 #include "ProgressBar.h"
 #include "AudioSource.h"
+#include "AudioListener.h"
 
 std::unique_ptr<FactoryManager> FactoryManager::instance_;
 
@@ -40,6 +41,7 @@ void FactoryManager::initEngineFactories()
 	FactoryManager::instance()->add<Text>();
 	FactoryManager::instance()->add<ProgressBar>();
 	FactoryManager::instance()->add<AudioSource>();
+	FactoryManager::instance()->add<AudioListener>();
 }
 
 Component* FactoryManager::create(const std::string& name)

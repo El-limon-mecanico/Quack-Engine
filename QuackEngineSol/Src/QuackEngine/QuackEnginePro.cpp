@@ -16,6 +16,7 @@
 #include "QuackEntity.h"
 #include "QuackTime.h"
 #include "CEGUIQuack.h"
+#include "SoundQuack.h"
 
 #include "Scene.h"
 #include "SceneMng.h"
@@ -116,6 +117,8 @@ void QuackEnginePro::update()
 		fixedUpdate =  quackTime_->frameStarted();
 
 		SceneMng::Instance()->preUpdate();
+
+		SoundQuack::Instance()->update();
 
 		BulletQuack::Instance()->stepPhysics(time()->deltaTime(), time()->fixedDeltaTime());
 

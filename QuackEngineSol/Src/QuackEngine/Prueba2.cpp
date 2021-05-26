@@ -57,10 +57,12 @@ void Prueba2::update()
 
 	//std::cout << "Horizontal: " << InputManager::Instance()->getMouseAxis(Horizontal) << " Vertical: " << InputManager::Instance()->getMouseAxis(Vertical) << "\n";
 
-	transform->Rotate({ rot.x,0,0 });
-	transform->Rotate({ 0,rot.y,0 }, true);
-
-	Vector3D mov = (transform->forward * -InputManager::Instance()->getAxis(Vertical)) + (transform->right * InputManager::Instance()->getAxis(Horizontal));
+	transform->Rotate({ rot.x,rot.y,0 });
+	
+	Vector3D mov = Vector3D(InputManager::Instance()->getAxis(Horizontal), 0, -InputManager::Instance()->getAxis(Vertical));
+	if (InputManager::Instance()->getKey(SDL_SCANCODE_SPACE)) mov.y = 1;
+	if (InputManager::Instance()->getKey(SDL_SCANCODE_LSHIFT)) mov.y = -1;
+	
 
 	transform->Translate(mov * QuackEnginePro::Instance()->time()->deltaTime() * 5);
 

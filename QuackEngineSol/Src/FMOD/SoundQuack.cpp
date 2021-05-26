@@ -11,7 +11,9 @@ SoundQuack* SoundQuack::Instance()
 	return instance_.get();
 }
 
-SoundQuack::SoundQuack(std::string route)
+SoundQuack::SoundQuack(std::string route) :
+	listeners_(std::vector<bool>(FMOD_MAX_LISTENERS, false)),
+	channels_(std::map<FMOD::Sound*, FMOD::Channel*>())
 {
 	assetsRouteFmod = route;
 
@@ -24,7 +26,7 @@ SoundQuack::SoundQuack(std::string route)
 		exit(-1);
 	}
 
-	result = systemFMOD_->init(512, FMOD_INIT_NORMAL, 0);    // Initialize FMOD.
+	result = systemFMOD_->init(512, FMOD_INIT_NORMAL | FMOD_INIT_3D_RIGHTHANDED, 0);    // Initialize FMOD.
 	if (result != FMOD_OK)
 	{
 		std::cout << "Error fmod_quack 2\n";
@@ -35,7 +37,7 @@ SoundQuack::SoundQuack(std::string route)
 
 SoundQuack::~SoundQuack()
 {
-	channels_.clear();				
+	channels_.clear();
 	systemFMOD_ = nullptr;
 }
 
@@ -78,6 +80,11 @@ FMOD::FMOD_MODE SoundQuack::getMode(FMOD::Sound* sound) {
 	return mode;
 }
 
+void SoundQuack::updateListener(int index, FMOD_VECTOR listenerPos, FMOD_VECTOR listenerFW, FMOD_VECTOR listenerUP, FMOD_VECTOR listenerVel)
+{
+	systemFMOD_->set3DListenerAttributes(index, &listenerPos, &listenerVel, &listenerFW, &listenerUP);     // update 'ears
+}
+
 FMOD::Sound* SoundQuack::createSound(std::string sound, int flags)
 {
 	FMOD::Sound* sonido;
@@ -91,8 +98,6 @@ FMOD::Sound* SoundQuack::createSound(std::string sound, int flags)
 	else channels_[sonido] = nullptr;
 	return sonido;
 }
-
-void SoundQuack::create3DSound(std::string sound) { createSound(sound, FMOD_3D); }
 
 void SoundQuack::removeSound(FMOD::Sound* sound)
 {
@@ -143,8 +148,37 @@ float SoundQuack::getVolume(FMOD::Sound* sound)
 	return volume;
 }
 
+void SoundQuack::set3DTransform(FMOD::Sound* sound, FMOD_VECTOR soundPos, FMOD_VECTOR soundVel)
+{
+	getChannel(sound)->set3DAttributes(&soundPos, &soundVel);
+}
+
+void SoundQuack::update()
+{
+	systemFMOD_->update();   // needed to update 3d engine, once per frame.
+}
+
 
 FMOD::Channel* SoundQuack::getChannel(FMOD::Sound* sound)
 {
 	return channels_[sound];
+}
+
+int SoundQuack::getNewListener()
+{
+	int i = 0;
+
+	for(int i = 0; i < listeners_.size(); i++){
+		if (!listeners_[i]){
+			listeners_[i] = true;
+			return i;
+		}
+	}
+	return -1;
+}
+
+void SoundQuack::removeListener(int index)
+{
+	listeners_[index] = false;
+	updateListener(index, { 10000,10000,10000 }, { 0,0,0 }, { 0,0,0 }, { 0,0,0 });
 }
