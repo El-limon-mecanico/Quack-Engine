@@ -57,32 +57,33 @@ void AudioSource::onEnable()
 
 void AudioSource::onDisable()
 {
-	if (playing_) {
+	if (isPlaying()) {
 		pause();
 		playing_ = true;
 	}
 }
 
 void AudioSource::play() {
-	if (!playing_) {
+	if (!isPlaying()) {
 		playing_ = true;
 		mngr_->playSound(sound_, volume_);
+	}
+	else {
+		stop();
+		play();
 	}
 
 }
 
 void AudioSource::stop() {
-	playing_ = false;
 	mngr_->stopSound(sound_);
 }
 
 void AudioSource::pause() {
-	playing_ = false;
 	mngr_->pauseSound(sound_, true);
 }
 
 void AudioSource::resume() {
-	playing_ = true;
 	mngr_->pauseSound(sound_, false);
 }
 
