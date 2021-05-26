@@ -74,6 +74,7 @@ inline QuackEntity* Transform::getChildByTag(std::string tag) const
 	while (i < childrenCount()) {
 		if (tag == children_[i]->entity_->tag())
 			return children_[i]->entity_;
+		i++;
 	}
 	return nullptr;
 }
@@ -83,6 +84,7 @@ inline QuackEntity* Transform::getChildByName(std::string name) const
 	while (i < childrenCount()) {
 		if (name == children_[i]->entity_->name())
 			return children_[i]->entity_;
+		i++;
 	}
 	return nullptr;
 }
