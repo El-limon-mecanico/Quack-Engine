@@ -7,8 +7,8 @@
 #  endif
 #endif
 
-#include "Raycast.h"
-#include "Vector3D.h"
+class Raycast;
+class Vector3D;
 
 class QUACK_ENGINE_PRO_API QuackRaycast {
 private:
@@ -16,7 +16,7 @@ private:
 
 public:
 	QuackRaycast(Vector3D from, Vector3D to);
-	~QuackRaycast() { delete raycast; raycast = nullptr; }
+	~QuackRaycast();
 	bool hasHit() const;
 	float getLength();
 	Vector3D getNormal();
