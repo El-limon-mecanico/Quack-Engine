@@ -154,8 +154,7 @@ void QuackEnginePro::pollEvents()
 		switch (event.type)
 		{
 		case SDL_QUIT:
-			OgreQuack::Instance()->getRoot()->queueEndRendering();
-			exit = true;
+			closeGame();
 			break;
 		default:
 			InputManager::Instance()->ManageInput(event);
@@ -189,4 +188,10 @@ int QuackEnginePro::getWindoWidth()
 int QuackEnginePro::getWindoHeight()
 {
 	return OgreQuack::Instance()->getWindowH();
+}
+
+void QuackEnginePro::closeGame()
+{
+	OgreQuack::Instance()->getRoot()->queueEndRendering();
+	exit = true;
 }

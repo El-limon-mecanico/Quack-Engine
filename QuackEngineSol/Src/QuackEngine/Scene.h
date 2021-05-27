@@ -73,4 +73,6 @@ public:
 
 	static void callBackBoton();
 
+	static void close();
+
 };

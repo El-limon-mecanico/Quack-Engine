@@ -71,6 +71,8 @@ public:
 	int getWindoWidth();
 
 	int getWindoHeight();
+
+	void closeGame();
 };
 
 #endif // !_QUACK_ENGINE_PRO_

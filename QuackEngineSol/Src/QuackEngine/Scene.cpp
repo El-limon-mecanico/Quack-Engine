@@ -9,6 +9,7 @@ Scene::Scene(const std::string& file, const std::string& name) {
 
 	//los call backs de los botones se tienen que crear antes de que se empiecen a cargar las entidades
 	CallBacks::instance()->addMethod("botonPresionado", callBackBoton);
+	CallBacks::instance()->addMethod("close", close);
 	lua_State* state = nullptr;
 	try {
 		state = readFileLua(file);
@@ -278,3 +279,9 @@ void Scene::callBackBoton()
 {
 	std::cout << "Se ha presionado el boton\n";
 }
+#include "QuackEnginePro.h"
+void Scene::close()
+{
+	QuackEnginePro::Instance()->closeGame();
+}
+
