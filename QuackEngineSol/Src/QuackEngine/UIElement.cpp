@@ -1,7 +1,15 @@
 #include "UIElement.h"
+#include "QuackEnginePro.h"
 #include <CEGUIQuack.h>
 #include <CEGUI/CEGUI.h>
 #include <CEGUI/RendererModules/Ogre/Renderer.h>
+
+UIElement::UIElement()
+{
+	float x = QuackEnginePro::Instance()->getWindoWidth();
+	float y = QuackEnginePro::Instance()->getWindoHeight();
+	targetResolution_ = { x,y };
+}
 
 UIElement::~UIElement()
 {
@@ -17,19 +25,22 @@ void UIElement::addScheme(std::string scheme)
 bool UIElement::init(luabridge::LuaRef parameterTable)
 {
 	bool correct = true;
-	LuaRef pos = NULL, size = NULL;
+	LuaRef pos = NULL, size = NULL, targetRes = NULL;
 	std::string style, name;
 	correct &= readVariable<LuaRef>(parameterTable, "Position", &pos);
 	correct &= readVariable<LuaRef>(parameterTable, "Size", &size);
 	correct &= readVariable<std::string>(parameterTable, "Style", &style);
 	correct &= readVariable<std::string>(parameterTable, "Name", &name);
-	
-	if (!correct) return false;
+	correct &= readVariable<LuaRef>(parameterTable, "TargetResolution", &targetRes);
 
 	element_ = CEGUIQuack::Instance()->createWidget(style, name);
 
+	if (!correct) return false;
+
+	targetResolution_ = { targetRes[1], targetRes[2] };
 	setPosition(pos[1], pos[2]);
 	setSize(size[1], size[2]);
+
 
 	return true;
 }
@@ -45,6 +56,12 @@ bool UIElement::init(std::pair<float, float> pos, std::pair<float, float> size, 
 	setEnable(active);
 
 	return true;
+}
+
+void UIElement::preUpdate()
+{
+	setPosition(position_.first, position_.second);
+	setSize(size_.first, size_.second);
 }
 
 void UIElement::onEnable()
@@ -81,8 +98,8 @@ void UIElement::setTextColor(std::string tLColor, std::string tRColor, std::stri
 void UIElement::setSize(float x, float y)
 {
 	size_ = { x,y };
-	CEGUI::UDim x_ = CEGUI::UDim(0, x);
-	CEGUI::UDim y_ = CEGUI::UDim(0, y);
+	CEGUI::UDim x_ = CEGUI::UDim(0, x * (QuackEnginePro::Instance()->getWindoWidth() /targetResolution_.first));
+	CEGUI::UDim y_ = CEGUI::UDim(0, y * (QuackEnginePro::Instance()->getWindoHeight() / targetResolution_.second));
 	element_->setSize({ x_,y_ });
 }
 
@@ -91,6 +108,7 @@ void UIElement::setPosition(float x, float y)
 	position_ = { x,y };
 	CEGUI::UDim x_ = CEGUI::UDim(x, 0);
 	CEGUI::UDim y_ = CEGUI::UDim(y, 0);
+	
 
 	element_->setPosition({ x_,y_ });
 }
