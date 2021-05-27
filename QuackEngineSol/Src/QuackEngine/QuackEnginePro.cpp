@@ -171,6 +171,7 @@ QuackTime* QuackEnginePro::time()
 
 void QuackEnginePro::setFullScreen(bool set)
 {
+	fullscreen_ = set;
 	OgreQuack::Instance()->setFullScreen(set);
 	CEGUIQuack::Instance()->resizeWindow(OgreQuack::Instance()->getWindowW(), OgreQuack::Instance()->getWindowH());
 }

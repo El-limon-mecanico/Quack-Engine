@@ -44,6 +44,8 @@ private:
 
 	bool exit = true;
 
+	bool fullscreen_ = false;
+
 	void readAssetsRoute();
 
 public:
@@ -63,6 +65,8 @@ public:
 	QuackTime* time();
 
 	void quit() { exit = true; }
+
+	bool getFullScreen() { return fullscreen_; }
 
 	void setFullScreen(bool set);
 
