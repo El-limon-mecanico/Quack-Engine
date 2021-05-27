@@ -20,7 +20,7 @@
 //};
 //class btDynamicsWorld;
 
-class Raycast
+class QUACK_ENGINE_PRO_API Raycast
 {
 private:
 	btVector3* from_ = nullptr, * to_ = nullptr;
