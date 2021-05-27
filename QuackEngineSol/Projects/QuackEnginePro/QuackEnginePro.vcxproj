@@ -33,9 +33,9 @@
     <ClCompile Include="..\..\Src\QuackEngine\FactoryManager.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\Prueba.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\QuackEnginePro.cpp" />
+    <ClCompile Include="..\..\Src\QuackEngine\QuackRaycast.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\QuackTime.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\MeshRenderer.cpp" />
-    <ClCompile Include="..\..\Src\QuackEngine\Raycast.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\ResourceMng.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\Rigidbody.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\Scene.cpp" />
@@ -77,10 +77,10 @@
     <ClInclude Include="..\..\Src\QuackEngine\QuackEnginePro.h" />
     <ClInclude Include="..\..\Src\QuackEngine\FactoryManager.h" />
     <ClInclude Include="..\..\Src\QuackEngine\Prueba.h" />
+    <ClInclude Include="..\..\Src\QuackEngine\QuackRaycast.h" />
     <ClInclude Include="..\..\Src\QuackEngine\QuackTime.h" />
     <ClInclude Include="..\..\Src\QuackEngine\MeshRenderer.h" />
     <ClInclude Include="..\..\Src\QuackEngine\QuackUI.h" />
-    <ClInclude Include="..\..\Src\QuackEngine\Raycast.h" />
     <ClInclude Include="..\..\Src\QuackEngine\ResourceMng.h" />
     <ClInclude Include="..\..\Src\QuackEngine\Rigidbody.h" />
     <ClInclude Include="..\..\Src\QuackEngine\Scene.h" />
