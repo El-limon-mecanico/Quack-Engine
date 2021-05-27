@@ -44,7 +44,7 @@ private:
 
 	bool exit = true;
 
-	bool fullscreen_ = true;
+	bool fullscreen_ = false;
 
 	void readAssetsRoute();
 
