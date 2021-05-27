@@ -1,4 +1,7 @@
 #include "Raycast.h"
+#include "BulletQuack.h"
+#include "BtOgre.h"
+#include "../QuackEngine/Vector3D.h"
 
 Raycast::Raycast(Vector3D from, Vector3D to)
 {
@@ -6,10 +9,6 @@ Raycast::Raycast(Vector3D from, Vector3D to)
 	to_ = new btVector3(to.x, to.y, to.z);
 
 	res = new btCollisionWorld::ClosestRayResultCallback(*from_, *to_);
-
-#ifdef DEBUG_DRAW_LINES
-	//m_dynamicsWorld->getDebugDrawer()->drawLine(from, to, btVector4(0, 0, 0, 1));
-#endif DEBUG_DRAW_LINES
 
 	BulletQuack::Instance()->getWorld()->getBtWorld()->rayTest(*from_, *to_, *res);
 }

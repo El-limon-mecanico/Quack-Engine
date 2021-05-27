@@ -21,10 +21,12 @@
   <ItemGroup>
     <ClInclude Include="..\..\Src\BULLET\BtOgre.h" />
     <ClInclude Include="..\..\Src\BULLET\BulletQuack.h" />
+    <ClInclude Include="..\..\Src\BULLET\Raycast.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\BULLET\BtOgre.cpp" />
     <ClCompile Include="..\..\Src\BULLET\BulletQuack.cpp" />
+    <ClCompile Include="..\..\Src\BULLET\Raycast.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

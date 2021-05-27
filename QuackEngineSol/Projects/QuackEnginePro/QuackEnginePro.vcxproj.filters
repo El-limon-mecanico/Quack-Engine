@@ -108,9 +108,6 @@
     <ClCompile Include="..\..\Src\QuackEngine\AudioListener.cpp">
       <Filter>Archivos de origen\Ecs\Components</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\QuackEngine\Raycast.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\QuackEngine\Scene.h">
@@ -194,7 +191,7 @@
     <ClInclude Include="..\..\Src\QuackEngine\AudioListener.h">
       <Filter>Archivos de encabezado\Ecs\Components</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\QuackEngine\Raycast.h">
+    <ClInclude Include="..\..\Src\QuackEngine\QuackRaycast.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
