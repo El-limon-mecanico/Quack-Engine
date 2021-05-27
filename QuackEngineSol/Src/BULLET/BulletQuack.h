@@ -48,9 +48,8 @@ public:
 	void addRigidBody(btRigidBody* rb);
 
 	void removeRigidBody(btRigidBody* rb);
+
+	BtOgre::DynamicsWorld* const getWorld() const { return world_; }
 };
 
 #endif // !_PHYSICS_MANAGER_
-
-
-
