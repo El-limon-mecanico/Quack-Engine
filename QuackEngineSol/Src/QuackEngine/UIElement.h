@@ -20,17 +20,20 @@ protected:
 
 	std::string text_ = "";
 
-	std::pair<float, float> position_;
-	std::pair<float, float> size_;
+	std::pair<float, float> position_ = { 0.5,0.5 };
+	std::pair<float, float> size_ = { 100,100 };
+	std::pair<float, float> targetResolution_ = {1920, 1080};
 
 public:
-	UIElement() {}
+	UIElement();
 	virtual ~UIElement();
 
 	static void addScheme(std::string scheme);
 
 	virtual bool init(luabridge::LuaRef parameterTable = { nullptr });
 	bool init(std::pair<float, float> pos, std::pair<float, float> size, bool active, std::string name, std::string style);
+
+	virtual void preUpdate();
 
 	virtual void onEnable();
 
