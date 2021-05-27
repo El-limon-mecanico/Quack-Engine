@@ -33,6 +33,7 @@
     <ClCompile Include="..\..\Src\QuackEngine\FactoryManager.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\Prueba.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\QuackEnginePro.cpp" />
+    <ClCompile Include="..\..\Src\QuackEngine\QuackRaycast.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\QuackTime.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\MeshRenderer.cpp" />
     <ClCompile Include="..\..\Src\QuackEngine\ResourceMng.cpp" />
