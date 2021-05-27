@@ -9,7 +9,6 @@
 #endif
 
 #include "BulletQuack.h"
-#include "QuackEntity.h"
 #include "BtOgre.h"
 #include "Vector3D.h"
 
