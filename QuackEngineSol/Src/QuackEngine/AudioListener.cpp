@@ -20,7 +20,7 @@ void AudioListener::preUpdate()
 	if (index_ == -1)
 		return;
 	Vector3D pos = transform->position();
-	Vector3D forward = transform->forward * -1;
+	Vector3D forward = transform->forward;
 	Vector3D up = transform->up;
 	mngr_->updateListener(index_, { pos.x,pos.y,pos.z }, { forward.x,forward.y,forward.z }, { up.x,up.y,up.z });
 }
